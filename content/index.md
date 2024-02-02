@@ -2,5 +2,11 @@
 title: Welcome to Quartz
 ---
 
-This is a blank Quartz installation.
-See the [documentation](https://quartz.jzhao.xyz) for how to get started.
+Indice dei file principali:
+
+### Primo Anno - Primo Semestre
+
+- [[Calcolo Differenziale]]
+- [[Progettazione di Sistemi Digitali]]
+- [[Metodi Matematici per l_Informatica|Metodi Matematici per l'Informatica]]
+- [[Fondamenti di Programmazione]]
