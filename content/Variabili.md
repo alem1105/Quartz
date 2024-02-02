@@ -4,7 +4,7 @@ Per dichiarare una variabile in Java ci sono vari step:
 - **Assegnazione**
 - **Inizializzazione**
 
-```Java
+```java
 public class Main {
 	public static void main(String[] args) {
 		int x; //dichiarazione
@@ -17,7 +17,7 @@ public class Main {
 Una variabile può **contenere soltanto i dati del tipo dichiarato**, quindi un intero (int) non può contenere stringhe di testo o numeri con la virgola (double), quindi ogni volta dobbiamo dichiarare il giusto tipo di variabile.
 Una volta inizializzata una variabile possiamo usarla per svolgere operazione o anche mandarla in output sulla console:
 
-```Java
+```java
 public class Main {
 	public static void main(String[] args) {
 		int x = 5;
@@ -31,7 +31,7 @@ public class Main {
 
 Una variabile può ovviamente anche **anche cambiare valore** durante il programma ma **non tipo di dato**:
 
-```Java
+```java
 public class Main {
 	public static void main(String[] args) {
 		int x;
