@@ -1,4 +1,4 @@
-#1AprimoSemestre 
+
 1) [[Insiemi Numerici]]
 2) [[Modulo (Distanza tra due punti)|Modulo]]
 3) [[Intervalli]]
@@ -9,4 +9,3 @@
 8) [[Teoremi sulla Discontinuità]]
 9) [[Derivate]]
 10) [[Polinomi di Taylor]]
-11) 

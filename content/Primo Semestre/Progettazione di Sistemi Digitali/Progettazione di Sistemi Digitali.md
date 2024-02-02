@@ -1,4 +1,4 @@
-#1AprimoSemestre 
+
 1) [[Architettura di Von Neumann]]
 2) [[Rappresentazione dell'informazione]]
 3) [[Operazioni in base 2]]
@@ -9,4 +9,3 @@
 8) [[Algebra Booleana]]
 9) [[Verilog]]
 10) [[Registri 2.0]]
-12) 

@@ -1,9 +1,6 @@
 ---
 title: Welcome to Quartz
 ---
-
-Indice dei file principali:
-
 ### Primo Anno - Primo Semestre
 
 - [[Calcolo Differenziale]]
