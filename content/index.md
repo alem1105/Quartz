@@ -1,5 +1,5 @@
 ---
-title: Welcome to Quartz
+title: Home
 ---
 ### Primo Anno - Primo Semestre
 
