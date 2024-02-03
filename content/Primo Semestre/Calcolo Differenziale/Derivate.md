@@ -4,21 +4,21 @@ Allora $f$ si dice derivabile in $x_0$ e $L=f'(x_0)$ si chiama **derivata prima*
 
 ### Formule
 
-$[x^n]' = nx^{n-1} \ \ \  \forall x \ n\in\mathbb{N}$
-$[e^{f(x)}]'=e^{f(x)}*f'(x) \ \ \ \forall x$
-$[log(x)]'=\frac{1}{x} \ \ \ x>0$
-$[sen(x)]'=cos(x) \ \ \ \forall x$
-$[cos(x)]'=-sen(x) \ \ \ \forall x$
-$[tg(x)]'=\frac{1}{cos^2(x)} \ \ \ \forall x\neq\frac{\pi}{2}+k\pi$
-$[x^{\alpha}]'=\alpha x^{\alpha - 1} \ \ \ x>0 \ \ \ \alpha\in\mathbb{R}$
-$[arctg(x)]'=\frac{1}{x^2+1} \ \ \ \forall x$
-$[arcsen(x)]'=\frac{1}{\sqrt{1-x^2}} \ \ \ |x|<1$
-$[arccos(x)]'=-\frac{1}{\sqrt{1-x^2}} \ \ \ |x|<1$
+- $[x^n]' = nx^{n-1} \ \ \  \forall x \ n\in\mathbb{N}$
+- $[e^{f(x)}]'=e^{f(x)}*f'(x) \ \ \ \forall x$
+- $[log(x)]'=\frac{1}{x} \ \ \ x>0$
+- $[sen(x)]'=cos(x) \ \ \ \forall x$
+- $[cos(x)]'=-sen(x) \ \ \ \forall x$
+- $[tg(x)]'=\frac{1}{cos^2(x)} \ \ \ \forall x\neq\frac{\pi}{2}+k\pi$
+- $[x^{\alpha}]'=\alpha x^{\alpha - 1} \ \ \ x>0 \ \ \ \alpha\in\mathbb{R}$
+- $[arctg(x)]'=\frac{1}{x^2+1} \ \ \ \forall x$
+- $[arcsen(x)]'=\frac{1}{\sqrt{1-x^2}} \ \ \ |x|<1$
+- $[arccos(x)]'=-\frac{1}{\sqrt{1-x^2}} \ \ \ |x|<1$
 
 #### Derivate composte
-$[f(x)\pm g(x)]' = f'(x)\pm g'(x)$
-$[f(x)*g(x)]' = f'(x)g(x)+f(x)g'(x)$
-$[\frac{f(x)}{g(x)}]'=\frac{f'(x)g(x)-f(x)g'(x)}{[g(x)]^2}$
+- $[f(x)\pm g(x)]' = f'(x)\pm g'(x)$
+- $[f(x)*g(x)]' = f'(x)g(x)+f(x)g'(x)$
+- $[\frac{f(x)}{g(x)}]'=\frac{f'(x)g(x)-f(x)g'(x)}{[g(x)]^2}$
 
 
 ![[Pasted image 20231127210906.png]]
