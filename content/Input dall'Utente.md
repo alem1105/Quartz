@@ -1,13 +1,13 @@
 Per usare gli input da terminale dell'utente dobbiamo importare una libreria chiamata **java.util.Scanner** in questo modo:
 
 ```java
-import java.util.Scanner
+import java.util.Scanner;
 ```
 
 Adesso possiamo creare un **oggetto** di tipo Scanner, vediamo la sintassi anche se la studieremo più avanti con la **programmazione a oggetti**.
 
 ```java {5}
-import java.util.Scanner
+import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
@@ -26,7 +26,7 @@ public class Main {
 Adesso vediamo come fare delle domande all'utente e associare le sue risposte a delle variabili all'interno del nostro codice
 
 ```java
-import java.util.Scanner
+import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
@@ -41,7 +41,7 @@ public class Main {
 Possiamo adesso utilizzare questo dato nel codice, ad esempio per mandarlo in output insieme ad altri valori.
 
 ```java
-import java.util.Scanner
+import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
@@ -58,7 +58,7 @@ public class Main {
 **Vediamo come prendere valori numerici**
 
 ```java
-import java.util.Scanner
+import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
@@ -83,7 +83,7 @@ public class Main {
 **Vediamo una soluzione:**
 
 ```java
-import java.util.Scanner
+import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
