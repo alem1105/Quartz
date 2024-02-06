@@ -16,7 +16,7 @@ public class Main {
 }
 ```
 
-> [!tip] Analizziamo per punti cosa fa questa riga:
+> [!example] Analizziamo per punti cosa fa questa riga:
 > - **Scanner:** Indica il tipo di variabile che stiamo creando, è lo stesso procedimento che utilizziamo per, ad esempio, gli interi le stringhe ecc..
 > - **og_scanner:** Indica il nome della variabile
 > - **new Scanner(System.in):** stiamo chiamando il metodo costruttore della classe Scanner, questo lo vedremo più nel dettaglio nella programmazione a oggetti
@@ -78,7 +78,7 @@ public class Main {
 
 
 > [!bug] scanner.nextInt()
-> Quando leggiamo l'età con **scanner.nextInt()** questo non posizionerà il cursore in una nuova linea ma rimarrà alla fine di quella con l'intero appena letto, creando problemi per le linee successive infatti provando questo programma crasherà dopo aver inserito l'età.
+> Quando leggiamo l'età con **scanner.nextInt()** questo non posizionerà il cursore in una nuova linea ma rimarrà alla fine di quella con l'intero appena letto creando problemi per le linee successive, infatti provando questo programma crasherà dopo aver inserito l'età.
 
 **Vediamo una soluzione:**
 
