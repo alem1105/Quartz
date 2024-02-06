@@ -43,7 +43,7 @@ public class Main {
 
 - _La Stringa infatti è un insieme di caratteri_
 
-> [!INFO] Qual è quindi la differenza tra primitiva e reference?
+> [!HELP]- Qual è quindi la differenza tra primitiva e reference?
 > Le primitive sono quei tipi di dato che ci vengono forniti direttamente da Java, li possiamo distinguere facilmente perché iniziano con una lettera minuscola (**es. int, boolean, float**), mentre le reference sono tipi di dato più complessi creati da noi ma in questo caso ad esempio la **String** ci viene fornita direttamente da Java.
 > Le reference infatti portano con loro una serie di **attributi** e **metodi** che possiamo utilizzare per manipolarli.
 
