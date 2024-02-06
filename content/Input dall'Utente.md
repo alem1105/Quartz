@@ -50,7 +50,7 @@ public class Main {
 		System.out.println("Ciao! Come ti chiami?");
 		String nome = scanner.nexLine();
 
-		System.out.println("Ciao " + nome)
+		System.out.println("Ciao " + nome);
 	}
 }
 ```
