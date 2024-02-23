@@ -12,6 +12,3 @@ description: Indice principale del vault
 ### Primo Anno - Secondo Semestre
 
 - [[Metodologie di Programmazione]]
-
-
-# PROVA MAC
