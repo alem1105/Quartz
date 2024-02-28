@@ -12,6 +12,7 @@ Vediamo i principali tipi, che dati possono contenere e quanto spazio occupano:
 | double  | numero con 15 cifre decimali  | 8 bytes |
 | char    | singolo carattere             | 2 bytes |
 | String  | sequenza di caratteri         | variabile        |
+**Possiamo anche rappresentare valori interi tramite una rappresentazione binaria in questo modo: 0b101, in questo caso abbiamo scritto 5.**
 
 **Variabili numeriche:**
 Quando inizializziamo una variabile di tipo **long** o **float** va inserita alla fine del numero rispettivamente una **'L'** o una **'F'**, maiuscole o minuscole non fa differenza

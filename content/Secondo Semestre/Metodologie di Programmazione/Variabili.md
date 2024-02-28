@@ -40,3 +40,10 @@ public class Main {
 	}
 }
 ```
+
+
+> [!info] Notazioni
+> - I nomi delle variabili non possono iniziare con delle cifre
+> - Si utilizza la camel case (nomeVariabileIntera)
+
+
