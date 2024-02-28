@@ -12,5 +12,3 @@ description: Indice principale del vault
 ### Primo Anno - Secondo Semestre
 
 - [[Metodologie di Programmazione]]
-- [[Calcolo Integrale]]
-- [[Introduzione Agli Algoritmi]]
