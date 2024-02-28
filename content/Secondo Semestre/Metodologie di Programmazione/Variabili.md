@@ -40,3 +40,9 @@ public class Main {
 	}
 }
 ```
+
+
+> [!NOTE] Notazioni
+> - Gli identificatori non possono iniziare con delle cifre
+> - Sono case-sensitive e si utilizza la notazione a cammello
+
