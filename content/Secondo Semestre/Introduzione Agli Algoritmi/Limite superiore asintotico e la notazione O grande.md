@@ -7,7 +7,9 @@ _Esempio:_
 É facile vedere che $\sqrt{n} = O(n)$ in quanto la funzione radice cresce meno della funzione lineare.
 Per provarlo in modo formale possiamo utilizzare i limiti ricordando che $f(n)\in O(g(n))$ se $\lim_{x\rightarrow +\infty}\frac{f(n)}{g(n)} \neq +\infty$
 Generalizzando il nostro caso otteniamo:
-$$\lim_{x\rightarrow+\infty}\frac{n^\frac{1}{a}}{n^b}=0$$ Oppure = 1 se $a=b=1$
+
+$$\lim_{x\rightarrow+\infty}\frac{n^\frac{1}{a}}{n^b}=0$$ 
+Oppure = 1 se $a=b=1$
 
 ### Altri Esempi
 ![[Pasted image 20240226184036.png]]![[IMG_0007.jpg]]

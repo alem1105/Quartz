@@ -5,13 +5,28 @@ Quindi in $Θ(g(n))$ troviamo tutte le funzioni che hanno lo stesso ordine asint
 ![[Pasted image 20240226201137.png]]
 
 _Esempio:_
-Prova che $$\log_an\inΘ(\log_bn)$$ per ogni $a,b>1$
+Prova che 
+
+$$\log_an\inΘ(\log_bn)$$
+
+per ogni $a,b>1$
 
 Ricordiamo che $f(n)\inΘ(g(n))$ se il limite per $n\rightarrow+\infty$ del rapporto $\frac{f(n)}{g(n)} = k$ con $k$ costante diversa da zero.
-Nel nostro caso otteniamo:$$\lim_{x\rightarrow+\infty}\frac{f(n)}{g(n)}=\lim_{x\rightarrow+\infty}\frac{\log_an}{\log_bn}$$
-Applicando il cambio di base dei logaritmi otteniamo che $$\log_an=\frac{\log_bn}{\log_ba}$$
+Nel nostro caso otteniamo:
+
+$$\lim_{x\rightarrow+\infty}\frac{f(n)}{g(n)}=\lim_{x\rightarrow+\infty}\frac{\log_an}{\log_bn}$$
+
+
+Applicando il cambio di base dei logaritmi otteniamo che 
+
+$$\log_an=\frac{\log_bn}{\log_ba}$$
+
+
 Quindi:
-$$\lim_{x\rightarrow+\infty}\frac{\log_bn}{\log_ba}*\frac{1}{\log_bn}=\lim_{x\rightarrow+\infty}\frac{1}{\log_ba}=\frac{1}{\log_ba}$$ Ovvero una costante maggiore di 0
+
+$$\lim_{x\rightarrow+\infty}\frac{\log_bn}{\log_ba}*\frac{1}{\log_bn}=\lim_{x\rightarrow+\infty}\frac{1}{\log_ba}=\frac{1}{\log_ba}$$
+
+Ovvero una costante maggiore di 0
 
 
 > [!info] Cambio di base
