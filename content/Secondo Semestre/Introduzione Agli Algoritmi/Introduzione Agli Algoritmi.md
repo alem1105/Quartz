@@ -60,20 +60,16 @@ Vedremo 3 diverse notazioni asintotiche:
 - **Notazione asintotica Ω**: La notazione Omega è limite inferiore asintotico
 - **Notazione asintotica Θ**: La notazione Theta è il limite asintotico stretto
 
+***DISEGNO DA CORREGGERE, NOTAZIONI INVERTITE***
 ![[Pasted image 20240226183451.png]]
 
 **Tutte le funzioni** che definiamo **vanno considerate non negative**, questo implica anche che il limite a $+\infty$ è non negativo, posto che esista.
 Questo perché ci interessano funzioni che catturano tempi di esecuzioni, quindi non possono essere negativi o 0.
 
-## Definizioni
-- **Limite superiore asintotico e la notazione O grande**
-  ![[Pasted image 20240226183902.png]]![[Pasted image 20240226184036.png]]![[IMG_0007.jpg]]
- **Limite inferiore asintotico e la notazione Ω**
-  ![[Pasted image 20240226191324.png]]![[Pasted image 20240226193809.png]] ![[photo_2024-02-26_19-48-32.jpg]]
-- **Il limite stretto asintotico e la notazione Theta**
-![[Pasted image 20240226200901.png]]
-![[Pasted image 20240226201137.png]]
-
+# Definizioni
+- **[[Limite superiore asintotico e la notazione O grande]]**
+- **[[Limite inferiore asintotico e la notazione Ω]]**
+- **[[Il limite stretto asintotico e la notazione Θ Theta]]**
 # Regole Generali
 ![[Pasted image 20240226201353.png]]
 
@@ -84,3 +80,5 @@ Per determinare i limiti asintotici di due funzioni $f(n)$ e $g(n)$ possiamo uti
 - Se il limite del rapporto per $n\rightarrow +\infty$ è un numero finito $k$ allora la funzione $f(n)$ è Θ$(g(n))$
 
 **Se il limite non esiste non possiamo utilizzare questo metodo**
+
+# [[Algebra della notazione asintotica]]
