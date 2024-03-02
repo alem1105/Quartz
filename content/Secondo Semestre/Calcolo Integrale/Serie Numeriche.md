@@ -48,7 +48,7 @@ A seconda del **valore del limite** si possono verificare più casi:
 > - Se $a_n$ è definitivamente uguale a 0 allora $\sum\limits_{n=1}^{+\infty} a_n$ converge
 
 --- 
-### Teorema
+# Teorema
 Sia $\{a_n\}$ una successione se $\sum\limits_{n=1}^{+\infty} a_n$ **converge** allora $a_n$ è **infinitesima** (tende a 0).
 _Dimostrazione:_
 $a_n = S_n - S_{n-1}$ infatti:
