@@ -40,3 +40,123 @@ A seconda del **valore del limite** si possono verificare più casi:
 
 > [!tip] Convergenza
 > Una serie converge se $a_n\neq 0$ solo per un numero finito di termini
+
+> [!example] Quindi in generale abbiamo 3 casi:
+> Definitivamente: Per un $n$ abbastanza grande
+> - Se $\exists r>0:$ definitivamente $a_n\geq r$ allora $\sum\limits_{n=1}^{+\infty} a_n=+\infty$
+> - $a_n=(-1)^n$ => $\sum\limits^{+\infty}_{n=1} (-1)^n$ è indeterminata
+> - Se $a_n$ è definitivamente uguale a 0 allora $\sum\limits_{n=1}^{+\infty} a_n$ converge
+
+--- 
+### Teorema
+Sia $\{a_n\}$ una successione se $\sum\limits_{n=1}^{+\infty} a_n$ **converge** allora $a_n$ è **infinitesima** (tende a 0).
+_Dimostrazione:_
+$a_n = S_n - S_{n-1}$ infatti:
+
+$$
+\begin{aligned}
+S_n &= a_1+a_2+...+a_{n-1}+a_n \\
+S_{n-1} &= a_1+a_2+...+a_{n-1}
+\end{aligned}
+$$
+
+Notiamo che se effettuiamo la differenza possiamo cancellare tutti i termini tranne $a_n$
+Quindi possiamo scrivere che:
+
+$$
+\begin{align}
+\lim_{n\rightarrow +\infty} a_n = \lim_{n\rightarrow +\infty} (S_n - S_{n-1}) \\
+\lim_{n\rightarrow +\infty}S_n - \lim_{n\rightarrow +\infty} S_{n-1} = S - S = 0
+\end{align}
+$$
+
+Infatti entrambi i limiti danno come risultato un valore $S$ dato che la serie è **convergente per ipotesi**, importante ricordare che $S-S=0$ è il valore del limite infatti le due $S$ non esattamente uguali ma molto simili.
+**Quindi se il limite fa 0 la serie è infinitesima**
+
+
+> [!warning] Differenze tra limiti e serie
+> Prendiamo la serie numerica $\sum\limits_{n=1}^{+\infty} \frac{n^2+5}{2n^2+3}=+\infty$
+> Dobbiamo fare attenzione perché il limite vale $\frac{1}{2}$ e noi stiamo sommando un numero infinito di $\frac{1}{2}$ quindi la serie vale $+\infty$.
+
+**Caso inverso**
+Se $a_n$ è **infinitesima** => $\sum\limits_{n=1}^{+\infty} a_n$ **converge**?
+
+No, possiamo prendere come esempio la **serie armonica**:
+
+$$
+\begin{align}
+a_n = \frac{1}{n}; \ \ \sum_{n=1}^{+\infty}\frac{1}{n}=+\infty
+\end{align}
+$$
+
+Infatti questa serie si sviluppa in questo modo:
+
+$$
+\begin{align}
+1 + \frac{1}{2} + (\frac{1}{3} + \frac{1}{4})  + (\frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8}) + (\frac{1}{9}+...+ \frac{1}{16})
+\end{align}
+$$
+
+Notiamo che raggruppando i termini in potenze di 2, otteniamo sempre un valore **maggiore o uguale a 1/2**, quindi anche se avremo bisogno di sempre più termini prima o poi aggiungeremo 1/2 al nostro risultato.
+
+---
+
+# Serie Geometriche
+Sia $q \in \mathbb{R} \ \ \sum\limits_{n=0}^{+\infty} q^n$ è la serie geometrica **di ragione q**.
+
+_Esempio:_
+
+$$
+\begin{align}
+&\sum^{+\infty}_{n=1}\frac{1}{2^n} = 1 \\
+&S_1=\frac{1}{2};S_2=\frac{3}{4};S_3=\frac{7}{8} \\
+\\
+&\text{in generale } S_n=1-\frac{1}{2^n} \\
+\\
+&\sum_{n=1}^{+\infty}\frac{1}{2^n}=\lim_{n\rightarrow +\infty}S_n=\lim_{n\rightarrow +\infty} 1-\frac{1}{2^n}=1-0=1
+\end{align}
+$$
+
+Vediamo cosa possiamo ottenere facendo dei raggruppamenti con questa tipologia di serie:
+
+$$
+\begin{align}
+S_n &= 1 + q + q^2 + ... +q^n \\
+q * S_n&=q+q^2+...+q^{n+1}
+\end{align}
+$$
+
+Adesso possiamo fare **la differenza** $S_n - q*S_n$ ottenendo $S_n(1-q) = 1-q^{n+1}$ infatti nel termine a sinistra abbiamo effettuato un **raggruppamento** mentre per il risultato della differenza ci basta notare nelle due successioni sopra che togliendo i termini rimaniamo soltanto con $1-q^{n+1}$.
+
+In generale otteniamo quindi che
+
+$$
+S_n = \frac{1-q^{n+1}}{1-q} \ \ \ \text{Se q $\neq$ 1}
+$$
+
+
+> [!example] **Vediamo ora tutti i casi che possiamo trovare:**
+> Sia $q\neq 0$
+> La serie geometrica di ragione $q$ $\sum\limits_{n=0}^{+\infty}q^n$:
+> - $\sum\limits_{n=0}^{+\infty}q^n = +\infty$ se $q\geq 1$
+> - $\sum\limits_{n=0}^{+\infty}q^n = \frac{1}{1-q}$ se $q\neq 0$ e $-1<q<1$
+> - $\sum\limits_{n=0}^{+\infty}q^n$ è indeterminata se $q\leq -1$
+
+> _Esempio_
+> $\sum\limits_{n=0}^{+\infty}\frac{1}{4^n} = \frac{1}{1-1/4} = 4/3$
+
+**E se partiamo da un n diverso da 0?**
+
+$$
+\begin{align}
+&\sum\limits_{n=4}^{+\infty}\frac{1}{3^n} \\
+\\
+&\text{Rappresentiamo la successione e notiamo che:} \\
+&\frac{1}{3^4}+\frac{1}{3^5}+\frac{1}{3^6}+... = \frac{1}{3^4}(1+\frac{1}{3}+\frac{1}{3^2}+...) \\
+&\text{Quindi possiamo risolvere il nostro problema moltiplicando $\frac{1}{3^4}$} \\
+&\text{per il risultato della successione che parte da 0, come nei casi visti sopra}\\
+\\
+&\sum\limits_{n=4}^{+\infty}\frac{1}{3^n} = \frac{1}{3^4}*\frac{1}{1-\frac{1}{3}} = \frac{3}{2*3^4} = \frac{1}{2*3^3}
+\end{align}
+$$
+
