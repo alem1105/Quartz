@@ -82,3 +82,18 @@ Per determinare i limiti asintotici di due funzioni $f(n)$ e $g(n)$ possiamo uti
 **Se il limite non esiste non possiamo utilizzare questo metodo**
 
 # [[Algebra della notazione asintotica]]
+
+**ESEMPI**
+![[IMG_7866E6CEA252-1.jpeg]]
+
+Troviamo invece la complessità di questo algoritmo che trova il valore massimo di un array:
+
+```python
+m = A[0] #Costo 1
+for i in range(A): #Costo Θ(lunghezzaA)
+	if i > m: #Costo 1
+		m = i #Costo 1
+print("Il valore massimo è: " + m) #Costo 1
+```
+
+In realtà la complessità sarebbe $lunghezza-1$ ma le costanti non le consideriamo nel calcolo dei limiti asintotici.
