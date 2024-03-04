@@ -160,3 +160,56 @@ $$
 \end{align}
 $$
 
+---
+
+# Serie Armoniche Generalizzate
+ Possiamo generalizzare la serie armonica elevando $n$ ad un valore $\alpha$, ottenendo quindi $\sum\limits_{n=1}^{+\infty}$
+
+Analizziamo due casi:
+- $\alpha \leq 1$: Notiamo che $\frac{1}{n^\alpha}\geq\frac{1}{n}$ quindi anche in questo caso abbiamo che $\sum\limits_{n=1}^{+\infty}\frac{1}{n^\alpha}=+\infty$
+- $a>1$: Non lo dimostriamo ma $\sum\limits_{n=1}^{+\infty}\frac{1}{n^\alpha}$ converge
+
+# Serie Telescopiche
+In queste successioni abbiamo sia termini positivi che negativi che si _"mangiano"_ a vicenda lasciando soltanto il primo termine e l'ultimo (anche se molto vicino allo 0).
+
+$$
+\begin{align}
+&a_k=\frac{1}{k(k+1)}=\frac{1}{k}-\frac{1}{k+1}=b_k-b_{k+1} \ \ \text{dove} \ b_k=\frac{1}{k} \\
+&S_1=1-\frac{1}{2};S_2=1-\frac{1}{2}+\frac{1}{2}-\frac{1}{3}\\
+&S_n = 1-\frac{1}{2}+\frac{1}{2}-\frac{1}{3}+\frac{1}{3}+...-\frac{1}{n}+\frac{1}{n}-\frac{1}{n+1} = 1 - \frac{1}{n+1}\\
+&\text{Quindi:}\\
+&\lim\limits_{n\rightarrow +\infty}S_n = 1
+\end{align}
+$$
+
+Otteniamo quindi che
+
+$$
+\sum_{n=1}^{+\infty}\frac{1}{n(n+1)} = 1
+$$
+
+**In Generale:**
+Sia $\{b_n\}$ una successione infinitesima e sia $a_n=b_n-b_{n+1}$ allora $\sum\limits_{n=1}^{+\infty}a_n=b_1$
+
+> [!attention] Attenzione
+> $\lim\limits_{n\rightarrow +\infty}S_{2n}=+\infty$ mentre $\lim\limits_{n\rightarrow +\infty}S_{2n+1}=-\infty$, infatti abbiamo una successione del tipo $-2+4-8+16-32...$, la successione è indeterminata infatti:
+> Se $\nexists\lim\limits_{n\rightarrow +\infty}S_n$ allora $\sum\limits_{n=1}^{+\infty}...$ è indeterminata.
+
+**Teorema**
+Siano $a_n\geq 0$ $\forall n \in \mathbb{N}$ allora $\sum\limits_{n=1}^{+\infty}a_n$ o converge o diverge a $+\infty$.
+_Dimostrazione_
+Se $\{S_n\}_{n\in\mathbb{N}}$ è una successione monotona non decrescente allora $\exists\lim\limits_{n\rightarrow +\infty}S_n=$ finito o $+\infty$
+
+_Esempi_
+$\sum\limits_{n=1}^{+\infty}\frac{n^2+7}{n^2+5}=+\infty$ infatti $\lim\limits_{n\rightarrow +\infty}\frac{n^2+7}{n^2+5}=1$; I termini sono definitivamente positivi quindi non posso oscillare.
+
+$\sum\limits_{n=1}^{+\infty}\frac{1}{n^\alpha}$ Converge? Se e solo se $\alpha > 1$
+
+$\sum\limits_{n=1}^{+\infty}sen(\frac{1}{n^2})$ posso studiare l'andamento della funzione e notare che la serie converge o anche confrontarla, infatti:
+
+**Teorema (Confronto)**
+Siano $a_n,b_n\geq 0$ $\forall n\in \mathbb{N}$ con $a_n\leq b_n$ $\forall n \in \mathbb{N}$
+
+Se $\sum\limits_{n=1}^{+\infty}b_n$ converge allora $\sum\limits_{n=1}^{+\infty}a_n$ converge
+
+Quindi ad esempio se non abbiamo una serie geometrica o telescopica possiamo comunque confrontarla con una di queste e capire il suo risultato.
