@@ -113,8 +113,12 @@ Esistono due tipi di memoria:
 ![[Screenshot 2024-03-07 alle 13.35.33.png]]
 ![[Screenshot 2024-03-07 alle 13.35.41.png]]
 
-Un'altra area di memoria viene chiamata **MetaSpace** dove vengono allocati i campi **static** relativi all'intera classe, questi esistono in questa locazione di memoria allocata prima di qualsiasi oggetto, viceversa per ogni campo non static esiste una locazione di memoria assegnata per ogni oggetto nel momento di creazione con la parola chiave **new**.
+- **MetaSpace**: Qui vengono allocati i campi di tipo static relativi all'intera classe, nel caso di un oggetto non static invece abbiamo una locazione di memoria diversa per ogni oggetto creato.
 
-La prima cosa che fa Java è tramite il **ClassLoader** caricare la prima classe e vedere se c'è un main eseguibile, se si vede se ci sono campi statici e li alloca nel **MetaSpace**, a questo punto inizia ad eseguire il main e se ci sono argomenti costruisce il vettore degli argomenti _String[] args_, se non ci sono stringhe esiste comunque ma sarà vuoto.
-Gli argomenti dei metodi vengono passati per **valore** e quindi copiati, i valori di args vengono quindi copiati _nell'heap_  (in generale quando carichiamo un metodo vengono copiati e caricati i suoi argomenti)
-Se chiamiamo un nuovo metodo viene creato un livello sopra al main nello *stack*
+Quando viene avviato un programma il compilatore di Java esegue queste azioni:
+- Tramite il **ClassLoader** carica la classe e vede se c'è un metodo main eseguibile.
+- Alloca nel **MetaSpace** i campi statici se ci sono
+- Inizia ad eseguire il main riservandogli una locazione di memoria nello **stack** e copiando **nell'heap** i valori presenti nella lista args, anche se vuota.
+- Va avanti nella compilazione del programma allocando locazioni di memoria di variabili, oggetti e metodi mano a mano che li troviamo.
+
+I valori dei parametri di un metodo vengono sempre copiato e non passati per riferimento, se troviamo un nuovo metodo questo viene allocato ad un livello superiore nello stack.
