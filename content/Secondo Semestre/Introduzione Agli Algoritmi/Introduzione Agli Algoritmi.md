@@ -86,3 +86,5 @@ Per determinare i limiti asintotici di due funzioni $f(n)$ e $g(n)$ possiamo uti
 **ESEMPI**
 ![[IMG_7866E6CEA252-1.jpeg]]
 # [[Costo di un Algoritmo]]
+
+# [[Il Problema della Ricerca]]
