@@ -63,3 +63,67 @@ Viene utilizzata ad esempio nelle operazioni come _addi_ dove possiamo aggiunger
 
 ### Formato delle istruzioni
 ![[Pasted image 20240305163805.png]]
+
+# Organizzazione della memoria
+![[Pasted image 20240308161501.png]]
+
+- **Stack Pointer**: Registro $sp che contiene l'indirizzo di inizio dello stack
+  Per le chiamate nidificate e le variabili locali delle funzioni
+- **Global Pointer**: Registro $gp che si utilizza per accedere ai dati globali tramite un offset.
+  Per gestire i dati dinamici non-locali
+- **Program Counter**: Registro $pc che contiene a che istruzione ci troviamo
+
+# Il set di istruzioni della CPU
+Ogni istruzione che riceve la CPU viene "spezzata" in più passaggi per essere eseguita:
+- **Fetch**: Caricamento in memoria dell'istruzione puntata dal program counter
+- **Decodifica**: I primi 6 bit ci indicano che tipologia di istruzione abbiamo, operazione svolta dalla _CU_
+- **Load**: Carica gli operandi dai registri
+- **Esecuzione**: La _ALU_ esegue i calcoli
+- **Store**: Salvataggio del risultato nel registro di destinazione
+- **Aggiornamento del Program Counter** che può avvenire anche contemporaneamente ad altre fasi
+
+## Tipologia di Istruzioni
+- **LOAD/STORE** Trasferiscono dati da o verso la memoria
+  _LW, LH, LB, SW, ecc.._
+- **Logico / Aritmetiche** Svolgono calcoli
+  _ADD, SUB, MUL, ecc.._
+- **Salti condizionati e incondizionati** Controllano il flusso del programma
+  _J, JAL, BEQZ, ec.._
+- **Gestione delle eccezioni** Salvano lo stato per un ripristino, un'interruzione può avvenire anche per via del _S.O._ che ha bisogno della CPU oppure perché dobbiamo aspettare che la memoria si liberi
+  _ERET_
+- **Trasferimento Dati** 
+  Non sono necessarie con il memory-mapping.
+
+## Codifica delle Istruzioni
+La codifica di un'istruzione deve indicare:
+- Che tipo di operazione va svolta (**OPCODE**)
+- Gli argomenti necessari, **registri**
+- Dove va posizionato il risultato
+
+Per indirizzare la memoria verso gli argomenti necessari abbiamo più modi:
+- **Implicito**: Sorgente e destinazione fisse con 0 accessi alla memoria
+- **Immediato**: I valori che ci servono sono costanti nell'istruzione, 0 accessi in memoria
+- **Diretto**: Nell'istruzione è presente l'indirizzo di memoria contenente il valore
+- **Indiretto**: Nell'istruzione è presente un indirizzo che punta ad un registro che a sua volta punta al valore di cui abbiamo bisogno
+- **A registro**: Il dato di cui abbiamo bisogno si trova nel registro indicato nell'istruzione
+- **A registro indiretto** (metodo più usato): Nell'istruzione indichiamo un registro che contiene l'indirizzo di memoria contenente il dato di cui abbiamo bisogno
+
+**Abbiamo anche altri modi di indirizzamento più complessi**
+
+- **Con Piazzamento (Offset / parte immediata)**
+  Al valore presente nel registro sommiamo un valore fisso (offset) e solo dopo accediamo all'indirizzo ottenuto
+  Ha 3 interpretazioni:
+  - Indice relativo al **Program Counter**
+  - Indice relativo al **Registro Base**
+	    Il registro è un indirizzo mentre l'offset la distanza
+  - Indicizzazione di un vettore
+	   Il registro contiene un offset, la parte immediata è l'indirizzo della struttura indicizzata
+
+# Esempi Assembly
+![[Pasted image 20240308163912.png]]
+
+![[Pasted image 20240308164722.png]]
+
+Quando dobbiamo accedere ad un indice di un vettore dobbiamo andare avanti a step di 4 byte. 
+Indice 6 = 6 * 4 = 24
+Indice 12 = 12 * 4 = 48

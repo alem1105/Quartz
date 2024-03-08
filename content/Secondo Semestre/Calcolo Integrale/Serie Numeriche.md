@@ -213,3 +213,24 @@ Siano $a_n,b_n\geq 0$ $\forall n\in \mathbb{N}$ con $a_n\leq b_n$ $\forall n \in
 Se $\sum\limits_{n=1}^{+\infty}b_n$ converge allora $\sum\limits_{n=1}^{+\infty}a_n$ converge
 
 Quindi ad esempio se non abbiamo una serie geometrica o telescopica possiamo comunque confrontarla con una di queste e capire il suo risultato.
+
+# Teorema del confronto asintotico
+Siano $a_n,b_n \geq 0 \ \ \forall n$, se $\lim\limits_{n\rightarrow +\infty}\frac{a_n}{b_n}=l\in(0,+\infty)$ allora $\sum\limits_{n=1}^{+\infty}a_n$ converge allora  $\sum\limits_{n=1}^{+\infty}b_n$ converge
+
+Più nello specifico **si comportano allo stesso modo**, quindi se una converge o diverge allora anche l'altra.
+Quindi analizzando anche altri case, in fine otteniamo:
+- Se $\lim\limits_{n\rightarrow +\infty}\frac{a_n}{b_n}=l\in(0,+\infty)$ allora $\sum\limits_{n=1}^{+\infty}a_n = \sum\limits_{n=1}^{+\infty}b_n$
+- Se $\lim\limits_{n\rightarrow +\infty}\frac{a_n}{b_n}=0$ e se $\sum\limits_{n=1}^{+\infty}b_n$ converge allora anche $\sum\limits_{n=1}^{+\infty}a_n$ converge
+- Se $\lim\limits_{n\rightarrow +\infty}\frac{a_n}{b_n}=+\infty$ e se $\sum\limits_{n=1}^{+\infty}b_n$ diverge allora anche $\sum\limits_{n=1}^{+\infty}a_n$ diverge
+
+_Esempi:_
+![[Pasted image 20240308154015.png]]
+![[Pasted image 20240308154101.png]]
+![[Pasted image 20240308154120.png]]
+
+**Con serie Infinitesima**
+![[Pasted image 20240308154214.png]]
+
+---
+
+![[Pasted image 20240308154249.png]]
