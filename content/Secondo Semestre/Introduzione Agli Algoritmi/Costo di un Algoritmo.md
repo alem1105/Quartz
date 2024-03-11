@@ -46,3 +46,39 @@ Anche se abbassassimo $n=100$ con la stessa macchina vista prima avremo un costo
 
 > [!NOTE] Un algoritmo con una complessità esponenziale non serve a molto
 > Anche con un avanzamento tecnologico un algoritmo del genere non è molto conveniente, ad esempio prendendo una macchina estremamente veloce in grado di risolvere un problema simile con $n=1000$ e prendendone un'altra 1000 volte più veloce, nello stesso periodo T riusciremo a risolvere soltanto un problema con $n=1010$, non abbiamo quindi fatto grandi progressi.
+
+# Algoritmi Ricorsivi
+Una funzione si dice ricorsiva quando chiama se stessa.
+- Deve avere un caso base
+- E un meccanismo di calcolo ricorsivo, ovvero come posso calcolare il valore successivo conoscendo quello che ho
+
+In ambito informatico di solito con la ricorsione risolviamo tanti piccoli sottoproblemi e combinando le soluzioni otteniamo la soluzione al problema originale.
+
+**Le chiamate a sottoproblemi devono sempre convergere ad un caso base per permettere la terminazione del programma**
+
+Ogni funzione, ricorsiva o non, richiede una certa quantità di memoria per:
+- Caricare il codice
+- Passare i parametri
+- Memorizzare il valore delle variabili
+
+In generale le funzioni ricorsive hanno maggiori esigenze in termini di memoria delle funzioni non ricorsive
+
+**Qualsiasi problema risolvibile con un algoritmo ricorsivo può essere risolto anche con un algoritmo iterativo**
+Quando conviene quindi utilizzare un algoritmo ricorsivo?
+
+- Quando permette di scrivere una soluzione in modo più chiaro e simile alla natura del problema
+- Non conviene quando esiste una soluzione iterativa semplice e chiara
+- Non conviene utilizzare la ricorsione quando è importante avere una buona efficienza
+
+![[Pasted image 20240311230307.png]]
+
+Abbiamo un costo elevato di spazio perchè ogni volta che andiamo in ricorsione creiamo una copia della lista con un elemento in meno, possiamo ottimizzare il codice passando un indice invece che delle copie della lista: 
+
+![[Pasted image 20240311230422.png]]
+
+**Costo di fibonacci iterativo e ricorsivo**
+
+![[Pasted image 20240311230740.png]]
+
+Il calcolo di Fibonacci ricorsivo ha costo in memoria molto elevato e vedremo più avanti un costo in tempo di $\theta(n^2)$ mentre la sua versione iterativi ha spazio $\theta(1)$ e in tempo $\theta(n)$
+Questo perchè nella versione ricorsiva eseguiamo tantissimi calcoli che abbiamo già svolto precedentemente

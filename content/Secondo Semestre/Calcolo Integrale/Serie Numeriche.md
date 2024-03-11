@@ -234,3 +234,83 @@ _Esempi:_
 ---
 
 ![[Pasted image 20240308154249.png]]
+
+# Esempi Esercizi
+
+$$
+\begin{align}
+&\sum_{n=1}^{+\infty}e^{\frac{1}{n}}-1 \\
+&\text{Ricordando il ilimite notevole} \\
+&\lim_{x\rightarrow 0}\frac{e^x-1}{x}=1 \\
+&\text{Posso quindi confrontare con} \frac{1}{n} \\
+&\lim_{x\rightarrow +\infty}\frac{e^{\frac{1}{n}}-1}{\frac{1}{n}}=1 \\
+&\text{Quindi} \\
+&\sum_{n=1}^{+\infty}\frac{1}{n}=+\infty \rightarrow \sum_{n=1}^{+\infty}e^{\frac{1}{n}}-1=+\infty
+\end{align}
+$$
+
+--- 
+
+![[Pasted image 20240311221610.png]]
+
+# Completezza Decimale
+
+$$
+\begin{align}
+&r=0.785... = \frac{7}{10} +\frac{8}{10^2}+\frac{5}{10^3}\\
+&\sum_{n=1}^{+\infty}\frac{a_n}{10^n}
+\end{align}
+$$
+
+**Osservazione**
+
+$$
+\begin{align}
+&0.\overline{9}=\sum_{n=1}^{+\infty}\frac{9}{10^n}=9\sum_{n=1}^{+\infty}(\frac{1}{10})^n \\
+&\text{Sappiamo che la sommatoria è una serie geometrica che converge}\\
+&\text{Siccome parte da 1 togliamo il primo valore e otteniamo che converge a:}\\
+&9*\frac{1/10}{1-1/10}=\frac{9/10}{9/10}=1
+\end{align}
+$$
+
+Abbiamo utilizzato la formula per le serie geometriche $\frac{1}{1-q}$ ma sottraendo anche il primo elemento ovvero 1 quindi $\frac{1}{1-q}-1=\frac{q}{1-q}$.
+
+# Criteri Radici e Confronto
+$\sum\limits_{n=1}^{+\infty}a_n$ Si comporta come $\sum\limits_{n=1}^{+\infty}q^n$ ? Con quale $q$?
+
+Oltre al confronto asintotico possiamo utilizzare altri due metodi:
+
+- Rapporto $\frac{a_{n+1}}{a_n}$
+- Radice n-esima $\sqrt[n]a_n$
+
+Vediamo meglio:
+Siano $a_n > 0 \ \ \ \forall n \in \mathbb{N}$
+
+Supponiamo che 
+
+$$
+\begin{align}
+&\lim_{n\rightarrow +\infty}\sqrt[n]a_n = l \\
+\\
+&\lim_{n\rightarrow +\infty}\frac{a_{n+1}}{a_n} = l
+\end{align}
+$$
+
+Allora:
+
+- Se $0 \leq l < 1$ allora $\sum\limits_{n=1}^{+\infty}a_n$ converge
+- Se $l>1$ allora $\sum\limits_{n=1}^{+\infty}a_n = +\infty$
+- Se $l=1$ non possiamo dire nulla
+
+**Osservazione**
+
+Se $a_n = \frac{1}{n^\alpha}$ i due metodi falliscono, infatti da notare che praticamente sempre i due metodi sono equivalenti.
+
+**Se $a_n$ cambia cosa facciamo?
+
+![[Pasted image 20240311223539.png]]
+
+**Altra dimostrazione utile**
+
+![[Pasted image 20240311223841.png]]
+
