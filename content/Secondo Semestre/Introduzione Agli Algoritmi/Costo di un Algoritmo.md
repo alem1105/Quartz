@@ -82,3 +82,47 @@ Abbiamo un costo elevato di spazio perchè ogni volta che andiamo in ricorsione 
 
 Il calcolo di Fibonacci ricorsivo ha costo in memoria molto elevato e vedremo più avanti un costo in tempo di $\theta(n^2)$ mentre la sua versione iterativi ha spazio $\theta(1)$ e in tempo $\theta(n)$
 Questo perchè nella versione ricorsiva eseguiamo tantissimi calcoli che abbiamo già svolto precedentemente
+
+## Equazione di ricorrenza
+Calcolare la complessità di un algoritmo ricorsivo è più complesso ad uno iterativo infatti questo da luogo ad una funzione di costo anch'essa ricorsiva.
+Trovarla è abbastanza semplice ma questa va riformulata in modo da non renderla ricorsiva altrimenti ci sarà impossibile quantificare il costo asintotico.
+Per riformulare la funzione di costo si imposta una **equazione di ricorrenza** costituita dalla _formulazione ricorsiva_ e dal _caso base_.
+
+![[Pasted image 20240314164240.png]]
+
+L'equazione deve essere sempre costituita dalla somma di almeno due addendi, uno contiene la parte ricorsiva mentre l'altro il costo di tutto quello che avviene al di fuori della chiamata ricorsiva.
+**DEVE ESSERE SEMPRE PRESENTE UN CASO BASE**
+
+Per risolvere le equazioni di ricorrenza abbiamo a disposizione 4 metodi:
+- **metodo iterativo**
+- **metodo dell'albero**
+- **metodo di sostituzione**
+- **metodo principale**
+
+## Metodo Iterativo
+In questo metodo sviluppiamo l'equazione in modo da esprimerla come somma di termini dipendenti da $n$ e dal caso base.
+**Contro:** Maggiore quantità di calcoli algebrici rispetto agli altri metodi.
+
+_Esempi:_
+![[Pasted image 20240314164709.png]]
+
+![[Pasted image 20240314164904.png]]
+
+![[Pasted image 20240314165113.png]]
+
+**Calcolo di Fibonacci**
+![[Pasted image 20240314170905.png]]
+![[Pasted image 20240314171009.png]]
+![[Pasted image 20240314171048.png]]
+
+Non siamo quindi riusciti a trovare la crescita asintotica precisa ma abbiamo comunque potuto approssimarla e notare che il calcolo di un numero di Fibonacci in modo ricorsivo ha costo esponenziale.
+
+## Metodo dell'albero
+In questo metodo rappresentiamo graficamente lo sviluppo ricorsivo e vediamo il costo passo per passo.
+
+_Esempio:_
+$T(n) = 2T(\frac{n}{2})+\theta(n)$ e come caso base $T(1)=\theta(1)$
+
+![[Pasted image 20240314173120.png]]
+
+Quindi ogni nodo ha costo $\theta(n)$ e sommando tutti i valori che sono equivalenti a $logn$ otteniamo $\sum\limits_{i=0}^{logn}\theta(n)=\theta(n)\sum\limits_{i=0}^{logn}1=\theta(n)*logn=\theta(nlogn)$
