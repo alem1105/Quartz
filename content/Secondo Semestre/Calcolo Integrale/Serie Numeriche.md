@@ -275,7 +275,7 @@ $$
 
 Abbiamo utilizzato la formula per le serie geometriche $\frac{1}{1-q}$ ma sottraendo anche il primo elemento ovvero 1 quindi $\frac{1}{1-q}-1=\frac{q}{1-q}$.
 
-# Criteri Radici e Confronto
+# Criteri Radici e Rapporto
 $\sum\limits_{n=1}^{+\infty}a_n$ Si comporta come $\sum\limits_{n=1}^{+\infty}q^n$ ? Con quale $q$?
 
 Oltre al confronto asintotico possiamo utilizzare altri due metodi:
