@@ -127,3 +127,5 @@ Per indirizzare la memoria verso gli argomenti necessari abbiamo più modi:
 Quando dobbiamo accedere ad un indice di un vettore dobbiamo andare avanti a step di 4 byte. 
 Indice 6 = 6 * 4 = 24
 Indice 12 = 12 * 4 = 48
+
+Da ASCII a intero, tolgo 48 da numero binario convertito in decimale

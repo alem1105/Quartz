@@ -309,8 +309,81 @@ Se $a_n = \frac{1}{n^\alpha}$ i due metodi falliscono, infatti da notare che pra
 **Se $a_n$ cambia cosa facciamo?
 
 ![[Pasted image 20240311223539.png]]
+![[Pasted image 20240316101858.png]]
 
 **Altra dimostrazione utile**
 
 ![[Pasted image 20240311223841.png]]
+
+# Serie Esponenziale
+
+$$\sum_{k=0}^{+\infty}\frac{1}{k!}$$
+
+Posso utilizzare il criterio del rapporto e ottenere:
+
+$$
+\begin{align}
+\lim_{k\rightarrow +\infty}\frac{1}{(k+1)!}\cdot k! \rightarrow \frac{1}{k+1} = 0\text{ Quindi la serie converge dato che } 0 < 1
+\end{align}
+$$
+
+Non lo dimostreremo ma nello specifico la serie $\sum_\limits{k=0}^{+\infty}\frac{1}{k!}$ converge a $e$.
+Anche mettendo un numero al numeratore otterremo una serie convergente
+
+$$
+\begin{align}
+&\sum_{k=0}^{+\infty}\frac{A^k}{k!} \\
+&\lim_{k\rightarrow +\infty}\frac{A^{k+1}}{(k+1)!}\cdot \frac{k!}{A^k} \rightarrow \frac{A}{k+1} = 0 \text{ Quindi dato che 0 < 1 la serie converge}
+\end{align}
+$$
+
+> [!NOTE] Formula Generale
+> $$\sum_{k=0}^{+\infty}\frac{A^k}{k!}=e^A$$
+> 
+> **Importante**: Funziona anche con $A<0$ infatti con $\frac{|A^k|}{k!}$ possiamo utilizzare il criterio di Leibniz
+
+Anche aumentando il numeratore non riusciamo a fare convergere la serie:
+
+![[Pasted image 20240316100644.png]]
+
+**Quindi come riusciamo a superare K! ?**
+
+![[Pasted image 20240316101207.png]]
+
+Quindi con $k^k$ riusciamo a superare il fattoriale
+
+# Teorema (Criterio della convergenza assoluta)
+Tornando al criterio di Leibniz, se non abbiamo la forma a "segni alterni" cosa facciamo?
+
+![[Pasted image 20240316102326.png]]
+
+Quindi
+
+$$
+\sum_{n=1}^{+\infty}\frac{|sen(n)|}{n^2}
+$$
+
+Converge dato che posso confrontarla con la serie armonica generalizzata.
+
+> [!NOTE] Enunciato
+> Se $\sum\limits_{n=1}^{+\infty}|a_n|<+\infty$ allora $\sum\limits_{n=1}^{+\infty}a_n$ converge
+> Se una serie soddisfa l'ipotesi si dice che **converge assolutamente**.
+> Quindi se una serie **converge assolutamente** allora converge anche **semplicemente** ovvero senza valori assoluti.
+
+_Esempi:_
+
+$$
+\begin{align}
+&\sum_{n=1}^{+\infty}\frac{cos(e^n\cdot ln(n^4+5))}{n^3} \\
+&\text{Dato che } |a_n|\leq\frac{1}{n^3}\text{ la serie converge assolutamente}
+\end{align}
+$$
+
+
+> [!warning] Osservazione
+> $\sum\limits_{n=1}^{+\infty}\frac{(-1)^n}{n}$ Converge semplicemente ma non assolutamente infatti prendendo solo i termini positivi otteniamo la serie armonica che diverge.
+
+**Dimostrazione**
+_Da aggiungere =(_
+
 
