@@ -28,7 +28,7 @@ Java è un linguaggio di programmazione **orientato agli oggetti** costruito per
 Un grande vantaggio è anche la sua portabilità sui vari sistemi operativi: **WORA (write once, run anywhere)**, Java infatti al contrario di altri linguaggi non viene compilato su una macchina ma nel **bytecode di una macchina virtuale**
 
 ## Tipi di dato di base (primitive)
-Questa tipologia di dati sono **built-in** ovvero già presenti di base nel linguaggio, è importante sapere quali tipi sono di base e quali non per questioni di **efficienza e allocazione della memoria**.
+Questa tipologia di dati sono **built-in** ovvero già di base nel linguaggio, è importante sapere quali tipi sono di base e quali non per questioni di **efficienza e allocazione della memoria**.
 I tipi primitivi in Java possiamo distinguerli dal modo in cui sono scritti, infatti iniziano per una lettera minuscola (int, float, double, ecc...)
 
 - **Interi** - 27

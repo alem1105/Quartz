@@ -15,3 +15,5 @@ description: Indice principale del vault
 - [[Calcolo Integrale]]
 - [[Introduzione Agli Algoritmi]]
 - [[Architettura degli Elaboratori]]
+- [[Architettura degli Elaboratori - Ver 2]]
+- 
