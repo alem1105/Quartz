@@ -228,7 +228,7 @@ main:
 > 
 > ![[Screenshot 2024-03-17 alle 22.39.20 1.png]]
 > 
-> Per aggirare questa cosa dobbiamo leggere i byte uno alla volta o salvare direttamente la stringa invertita.
+
 
 # Salti Condizionati e Salti Assoluti
 
