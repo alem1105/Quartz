@@ -387,3 +387,53 @@ $$
 _Da aggiungere =(_
 
 
+--- 
+**Osservazione**
+
+Dato che $\sum\limits_{n\in\mathbb{N}}a_n+b_n = \sum\limits_{n\in\mathbb{N}}a_n + \sum\limits_{n\in\mathbb{N}}b_n$ allora se $\sum\limits_{n\in\mathbb{N}}a_n=+\infty$ e $\sum\limits_{n\in\mathbb{N}}b_n$ converge allora $\sum\limits_{n\in\mathbb{N}}a_b+b_n=+\infty$
+
+_Esempio_
+
+$\sum\limits_{n\in\mathbb{N}}\frac{1}{n^3}-\frac{1}{n}=-\infty$ ho infatti una serie convergente ad un valore - una serie divergente ad infinito
+
+_Esempio_
+
+$\sum\limits_{n\in\mathbb{N}}\frac{1}{n^{1/2}}-\frac{1}{n^{1/3}}$ dato che $\frac{1}{n^{1/2}}<\frac{1}{n^{1/3}}$ ed entrambe le serie divergono ottengo che il $-\infty$
+
+---
+
+# Riordinamenti
+
+**Cambiando l'ordine degli addendi la serie cambia?**
+
+$\sum\limits_{n\in\mathbb{N}}(-1)^n$ oscilla, ma cambiando l'ordine posso ottenere $\pm\infty$? Si infatti posso sommare prima tutti i positivi arrivare a $+\infty$ e togliere sempre -1 rimanendo però sempre a $+\infty$ e viceversa per ottenere $-\infty$
+
+**Riordinamento**
+
+$k(n)=2n$ non è un riordinamento perché sto prendendo soltanto i termini pari.
+
+$k(n)=1 \ \ \forall n \in \mathbb{N}$ non è un riordinamento perché sto prendendo tante volte lo stesso numero.
+
+> [!info]
+> $k(n)$ definisce un ordinamento se $k \ \mathbb{N} \rightarrow \mathbb{N}$ è biettiva, quindi deve prendere tutti gli addendi e una sola volta
+
+_Esempio_
+
+$a_n = \frac{(-1)^n}{n}$  e $\sum\limits_{n\in\mathbb{N}}a_n$ converge ma posso dire ad esempio che esiste un ordinamento che mi permette di arrivare a 33, infatti una volta raggiunta la soglia posso togliere e aggiungere valori per stabilizzarmi.
+
+# Teorema
+
+Se $\sum\limits_{n\in\mathbb{N}}a_n$ converge assolutamente allora ogni ordinamento da lo stesso risultato
+
+Se la serie converge semplicemente ma non assolutamente allora $\forall s \in[-\infty,+\infty]\exists$ un ordinamento $k(n)$ tale che $\sum\limits_{n=1}^{+\infty}a_{k(n)}=S$
+
+
+# Serie di Taylor
+
+Sia $f \ \mathbb{R} \rightarrow \mathbb{R}$ con $f$ derivabile infinite volte e continua in $\mathbb{R}$ .
+
+Sia $x_0$ e $n\in\mathbb{N}$
+
+Poniamo $T(n)(x;x_0)=\frac{1}{0!}f(x_0)+\frac{1}{1!}f^{'}(x_0)(x-x_0)+...+\frac{1}{n!}f^n(x-x_0)^n$
+
+## Resto di Lagrange
