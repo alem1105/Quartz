@@ -129,3 +129,4 @@ Indice 6 = 6 * 4 = 24
 Indice 12 = 12 * 4 = 48
 
 Da ASCII a intero, tolgo 48 da numero binario convertito in decimale
+
