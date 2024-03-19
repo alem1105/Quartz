@@ -12,4 +12,4 @@
 - [[Metodologie di Programmazione - Lezione 3]]
 - [[Metodologie di Programmazione - Lezione 4]]
 - [[Metodologie di Programmazione - Lezione 5]]
-- 
+- [[Metodologie di Programmazione - Lezione 6]]
