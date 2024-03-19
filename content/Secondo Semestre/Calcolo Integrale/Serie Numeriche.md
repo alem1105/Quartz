@@ -327,7 +327,7 @@ $$
 \end{align}
 $$
 
-Non lo dimostreremo ma nello specifico la serie $\sum_\limits{k=0}^{+\infty}\frac{1}{k!}$ converge a $e$.
+Non lo dimostreremo ma nello specifico la serie $\sum\limits_{k=0}^{+\infty}\frac{1}{k!}$ converge a $e$.
 Anche mettendo un numero al numeratore otterremo una serie convergente
 
 $$
