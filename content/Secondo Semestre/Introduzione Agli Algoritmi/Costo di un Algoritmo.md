@@ -126,3 +126,18 @@ $T(n) = 2T(\frac{n}{2})+\theta(n)$ e come caso base $T(1)=\theta(1)$
 ![[Pasted image 20240314173120.png]]
 
 Quindi ogni nodo ha costo $\theta(n)$ e sommando tutti i valori che sono equivalenti a $logn$ otteniamo $\sum\limits_{i=0}^{logn}\theta(n)=\theta(n)\sum\limits_{i=0}^{logn}1=\theta(n)*logn=\theta(nlogn)$
+
+## Master Theorem
+
+Questo metodo è molto meccanico ma non sempre applicabile, infatti possiamo utilizzarlo solo quando nella funzione di ricorrenza andiamo in ricorsione su un $n/x$.
+
+Più nello specifico definiamo questa forma:
+
+$T(n)=a\cdot T(\frac{n}{b}) + f(n)$
+
+- Se $f(n)$ = $O(n^{log_ba-\epsilon})$ per qualche costante $\epsilon>0$ allora $T(n)=\theta(n^{lob_ba})$
+- Se $f(n)=\theta(n^{log_ba})$ allora $T(n)=\theta(n^{log_ba}\cdot logn)$
+- Se $f(n)=\ohm(n^{log_ba+\epsilon})$ per qualche costante $\epsilon>0$ e se $a\cdot f(\frac{n}{b})\leq c\cdot f(n)$ per qualche costante $c<1$ e per $n$ sufficientemente grande allora $T(n)=\theta(f(n))$.
+
+![[Pasted image 20240319214845.png]]
+![[Pasted image 20240319214900.png]]
