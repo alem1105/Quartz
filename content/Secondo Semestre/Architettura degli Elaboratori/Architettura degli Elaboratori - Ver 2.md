@@ -232,7 +232,131 @@ main:
 
 # Salti Condizionati e Salti Assoluti
 
+Con un'operazione di salto andiamo a modificare il registro del **Program Counter** ovvero l'indirizzo dell'istruzione successiva da eseguire.
 
+- **Salti Assoluti**: L'operazione di salto viene eseguita non appena viene raggiunta.
+  
+```assembly
+.text
 
+main:
+	li $t0, 0
+loop:
+	addi $t0, $t0, 1
+	j loop                // Salto all'etichetta 'loop'
+```
 
+In questo caso abbiamo creato un loop infinito, infatti non raggiungeremo mai la fine del programma.
+
+- **Salti Condizionati**:
+
+Hanno lo stesso funzionamento dei jump, ovvero vanno a modificare l'indirizzo presente nel _program counter_ ma lo fanno soltanto se rispettiamo una determinata condizione, possiamo creare più condizioni:
+
+- **Branch on Equal**: Il salto viene effettuato se e solo se il valore contenuto nel primo registro è uguale al secondo.
+  
+```assembly
+beq $s1, $s2, label
+```
+
+- **Branch on Not Equal**: Il salto viene effettuato se e solo il valore contenuto nel primo registro non è uguale al valore contenuto nel secondo registro.
+
+```assembly
+bne $s1, $s2, label
+```
+
+- **Branch on Less Than or Equal Zero**: Il salto viene effettuato se e solo se il valore contenuto nel primo registro è minore o uguale a zero.
+
+```assembly
+blez $s1, label
+```
+
+- **Branch on Greater Than or Equal Zero**: Il salto viene effettuato se e solo il valore contenuto nel primo registro è maggiore o uguale a zero.
+
+```assembly
+bgez $s1, label
+```
+
+- **Branch on Less Than Zero**: Il salto viene effettuato se e solo se il valore contenuto nel primo registro è minore di zero.
+
+```assembly
+bltz $s1, label
+```
+
+- **Branch on Greater Than Zero**: Il salto viene effettuato se e solo se il valore contenuto nel primo registro è maggiore di zero.
+
+```assembly
+bgtz $s1, label
+```
+
+_Esempio di codice che cerca il valore massimo in un array di 4 valori_
+
+```assembly
+
+.data
+
+values: 10, 13, 99, 9
+maxValue = 0
+
+.text
+
+main:
+	lw $s0, values
+	lw $s1, values+4
+	lw $s2, values+8
+	lw $s3, value+12
+
+CopyA: move $t0, $s0
+
+CheckB: slt $t1, $t0, $s1
+		beq $t1, $zero, CheckC
+
+		move $t0, $s1
+
+CheckC: slt $t1, $t0, $s2
+		beq $t1, $zero, CheckD
+
+		move $t0, $s2
+
+CheckD: slt $t1, $t0, $s3
+		beq $t1, $zero, End
+
+		move $t0, $s3
+
+End: sw $t0, maxValue
+```
+
+In questa versione del codice non abbiamo utilizzato i salti per creare dei cicli infatti il programma è molto ridondante, possiamo creare una versione migliorata salvando in un registro l'indirizzo di memoria del vettore e ciclando su tutti i valori.
+
+```assembly
+.data
+
+values = 10, 13, 99, 1000
+maxValue = 0
+
+.text
+
+main:
+	la $s0, values
+	li $s1, 3
+
+	lw $s2, 0($s0)
+
+CheckNext:
+	subi $s1, $s1, 1
+	addi $s0, $s0, 4
+
+	lw $t0, 0($s0)
+
+	slt $t1, $s2, $t0
+	beq $t1, $zero, CheckEnd
+
+	move $s2, $t0
+
+CheckEnd:
+	bne $s1, $zero, CheckNext
+
+	sw $s2, maxValue
+```
+
+# Vettori e Matrici
 
