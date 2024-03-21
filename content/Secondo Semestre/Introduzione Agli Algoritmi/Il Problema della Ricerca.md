@@ -38,3 +38,4 @@ Quindi la probabilità di trovare un elemento sono nelle posizione toccate dalle
 
 ![[Pasted image 20240308172904.png]]
 
+

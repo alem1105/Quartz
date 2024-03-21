@@ -141,3 +141,72 @@ $T(n)=a\cdot T(\frac{n}{b}) + f(n)$
 
 ![[Pasted image 20240319214845.png]]
 ![[Pasted image 20240319214900.png]]
+
+## Metodo di sostituzione
+
+Con questo metodo non andiamo a trovare una soluzione ma ne dovremmo ipotizzare una e dimostrare che questa sia vera.
+
+_Esempio:_
+
+$$
+\begin{align}
+&T(n)=T(n-1)+\theta(1)\\
+&T(1)=\theta(1)
+\end{align}
+$$
+
+Per utilizzare questo metodo è necessario eliminare la notazione asintotica dall'equazione di ricorrenza, ottenendo quindi:
+
+$$
+\begin{align}
+&T(n)=T(n-1)+b\\
+&T(1)=a
+\end{align}
+$$
+
+Per due costanti $a$ e $b$ fissate.
+
+Ipotizziamo la soluzione $T(n)=O(n)$, ossia $T(n)\leq c\cdot n$ dove $c$ è una costante che dobbiamo ancora determinare.
+
+**Caso Base**:
+$T(1)=a\leq c$ che sarà vera per $c\geq a$
+
+**Induzione**
+Sostituendo nella formulazione ricorsiva otteniamo 
+
+$$
+T(n)\leq c(n-1)+b=c\cdot n-c+b\leq c\cdot n
+$$
+
+Ottenendo quindi che la disequazione è vera quando $c\geq b$
+
+Abbiamo quindi dimostrato che $T(n)$ è effettivamente un $O(n)$ poiché è possibile trovare un valore $c$ per il quale si ha $T(n)\leq c\cdot n$ infatti basta prendere $c=max\{a,b\}$.
+
+---
+
+**Troviamo adesso la notazione asintotica omega**
+
+Adesso dobbiamo ipotizzare una funzione che viene dominata da $T(n)$ quindi troviamo una costante $c$ tale che $T(n)\geq c\cdot n$
+
+Come fatto prima sostituiamo nel **caso base**
+
+$T(1)=a\geq c$ che viene soddisfatta quando $c\leq a$ 
+
+Sostituiamo nell'equazione di ricorrenza usando l'**ipotesi induttiva**
+
+$$
+T(n)\geq c\cdot(n-1)+b = c\cdot n -c+b\geq c\cdot n
+$$
+
+Che risulta vera nel caso in cui scegliamo $c\leq b$
+
+Abbiamo quindi dimostrato che $T(n)$ è un $\ohm(n)$ dato che possiamo trovare un valore $c$ tale che $T(n)\geq c\cdot n$ ovvero basta prendere $c=min\{a,b\}$
+
+---
+
+_Esempio più complesso_
+
+![[Pasted image 20240321205902.png]]
+![[Pasted image 20240321205915.png]]
+
+
