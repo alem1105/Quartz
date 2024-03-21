@@ -360,3 +360,130 @@ CheckEnd:
 
 # Vettori e Matrici
 
+Abbiamo già introdotto il concetto di **vettore** ovvero una collezione di **elementi** posti in **sequenza** nella memoria, tutti della **stessa dimensione**.
+Questo concetto è molto importante per la gestione della memoria, consideriamo adesso questi vettori:
+
+```assembly
+vet1: .word 100, 55, 4
+vet2: .half 100, 55, 4
+vet3: .byte 100, 55, 4
+```
+
+Questi 3 vettori differiscono nella lunghezza dei loro elementi, infatti il primo è composto da **word da 4 byte**, il secondo da **half word da 2 byte** e il terzo da **byte**.
+Possiamo rappresentarli nella memoria in questo modo:
+
+![[Pasted image 20240321213754.png]]
+
+Questa differenza ovviamente implica anche un codice assembly diverso, infatti nel primo vettore ci sposteremo di 4 in 4, nel secondo di 2 in 2 mentre per l'ultimo di byte in byte.
+
+```assembly
+.text
+
+main:
+	li $s0, vet1
+	li $s1, vet1 + 4
+
+	li $s0, vet2
+	li $s1, vet2 + 2
+
+	li $s0, vet3
+	li $s0, vet3 + 1
+```
+
+Notiamo quindi che è possibile utilizzare diversi formati per rappresentare i nostri dati e svolgere le stesse funzioni ma usando una quantità molto inferiore di memoria
+
+## Stringhe di caratteri
+
+Possiamo estendere il concetto di vettore alle stringhe di caratteri, infatti i **caratteri alfanumerici** vengono codificati in un valore **binario di 8 bit** utilizzando la **codifica ASCII**, quindi ogni carattere corrisponde ad un byte.
+Quindi possiamo dire che una stringa di testo non è altro che un vettore di caratteri dove ogni carattere corrisponde al suo valore intero nella codifica ASCII.
+
+
+> [!info] Fine Stringa
+> Ogni carattere occupa un byte in memoria e a fine di ogni stringa viene inserito un carattere speciale che fa capire al compilatore la fine della stringa, **'\0'** ovvero il **Null Byte**
+
+--- 
+
+Per accedere agli elementi di un vettore ci sono due modi:
+
+- **Accesso tramite puntatore**: L'indirizzo di memoria viene caricato in un registro che prende appunto il nome di _puntatore_.
+  Per raggiungere il _k-esimo_ valore il nostro puntatore dovrà valere:
+  _indirizzo_vettore + k * dim_elementi(es. 4-2-1 ecc..)_
+  
+  _Esempio:_
+  
+```assembly
+.data
+vector: 10, 123, 33
+
+.text
+main:
+	la $s0, vector # Carico in $s0 l'indirizzo del vettore
+	li $t0, 2      # Carico in $t0 il valore 2, indice dell'elemento
+	sll $t1, $t0, 2  # Carico in $t1 il valore $t0 * 4 (shifto di 2)
+	add $s0, $s0, $t1 # Sommo $s0 e $t1 (sposto il puntatore)
+```
+
+- **Accesso traite indice**: Nel caso in cui il vettore è stato creato in modo statico quindi nella direttiva _.data_ possiamo accedervi usando direttamente un valore e non un puntatore
+
+```assembly
+.data
+vector: 10, 123, 33
+
+.text
+main:
+	li $t0, 2 # Carico 2 in $t0
+	sll $t1, $t0, 2 # Moltiplico per 4 e carico in $t1
+	lw $s0, vector($t1) # Leggo l'indirzzo vettore+$t1
+```
+
+## Matrici - vettori di vettori
+
+Una matrice non è altro che un vettore di **M elementi** dove ogni elemento è un vettore di **N elementi**, otteniamo quindi questi dati:
+- Numero totale di elementi = $M\cdot N$
+- Dimensione Totale in byte = $M\cdot N \cdot dim$
+- In memoria verrà salvata come una serie di **M serie** tutte da **N elementi**, ovvero un'unica serie di **M * N elementi** cosecutivi.
+
+Dato che in assembly non abbiamo un tipo per definire le matrici spetta a noi programmatori decretare le sue dimensioni, infatti una serie di 36 elementi può essere interpretata come:
+
+$$
+1\cdot36; 2\cdot13;3\cdot12;4\cdot9;6\cdot6
+$$
+
+_Accedere ad elementi specifici:_
+
+![[Pasted image 20240321220905.png]]
+
+### Matrici 3D
+
+![[Pasted image 20240321221155.png]]
+
+# System Calls (syscalls)
+
+Con il termine **syscall** indichiamo una chiamata al sistema ovvero un set di **servizi** messi a disposizione dal **Kernel del Sistema Operativo**.
+Ogni S.O. gestisce le chiamate in modo diverso ma generalmente un sistema MIPS segue questo formato:
+- **Input**:
+	- **Registro $v0**: Dove inseriamo il codice della _syscall_ che vogliamo chiamare
+	- **Registri $a0, $a1, $a2, $f0**: Vengono inseriti eventuali parametri aggiuntivi
+- **Output**:
+	- **Registri $v0, $f0**: Vengono restituiti eventuali valori della syscall
+
+Quella spesso più utilizzata è la syscall per mandare in stampa valori sul terminale
+
+```assembly
+.data
+stringa: .asciiz "Hello, World!"
+
+.text
+main:
+	la $a0, stringa # Carichiamo in $a0 l'indirzzo della stringa
+	li $v0, 4 # Carichiamo il valore per la stampa
+	syscall # Chiamiamo la syscall
+```
+
+4 infatti è il valore da caricare nel registro $v0 per chiamare la syscall che stampa valori sul teminale, mentre in $a0 dobbiamo caricare l'indirzzo della stringa.
+Ci sono molti valori per syscall, questi sono solo alcuni:
+
+![[Pasted image 20240321222547.png]]
+
+# Pseudoistruzioni
+
