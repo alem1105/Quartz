@@ -487,3 +487,6 @@ Ci sono molti valori per syscall, questi sono solo alcuni:
 
 # Pseudoistruzioni
 
+**Per chimate a funzioni**
+Se chiamo istruzioni, salvo rd.
+Se sporco registri li salvo nello stack
