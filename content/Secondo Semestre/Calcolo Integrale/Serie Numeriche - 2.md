@@ -123,3 +123,71 @@ _Esempi:_
 
 ![[Pasted image 20240324102635.png]]
 
+# Serie Armonica
+
+La serie armonica è una serie dove il termine generale è $\frac{1}{n}$ quindi la serie è uguale a:
+
+$$
+\sum_{n=1}^{+\infty}\frac{1}{n}
+$$
+
+Utilizzando metodi di confronto non riusciremo a dimostrare che questa serie **diverge**, come facciamo quindi?
+La serie armonica equivale quindi a:
+
+$$
+\begin{align}
+1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}+...
+\end{align}
+$$
+
+Per dimostrare che converge possiamo fare dei piccoli raggruppamenti e notiamo che andremo a sommare sempre $\frac{1}{2}$ :
+
+$$
+\begin{align}
+1 + \frac{1}{2} + (\frac{1}{3} + \frac{1}{4})  + (\frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8}) + (\frac{1}{9}+...+ \frac{1}{16})
+\end{align}
+$$
+
+> [!info] Teorema
+> Se una serie **converge** allora la successione è **infinitesima**, ma se una successione è infinitesima **non** è detto che la serie converga.
+> _Esempio la serie armonica_
+> 
+
+# Serie Armonica Generalizzata
+
+Il termine generale delle serie armoniche è $\frac{1}{n^k}$ con $k\in\mathbb{R}$ quindi la serie è:
+
+$$
+\sum_{n=1}^{+\infty}\frac{1}{n^k}
+$$
+Se:
+- $k>1$: La serie **converge**
+- $k\leq 1$: La serie **diverge**
+
+# Criterio del Confronto
+
+Consideriamo di avere due serie a termini positivi
+
+$$
+\begin{align}
+&\sum_{n=1}^{+\infty}a_n=a_1+a_2+...+a_n \\
+&\sum_{n=1}^{+\infty}b_n=b_1+b_2+...+b_n
+\end{align}
+$$
+
+Adesso supponiamo che ogni termine della prima serie sia $a_n\leq b_n$, in questo caso si dice che la serie $a_n$ è la **minorante** di $b_n$ oppure che quest'ultima è la **maggiorante** di $a_n$
+
+Adesso si possono verificare più casi:
+
+- Se $\sum\limits_{n=1}^{+\infty}b_n$ converge allora anche $\sum\limits_{n=1}^{+\infty}a_n$ converge
+- Se $\sum\limits_{n=1}^{+\infty}a_n$ diverge allora anche $\sum\limits_{n=1}^{+\infty}b_n$ diverge
+
+**Tutti gli altri casi non ci danno informazioni utili**
+
+_Esempio_
+
+![[Pasted image 20240324181642.png]]
+
+![[Pasted image 20240324182953.png]]
+
+# Criterio del Confronto Asintotico
