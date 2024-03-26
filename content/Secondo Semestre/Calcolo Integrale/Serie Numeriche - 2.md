@@ -148,7 +148,7 @@ $$
 \end{align}
 $$
 
-> [!info] Teorema
+> [!info] Teorema generale di Convergenza
 > Se una serie **converge** allora la successione è **infinitesima**, ma se una successione è infinitesima **non** è detto che la serie converga.
 > _Esempio la serie armonica_
 > 
@@ -191,3 +191,44 @@ _Esempio_
 ![[Pasted image 20240324182953.png]]
 
 # Criterio del Confronto Asintotico
+
+Consideriamo di avere due serie a termini positivi
+
+$$
+\begin{align}
+&\sum_{n=1}^{+\infty}a_n \ \ ; \  \sum_{n=1}^{+\infty}b_n\\
+&\text{Consideriamo adesso il limite}\\
+&\lim_{n\rightarrow +\infty}\frac{a_n}{b_n}=l\neq 0 \\
+&\text{Allora le due serie si comportano allo stesso modo}
+\end{align}
+$$
+
+![[Pasted image 20240325180008.png]]
+
+![[Pasted image 20240325181011.png]]
+
+> [!info] Criterio del Confronto Asintotico
+> Consideriamo la serie $\sum\limits_{n=1}^{\infty}a_n$ e il limite $\lim\limits_{n\rightarrow + \infty}n^{\alpha}a_n=l$
+> 
+> - Se con $a>1$ abbiamo $l\in\mathbb{R}$ allora la serie **converge**
+> - Se con $0<a\leq 1$ e $l\neq 0$ oppure $l=+\infty$ allora la serie **diverge**
+
+![[Pasted image 20240325183607.png]]
+
+# Serie a Termini Alterni
+
+Una serie a termini alterni si comporta nel modo tipo $a_1-a_2+a_3-...+a_n$ ad esempio la serie:
+
+$$
+\sum_{n=1}^{\infty}(-1)^{n+1}\cdot\frac{1}{n}=1-\frac{1}{2}+\frac{1}{3}-...
+$$
+
+Per studiare questo tipo di serie si utilizza il **Criterio di Leibniz**
+
+> [!info] Criterio di Leibniz
+> La serie $\sum\limits_{n=0}^{\infty}(-1)^n\cdot a_n$ converge se:
+> - $\lim\limits_{n\rightarrow \infty}a_n=0$
+> - La successione dei valori assoluti $|a_1|, |a_2|, |a_n|$ deve essere **decrescente** e non obbligatoriamente dal primo termine
+
+## Convergenza Assoluta
+
