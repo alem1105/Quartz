@@ -114,3 +114,133 @@ Queste infatti prendono il nome di **Leggi di De Morgan**.
 2) $A\cup (B\cap C) = (A \cup B) \cap (A \cup C)$
 
 ## Prodotto Cartesiano
+Dati due insiemi $X,Y$ non vuoti si definisce $X \times Y = \{(x,y):x\in X, y\in Y\}$.
+Con la scrittura $\mathbb{R}^2$ indichiamo $\{(x,y):x,y\in\mathbb{R}\}$.
+Il prodotto cartesiano è formato da **coppie ordinate** quindi non confondiamo $(x,y)$ con $\{x,y\}$.
+
+Si pone $(x,y)=\{x,\{x,y\}\}$. Infatti anche nell'insieme non possiamo scambiare $x,y$ altrimenti cambiamo significato a quest'ultimo.
+Se aggiungiamo un elemento: $(x,y,z)=(x,(y,z))=(x,\{y,\{y,z\}\})=\{x,\{x,\{y, \{y,z\}\}\}\}$.
+Questo serve per definire il concetto di ordine usando gli insiemi, una struttura dove l'ordine non conta. Abbiamo quindi rappresentato una coppia ordinata, mantenendo l'ordine, con un insieme.
+
+Altre notazioni:
+
+- $\mathbb{R}^n := \mathbb{R}\times \mathbb{R}^{n-1}$
+- $\mathbb{R}^1 := \mathbb{R}$
+
+## Corrispondenze
+Prendiamo due insiemi $X,Y\neq \emptyset$, una corrispondenza su $X$ e $Y$ è il dato:
+
+$$
+(X,Y,\Gamma)\subset(X,Y,X\times Y)
+$$
+
+Dove:
+- $X$ indica il dominio
+- $Y$ indica il codominio
+- $\Gamma$ è un sottoinsieme non vuoto di $X\times Y$ detto "**grafo**".
+
+## Relazioni
+Una relazione è una corrispondenza dove **dominio e codominio coincidono** quindi $(X,X,\Gamma)$, possiamo anche scrivere $(X,\Gamma)$.
+
+Definiamo $R=(X,\Gamma)$, quindi $\Gamma$ sarà un sottoinsieme di $X^2$, presi due elementi $x,y\in X$ si dicono **in relazione** se:
+
+$$
+xRy \Leftrightarrow (x,y)\in\Gamma
+$$
+
+La parte a sinistra è una convenzione per dire che $x$ è in relazione con $y$.
+
+### Proprietà delle Relazioni:
+- **Riflessiva**: $R$ è riflessiva se $\forall x \in X$ abbiamo che $xRx$ (oppure che $\forall x \in X, (x,x) \in \Gamma$).
+- **Simmetrica**: $R$ è simmetrica se $\forall x,y \in X$ se $xRy$ allora $yRx$ (oppure se $(x,y)\in\Gamma$ allora anche $(y,x)\in\Gamma$).
+- **Transitiva**: $R$ è transitiva se presi 3 elementi $x,y,z\in X$, se $xRy \wedge yRz \Rightarrow xRz$.
+- **Equivalenza**: $R$ è una relazione di equivalenza se è contemporaneamente Riflessiva, Simmetrica e Transitiva.
+
+_Esempio 1 - Relazione d'uguaglianza_
+Si prenda $R = (\mathbb{R}, \Delta)$ dove $\Delta = \{(x,x):x\in\mathbb{R}\}$. Al posto di scrivere $R$ scriviamo $=$.
+
+- $=$ è riflessiva infatti $\forall x\in \mathbb{R}, x = x$
+- $=$ è simmetrica infatti $\forall x,y \in \mathbb{R}, x=y\Rightarrow y=x$
+- $=$ è transitiva infatti $\forall x,y,z \in \mathbb{R}, x=y\wedge y=z \Rightarrow x=z$
+
+_Esempio 2 - Rette parallele_
+$X=\{\text{rette di }\mathbb{R}^2\}$
+
+Dati $r,r'\in X$ abbiamo che $r||r'\Leftrightarrow$ $r$ e $r'$ sono parallele.
+
+- || è riflessiva: Ogni retta è parallela a se stessa
+- || simmetrica: Se $r||r'$ allora anche $r'||r$
+- || transitiva: Se $r||r'$ e $r'||r''$ allora $r||r''$
+
+**Dimostrazione della transitività:**
+
+> [!info] Vettori
+> Quando indichiamo $(x',y')\in\mathbb{R}^2$ stiamo indicando dei vettori, se li sommiamo alla retta non cambiamo il suo coefficiente angolare e rimangono quindi parallele, infatti data l'equazione di una retta:
+> 
+> $$
+> y = mx + q
+> $$
+> 
+> Se sommiamo un vettore otteniamo:
+> 
+> $$
+> y' = m(x + x') + (q + y')
+> $$
+> 
+> Notiamo quindi che $m$, il coefficiente angolare, è rimasto invariato.
+
+- $r || r' \Leftrightarrow r'=r+(x',y')$ con $(x',y')\in\mathbb{R}^2$.
+- $r' || r'' \Leftrightarrow r''=r'+(x'',y'')$ con $(x'',y'')\in\mathbb{R}^2$
+
+Queste due condizioni implicano che:
+
+- $r''=r+(x',y')+(x'',y'')$ ovvero $r''=r+(x'+x'',y'+y'')$
+
+Quindi dato che $r''$ è formata da $r$ traslata sul piano da un vettore e mantenendo quindi la stessa pendenza abbiamo che anche $r||r''$.
+
+_Esempio 3 - Rette Ortogonali_
+$X = \{\text{rette di } \mathbb{R}^2 \}$
+
+Date $r,r'\in X$, abbiamo che $r\bot r'\Leftrightarrow r, r'$ sono ortogonali.
+
+In questo caso:
+- $\bot$ è simmetrica
+- $\bot$ non è riflessiva
+- $\bot$ non è transitiva
+
+_Esempio 4 - Minore o Uguale_
+$X = \mathbb{R}$, dati due elementi $x,y\in X$ abbiamo che $xRy\Leftrightarrow x\leq y$
+
+- Riflessiva, $\forall x, x\leq x$
+- Transitiva, $\forall x,y,z$ se $x\leq y \wedge y\leq z$ allora $y\leq z$
+- Non è simmetrica, $2\leq3$ ma $2\not\leq3$
+
+Però è:
+- **Antisimmetrica**: $\forall x,y \in X, x\leq y \wedge y\leq x \Leftrightarrow x=y$
+- **Totale**: $\forall x,y \in \mathbb{R}$ o $x\leq y$ o $y \leq x$
+
+> [!info] Relazione Antisimmetrica
+> Presi qualsiasi due elementi $x,y$ se $x$ è in relazione con $y$ e $y$ e in relazione con $x$ allora $x=y$.
+> 
+> $$
+> \forall x,y \ \ \ xR y \wedge yR x \Leftrightarrow x=y
+> $$
+> 
+
+
+> [!info] Relazione Totale
+> Tutti gli elementi sono in relazione con almeno un altro elemento.
+> 
+> $$
+> \forall x,y \in \mathbb{R} \ \ \ xRy \vee yRx
+> $$
+> 
+
+Notiamo che l'inclusione come relazione è, come il minore o uguale, riflessiva, antisimmetrica e transitiva ma non totale.
+
+## Studio delle Relazioni d'equivalenza
+Sia $R=(X,\Gamma)$ relazione d'equivalenza e $x\in X$, poniamo $Cl(x)=\{y\in X \ \ t.c. \ \ xRy\}$.
+$Cl$ è la **classe di equivalenza** di un elemento e da notare che **non può essere vuota** $Cl(x)\neq\emptyset$ infatti dato che siamo in una relazione d'equivalenza $x$ è in relazione con se stesso e quindi $x\in Cl(x)$ ovvero $xRx$.
+L'elemento $x$ si chiama **rappresentante** della classe d'equivalenza, infatti si può avere che $Cl(x)=Cl(x')$ con $x\neq x'$.
+
+### Proposizione 1
