@@ -7,6 +7,7 @@
 
 _Esempio_
 Se lanciamo un dado 2 volte, la prima volta abbiamo 6 esiti possibili mentre al secondo lancio abbiamo comunque 6 esiti possibili, indipendentemente dal risultato del primo.
+
 Quindi in totale $6 \cdot 6 = 36$ esiti.
 
 $$
@@ -30,7 +31,9 @@ Per scegliere il rappresentante abbiamo 140 modi, per il suo vice abbiamo uno st
 
 _Esempio_
 Abbiamo 120 ragazzi e 20 ragazze, dobbiamo scegliere un rappresentante e un suo vice in modo che siano di sesso diverso.
+
 Nel primo caso abbiamo 140 esiti possibili, ma nel secondo dipende dall'esito del primo, infatti se abbiamo un rappresentante maschio otteniamo $140 \cdot 20$ esiti, mentre se il rappresentante è femmina allora il secondo esperimento ha 120 esiti e quindi $140 \cdot 120$.
+
 **È caduta l'ipotesi, possiamo però dividere il problema in più sottoproblemi**.
 
 Infatti la soluzione che cerchiamo è l'unione di due soluzioni:
@@ -46,6 +49,7 @@ Ad ogni "entrata" ovvero ad ogni carattere della stringa ho sempre 2 possibili i
 
 _Esempio_
 Ho un insieme A di _n_ elementi distinti, quanti sono i suoi sottoinsiemi?
+
 Possiamo utilizzare la stessa formula di prima, quindi $2^n$, questo perché è possibile applicare una **bigezione** (una funzione biettiva, ha lo stesso funzionamento di una mappa, è come convertire un elemento in un altro) per indicare ogni sottoinsieme con una stringa binaria.
 
 $$
@@ -72,9 +76,11 @@ Dobbiamo ordinare:
 2) In quanti modi possiamo ordinarli sullo scaffale, mantenendo vicini quelli della stessa categoria?
    
    In questo caso non possiamo utilizzare subito il principio fondamentale, perché una volta messo un libro non conosciamo la sua tipologia e ad un certo punto non sapremo come continuare.
+   
    Possiamo però dividere in più sottoproblemi questo caso, prima **ordiniamo le categorie**.
    
    Abbiamo 3 categorie, quindi per ordinarle $3!$ modi possibili, teniamo questo numero da parte.
+   
    Poi per ogni categoria vediamo quanti modi abbiamo per ordinarla, quindi matematica $4!$, chimica $3!$ e i romanzi $2!$, mettendo tutto insieme otteniamo $3!\cdot4!\cdot3!\cdot2!$ esiti possibili.
 
 
@@ -93,10 +99,13 @@ Dobbiamo ordinare:
 
 _Esempio_
 Anagrammi, anche senza senso, della parola "Mela".
+
 Come prima dobbiamo trovare le permutazioni di 4 elementi distinti, quindi $4!$.
 
 Se dovessimo trovare gli anagrammi di "Emma"? In questo caso abbiamo due elementi uguali, come si procede?
+
 Proviamo a diversificare le M e ottenere $M_1,M_2$, in questo modo otteniamo $4!$ anagrammi, ma se riportiamo le M come prima avremo delle ripetizioni, ad esempio $EM_1M_2A$ e $EM_2M_1A$.
+
 Quindi avendo 2 elementi uguali, per ogni permutazione otteniamo una sua copia, quindi per toglierle tutte dobbiamo calcolare $\frac{4!}{2!}$ dove $4$ indica il numero di elementi e $2$ quello di elementi uguali.
 
 
@@ -286,6 +295,7 @@ _Esperimento 2_
 Lancio 2 volte una moneta $S=\{(T,T), (T,C), (C,C), (C,T)\}$.
 
 Un evento è descritto matematicamente da un sottoinsieme di $S$, più precisamente dall'insieme degli esiti che lo realizzano.
+
 L'evento "esce un numero pari" è descritto da $\{2,4,6\} \subset S$.
 
 La **Famiglia degli eventi** = **Famiglia dei sottoinsiemi di S**.
