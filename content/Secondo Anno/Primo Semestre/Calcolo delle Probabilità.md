@@ -6,6 +6,7 @@
 > Allora il numero delle coppie $(a_1,a_2)$ possibili con $a_i$ esito dell'esperimento i-esimo è $n_{1}\cdot n_2$.
 
 _Esempio_
+
 Se lanciamo un dado 2 volte, la prima volta abbiamo 6 esiti possibili mentre al secondo lancio abbiamo comunque 6 esiti possibili, indipendentemente dal risultato del primo.
 
 Quindi in totale $6 \cdot 6 = 36$ esiti.
@@ -19,6 +20,7 @@ $$
 
 
 _Esempio_
+
 Se abbiamo 140 studenti, in quanti modi possiamo scegliere un rappresentante e un suo vice?
 Per scegliere il rappresentante abbiamo 140 modi, per il suo vice abbiamo uno studente in meno quindi 139, in totale quindi $140\cdot 139$ esiti.
 
@@ -30,6 +32,7 @@ Per scegliere il rappresentante abbiamo 140 modi, per il suo vice abbiamo uno st
 > Allora il numero delle possibili stringhe $(a_1,a_2,\dots,a_R)$ dove $a_i$ è l'esito dell'esperimento i-esimo è $n_{1}\cdot n_{2} \cdot ... \cdot n_{R}$.
 
 _Esempio_
+
 Abbiamo 120 ragazzi e 20 ragazze, dobbiamo scegliere un rappresentante e un suo vice in modo che siano di sesso diverso.
 
 Nel primo caso abbiamo 140 esiti possibili, ma nel secondo dipende dall'esito del primo, infatti se abbiamo un rappresentante maschio otteniamo $140 \cdot 20$ esiti, mentre se il rappresentante è femmina allora il secondo esperimento ha 120 esiti e quindi $140 \cdot 120$.
@@ -43,11 +46,13 @@ $\{(a,b): \text{a rappresentante M., b vice F.}\} \cup \{(a,b): \text{a rappr. F
 Il primo ha $120\cdot 20$ esiti mentre il secondo $20 \cdot 120$, quindi in totale abbiamo $120\cdot 20 + 20 \cdot 120$ esiti.
 
 _Esempio_
+
 $\#\{\text{Strighe binarie di lunghezza 5}\}$.
 
 Ad ogni "entrata" ovvero ad ogni carattere della stringa ho sempre 2 possibili input, quindi $2\cdot2\cdot2\cdot2\cdot2 = 2 ^5$.
 
 _Esempio_
+
 Ho un insieme A di _n_ elementi distinti, quanti sono i suoi sottoinsiemi?
 
 Possiamo utilizzare la stessa formula di prima, quindi $2^n$, questo perché è possibile applicare una **bigezione** (una funzione biettiva, ha lo stesso funzionamento di una mappa, è come convertire un elemento in un altro) per indicare ogni sottoinsieme con una stringa binaria.
@@ -64,6 +69,7 @@ $$
 Quindi la nostra bigezione funziona in modo che $a_{i}\in B \leftrightarrow x_{i} = 1$.
 
 _Esempio_
+
 Dobbiamo ordinare:
 - 4 libri di matematica
 - 3 di chimica
@@ -98,6 +104,7 @@ Dobbiamo ordinare:
 >
 
 _Esempio_
+
 Anagrammi, anche senza senso, della parola "Mela".
 
 Come prima dobbiamo trovare le permutazioni di 4 elementi distinti, quindi $4!$.
@@ -122,6 +129,7 @@ Quindi avendo 2 elementi uguali, per ogni permutazione otteniamo una sua copia, 
 >   $\frac{4!}{1!*2!*1!}$ Dato che E=1, M=2, A=1.
 
 _Esempio_
+
 Numero di possibili targhe alfanumeriche di lunghezza 5.
 Abbiamo 26 lettere e 10 cifre, quindi per ogni entrate 36 input possibili, dato che sono 5 otteniamo $36^5$.
 
@@ -135,6 +143,7 @@ $$
 $$
 
 _Esempio_
+
 Nella finale di 100m, calcolare le possibili classifiche delle nazioni se non ci sono parimerito, con nazione A=3, B=2, C=1, D=2, E=1, F=1
 
 Utilizziamo la formula per il numero di permutazioni con ripetizioni, quindi con 10 partecipanti abbiamo:
@@ -144,6 +153,7 @@ $$
 $$
 
 _Esempio_
+
 Riprendiamo un esempio visto prima ma facciamo un'osservazione, scegliamo due rappresentanti in 140 studenti.
 
 $$
@@ -180,6 +190,7 @@ Questo ha varie proprietà:
 ![[Pasted image 20240925104452.png]]
 
 _Esempio_
+
 Ho 10 studenti, in quanti modi ne posso scegliere 3 se conta l'ordine? E se non conta?
 
 Se conta l'ordine facciamo $10\cdot 9 \cdot 8$, se invece l'ordine non conta utilizziamo il C.B. quindi:
@@ -189,6 +200,7 @@ $$
 $$
 
 _Esempio_
+
 Ho 10 informatici, 5 segretari e 20 operai, devo scegliere un gruppo di rappresentanti composto da 3 inf. 2 seg. e 6 op., in quanti modi posso farlo?
 
 $$
@@ -196,6 +208,7 @@ $$
 $$
 
 _Esempio_
+
 In un gruppo da 10 amici devo formare 2 squadre, devo assegnare 5 maglie rosse e 5 maglie blu, in quanti modi posso farlo?
 
 $$
@@ -205,6 +218,7 @@ $$
 Infatti le combinazione per assegnare una maglietta sono uguali per entrambe le squadre.
 
 _Esempio_
+
 Cambiando l'esempio di prima, se voglio formare due squadre scegliendo mano mano ogni membro, in quanti modi posso farlo?
 
 $$
@@ -214,6 +228,7 @@ $$
 Vediamo due esempi utili per capire come si svolge.
 
 _Esempio 1_
+
 Ho 6 studenti e devo dividerli in 2 gruppi, uno da 4 e uno da 2.
 In questo caso mi basta calcolare i modi di un gruppo, quindi:
 
@@ -225,6 +240,7 @@ Infatti una volta scelto un gruppo l'altro è già formato.
 La situazione cambia se i due gruppi hanno la stessa dimensione.
 
 _Esempio 2_
+
 Dividiamo in 2 gruppi da 3 persone.
 Se ne scelgo solo 3 per un gruppo, avrò delle ripetizioni, infatti se ad esempio ho come persone A,B,C,D,E,F e scelgo nel primo {A, B, C} nel secondo avrò {D, E, F} ma se come primo gruppo scelgo {D, E, F} come secondo ottengo {A, B, C}, ho ottenuto una ripetizione.
 
@@ -235,6 +251,7 @@ $$
 $$
 
 _Esempio_
+
 5 studenti vogliono organizzare una festa e si dividono i ruoli:
 - C1) Pulire il locale - 2 persone
 - C2) Comprare bibite - 2 persone
@@ -289,9 +306,11 @@ Quindi le ripartizioni totali sono:
 Consideriamo un esperimento (fenomeno con vari esiti) e chiamiamo **spazio campionario (S)** l'insieme dei possibili esiti dell'esperimento.
 
 _Esperimento 1_
+
 Lancio di un dado $S=\{1,2,3,4,5,6\}$.
 
 _Esperimento 2_
+
 Lancio 2 volte una moneta $S=\{(T,T), (T,C), (C,C), (C,T)\}$.
 
 Un evento è descritto matematicamente da un sottoinsieme di $S$, più precisamente dall'insieme degli esiti che lo realizzano.

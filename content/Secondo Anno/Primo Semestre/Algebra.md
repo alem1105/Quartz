@@ -9,6 +9,7 @@ Poi c'è un insieme particolare chiamato **Insieme Vuoto**, si indica con $\empt
 Per indicare un insieme il modo più utilizzato è quello di scegliere un **insieme universo U** e caratterizzare dei suoi sottoinsiemi attraverso delle proprietà, quindi gli elementi che rispettano tali proprietà faranno parte dei sottoinsiemi.
 
 _Esempio_
+
 $U = \mathbb{N}$     $I = \{x\in \mathbb{N} : \text{ x è pari }\}$
 L'insieme $I$ è formato da tutti gli elementi appartenenti ad $\mathbb{N}$ tali che siano pari.
 
@@ -43,6 +44,7 @@ I \cup J = \{x\in U: x\in I \vee x \in J\}
 $$
 
 _Esempio_
+
 $I \subset \mathbb{N} = \{x\in \mathbb{N}:x \text { è pari}\}$ 
 $J \subset \mathbb{N} = \{x\in \mathbb{N}:x \text { è dispari}\}$ 
 
@@ -159,6 +161,7 @@ La parte a sinistra è una convenzione per dire che $x$ è in relazione con $y$.
 - **Equivalenza**: $R$ è una relazione di equivalenza se è contemporaneamente Riflessiva, Simmetrica e Transitiva.
 
 _Esempio 1 - Relazione d'uguaglianza_
+
 Si prenda $R = (\mathbb{R}, \Delta)$ dove $\Delta = \{(x,x):x\in\mathbb{R}\}$. Al posto di scrivere $R$ scriviamo $=$.
 
 - $=$ è riflessiva infatti $\forall x\in \mathbb{R}, x = x$
@@ -166,6 +169,7 @@ Si prenda $R = (\mathbb{R}, \Delta)$ dove $\Delta = \{(x,x):x\in\mathbb{R}\}$. A
 - $=$ è transitiva infatti $\forall x,y,z \in \mathbb{R}, x=y\wedge y=z \Rightarrow x=z$
 
 _Esempio 2 - Rette parallele_
+
 $X=\{\text{rette di }\mathbb{R}^2\}$
 
 Dati $r,r'\in X$ abbiamo che $r||r'\Leftrightarrow$ $r$ e $r'$ sono parallele.
@@ -201,6 +205,7 @@ Queste due condizioni implicano che:
 Quindi dato che $r''$ è formata da $r$ traslata sul piano da un vettore e mantenendo quindi la stessa pendenza abbiamo che anche $r||r''$.
 
 _Esempio 3 - Rette Ortogonali_
+
 $X = \{\text{rette di } \mathbb{R}^2 \}$
 
 Date $r,r'\in X$, abbiamo che $r\bot r'\Leftrightarrow r, r'$ sono ortogonali.
@@ -211,6 +216,7 @@ In questo caso:
 - $\bot$ non è transitiva
 
 _Esempio 4 - Minore o Uguale_
+
 $X = \mathbb{R}$, dati due elementi $x,y\in X$ abbiamo che $xRy\Leftrightarrow x\leq y$
 
 - Riflessiva, $\forall x, x\leq x$
