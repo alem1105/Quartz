@@ -254,3 +254,142 @@ $Cl$ è la **classe di equivalenza** di un elemento e da notare che **non può e
 L'elemento $x$ si chiama **rappresentante** della classe d'equivalenza, infatti si può avere che $Cl(x)=Cl(x')$ con $x\neq x'$.
 
 ### Proposizione 1
+Data $R=(X,\Gamma)$ una relazione d'equivalenza abbiamo che:
+
+1) Se $x,y\in X$, allora $Cl(x)=Cl(y)\Leftrightarrow xRy$
+2) $\forall x,y \in X$ allora:
+	1) o $Cl(x)=Cl(y)$
+	2) oppure $Cl(x)\cap Cl(y)=\emptyset$
+
+Quindi due classi di equivalenza di una relazione d'equivalenza **o sono uguali o sono disgiunte**, inoltre data una classe d'equivalenza $C, \forall x \in C, C=Cl(x)$ ovvero **ogni elemento è rappresentante.**
+
+#### Dimostrazione
+Ricordiamo che $Cl(x)=\{y\in X : xRy\}$.
+
+**1° punto**: Supponiamo che $Cl(x)=Cl(y)$, dato che $R$ è **riflessiva** si ha che $y\in Cl(y)$ e quindi per l'ipotesi abbiamo che $y\in Cl(x)$ ovvero che $x$ è in relazione con $y$ $xRy$.
+
+Adesso supponiamo che $xRy$, allora $y\in Cl(x)$. Sia $z\in Cl(y)$ si ha che $yRz$ quindi dato che $xRy \wedge yRz$ otteniamo che $xRz$ ovvero $z\in Cl(x)$ dato che la relazione è **transitiva**.
+
+Quindi $Cl(y)\subset Cl(x)$, ma dato che $R$ è **simmetrica** e quindi $xRy\Leftrightarrow yRx$ posso scambiare $x$ e $y$ e mostrare nello stesso modo che $Cl(x)\subset Cl(y)$. Quindi siccome ho dimostrato che $Cl(y)\subset Cl(x) \wedge Cl(x)\subset Cl(y)$ allora so che $Cl(x)=Cl(y)$.
+
+**2° punto**: Vogliamo dimostrare che $\forall x,y \in X$ o $Cl(x)=Cl(y)$ oppure sono disgiunte ovvero $Cl(x)\cap Cl(y)=\emptyset$.
+
+Siano $x,y\in X$ se $Cl(x)\cap Cl(y)=\emptyset$ non c'è nulla da dimostrare. 
+
+Supponiamo che $Cl(x)\cap Cl(y)\neq\emptyset$, sia $z\in Cl(x)\cap Cl(y)$ allora si ha che $xRz,yRz$ (per simmetria abbiamo che $zRy$) e quindi per transitività $xRz \wedge zRy \Rightarrow xRy$, inoltre per il punto 1 abbiamo che $Cl(x)=Cl(y)$ dato che sono in relazione.
+
+## Insieme delle Parti
+Dato $X\neq \emptyset$, consideriamo un insieme $\mathcal{P}$ di sottoinsiemi di $X$, quindi $P\in\mathcal{P}\Rightarrow P\subset X$.
+
+Quindi $\mathcal{P}(X):=\{P:P\subset X\}$ viene chiamato **insieme delle parti**, si ha quindi che $P\in\mathcal{P}(X)\Leftrightarrow P\subset X$.
+
+Sia $\mathcal{P}\subset\mathcal{P}(X)$ non vuoto si dice che $\mathcal{P}$ è **una partizione** di $X$ se:
+1) $\forall P\in\mathcal{P} \ \ \ \ \ P\neq\emptyset$
+2) $\forall P,Q\in\mathcal{P}\ \ \ \ \ P\neq Q\Rightarrow P\cap Q \neq \emptyset$
+3) $\forall x\in X \ \ \ \ \ \exists !P\in \mathcal{P} \ t.c. \ x\in P$
+
+Quindi, gli insiemi non devono essere vuoti, non ci devono essere insiemi con elementi in comune e tutti i punti del dominio devono stare in un solo insieme. L'unicità nell'ultima condizione non è obbligatoria dato che sono "coperto" dalla seconda condizione.
+
+_Esempio_
+
+Partizione di $X$ in 9 parti.
+
+![[Pasted image 20240927113820.png|400]]
+
+$$
+X=\bigsqcup_{i=1}^{9} P_i
+$$
+
+### Proposizione 2
+Data $R=(X,\Gamma)$ una relazione d'equivalenza, $\mathcal{P}=\{Cl(x):x\in X\}$ è una partizione di $X$.
+
+#### Dimostrazione
+Se $P\in\mathcal{P}$, allora $P$ è una classe di equivalenza di un elemento quindi $P=Cl(x)$ con $\exists x\in X$.
+
+Dato che $R$ è riflessiva abbiamo che $x$ stesso appartiene alla classe di equivalenza e quindi $x\in P\Rightarrow P\neq \emptyset$ (Rispettiamo la prima condizione).
+
+Se $Cl(x)\neq Cl(y)\Rightarrow Cl(x)\cap Cl(y) = \emptyset$ per via della preposizione precedente che ci dice che le intersezioni o sono uguali o sono disgiunte. (Rispettiamo anche la seconda condizione).
+
+Come detto prima dato che $R$ è riflessiva abbiamo che sia $x\in X$ allora $x\in Cl(x)$. (Terza condizione).
+
+
+> [!info] Definizione Quoziente di $X$ per $R$
+> Prendiamo $X$ con relazione d'equivalenza $R$.
+> Il quoziente di $X$ per $R$ indicato da:
+> 
+> $$
+> X/R \ \ \ \text{ Oppure } \ \ \ \frac{X}{R} 
+> $$
+> 
+> È l'insieme delle classi di equivalenza di $X$ per $R$:
+> 
+> $$
+> X/R = \{Cl(x):x\in X\}
+> $$
+> 
+
+## Sistema completo di Rappresentanti
+Dati $X$ con relazione d'equivalenza $R$, un **sistema completo di rappresentanti (SCR)** è un sottoinsieme $X'\subset X$ tale che:
+1) $\forall x_1',x_2'\in X'$ diversi si ha che $x_1'\not R x_2'\Rightarrow Cl(x_1')\cap Cl(x_2')=\emptyset$
+2) $\forall x\in X \ \ \ \exists x'\in X'$ tale che $x\in Cl(x')$ ($x'$ è unico perché garantito dalla prima condizione)
+
+Quindi un sistema completo di rappresentanti è un insieme di elementi scelti in modo che rappresentino esattamente una sola classe d'equivalenza.
+
+_Esempio 1_
+
+$X = \{r\text{ retta di } \mathbb{R}^2\}$, $R=||$ parallelismo, allora $R$ è una relazione d'equivalenza.
+
+$X'=\{\text{rette per l'origine}\}$ è un sistema completo di rappresentanti per $R = ||$, infatti:
+
+1) Due rette che passano per l'origine distinte non sono parallele, quindi nessun elemento di $X'$ è in relazione con un altro.
+2) Data una retta $r\in X$ esiste un'unica retta $r'\in X'$ con $r' || r$, ovvero un'unica retta parallela ad $r$ passante per l'origine.
+
+> [!info] Osservazione
+> Non c'è unicità nella scelta di un SCR, questo significa che abbiamo a disposizione più scelte possibili purché rispettiamo le condizioni.
+
+Un esempio più semplice per capire il funzionamento può essere ad esempio la divisione per 3 e i suoi resti, abbiamo 3 resti possibili:
+
+- resto 0 dato da: {0, 3, 6, 9, 12, ...}
+- resto 1 dato da: {1, 4, 7, 10, 13, ...}
+- resto 2 dato da: {2, 5, 8, 11, 14, ...}
+
+Possiamo scegliere come SCR {0, 1, 2} ma anche {9, 4, 14} e così via, l'importante è che scegliamo un solo elemento per ogni classe d'equivalenza.
+
+_Esempio 2_
+
+1) $X\neq \emptyset$ e dati $x,x'\in X$ si ha che $xR_1 x' \Leftrightarrow x = x'$ quindi $R_1$ è l'uguaglianza. In questo modo otteniamo che $X/R_1 = X$ quindi ogni classe d'equivalenza è un **singleton** infatti ogni elemento è uguale solo a se stesso e quindi $X$ è l'unico **SCR**
+2) Se invece abbiamo $x,x' \in X$ allora $xR_2 x'$ avviene sempre, in questo caso abbiamo una sola classe di equivalenza e quindi $X/R_2$ è un **singleton**, ogni **SCR** è quindi un singleton della forma $\{x\}$ con $x\in X$.
+   
+   Ovvero possiamo prendere qualsiasi elemento dell'insieme come SCP dato che sono tutti in relazione fra loro.
+
+## Applicazioni (funzioni)
+Una corrispondenza $f=(A,B,\Gamma)$ con la proprietà che $\forall a\in A \ \exists !b\in B$ con $(a,b)\in\Gamma$ si dice **applicazione** e si scrive $b=f(a)$. Si scrive anche $A\xrightarrow{f} B$.
+
+![[Pasted image 20240927143021.png|400]]
+
+Quindi otteniamo che $\Gamma=\{(1,x),(2,y),(3,y)\}$ e ad esempio $x=f(1)$.
+
+Il **codominio** si dice anche **insieme immagine**.
+
+Sia $f:X\rightarrow Y$ applicazione e $X'\subset X$ allora $f(X'):=\{y\in Y : \exists x\in X'\text{ con } f(x)=y\}$, questo è **l'insieme immagine** di $X'$ per $f$, quindi $f(X')\subset Y$.
+
+Dato invece un insieme $Y'\subset Y$, l'insieme $f^{-1}(Y')=\{x\in X: f(x)\in Y'\}$ è detto **co-immagine** o anche **immagine inversa** di $Y'$, abbiamo che $f^{-1}(Y')$ è sottoinsieme di $X$. 
+
+In poche parole l'insieme coimmagine è l'insieme delle classi di equivalenza create dalla relazione, quindi prendendo l'esempio di prima abbiamo come insieme coimmagine: $\{\{1\},\{2,3\}\}$ dato che 1 è l'unico elemento che mappa $x$ mentre 2 e 3 sono gli elementi che mappano $y$.
+
+Se invece noi scriviamo $f^{-1}(\{y\})$ otteniamo ${2,3}$.
+
+### Tipi di Applicazioni
+
+#### Funzioni Iniettive
+È detta iniettiva se $x,x'\in X$ e $f(x)=f(x')$ allora $x=x'$ oppure possiamo scrivere anche $\forall y\in Y$ abbiamo $f^{-1}(\{y\})=\emptyset \vee \text{singleton}$.
+
+#### Funzioni Suriettive
+Si dice che $f$ è suriettiva se $f(X)=Y$ oppure $\forall y\in Y, \exists x\in X$ tale che $f(x)=y$, quindi ogni valore del codominio deve essere raggiunto da almeno un valore del dominio.
+
+Si può anche scrivere $\forall y\in Y, f^{-1}(\{y\})\neq \emptyset$.
+
+#### Funzioni Biettive
+Una funzione $f:X\rightarrow Y$ è biiettiva se è al tempo stesso suriettiva e iniettiva.
+
+Quindi $f$ biiettva se e solo se $\forall y\in Y, f^{-1}(\{y\})$ è un singleton, ovvero ogni elemento del codominio ha un unico elemento del dominio associato. Infatti la suriettività toglie una possibilità all'esito della condizione di initetività ($\emptyset$) lasciando soltanto il caso singleton.
