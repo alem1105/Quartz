@@ -53,21 +53,21 @@ Ad esempio:
 - Campi: Codice, Cognome, Nome, Ruolo, Anno di Assunzione
 
 $$
-\begin{array}{|c|c|c|c|c|c|c|c|} \hline \textbf{CODICE} & \textbf{COGNOME} & \textbf{NOME} & \textbf{RUOLO} & \textbf{ASSUNZIONE} \\ \hline \text{COD1} & \text{Rossi} & \text{Mario} & \text{Analista} & 1995 \\ \hline \end{array}
+\begin{array}{|c|c|c|c|c|} \hline \textbf{CODICE} & \textbf{COGNOME} & \textbf{NOME} & \textbf{RUOLO} & \textbf{ASSUNZIONE} \\ \hline \text{COD1} & \text{Rossi} & \text{Mario} & \text{Analista} & 1995 \\ \hline \end{array}
 $$
 
 - Tabella: Insieme di record di tipo omogeneo, creiamo ad esempio la Tabella STAFF ovvero l'insieme di record di tipo "Membro dello Staff":
 
 $$
-\begin{array}{|c|c|c|c|c|c|c|c|} 
+\begin{array}{|c|c|c|c|c|} 
 
 \hline \textbf{CODICE} & \textbf{COGNOME} & \textbf{NOME} & \textbf{RUOLO} & \textbf{ASSUNZIONE} 
 
 \\ \hline \text{COD1} & \text{Rossi} & \text{Mario} & \text{Analista} & 1995 \\ 
 
-\hline \hline \text{COD2} & \text{Bianchi} & \text{Pietro} & \text{Analista} & 1990 \\ 
+\hline \text{COD2} & \text{Bianchi} & \text{Pietro} & \text{Analista} & 1990 \\ 
 
-\hline \hline \text{COD3} & \text{Neri} & \text{Paolo} & \text{Amministratore} & 1985 \\ \hline 
+\hline \text{COD3} & \text{Neri} & \text{Paolo} & \text{Amministratore} & 1985 \\ \hline 
 
 \end{array}
 $$
@@ -77,15 +77,15 @@ _Esempio più completo di DB Relazionale_
 **Studenti:**
 
 $$
-\begin{array}{|c|c|} 
+\begin{array}{|c|c|c|c|} 
 
 \hline \textbf{MATRICOLA} & \textbf{COGNOME} & \textbf{NOME} & \textbf{DATA NASCITA}
 
 \\ \hline \text{276545} & \text{Smith} & \text{Mary} & \text{25/11/1980}\\ 
 
-\hline \hline \text{485745} & \text{Black} & \text{Anna} & \text{23/04/1981}\\ 
+\hline \text{485745} & \text{Black} & \text{Anna} & \text{23/04/1981}\\ 
 
-\hline \hline \text{200768} & \text{Verdi} & \text{Paolo} & \text{12/02/1981} \\ \hline 
+\hline \text{200768} & \text{Verdi} & \text{Paolo} & \text{12/02/1981} \\ \hline 
 
 \end{array}
 $$
@@ -93,7 +93,7 @@ $$
 **Corsi:**
 
 $$
-\begin{array}{|c|c|} 
+\begin{array}{|c|c|c|} 
 
 \hline \textbf{CODICE} & \textbf{TITOLO} & \textbf{TUTOR}
 
@@ -101,7 +101,7 @@ $$
 
 \hline \text{03} & \text{Chemistry} & \text{Beale}\\ 
 
-\hline \hline \text{04} & \text{Chemistry} & \text{Clark}\\ \hline 
+\hline \text{04} & \text{Chemistry} & \text{Clark}\\ \hline 
 
 \end{array}
 $$
@@ -109,7 +109,7 @@ $$
 **Esami:**
 
 $$
-\begin{array}{|c|c|} 
+\begin{array}{|c|c|c|} 
 
 \hline \textbf{STUDENTE} & \textbf{VOTO} & \textbf{CORSO}
 
@@ -117,7 +117,7 @@ $$
 
 \hline \text{276545} & \text{B} & \text{04}\\ 
 
-\hline \hline \text{200768} & \text{B} & \text{01}\\ \hline 
+\hline \text{200768} & \text{B} & \text{01}\\ \hline 
 
 \end{array}
 $$
