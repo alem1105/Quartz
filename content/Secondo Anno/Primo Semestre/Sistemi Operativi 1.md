@@ -226,3 +226,205 @@ Il processore ha più processori interni, e ogni processore ha diverse cache (L1
 Come detto prima il S.O. **può spegnere il caching** e inoltre può decidere **la politica di scrittura**, ad esempio Linux non la spegne mai e utilizza sempre write-back.
 
 ## Strati e Utenti
+![[Pasted image 20240929161113.png|400]]
+
+Quindi un utente "non sviluppatore" usa semplicemente le applicazioni, un programmatore  si basa principalmente sulle utilities e sul Sistema Operativo mentre chi scrive il S.O. si basa sulle specifiche Hardware.
+
+Nello specifico quali servizi ci offre il S.O.?
+- **Esecuzione di programmi** anche in contemporanea.
+- Accesso ai **dispositivi I/O**.
+- Accesso al Sistema Operativo stesso tramite **shell**.
+- **Sviluppo di Programmi** quindi compilatori, syscalls, debugger ecc...
+- Rilevamento e reazione ad errori hardware / software.
+- **Accounting** ovvero una collezione di statistiche di sistema e monitoraggio delle risorse. Viene utilizzato per capire cosa migliorare.
+
+In sostanza quindi il Sistema Operativo è un programma ma che gestisce il funzionamento degli altri programmi, prepara i loro ambienti, li manda in esecuzione, gestisce errori. È **un'interfaccia** tra hardware e software.
+
+Infatti è un normale programma in esecuzione con il suo ciclo di _fetch / execute_ ma ha privilegi più alti, in alcuni casi può passare questi privilegi ad altri programmi.
+
+> [!info] Kernel
+> Una parte del Sistema Operativo in codice macchina è racchiusa tutta insieme in una parte della RAM (solitamente quella iniziale), e serve appunto per eseguirlo. Questa parte si chiama **kernel** che significa **nucleo** infatti è la più importante dato che è sempre pronta in RAM.
+> 
+
+## Evoluzione dei Sistemi Operativi
+I S.O. esistevano dagli anni 40 ed erano molto diversi da quelli di adesso, è importante vedere alcune tappe evolutive per capire i moderni sistemi.
+
+Le evoluzione sono dovute principalmente a:
+- Aggiornamenti Hardware
+- Nuovi servizi
+- Correzione di errori
+
+**Anni Quaranta**
+
+Non c'era nessun Sistema Operativo e per fornire comandi ad un computer si usavano delle speciali console con interruttori, i computer arrivavano a occupare intere stanze.
+
+Il metodo di input venne presto migliorato grazie alle **schede perforate**:
+
+![[Pasted image 20240929163035.png|400]]
+
+In ogni caso i sistemi erano interamente sequenziali quindi potevano svolgere un calcolo alla volta e non essendoci un S.O. i programmi utente gestivano da soli gli input e gli output.
+
+**Anni Cinquanta / Sessanta**
+
+Si mettono insieme più programmi da eseguire (prendono il nome di **jobs**) e il primo sistema operativo serviva a gestire questi jobs, questo metodo funzionava molto bene in sistemi non interattivi chiamati **batch**, questi sistemi appunto vogliono solo un dato in input e poi l'utente deve soltanto aspettare la fine dei calcoli.
+
+Questi sistemi mostrarono le prime problematiche:
+- **Protezione della memoria**: ad esempio se un job andava a scrivere nella zona della memoria del controllore dei jobs, questa parte non doveva essere accessibile.
+- **Timer**: Impedisce che un job blocchi l'intero sistema per essere eseguito, infatti alcuni di questi impiegavano anche giorni per essere eseguiti.
+- **Istruzioni Privilegiate**: Ad esempio il sistema di controllo dei jobs doveva essere eseguito con dei privilegi più alti, infatti lui può accedere a quella zona di memoria.
+
+Quindi i job venivano eseguiti in **modalità utente** (numero limitato di istruzioni) mentre il monitor dei job in **modalità sistema** (possono essere eseguite più istruzioni e possiamo accedere a zone di memoria protette).
+
+C'era un problema molto importante:
+- Più del 96% del tempo è sprecato ad aspettare i dispositivi I/O
+   
+   ![[Pasted image 20240929164349.png|400]]
+   
+   Come possiamo vedere dei 31 microsecondi soltanto 1 è lavoro effettivo della CPU gli altri 30 sono attesa di I/O.
+
+Quindi prima veniva eseguita una **programmazione singola** ovvero un'operazione per volta con tante attese. Si passa alla **multiprogrammazione**.
+
+![[Pasted image 20240929164642.png|400]]
+
+Quindi ci sono più programmi in esecuzione e durante l'attesa di uno ne viene svolto un altro, ci sono comunque attese ma molte di meno.
+
+_Esempio_
+
+![[Pasted image 20240929165103.png|400]]
+
+Prendiamo questi 3 jobs, il primo è molto incentrato sulla CPU e dura 5 minuti mentre gli altri due utilizzano molto I/O e durano 15 e 10 minuti, vediamo cosa succede in entrambi i tipi di programmazione:
+
+![[Pasted image 20240929165157.png|600]]
+
+A sinistra abbiamo programmazione singola e quindi impieghiamo 30 minuti (1 job dietro l'altro) e un utilizzo non gestito molto bene delle risorse.
+
+Nella multiprogrammazione invece eseguiamo tutti i job insieme, infatti job1 utilizza soltanto CPU e nessun dispositivo mentre gli altri 2 utilizzano dispositivi diversi e quindi possono essere eseguiti tutti contemporaneamente, ne impieghiamo soltanto 15, ovvero quello con il tempo massimo.
+
+Come statistiche otteniamo:
+
+![[Pasted image 20240929165552.png|700]]
+
+**Throughput**: $\frac{job-completati}{ore}$
+**Mean Response Time**: Media dei tempi di completamento. Nel caso di uniprogramming dobbiamo considerare che job1 = 5, job2 = job1 + 15 e job3 = job2 + 10, quindi (5 + 20 + 30) / 3
+
+Ovviamente questo è un _esempio un po' estremo_.
+
+### Sistemi Time Sharing
+Dagli anni 70 era necessario gestire più **jobs interattivi** da parte di più utenti, il tempo del processore veniva gestito fra più utenti (da qui Time Sharing).
+
+![[Pasted image 20240929170147.png|400]]
+
+Quindi in un sistema Batch vogliamo vedere l'utilizzo della CPU con meno tempi morti possibile mentre nel Time Sharing vogliamo che quando un utente da un comando nel terminale debba attendere il minor tempo possibile per ottenere la risposta.
+
+Nel primo caso veniva utilizzato un **Job Control Language** mentre nel secondo dei comandi dati da terminale gestiti dal S.O.
+
+**Ricapitolando**:
+- Computazione Seriale (Anni Quaranta)
+- Sistema non interattivo / batch (Anni Cinquanta / Sessanta), introdotta la multiprogrammazione
+- Time - Sharing (Anni Settanta), job principalmente interattivi
+
+Questa evoluzione porta a degli sviluppi molto interessanti:
+- Il concetto di **processi**
+- **Gestione della Memoria**
+- **Sicurezza** e protezione delle informazioni, dato che molti utenti potevano accedere ai dati.
+- **Scheduling delle risorse**, decidere quale job eseguire in un determinato momento.
+- **Strutturazione del Sistema**, scrivere il codice in moduli ben organizzati.
+
+## Dal Job al Processo
+Il processo racchiude in un solo concetto job interattivo e non interattivo.
+
+Inoltre incorpora anche un altro tipo di job, quello **transazionale real-time**, ad esempio un sito per acquistare biglietti deve gestire il caso in cui due persone comprano nello stesso momento lo stesso posto per lo stesso giorno alla stessa ora.
+
+Ogni processo è caratterizzato da:
+- **Thread** di esecuzione ovvero il flusso del processo, ce ne possono essere più di uno.
+- Uno **stato** corrente.
+- Un insieme di **risorse** di sistema associate.
+
+Tutto questo a portato dei problemi per chi scriveva sistemi operativi:
+- Errori di sincronizzazione: alcuni interrupt si perdono o vengono ricevuti più volte.
+- Violazione della mutua esclusione: Se 2 processi vogliono accedere alla stessa risorsa possono verificarsi problemi.
+- Programmi con esecuzione non deterministica: Un programma accede ad una zona di memoria modificata da un altro processo.
+- Deadlock (stallo): Più processi attendono l'esecuzione di altri processi in "loop", ad esempio A sta aspettando B e B sta aspettando A, nessun processo inizia l'esecuzione.
+
+### Gestione della Memoria
+- I processi andavano isolati, ovvero dovevano accedere a diverse zone di memoria senza andare in conflitto.
+- Supporto per la programmazione modulare (stack), è quello che permette a noi programmatori di scrivere delle funzioni all'interno del codice.
+- Allocazione e Deallocazione automatica
+- Tutto questo viene gestito tramite **Paginazione e Memoria Virtuale**.
+
+### Sicurezza
+- Protezione dai DoS (Denial of Service), interruzione del servizio.
+- Confidenzialità, gli utenti devono accedere soltanto ai dati per i quali hanno il permesso di lettura / scrittura.
+- Integrità: Protezione da modifiche non autorizzate.
+- Autenticità: Verificare l'identità degli utenti.
+
+### Gestione delle Risorse
+Il S.O. in tutto questo deve garantire:
+- Equità: dare accesso alle risorse in modo equo.
+- Velocità di risposta differenziate: alcuni processi hanno maggiore priorità.
+- Efficienza: Massimizzare l'uso delle risorse nel tempo (throughput), minimizzare il tempo di risposta e servire più utenti possibili.
+
+### Elementi Principali
+
+![[Pasted image 20240929172450.png|500]]
+
+## Struttura del Sistema Operativo
+Da subito si è capito che non conveniva mettere tutto "a caso", infatti è stato diviso in una serie di livelli, dove ogni livello effettua un sottoinsieme delle funzioni di sistema.
+
+Ogni livello si basa su quello più sotto, ad esempio il livello 4 può richiedere un'operazione al 5 ma non al 3.
+
+- Livello 1:
+	- Circuiti elettrici
+	- Registri, celle di memoria, porte logiche
+	- Operazioni come reset di un registro o leggere in una locazione di memoria
+- Livello 2:
+	- Insieme delle istruzioni macchina come _add, sub, load, store_.
+- Livello 3:
+	- Aggiunge il concetto di routine, operazioni di chiamata e ritorno.
+- Livello 4:
+	- Interruzioni.
+- Livello 5:
+	- Processo come programma in esecuzione.
+	- Sospensione e ripresa di un processo.
+- Livello 6:
+	- Dispositivi di memorizzazione secondaria
+	- Trasferimento di blocchi di dati
+- Livello 7:
+	- Crea uno spazio logico degli indirizzi per i processi.
+	- Organizza lo spazio degli indirizzi virtuali in blocchi
+- Livello 8:
+	- Comunicazioni fra processi
+- Livello 9:
+	- Salvataggio di file a lungo termine
+- Livello 10:
+	- Accesso a dispositivi esterni con interfacce standard
+- Livello 11:
+	- Associazione tra identificatori interni ed esterni
+- Livello 12:
+	- Supporto di alto livello per i processi
+- Livello 13:
+	- Interfaccia utente
+
+
+
+> [!info] Architettura UNIX
+> ![[Pasted image 20240929173422.png|500]]
+> 
+> **Kernel Moderno:**
+> ![[Pasted image 20240929173554.png|500]]
+> 
+> Solo per info.
+
+### Kernel Moderno di Linux
+I moderni kernel sono **monolitici** o **microkernel**:
+- monolitico: Tutto il sistema operativo viene caricato in RAM all'accensione.
+- microkernel: Solo una minima parte del S.O. viene caricato in RAM e il resto solo quando serve.
+	- Sempre in memoria: scheduler, sincronizazzione.
+	- Solo a richiesta: gestore memoria, filesystem, driver.
+- Il monolitico è più efficiente in velocità ma ovviamente occupa più memoria RAM.
+
+Quasi tutti i sistemi moderni sono a kernel monolitico ad eccezione di MacOS.
+
+Linux invece è principalmente monolitico ma ha dei moduli:
+- Alcune parti del sistema operativo possono essere caricate solo quando servono, la differenza è che in Linux cosa serve e cosa no lo decide l'utente e non il S.O.
+- Le cose che Linux non carica sono vari filesystem che non gestisce, driver per alcuni dispositivi, funzionalità di rete.
