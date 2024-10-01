@@ -330,6 +330,8 @@ La **Famiglia degli eventi** = **Famiglia dei sottoinsiemi di S**.
 
 - L'evento **impossibile** è descritto da $\emptyset$.
 
+## Spazio di Probabilità
+
 > [!info] Definizione Spazio di Probabilità
 > Uno spazio di probabilità è descritto dalla coppia $(S, P)$ dove **S è lo spazio campionario** dell'esperimento e **P detta funzione di probabilità**, è una funzione definita sulla famiglia degli eventi che soddisfa i seguenti assiomi:
 > 
@@ -347,5 +349,104 @@ La **Famiglia degli eventi** = **Famiglia dei sottoinsiemi di S**.
 >    Terminologia: Dato $E$ evento, $P(E)$ si dice probabilità dell'evento E.
 >
 
+### Proposizione 1
 
+$$
+P(\emptyset)=0
+$$
 
+La probabilità dell'evento impossibile è uguale a 0.
+
+_Dimostrazione - Utilizzando l'assioma 3_
+
+Prendiamo la successione $E_1,E_2,E_3,...$  dove $E_1=\emptyset,E_2=\emptyset,E_3=\emptyset,...$, quindi abbiamo che $\forall i\neq j$ l'intersezione $E_i\cap E_j=\emptyset$.
+
+Per l'assioma 3 $P(\bigcup\limits^{\infty}_{i=1} E_{i})=\sum\limits_{i=1}^{\infty}P(E_{i})$, quindi $P(\emptyset)=\sum\limits_{i=1}^{\infty}P(\emptyset)$, per l'assioma 1 sappiamo che $P(\emptyset)\in [0,1]$.
+
+Supponiamo che $P(\emptyset)\in (0,1]$ allora abbiamo che $\sum\limits_{i=1}^{\infty}P(\emptyset)=+\infty$ e quindi $P(\emptyset)\neq \sum\limits_{i=1}^{\infty}P(\emptyset)$, per esclusione quindi $P(\emptyset)=0$ altrimenti come appena visto otteniamo un valore infinito.
+
+### Proposizione 2
+Prendiamo un esempio:
+- Domani piove con una probabilità 0.3
+- Domani c'è il sole con una probabilità 0.6
+- Domani nevica con una probabilità 0.1
+Qual è la probabilità che piova o che nevichi? 0.3 + 0.1 = 0.4
+
+**P soddisfa l'additività finita**: Dati $n$ eventi a 2 a 2 _incompatibili_ $E_1,E_2,...,E_n$ vale $P(\bigcup\limits^{n}_{i=1} E_{i})=\sum\limits_{i=1}^{n}P(E_{i})$
+
+_Dimostrazione_
+
+Consideriamo la successione $F_1:=E_1,F_2:=E_2,...,F_n:=E_n,F_{n+1}:=\emptyset,F_{n+2}:=\emptyset$, ovvero hanno dei valori fino ad $n$ e poi sono $\emptyset$.
+
+Dato che la successione è fatta da eventi 2 a 2 _incompatibili_ posso applicare il 3 assioma e otteniamo:
+
+$$
+P(\bigcup\limits^{\infty}_{i=1} F_{i})=\sum\limits_{i=1}^{\infty}P(F_{i})
+$$
+
+Che è equivalente a:
+
+$$
+P(\bigcup\limits^{\infty}_{i=1} E_{i})=P(E_1)+P(E_2)+...+P(E_n)+P(\emptyset)+...
+$$
+
+Per la proposizione precedente sappiamo che $P(\emptyset)=0$ quindi tutti i $P(\emptyset)$ sono trascurabili lasciando soltanto:
+
+$$
+P(\bigcup\limits^{n}_{i=1} E_{i})=P(E_1)+P(E_2)+...+P(E_n)
+$$
+### Proposizione 3
+
+$$
+\forall E\subset S \text{ vale } P(E^c)=1-P(E)
+$$
+
+_Dimostrazione_
+
+![[Pasted image 20241001105352.png|400]]
+
+$E$ e $E^c$ sono eventi _incompatibili_, quindi per l'**additività finita** abbiamo che $P(E\cup E^c)=P(E)+P(E^c)$ ma sappiamo che $E\cup E^c=S$ quindi possiamo dire che $P(E\cup E^c)=P(S)=1$.
+
+Possiamo scrivere quindi:
+
+$$
+P(E)+P(E^c)=1\rightarrow P(E^c)=1-P(E)
+$$
+
+### Proposizione 4 - Monotonia della Funzione di Probabilità
+Dati $E$ e $F$ eventi con $E\subset F$ allora vale $P(E)\leq P(F)$.
+
+![[Pasted image 20241001105832.png|400]]
+
+$F=E\cup (F\backslash E)$, quindi $E$ ed $F\backslash E$ sono _disgiunti_.
+
+Quindi, $P(F)=P(E)+P(F\backslash E)$ dato che per l'assioma 1 $P(F\backslash E)\geq 0$
+allora $P(E)+P(F\backslash E)\geq P(E)$.
+
+### Proposizione 5
+$\forall E,F$ eventi, allora $P(E\cup F)=P(E)+P(F)-P(E\cap F)$, questa è la **formula generale**, non l'abbiamo usata prima perché nel caso in cui $E,F$ sono disgiunti allora $P(E\cap F) = 0$.
+
+_Esempio Grafico_
+
+![[Pasted image 20241001110629.png|400]]
+
+Anche se conosco l'area delle due figure, per conoscere l'area totale devo sottrarre l'area dell'intersezione fra le due.
+
+_Dimostrazione_
+
+![[Pasted image 20241001110726.png|300]]
+
+Abbiamo che $I=E\backslash F, II = F\backslash E, III = E\cap F$, gli eventi quindi sono 2 a 2 disgiunti (gli eventi 2 a 2 disgiunti sono le zone I, II e III non E ed F).
+
+Otteniamo che:
+- $P(E)=P(I\cup III)= P(I)+P(III)$
+- $P(F)=P(II\cup III)=P(II)+P(III)$
+- $P(E\cap F)=P(III)$
+
+Sappiamo che:
+- $P(E\cup F)=P(I\cup II\cup III) = P(I)+P(II)+P(III)$
+- E secondo la proposizione: $P(E\cup F)=P(E)+P(F)-P(E\cap F)$, sostituendo i valori : 
+$$
+P(E\cup F)=P(I)+P(III)+P(II)+P(III)-P(III)=P(I)+P(II)+P(III)
+$$
+Abbiamo ottenuto lo stesso risultato.
