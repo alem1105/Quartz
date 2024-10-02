@@ -450,3 +450,158 @@ $$
 P(E\cup F)=P(I)+P(III)+P(II)+P(III)-P(III)=P(I)+P(II)+P(III)
 $$
 Abbiamo ottenuto lo stesso risultato.
+
+_Esempio_
+
+Giulia porta ha 2 libri _L1, L2_, l'evento _E_ corrisponde a "Le piace _L1_" mentre _F_ a "Le piace _L2_".
+
+- $P(E)=0.5$
+- $P(F)=0.4$
+- $P(E\cap F)=0.3$ -> "Le piacciono entrambi"
+
+Quant'è la probabilità che non le piaccia alcun libro?
+
+- Calcoliamo prima $E\cup F$ che equivale a "Le piace almeno un libro":
+  $P(E\cup F)=P(E)+P(F)+P(E\cap F)=0.5+0.4-0.3=0.6$
+- L'evento complementare di "Le piace almeno un libro" è "Non le piace nessun libro" quindi il risultato finale è:
+
+$$
+P((E\cup F)^c)=1-P(E\cup F)=1-0.6=0.4
+$$
+
+**Infatti**:
+
+Dato uno spazio campionario _S_ e due eventi $E,F\subset S$ abbiamo che:
+
+$$
+x\in E\cup F\Leftrightarrow x\in E \text{ o } x\in F \Leftrightarrow \text{ x realizza almeno uno dei due eventi}
+$$
+
+Quindi $E\cup F$ significa che "Si verifica E oppure si verifica F" **non c'è esclusività**, invece $E\cap F$ significa che "Si verifica sia E che F".
+
+_Esempio_
+
+Abbiamo un dato truccato dove:
+- 1 esce con probabilità $\frac{1}{2}$
+- Gli altri numeri con probabilità $\frac{1}{10}$
+
+Quant'è la probabilità che esce un numero dispari? $E=\{1,3,5\}$.
+
+Per **additività finita**:
+
+$$
+\underbrace { P(E) }_{ \{1\}\cup\{3\}\cup\{5\} \text{ 2 a 2 incompatibili} }=P(\{1\})+P(\{3\})+P(\{5\})=\frac{1}{2}+\frac{1}{10}+\frac{1}{10}=\frac{7}{10}
+$$
+
+## Esiti su spazi di probabilità con esiti equiparabili
+Supponiamo che $|S|<\infty$ quindi abbiamo una situazione del tipo, $S=\{ S_{1},S_{2},\dots,S_{n}\}$ con $n$ esiti.
+Supponiamo che, ad esempio per simmetria, i vari esiti abbiano la stessa probabilità di realizzarsi, **sono equiprobabili**.
+
+Come modelliamo questo esperimento con uno spazio di probabilità?
+
+- Dato che gli esiti sono tra di loro paritari richiederanno che $P(\{ 1 \})=P(\{ 2 \})=\dots=P(\{ S_{n} \})=z$, questo valore lo chiameremo $z$.
+- Inoltre abbiamo che
+  $$
+  1=P(S)=\underbrace{ P(\{ 1 \}\cup \dots\cup \{ S_{n} \}) }_{ S=\{ 1 \}\cup \dots\cup \{ S_{n} \} \text{ 2 a 2 incompatibili} }=\sum\limits_{i=1}^{n}P(\{ S_{i} \})=n \cdot z
+  $$
+Questo perché abbiamo la somma di $n$ valori uguali che valgono tutti $z$.
+
+In questo modo abbiamo provato che $1=n \cdot z$ e quindi $z=\frac{1}{n}$, e dato che sono equiprobabili sappiamo che $\forall i, 1 \leq i \leq n, P(\{ S_{i} \})=\frac{1}{n}$.
+
+### Proposizione
+Se $|S|=n$ e gli esiti sono equipossibili, allora $\forall E, P(E)=\frac{|E|}{|S|}=\frac{\text{\# esiti favorevoli a E}}{\text{\# esiti possibili}}$
+
+_Dimostrazione_
+
+Dato $E=\bigcup\limits_{S\in E}\{ S \}$ gli eventi $\{ S \}$, con $S \in E$ sono 2 a 2 incompatibili. Possiamo applicare l'additività finita e ottenere:
+
+$$
+P(E)=\sum_{S\in E}P(\{ S \})=\sum_{S\in E} \frac{1}{n}=\frac{|E|}{n}=\frac{|E|}{|S|}
+$$
+_Esempio_
+
+Lancio 2 dadi, qual è la probabilità che la somma dei numeri usciti dia 6?
+
+$$
+\begin{align*}
+&S=\{ (a,b):a,b\in \{ 1,2,\dots,6 \} \}\\
+&a=\text{numero al 1° lancio} \\
+&b=\text{numero al 2° lancio}
+\end{align*}
+$$
+
+Il dado è onesto e quindi tutti i numeri sono equipossibili, quindi:
+
+$$
+P(E)=\frac{|E|}{|S|} \text{ dove } E\subset S
+$$
+
+$$
+\begin{align*}
+E=\text{"La somma da 6"}&=\{ (a,b)\in S:a+b=6 \} \\
+&=\{ (1,5),(2,4),(3,3),(4,2),(5,1) \} \\ \\
+&P(E)=\frac{|E|}{|S|}=\frac{5}{\underbrace{ 6 \cdot 6 }_{ \text{esiti possbili 2 dadi} }}=\frac{5}{36}
+\end{align*}
+$$
+
+
+> [!info] Ordine
+> Conviene non prendere i numeri dimenticando l'ordine, altrimenti gli esiti non sono equipossibili:
+> $$
+> P(\text{"Sono usciti 2 e 3 in qualunque ordine"})=\frac{2}{36}, \{ (2,3),(3,2) \}
+> $$
+> 
+> $$
+> P(\text{"Uscito 1 e 1"})=P(\{ (1,1) \})=\frac{1}{36}
+> $$
+
+_Esempio_
+
+Ho un mazzo da 40 carte, estraggo 2 carte senza rimpiazzo, quant'è la probabilità che escano 2 carte di bastoni?
+
+Il mazzo è composto da 4 semi e 10 carte per seme.
+- $M$ = Mazzo
+- $S=\{ (a,b):a,b\in M, a \neq b \}$
+
+Per simmetria ho esiti equiprobabili quindi vale $P(E)=\frac{|E|}{|S|}$.
+
+In questo caso abbiamo che $E=\{ (a,b)\in S:a,b \text{ sono di bastoni} \}$, $|S|=40 \cdot 39$ che sono i modi possibili per estrarre due carte ed $|E|=10 \cdot 9$ che sono i modi possibili per estrarre due carte dello stesso seme.
+
+$$
+P(E)=\frac{|E|}{|S|}=\frac{10 \cdot 9}{40 \cdot 39}=\frac{1}{4}\cdot \frac{3}{13}=\frac{3}{52}
+$$
+
+_Approccio Alternativo_
+
+$S=\{ \{ a,b \}:a,b\in M, a\neq B \}$, adesso consideriamo di estrarre 2 carte nello stesso momento e quindi non sono più coppie ordinate, non conta l'ordine.
+
+Gli esiti sono comunque equiprobabili ma adesso per selezionare due carte senza contare l'ordine in tutto il mazzo posso fare $\binom{40}{2}$ mentre per due carte dello stesso seme $\binom{10}{2}$ quindi:
+
+$$
+P(E)=\frac{\binom{10}{2}}{\binom{40}{2}}=\frac{3}{52}
+$$
+
+_Esempio Libro_
+
+Ho un'urna con 6 palline bianche e 5 nere.
+Estraggo 3 palline a caso senza rimpiazzo, quant'è la probabilità che esca 1 bianca e 2 nere?
+
+Non ci conviene registrare soltanto il colore delle palline, **questo perché rompe la simmetria**, ci conviene invece numerarle una per una in modo da distringuerle.
+
+$Urna=U=\{ B_{1},B_{2},B_{3},B_{4},B_{5},B_{6},N_{1},N_{2},N_{3},N_{4},N_{5} \}$ abbiamo quindi 11 palline distinguibili.
+
+$S=\{ A\subset U:|A|=3 \}$, un esempio di esito è $\{ B_{2},B_{4},N_{3} \}$.
+
+Quindi adesso $S$ ha esiti equiprobabili per simmetria: $P(E)=\frac{|E|}{|S|}$ dove $|S|=\binom{11}{3}$.
+
+Quanto vale $|E|$? $E=\{ A \subset U:|A|=3, \text{A ha una pallina bianca e 2 nere} \}$
+
+$|E|=6 \cdot\binom{5}{2}$ dove $6$ sono i modi per estrarre una pallina bianca e $\binom{5}{2}$ quelli per scegliere due palline nere senza considerare l'ordine. Quindi:
+
+$$
+P(E)=\frac{6 \cdot\binom{5}{2}}{\binom{11}{3}} = \frac{4}{11}
+$$
+
+
+
+
