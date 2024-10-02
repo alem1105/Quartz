@@ -2,7 +2,13 @@
 title: Home
 description: Indice principale del vault
 ---
-# Altro
+# Info
+
+![[index_image.gif]]
+
+Qui carico gli appunti che mi scrivo per studiare, potrebbero esserci errori (ci sono sicuramente 😔).
+
+# Studiate non per corsi uni
 
 - [[Git]]
 
