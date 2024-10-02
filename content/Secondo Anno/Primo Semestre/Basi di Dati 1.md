@@ -414,9 +414,191 @@ Prendendo l'esempio di prima quindi, se due tuple concordano sul CodiceVolo (X) 
 
 **X** prende il nome di **Determinante** e **Y** di **Dipendente**, inoltre un'istanza si dice **legale** quando **soddisfa tutte le dipendenze funzionali**.
 
+# Algebra Relazionale
+**Linguaggio Formale** per interrogare una base di dati relazionale: Consiste in un insieme di operatori che possono essere applicati ad una o due relazioni e forniscono come risultato una nuova istanza di relazione.
 
+**Linguaggio Procedurale**: L'interrogazione consiste in un'espressione in cui compaiono operatori dell'algebra e istanze di relazioni della base di dati, in una sequenza che stabilisce l'ordine delle operazioni e i loro operandi.
 
+## Proiezione
+Consiste nell'effettuare un _taglio verticale_ su una relazione, ovvero selezionare soltanto alcuni attributi di essa.
 
+Si denota con il simbolo $\pi$ ad esempio  $\pi_{A_{1},A_{2},\dots A_{k}}(r)$, in questo modo stiamo selezionando le colonne di $r$ che corrispondono agli attributi $A1, A2,\dots Ak$.
 
+_Esempio_
 
+![[Pasted image 20241002212523.png]]
+
+**NOTA**: Si seguono le regole insiemistiche e quindi nella relazione risultato non ci sono duplicati, notiamo però che abbiamo cancellato delle ennuple significative, ovvero delle ennuple che sono in realtà diverse se consideriamo tutti gli attributi.
+
+Dobbiamo considerare nella proiezione anche un attributo in più, in questo caso la chiave ovvero C#:
+
+![[Pasted image 20241002212936.png]]
+
+## Selezione
+Consente di effettuare soltanto alcune tuple di una relazione.
+
+Si denota con il simbolo $\sigma_{C}(r)$, in questo caso seleziona le tuple della relazione $r$ che soddisfano la condizione $C$.
+
+La selezione è un'espressione booleana composta in cui i termini semplici sono del tipo:
+
+- $A \theta B$ oppure $A\theta'a'$
+
+Dove:
+- $\theta$ è un operatore di confronto, $\theta\in \{ <,=,>,\leq,\geq \}$
+- A e B sono due attributi con lo stesso dominio
+- a è un elemento di dom(A)
+
+_Esempio_
+
+![[Pasted image 20241002213441.png]]
+
+Da notare che al contrario della proiezione, con la selezione non rischiamo di perdere dati significativi.
+## Unione
+Costruisce una relazione contenente tutte le ennuple che appartengono ad almeno uno dei due operandi, si denota con $\bigcup$
+
+![[Pasted image 20241002153358.png|300]]
+
+L'unione può essere applicata soltanto ad operandi compatibili ovvero:
+- Hanno lo stesso numero di attributi
+- Gli attributi corrispondenti nell'ordine devono avere lo stesso dominio
+
+Gli schemi in questo caso sono detti **union compatibili**.
+
+**Inoltre**:
+- Non è necessario che gli attributi abbiano lo stesso nome ma l'unione ha senso se hanno un significato omogeneo. 
+  
+  Ad esempio _Numero di esami_ ed _Età_ sono definiti sullo stesso dominio ma non avrebbe senso unire due relazioni che hanno questi attributi in colonne corrispondenti.
+
+- Uno o entrambi gli operandi possono essere il risultato di operazioni precedenti, ad esempio eliminare gli attributi incompatibili.
+
+_Esempio 1_
+
+![[Pasted image 20241002153800.png]]
+
+In questo caso l'unione è fattibile, dato che le istanze sono compatibili, otteniamo quindi:
+
+![[Pasted image 20241002153838.png]]
+
+Abbiamo un problema adesso, non riusciamo più a distinguere i _Docenti_ dagli _Amministrativi_, inoltre dovremmo avere 9 membri del personale ma ne abbiamo solo 8, questo perché una tupla era presente in entrambe le relazioni e quindi è stata riportata una sola volta (Bianchi, C4, Lingue).
+
+Questo è un **problema di progettazione**, possiamo risolverlo cambiando la notazione per i COD:
+
+![[Pasted image 20241002154154.png]]
+
+In questo modo vediamo tutto il personale e riusciamo anche a ditinguerli.
+
+_Esempio 2_
+
+![[Pasted image 20241002154345.png]]
+
+In questo caso non possiamo effettuare l'unione, le due istanze non hanno lo stesso numero di attributi. Come possiamo proseguire?
+
+Possiamo proiettare su un sottoinsieme di attributi comuni (con significato compatibile):
+
+![[Pasted image 20241002154607.png|400]]
+
+Quindi _Amministrativi_ non ha più l'attributi _Stip_ e quindi le relazioni diventano compatibili.
+
+_Esempio 3_
+
+![[Pasted image 20241002154743.png]]
+
+In questo caso non dobbiamo proiettare entrambe le relazioni dato che abbiamo si lo stesso numero di attributi ma _Dipartimento_ e _AnniServizio_ non sono compatibili, dobbiamo quindi rimuoverli entrambi.
+
+![[Pasted image 20241002154951.png|400]]
+
+_Esempio 4_
+
+![[Pasted image 20241002155321.png]]
+
+In questo caso _Dipartimento e Mansioni_ hanno lo stesso dominio ma significato diverso, in questo caso possiamo proiettare togliendo i due attributi, come visto prima.
+
+![[Pasted image 20241002155412.png|400]]
+
+## Differenza
+Anche la differenza si applica a operandi **union compatibili**, quindi le condizioni sono uguali a quelle dell'unione.
+
+La differenza consente di costruire una relazione contenente tutte le tuple che appartengono al primo operando e non appartengono al secondo operando.
+
+Si denota con il simbolo $-, \ r_{1}-r_{2}$.
+
+![[Pasted image 20241002155900.png]]
+
+**Attenzione**, la differenza non è commutativa:
+- Studenti - Amministrativi: Sono gli studenti che non sono anche amministrativi
+- Amministrativi - Studenti: Sono gli amministrativi che non sono anche studenti.
+
+_Risultati:_
+
+![[Pasted image 20241002160010.png|400]]
+
+## Intersezione
+Si applica sempre ad operandi **union-compatibili**, consente di costruire una relazione contenente tutte le tuple che appartengono ad entrambi gli operandi.
+
+Si denota con $\bigcap, \ r_{1}\cap r_{2}=(r_{1}-(r_{1}-r_{2}))$
+
+_Esempio_
+
+![[Pasted image 20241002160852.png]]
+
+- L'operazione intersezione **è commutativa**.
+
+![[Pasted image 20241002160925.png]]
+
+Come tutte le operazioni, se non rispetto la **union-compatibili** posso effettuare delle proiezioni.
+
+# Algebra Relazionale II
+Per garantire un'ottima qualità di una relazione occorre rappresentare in relazioni diverse più concetti. Infatti capita spesso che le informazioni che interessano un'interrogazione sono distribuite in più relazioni dato che coinvolgono più oggetti associati fra loro.
+
+Dobbiamo individuare le relazioni in cui si trovano le informazioni che ci interessano e combinare queste informazioni in modo opportuno.
+
+## Prodotto Cartesiano
+Consente di costruire una relazione contenente tutte le ennuple che si ottengono concatenando ogni ennupla del primo operando con ogni ennupla del secondo.
+
+Si denota con il simbolo $\times, \ r_{1}\times r_{2}$ e si utilizza quando le informazioni che occorrono per rispondere ad una query si trovano i relazioni diverse.
+
+In questa operazione non dobbiamo rispettare la **union-compatibile** e per questo non tutti i risultati che otteniamo hanno un senso.
+
+_Esempio_
+
+![[Pasted image 20241002163748.png]]
+
+_Query:_ Dati dei clienti e degli ordini ($Cliente \times Ordine$).
+
+Per poter distinguere gli attributi con lo stesso nome nello schema risultante possiamo usare l'operazione di _ridenominazione_ per utilizzare una copia della relazione Ordine in cui l'attributo C# diventa CC#. Altrimenti avremmo anche potuto scrivere _Ordine.C#_.
+
+![[Pasted image 20241002164117.png]]
+
+Adesso però abbiamo delle ennuple "inutili" dato che C# e CC# non corrispondono.
+
+Per risolvere questo problema possiamo fare una selezione dove C# e C## sono uguali ottenendo:
+
+![[Pasted image 20241002164418.png]]
+
+Notiamo anche che adesso le colonne C# e C## sono uguali, quindi se vogliamo fare una soluzione più elegante possiamo anche effettuare una proiezione sugli altri attributi e lasciare solo la colonna C#.
+
+## Join Naturale
+Consente di selezionare le tuple del prodotto cartesiano dei due operandi che soddisfano la condizione:
+
+$$
+R_{1}.A_{1}=R_{2}.A_{1}\wedge R_{1}.A_{2}=R_{2}.A_{2}\wedge \dots\wedge R_{1}.A_{k}=R_{2}.A_{k}
+$$
+
+Dove $R_{1}$ ed $R_2$ sono i nomi delle relazioni operando e $A_{1}\dots A_{k}$ sono gli attrinuti comuni, cioè con lo stesso nome, delle relazioni operando, eliminando le ripetizioni degli attributi.
+
+Si scrive con $r_{1}\triangleright\triangleleft \ r_{2}=\pi_{XY}(\sigma_{C}(r_{1}\times r_{2}))$
+
+![[Pasted image 20241002165744.png]]
+
+**NOTA**:
+- Nel join naturale gli attributi della condizione che consente di unire solo le ennuple giuste che hanno lo stesso nome.
+- Vengono unite le ennuple in cui questi attributi hanno lo stesso valore
+
+![[Pasted image 20241002165908.png]]
+
+Quindi il Join naturale fa tutte le operazioni che abbiamo visto prima con il prodotto cartesiano.
+
+_Risultato Join:_
+
+![[Pasted image 20241002170038.png]]
 
