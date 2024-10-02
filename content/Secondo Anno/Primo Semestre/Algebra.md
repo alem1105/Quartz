@@ -508,5 +508,5 @@ $\phi$ è biiettiva e permette di calcolare $f$ fattorizzandola nel diagramma:
 
 
 > [!warning]  Da capire 😢
-> Per vedere che $\phi$ è biiettiva poniamo per $y\in f(X), \psi(y)=\{ x\in X:f(x)=y \}$ tale insieme è $\neq \emptyset$ quindi $f$ è suriettiva nella sua immagine. $\psi(y)=[x]$ con $f(x)=y$ di modo che $\psi=\phi^{-1}$.
+> Per vedere che $\phi$ è biiettiva poniamo per $y\in f(X), \psi(y)=\{ x\in X:f(x)=y \}$ tale insieme è $\neq \emptyset$ quindi $f$ è suriettiva nella sua immagine. $\psi(y)=[x]$ con $f(x)=y$ (dato che tutti gli elementi di $X$ in relazione hanno stessa immagine) di modo che $\psi=\phi^{-1}$.
 
