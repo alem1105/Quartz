@@ -506,7 +506,62 @@ $\phi$ è biiettiva e permette di calcolare $f$ fattorizzandola nel diagramma:
 
 ![[Pasted image 20241002123137.png]]
 
+** f(x) è un sottoinsieme di Y
 
-> [!warning]  Da capire 😢
+> [!info]  Biiettiva
 > Per vedere che $\phi$ è biiettiva poniamo per $y\in f(X), \psi(y)=\{ x\in X:f(x)=y \}$ tale insieme è $\neq \emptyset$ quindi $f$ è suriettiva nella sua immagine. $\psi(y)=[x]$ con $f(x)=y$ (dato che tutti gli elementi di $X$ in relazione hanno stessa immagine) di modo che $\psi=\phi^{-1}$.
+
+1) $\phi$ è ben definita. Questo perché se $X'=[x]=[x']$ si ha $f(x)=f(x')=y\in f(X), f(X')$ è un singleton di $f(X)$
+2) $\phi$ è biiettiva, $\phi^{-1}(y)=f^{-1}(\{ y \})\in X\backslash \sim$, $f^{-1}(\{ y \})$ mi restituisce tutti gli elementi di $X$ che hanno come immagine $y$ 
+3) $f=i\circ \phi \circ \pi$. Poniamo $y=f(x)$ con $x\in X$. Allora $\pi(x)=f^{-1}(\{ y \})$. Quindi $(\phi\circ\pi)(x)=y$ e $(i\circ\phi\circ\pi)(x)=y=f(x)$.
+
+_Esempio_
+
+Abbiamo $X=\mathbb{Z}, b\in\mathbb{N}^*$ e $Y=\{ 0,\dots,b-1 \}$, ricordiamo che $\mathbb{N}^*=\mathbb{N}\backslash \{ 0 \}$.
+
+**Algoritmo della divisione euclidea per b**
+
+$\forall x\in\underbrace{ \mathbb{Z} }_{ X } \ \exists!(q,r)\in\mathbb{Z}\times \underbrace{ \{ 0,\dots,b-1 \} }_{ Y }$ tale che $x=qb+r$ dove:
+- $r$ resto
+- $q$ quoziente
+
+Stiamo dicendo quindi che per ogni numero appartenente a Z esiste una sola coppia appartenente al prodotto cartesiano fra Z e i possibili resti (da 0 a b-1). Infatti le coppie sono composte da un numero q quoziente e il resto associato.
+
+Definiamo $f:X\rightarrow Y$ ponendo $f(x):=r$. Questa è ben definita e si chiama **riduzione modulo b**, è un'applicazione suriettiva: $f(X)=Y$.
+Ad esempio se $b=2$ allora $f(5)=1, f(4)=0$.
+
+Allora la relazione d'equivalenza associata, che scriviamo come $\equiv$ e la chiamiamo **congruenza modulo b**.
+
+Se due interi $x,x'$ sono in relazione allora si scrive $x\equiv x'(mod \ b)$ e si legge _x congruente a x' modulo b_.
+
+$$
+X'\in X\backslash\equiv \ \Leftrightarrow \exists r\in Y,\forall x\in X',x=qb+r
+$$
+Quindi tutte le $x$ di $X'$ devono avere lo stesso resto.
+Inoltre l'insieme $Y\subset\mathbb{Z}$ è in questo caso un **SCR** dato che:
+1) $f$ suriettiva e quindi $\forall r\in Y, \exists x\in X$ t.c. $x\equiv r(mod\ b)$
+2) Presi $r,r'\in Y$ con $r\neq r'$ si ha che $r\not\equiv r'(mod \ b)$ infatti supponiamo per assurdo che $r\equiv r'(mod\ b)$:
+
+$$
+\begin{cases}
+r=qb+\tilde{r} \\
+r'=q'b+\tilde{r}
+\end{cases}
+$$
+
+Quindi $r-r'=(q-q')\cdot b$
+
+$r-r'=b \cdot k\ (\underbrace{ k\in\mathbb{Z}\backslash\{ 0 \} }_{ \text{perché } r\neq r'}),\ k>0\Rightarrow r=r'+bk\geq r'+b$ ma $r\geq r'+b\geq b$ è una **contraddizione** dato che i resti vanno da 0 a $b-1$.
+
+$\phi$ è la biiezione tra $X\backslash\equiv$ e $Y$ che manda ogni classe $X'$ nell'unico $r\in Y$ t.c. $\forall x\in X',f(x)=r$, in pratica $r$ è il resto in $Y$ della divisione euclidea di $x$ per $b$ e non cambia al variare di $x$ in $X'$, ovvero tutti gli elementi presenti in $X'$ hanno lo stesso resto.
+
+$$
+\forall X'\in X\backslash\equiv\text{ si scrive } X'=\overline{x}=\overline{x'}=\overline{r} \ \forall x,x'\in X
+$$
+
+e se
+
+$$
+\phi(X')=r\in Y=f(X)=f(Y)
+$$
 
