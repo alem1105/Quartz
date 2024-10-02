@@ -393,3 +393,120 @@ Si può anche scrivere $\forall y\in Y, f^{-1}(\{y\})\neq \emptyset$.
 Una funzione $f:X\rightarrow Y$ è biiettiva se è al tempo stesso suriettiva e iniettiva.
 
 Quindi $f$ biiettva se e solo se $\forall y\in Y, f^{-1}(\{y\})$ è un singleton, ovvero ogni elemento del codominio ha un unico elemento del dominio associato. Infatti la suriettività toglie una possibilità all'esito della condizione di initetività ($\emptyset$) lasciando soltanto il caso singleton.
+
+### Operazioni sulle Funzioni
+Prima di vedere le operazioni, vediamo cos'è un diagramma.
+
+> [!info] Definizione Diagramma
+> È una collezione di insiemi non vuoti collegati da applicazioni
+> _Esempi_
+>
+>![[Pasted image 20241002110508.png|400]]
+>
+>Noi vedremo diagrammi del tipo:
+>
+>![[Pasted image 20241002110608.png|400]]
+>
+
+#### Composizione
+
+![[Pasted image 20241002110744.png|400]]
+
+Si definisce **funzione composta** $X \xrightarrow{g \circ f} Z$.
+
+> [!info] Notazioni
+> Nel diagramma vediamo prima $f$ e poi $g$ ma nella funzione composta scriviamo prima $g$ e poi $f$ questo perché si calcola prima il risultato di $f$ e si "fornisce" a $g$ ovvero $g(f(x))$. Si legge _"g composta f"_.
+
+_Con tre funzioni:_
+
+$$
+X\xrightarrow{f}Y\xrightarrow{g}Z\xrightarrow{h}T
+$$
+Otteniamo:
+
+$$
+(h\circ g\circ f)(x)=h(g(f(x)))
+$$
+
+Per le funzioni composte vale **la proprietà associativa**:
+
+$$
+(h\circ g)\circ f = h \circ (g \circ f)
+$$
+
+##### Proposizione
+Dato il diagramma $X \rightleftarrows Y$ con $f:X\rightarrow Y$ e $g:Y\rightarrow X$.
+
+Diciamo che $f$ è biiettiva $\Leftrightarrow \exists g:Y\rightarrow X, t.c. \  f\circ g\overset{ ② }=id_{y}, g\circ f\overset{ ① }=id_{x}$.
+Quindi $f$ è biiettiva se e solo se esiste una funzione $g$ che va da $Y$ ad $X$ tale che $f$ composta $g$ restituisca $y$ (parto da $Y$ con $g$ e ritorno in $Y$ con $f$) e tale che $g$ composta $f$ restituisca $x$ (parto da $X$ con $f$ e ritorno in $X$ con $g$).
+
+$g$ è detta **funzione inversa** di $f$, se esiste è **unica**.
+
+_Dimostrazione_
+
+Partiamo dalla condizione che $f$ è biiettiva, allora $\forall y \in Y \  \exists !  \ x\in X \ t.c. \ f(x)=y$.
+
+Poniamo $g(y)=x$.
+
+Se $x\in X$, $g(f(x))=g(y)=x$ e $x$ è l'unico elemento t.c. $f(x)=y$ allora $g(x)=x\Rightarrow g\circ f=id_{x}$ (①), analogamente possiamo ottenere $f \circ g = id_{y}$ ovvero ②.
+
+---
+
+Partiamo dalla condizione a destra quindi abbiamo il diagramma $X \rightleftarrows Y$ con $f:X\rightarrow Y$ e $g:Y\rightarrow X$ e $f\circ g \overset{①}= id_{y}$ e $g \circ f\overset{②}=id_{x}$.
+
+Possiamo mostrare allo stesso modo sia $f$ che $g$ suriettive e iniettive, mostriamo $g$:
+
+_Suriettiva:_
+
+Sia $x\in X$ poniamo $y=f(x)$, quindi $g(y)=g(f(x))=(g\circ f)(x)=x$ per via di ② ne deduciamo che $g^{-1}(\{ x \})\neq \emptyset$ e quindi $g$ è _suriettiva_.
+
+_Iniettiva:_
+
+Siano $y,y'\in Y$ t.c. $g(y)=g(y')=x$ allora applicando $f$ ottengo:
+
+$$
+\underbrace{ f(g(y)) }_{ \underbrace{ (f\circ g)(y) }_{ \text{Per ①, = y} } }=\underbrace{ f(g(y')) }_{ \underbrace{ (f\circ g)(y') }_{ \text{Per ①, = y'} } }=\underbrace{ f(x) }_{ y }
+$$
+
+Quindi $y=y'$, $g$ è _iniettiva_.
+
+Se $g$ è sia iniettiva che suriettiva allora è **biiettiva**.
+
+### Teorema Struttura Applicazioni
+$X\xrightarrow{f}Y$, abbiamo come obiettivo quello di costruire una relazione d'equivalenza $\sim$ su $X$.
+
+Si pone $x,x'\in X, x\sim x' \Leftrightarrow f(x)=f(x')$ allora $\sim$ è una relazione d'equivalenza:
+- $x\sim x: f(x) = f(x)$ | **Riflessiva**
+- $x\sim x' \Leftrightarrow f(x)=f(x')\Leftrightarrow f(x')= f(x)\Leftrightarrow x'\sim x$ | **Simmetrica**
+- $x\sim x', x'\sim x''\Leftrightarrow f(x)=f(x'),f(x')=f(x'')\Rightarrow f(x)=f(x'')\Rightarrow x\sim x''$ | **Transitiva**
+
+Consideriamo l'insieme quoziente $X \backslash \sim$ allora:
+
+$$
+X'\in X\backslash \sim \ \Leftrightarrow X'\subset X \ e \ \exists y\in Y:X'=f^{-1}(\{ y \})
+$$
+
+![[Pasted image 20241002121311.png]]
+
+1) $\forall x\in X \ \ \exists X'\in X\backslash \sim \ t.c. \ x\in X'$ Ogni elemento fa parte di una classe di equivalenza.
+2) $X_{1}', X_{2}'\in X\backslash \sim$ e $X_{1}'\neq X_{2}'\Rightarrow X_{1}'\cap X_{2}'=\emptyset$ Le classi di equivalenza non hanno elementi in comune.
+3) Se $X'\in X\backslash \sim$ allora $f|_{X'}$ è costante ovvero l'immagine è un singleton, questo perché elementi di X in relazione (fanno parte di un X') hanno la stessa immagine.
+
+Adesso, costruiamo a partire da $X\xrightarrow{f} Y$ un'applicazione $\phi=X\backslash \sim \rightarrow f(X)\subset Y$.
+
+Sia $X'\in X\backslash \sim$ allora $X'=[x] \ \exists x\in X$.
+
+Si pone $y=f(x)\in Y$ allora definiamo $\phi(X')=y$ **non deve dipendere dal rappresentante (ben definita):**
+
+$$
+C=[x]=[x'] \ \ f(x)=f(x')
+$$
+
+$\phi$ è biiettiva e permette di calcolare $f$ fattorizzandola nel diagramma:
+
+![[Pasted image 20241002123137.png]]
+
+
+> [!warning]  Da capire 😢
+> Per vedere che $\phi$ è biiettiva poniamo per $y\in f(X), \psi(y)=\{ x\in X:f(x)=y \}$ tale insieme è $\neq \emptyset$ quindi $f$ è suriettiva nella sua immagine. $\psi(y)=[x]$ con $f(x)=y$ di modo che $\psi=\phi^{-1}$.
+
