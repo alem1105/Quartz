@@ -591,7 +591,7 @@ Si scrive con $r_{1}\triangleright\triangleleft \ r_{2}=\pi_{XY}(\sigma_{C}(r_{1
 ![[Pasted image 20241002165744.png]]
 
 **NOTA**:
-- Nel join naturale gli attributi della condizione che consente di unire solo le ennuple giuste che hanno lo stesso nome.
+- Nel join naturale gli attributi della condizione che consente di unire solo le ennuple giuste hanno lo stesso nome.
 - Vengono unite le ennuple in cui questi attributi hanno lo stesso valore
 
 ![[Pasted image 20241002165908.png]]
@@ -602,3 +602,41 @@ _Risultato Join:_
 
 ![[Pasted image 20241002170038.png]]
 
+Spesso quando facciamo un join non vogliamo farlo su tutti gli attributi in comune ma solo su alcuni specificati, _si vede successivamente con altri tipi di join_.
+
+Anche nel caso in cui gli attributi non hanno lo stesso nome, o come prima facciamo una ridenominazione oppure usiamo altri join, altrimenti in alcuni casi il join potrebbe restituire un prodotto cartesiano.
+
+> [!info] Casi Limite Join Naturale
+> - Attributi con lo stesso nome ma nessuna tupla della prima relazione ha valori uguali con la seconda relazione in corrispondenza degli attributi uguali, risultato vuoto.
+> - Se non abbiamo attributi con lo stesso nome, il risultato diventa un prodotto cartesiano.
+> 
+
+Un possibile errore quindi può essere che gli attributi hanno lo stesso nome ma non lo stesso significato.
+
+![[Pasted image 20241003135240.png]]
+
+Quindi C# in _Artista_ è il codice artista mentre in _Quadro_ indica il codice quadro, il join per avere senso quindi deve essere effettuato tra Artista.C# e Quadro.Artista, **non possiamo** utilizzare un join naturale.
+
+Possiamo o fare una ridenominazione o usare un $\theta$ join.
+
+## $\theta$ Join
+Consente di selezionare le tuple del prodotto cartesiano di due operandi che soddisfano una condizione: $A\theta B$.
+
+Ci permette di effettuare un join sugli attributi che vogliamo noi.
+
+Dove:
+- $\theta$ è un operatore di confronto
+- A è un attributo della prima relazione
+- B è un attributo della seconda relazione
+- $dom(A)=dom(B)$
+
+Ad es. $r_{1}\underbrace{ \triangleright\triangleleft }_{ A\theta B } r_{2}=\sigma_{A\theta B}(r_{1}\times r_{2})$
+
+## Condizione Negative
+
+![[Pasted image 20241003140032.png]]
+
+Quindi quando le informazioni che vogliamo non sono nella stessa relazione:
+1) Troviamo tutte le relazioni che contengono le informazioni
+2) Selezioniamo soltanto dei sottoinsiemi rilevanti per le interrogazioni
+3) Combiniamo le informazioni attraverso i valori che in delle tuple fanno riferimento ad altre tuple
