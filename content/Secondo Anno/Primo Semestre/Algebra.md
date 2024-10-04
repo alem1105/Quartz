@@ -647,3 +647,89 @@ Dobbiamo quindi dimostrare 3 punti:
 	
 	Se invece $j\neq j'$ allora $Y_{j}\cap Y_{j'}=\emptyset$ e questo, per lo stesso ragionamento visto prima implica che $(X_{i}\times Y_{j})\cap(X_{i'}\times Y_{j'})=\emptyset$.
 
+_Esercizio 12_
+
+> Sia $f:\{ 1,\dots,n \}\rightarrow \{ 1,\dots,m \}$ un'applicazione. Si provi che se $n>m$ allora $f$ non è iniettiva e se $n>m$ allora $f$ non è suriettiva.
+
+Iniziamo rappresentando graficamente il nostro problema per avere più chiarezza.
+
+In questo caso $n>m$ è impossibile che $f$ sia iniettiva dato che tutti gli elementi del dominio devono avere un'immagine nel codominio.
+
+![[Pasted image 20241004124447.png|300]]
+
+In questo caso invece $m>n$ e non possiamo avere $f$ suriettiva dato che un elemento del dominio può avere una sola immagine nel codominio e quindi alcuni elementi del codominio rimangono "scoperti" cioè senza controimmagine.
+
+![[Pasted image 20241004124716.png|300]]
+
+--- 
+
+Iniziamo mostrando che se $n>m\geq 1$ allora $f$ non è iniettiva $\forall f$ applicazione.
+
+Definiamo $E_{n}=\{ 1,\dots,n \}$, abbiamo bisogno delle seguenti proprietà:
+1) $E_{n}=E_{n-1}\bigsqcup\{ n \}$.
+2) $\forall m_{0}\in E_{m},\exists \ \ \  E_{m}\backslash\{ m_{0} \}\underset{\cong}{\xrightarrow{f}}E_{m-1}$ 
+3) Sia $X\xrightarrow{h}Y$ iniettiva allora il grafo $\Gamma$ di $h$ ha le proprietà che $\forall y\in Y,\text{ se }\exists x\in X\text{ con }(x,y)\in\Gamma$ allora $x$ è unico.
+
+Quindi:
+
+1) Per questa proprietà non abbiamo nulla da dimostrare infatti dato un insieme del tipo definito prima $E_{n}$ questo possiamo scriverlo come l'unione fra se stesso meno un elemento e l'insieme che contiene l'elemento mancante.
+
+2) L'applicazione $E_{m}\backslash\{ m_{0} \}\xrightarrow{f}E_{m-1}$ definita da:
+   
+   $$
+   f(x)=\begin{cases}
+x\ \text{ se  }\  x<m_{0} \\ \\
+x-1 \ \text{ se }\  x> m_{0}
+\end{cases}
+   $$
+   
+   è invertibile, infatti:
+   
+   $$
+   f^{-1}(y)=\begin{cases}
+y\ \text{ se  }\  y<m_{0} \\ \\
+y+1 \ \text{ se }\  y\geq m_{0}
+\end{cases}
+   $$
+   
+   _Esempi_
+   
+   ![[Pasted image 20241004131030.png|400]]
+   
+   Quindi esiste una funzione biiettiva definita come prima.
+
+3) Abbiamo $h$ iniettiva $\Leftrightarrow \forall y\in Y, h^{-1}(y)=\emptyset\text{ oppure singleton}$. Si ha che $\exists x\in X\ t.c.\ h(x)=y\Leftrightarrow h^{-1}(y)\neq \emptyset$ dato che nel grafo $\Gamma$ ci sono solo $(x,y) \ t.c.\ \exists x\in X$ quindi la possibilità del vuoto è esclusa e quindi $x$ è sicuramente unico.
+   
+   Allora in questo caso $(x,y)\in\Gamma\Leftrightarrow f(x)=y\Leftrightarrow\{ x \}=f^{-1}(y)$.
+
+---
+
+Adesso usiamo queste 3 proprietà per dimostrare il punto principale dell'esercizio.
+
+Se $m=1$ non ho nulla da dimostrare, infatti sto prendendo come dominio un insieme da almeno due elementi $(n>m)$ e come codominio un insieme con un solo elemento, l'applicazione non può essere iniettiva dato che tutti gli elementi hanno come immagine lo stesso elemento (Come abbiamo mostrato con il disegno sopra).
+
+Adesso per dimostrarlo in generale, supponiamo per assurdo che l'enunciato sia falso.
+
+Allora $\exists n_{o},m\text{ con } n_{0}>m>1 \ e \ g:E_{n_{0}}\rightarrow E_{m}$ iniettiva, questi $n_{0}$ li possiamo "collezionare" e quindi ne esiste uno che è il più piccolo possibile, focalizziamoci su questo elemento, dato che la nostra ipotesi dovrebbe funzionare sempre.
+
+Quindi adesso consideriamo $n_{0}$ come l'elemento più piccolo possibile adesso possiamo porre $m_{0}:=g(n_{0})\in E_{m}$
+
+Allora per la seconda proprietà sappiamo che $\exists E_{m}\backslash\{ m_{0} \}\underset{\cong}{\xrightarrow{f}}E_{m-1}$, quindi abbiamo $g$ iniettiva e $f$ biiettiva.
+
+Adesso dato che $n_{0}>m$ allora $n_{0}-1>m-1$ e dato che $m>1$ possiamo supporre $m\geq 1$, allora:
+
+$$
+E_{n_{0}-1}\underbrace{ \xrightarrow{g|_{E_{n_{0}-1}}}E_{m}\backslash\{ m_{0} \}\xrightarrow{f} }_{ g'=f\circ g|_{E_{n_{0}-1}} }E_{m-1}
+$$
+
+$g'$ non è iniettiva perché va da $E_{n_{0}-1}$ a $E_{m-1}$, e noi avevamo affermato che $n_{0}$ era il più piccolo valore per cui esisteva una funzione iniettiva.
+
+--- 
+
+Per la proprietà 3 sappiamo che sia $\Gamma'$ il grafo di $g'$ e $g'$ non è iniettiva allora $\exists y\in Y=E_{m-1}$ e $x_{1},x_{2}\in X=E_{n_{0}-1}\ x_{1}\neq x_{2}\ t.c. \ (x_{1},y),(x_{2},y)\in\Gamma'$, ovvero che esistono due valori del dominio diversi tali che hanno la stessa immagine.
+
+Questo implica che $g|_{E_{n_{0}-1}}$ non è iniettiva.
+
+_Da capire meglio:_
+
+Infatti $(x_{1},f^{-1}(y)),(x_{2},f^{-1}(y))$ appartengono al suo grafo $\tilde{\Gamma}$ , ma il grafo $\Gamma$ di $g$ è dato da $\tilde{\Gamma}\bigsqcup\{ (n_{0},m_{0}) \}$ che contiene sempre i due elementi visti prima, per cui $g$ non è iniettiva -> **contraddizione**.
