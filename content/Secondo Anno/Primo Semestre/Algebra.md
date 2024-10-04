@@ -676,21 +676,23 @@ Quindi:
 
 2) L'applicazione $E_{m}\backslash\{ m_{0} \}\xrightarrow{f}E_{m-1}$ definita da:
    
-   $$
-   f(x)=\begin{cases}
-x\ \text{ se  }\  x<m_{0} \\ \\
+$$
+f(x)=
+\begin{cases}
+x\ \text{ se  }\  x<m_{0} \\
 x-1 \ \text{ se }\  x> m_{0}
 \end{cases}
-   $$
+$$
    
    è invertibile, infatti:
    
-   $$
-   f^{-1}(y)=\begin{cases}
+$$
+f^{-1}(y)=
+\begin{cases}
 y\ \text{ se  }\  y<m_{0} \\ \\
 y+1 \ \text{ se }\  y\geq m_{0}
 \end{cases}
-   $$
+$$
    
    _Esempi_
    
