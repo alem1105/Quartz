@@ -565,3 +565,85 @@ $$
 \phi(X')=r\in Y=f(X)=f(Y)
 $$
 
+
+> [!NOTE] Congettura di Collatz
+> Spiegato a lezione non so di preciso perché, però è simpatico [wikipedia](https://it.wikipedia.org/wiki/Congettura_di_Collatz)
+
+_Esercizio_
+
+> Studiare l'applicazione $f:\mathbb{Z}\rightarrow\mathbb{Z}$ che ad $x\in\mathbb{Z}$ associa $f(x)=ax+1$. Al variare del parametro $a\in\mathbb{Z}$ dire quando la funzione è suriettiva e iniettiva.
+
+- Se $a=0$ allora $\forall x\in\mathbb{Z}$ abbiamo che $f(x)=1$ e quindi $f$ non è ne iniettiva ne suriettiva, infatti a $x$ diverse abbiamo immagini uguali (iniettività) e non tutto il codominio ha controimmagine (suriettività).
+
+- Se $a=1$, otteniamo che $f(x)=x+1$, ha anche una formula inversa $g(y)=y-1$ ed è quindi biiettiva, infatti:
+
+$(f\circ g)(y)=f(y-1)=(y-1)+1=y\Rightarrow f\circ g=Id_{\mathbb{Z}}$ e,
+
+$(g\circ f)(x)=g(x+1)=(x+1)-1=x\Rightarrow g\circ f=Id_{\mathbb{Z}}$
+
+- Se $a=-1$ con ragionamenti analoghi troviamo lo stesso risultato ovvero che $f$ è biiettiva
+
+- Se $a\not\in \{ 0 \}$ allora $f$ è iniettiva, infatti:
+  $f(n_{1})=f(n_{2})\Leftrightarrow an_{1}+1=an_{2}+1\Leftrightarrow \underbrace{ a(n_{1}-n_{2})=0\Leftrightarrow n_{1}-n_{2}=0 }_{ \text{Ricordiamo che a non può essere nullo} }\Leftrightarrow n_{1}=n_{2}$
+- Se $a\not\in \{ -1,0,1 \}$ $f$ non è suriettiva, infatti:
+
+$f^{-1}(\{ a \})=\emptyset$ infatti qualsiasi valore prendo per $a$ è impossibile che io copra tutto il codominio o comunque è impossibile che ci trovo $a$ stesso.
+
+Infatti se $f$ fosse suriettiva avremmo $\exists x\in \mathbb{Z} \ t.c.\ f(x)=a$ e quindi $f(x)=ax+1=a$ che per risolverla $a(x-1)=-1\rightarrow a(1-x)=1$.
+
+Per risolvere questa equazione in $\mathbb{Z}$ abbiamo solo due casi o $1\cdot 1$ oppure $-1\cdot (-1)$ e questo implica che $a\in \{ -1,1 \}$ ovvero un'ipotesi che abbiamo escluso all'inizio.
+
+_Esercizio preparazione al 21_
+
+Sia $\mathcal{P}=\{ X_{1},X_{2} \}$ una partizione di $X\neq \emptyset$ e $\mathcal{Q}=\{ Y_{1},Y_{2},Y_{3} \}$ una partizione di $Y\neq \emptyset$. Graficamente abbiamo una situazione come questa: 
+
+![[Pasted image 20241004113428.png|400]]
+
+Quindi per la definizione di partizione abbiamo che $X$ ha sicuramente 2 elementi e $Y$ ne ha sicuramente 3.
+
+**Obiettivo**: Mostrare che $\mathcal{R}=\{ X_{i}\times Y_{j}:i=1,2;j=1,2,3 \}$ è una partizione di $X\times Y$.
+
+Proviamo prima di tutto a rappresentare in modo grafico cosa vogliamo dimostrare:
+
+![[Pasted image 20241004113745.png|400]]
+
+Notiamo quindi che effettivamente è una partizione, adesso dobbiamo scriverlo in linguaggio matematico.
+
+Nel nostro caso possiamo scrivere che $X= \underset{i\in \{ 1,2 \}}\bigsqcup X_{i}$ e $Y=\underset{i\in \{ 1,2,3 \}}\bigsqcup Y_{i}$ con $\{ X_{1},X_{2},Y_{1},Y_{2},Y_{3} \}\cap \{ \emptyset \}=\emptyset$, ovvero dove nessun di questi insiemi è vuoto, inoltre poniamo $I=\{ 1,2 \}, J=\{ 1,2,3 \}$.
+
+Allora $\mathcal{R}=\{ X'\times Y':X'\in\mathcal{P},Y'\in\mathcal{Q} \}$=$\{ X_{1}\times Y_{1},X_{2}\times Y_{1},X_{1}\times Y_{2},X_{2}\times Y_{2},X_{3}\times Y_{1},X_{3}\times Y_{2} \}$.
+
+Dobbiamo quindi dimostrare 3 punti:
+
+1) $\forall(i,j)\in I\times J, X_{i}\times X_{j}\neq \emptyset$
+   
+   Ovvero nessuna partizione deve essere vuota, per dimostrare questo sappiamo che $X_{i}$ ed $Y_{j}$ sono partizioni rispettivamente di $\mathcal{P}$ e $\mathcal{Q}$ quindi non possono essere vuote e questo significa che non lo è nemmeno il loro prodotto cartesiano, possiamo quindi dire $(x,y)\in X_{i}\times Y_{j}\Rightarrow X_{i}\times Y_{j}\neq \emptyset$.
+   
+---
+
+2) $\forall(x,y)\in X\times Y \ \exists(i,j) \ t.c. \ (x,y)\in X_{i}\times Y_{j}$
+   
+   Quindi che ogni elemento del prodotto cartesiano è all'interno di una partizione.
+   
+   Dati $(x,y)\in X\times Y$ dato che $\mathcal{P}$ è una partizione allora l'elemento $x$ farà sicuramente parte di una partizione di $X$: $x\in X_{i} \ \exists i\in I$, inoltre per lo stesso ragionamento dato che $\mathcal{Q}$ è una partizione allora anche $y$ farà sicuramente parte di una partizione di $Y:y\in Y_{j} \ \exists j\in J$.
+   
+   Mettendo insieme le conclusioni possiamo dire che $(x,y)\in X_i\times Y_{j}$, ovvero che qualsiasi coppia $(x,y)$ del prodotto cartesiano farà sicuramente parte di una partizione.
+   
+---
+
+3) Se $(i,j)\neq(i',j')$ allora $X_{i}\times Y_{j}\cap X_{i'}\times Y_{j'}=\emptyset$
+   
+	Questo significa che due partizioni diverse non hanno elementi in comune.
+	
+	$(i,j)\neq(i',j')\Leftrightarrow i\neq i'\text{ oppure } j\neq j'$, vediamo entrambi i casi:
+	
+	Se $i\neq i'$ allora $X_{i}\cap X_{i'}=\emptyset$ dato che $\mathcal{P}$ è una partizione
+	
+	Calcoliamo allora $(X_{i}\times Y_{j})\cap(X_{i'}\times Y_{j'})$=
+	
+	$$
+	\{ (x,y):x\in \underbrace{ X_{i}\cap X_{i'} }_{ =\emptyset }\ \ ; \ \ y\in Y_{j}\cap Y_{j'}\} = \emptyset
+	$$
+	
+	Se invece $j\neq j'$ allora $Y_{j}\cap Y_{j'}=\emptyset$ e questo, per lo stesso ragionamento visto prima implica che $(X_{i}\times Y_{j})\cap(X_{i'}\times Y_{j'})=\emptyset$.
+

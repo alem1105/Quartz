@@ -603,5 +603,63 @@ P(E)=\frac{6 \cdot\binom{5}{2}}{\binom{11}{3}} = \frac{4}{11}
 $$
 
 
+_Esempio dei Compleanni_
 
+A quanto corrisponde la probabilità che due persone condividano lo stesso giorno di compleanno? Prendendo in considerazione soltanto anni da 365 giorni.
 
+$S=\{ (x_{1},x_{2}):x_{1},x_{2}\in \{ 1,2,\dots,365 \} \}$, $E=\{ (x_{1},x_{2})\in S:x_{1}=x_{2} \}=\{ (1,1),(2,2),\dots,(365,365) \}$.
+
+Allora $P(E)=\frac{365}{365^2}$ infatti ho una sola coppia fra le 365 di $E$ ed ho $365^2$ per scegliere i compleanni di due persone.
+
+Se abbiamo 3 persone?
+
+$S=\{ (x_{1},x_{2},x_{3}):x_{1},x_{2},x_{3}\in \{ 1,2,\dots,365 \} \}$, $E=\{ (x_{1},x_{2},x_{3})\in S: \exists i\neq j \text{ con }1\leq i,j\leq 3, x_{i}=x_{j}\}$
+
+Ma calcolare tutte le triplette con 3 valori uguali è molto complesso, è invece più semplice calcolare quelle con 3 valori distinti ovvero $E^c$ e poi per calcolare $P(E)$ svolgere $1-P(E^c)$.
+
+$E^c=\{ (x_{1},x_{2},x_{3})\in S:x_{1},x_{2},x_{3}\text{ sono distinti} \}$, per il principio fondamentale della combinatoria $|E^c|=365\cdot 364\cdot 363$, mentre $|S|=365^3$ e quindi:
+
+$$
+P(E)=1-\frac{365\cdot 364\cdot 363}{365^3}
+$$
+
+_In Generale per n persone:_
+
+$$
+P(E)=1-\frac{|E^c|}{|S|}=1-\frac{365\cdot 364\cdot \dots. \cdot (365-n+1)}{365^n}
+$$
+
+_Esercizio_
+
+Creare una commissione di 5 persone estratte da un gruppo composto da 6 uomini e 9 donne. Se scelgo le persone da bendato, quante sono le probabilità che la commissione sia formata da 3 uomini e 2 donne.
+
+$S=\{ A\subset G:|A|=5 \}$ dove $G=$ gruppo delle 15 persone totali.
+Dobbiamo calcolare quindi $P(E)=\frac{|E|}{|S|}$ dove $E=\{ A\subset G:|A|=5\wedge\text{A contiene 3U e 2D} \}$.
+
+Come visto in esempi precedenti ci conviene numerare tutte le persone in modo da distinguerle in questo modo otteniamo che per scegliere 3 uomini da un gruppo di 6 posso calcolare $\binom{6}{3}$ e per le donne $\binom{9}{2}$ in totale per formare un gruppo da 5 = $\binom{6}{3}\cdot \binom{9}{2}$.
+
+$|S|$ è più semplice dato che dobbiamo semplicemente scegliere 5 persone da un gruppo di 15 e quindi $\binom{15}{5}$, la probabilità è data quindi da:
+
+$$
+P(E)=\frac{|E|}{|S|}=\frac{\binom{6}{3}\cdot\binom{5}{2}}{\binom{15}{5}}=\frac{240}{1001}
+$$
+
+_Proviamo a tenere conto dell'ordine di scelta:_
+
+Allora $S=\{ (x_{1},x_{2},x_{3},x_{4},x_{5}):\forall i,\ x_{i}\in G,x_{1},\dots,x_{5}\text{ sono distinti} \}$.
+
+$|S|=15\cdot 14\cdot 13\cdot 12\cdot 11$.
+
+$E=\{ (x_{1},\dots,x_{5})\in S:\text{ci sono 3u e 2d} \}$.
+
+In questo caso non posso procedere subito con il principio fondamentale dato che se appunto inizio a calcolare $15\cdot 14\cdot ?$ a questo punto non so cosa scegliere, perché dipende dagli esiti precedenti, se ho scelto 2 donne devo scegliere un uomo ma se ho scelto 2 uomini posso scegliere sia una donna che 1 uomo, o altri casi ancora.
+
+Posso però stabilire in che posizione scelgo gli uomini e le donne ad esempio $(U_{*},D_{*},D_{*},U_{*},U_{*})$ in questo modo posso calcolare tutte le combinazioni di posizioni possibili con il coefficiente binomiale $\binom{5}{3}=\binom{5}{2}$ oppure calcolare le permutazioni della stringa e quindi $\frac{5!}{3!\cdot 2!}$, tutti e 3 i modi sono validi.
+
+A questo punto scelgo gli uomini nella cinquina con il principio fondamentale e quindi $6\cdot 5\cdot 4$, e poi scelgo le donne $9\cdot 8$. Mettendo tutto insieme:
+
+$$
+\frac{5!}{3!\cdot 2!}\cdot 6\cdot 5\cdot 4\cdot 9\cdot 8 =\frac{240}{1001}
+$$
+
+**Considerando o meno l'ordine, il risultato NON cambia, avrò sempre le stesse probabilità**

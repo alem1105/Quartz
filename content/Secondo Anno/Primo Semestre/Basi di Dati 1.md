@@ -417,7 +417,7 @@ Prendendo l'esempio di prima quindi, se due tuple concordano sul CodiceVolo (X) 
 # Algebra Relazionale
 **Linguaggio Formale** per interrogare una base di dati relazionale: Consiste in un insieme di operatori che possono essere applicati ad una o due relazioni e forniscono come risultato una nuova istanza di relazione.
 
-**Linguaggio Procedurale**: L'interrogazione consiste in un'espressione in cui compaiono operatori dell'algebra e istanze di relazioni della base di dati, in una sequenza che stabilisce l'ordine delle operazioni e i loro operandi.
+Inoltre è un **Linguaggio Procedurale**: L'interrogazione consiste in un'espressione in cui compaiono operatori dell'algebra e istanze di relazioni della base di dati, in una sequenza che stabilisce l'ordine delle operazioni e i loro operandi.
 
 ## Proiezione
 Consiste nell'effettuare un _taglio verticale_ su una relazione, ovvero selezionare soltanto alcuni attributi di essa.
@@ -630,7 +630,7 @@ Dove:
 - B è un attributo della seconda relazione
 - $dom(A)=dom(B)$
 
-Ad es. $r_{1}\underbrace{ \triangleright\triangleleft }_{ A\theta B } r_{2}=\sigma_{A\theta B}(r_{1}\times r_{2})$
+Ad es. $r_{1}\underset{ A\theta B }{\triangleright\triangleleft} r_{2}=\sigma_{A\theta B}(r_{1}\times r_{2})$
 
 ## Condizione Negative
 
