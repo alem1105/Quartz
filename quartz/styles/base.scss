@@ -63,19 +63,6 @@ ul,
   }
 }
 
-i {
-  color: #cf856f;
-}
-
-b{
-  color: #eccb8a;
-}
-
-strong {
-  font-weight: $semiBoldWeight;
-  color: #eccb8a;
-}
-
 a {
   font-weight: $semiBoldWeight;
   text-decoration: none;
@@ -154,7 +141,7 @@ a {
     }
 
     p > strong {
-      color: var(--dark);
+      color: #eccb8a;
     }
   }
 
@@ -320,9 +307,6 @@ blockquote {
   transition: border-color 0.2s ease;
 }
 
-h1,
-h2,
-h3,
 h4,
 h5,
 h6,
@@ -597,4 +581,17 @@ iframe.pdf {
   height: 100%;
   width: 100%;
   border-radius: 5px;
+}
+
+i {
+  color: #cf856f;
+}
+
+b{
+  color: #eccb8a;
+}
+
+strong {
+  font-weight: $semiBoldWeight;
+  color: #eccb8a;
 }
