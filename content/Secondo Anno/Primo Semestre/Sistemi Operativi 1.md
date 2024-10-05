@@ -700,3 +700,12 @@ _Process Image_ vista in memoria virtuale ovvero astraendo da come è realmente 
 ![[Pasted image 20241005130127.png]]
 
 La parte del _Process Control Block_ quindi ricordiamo **non** essere sotto il controllo del processo ma bensì del Sistema Operativo.
+
+
+# 1
+
+## 2
+
+### 3
+
+**BOLD** _ITALIC_
