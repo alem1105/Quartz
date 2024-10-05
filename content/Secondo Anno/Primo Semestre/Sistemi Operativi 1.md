@@ -408,9 +408,11 @@ Ogni livello si basa su quello più sotto, ad esempio il livello 4 può richiede
 
 
 > [!info] Architettura UNIX
+> 
 > ![[Pasted image 20240929173422.png|500]]
 > 
 > **Kernel Moderno:**
+> 
 > ![[Pasted image 20240929173554.png|500]]
 > 
 > Solo per info.
@@ -699,5 +701,186 @@ _Process Image_ vista in memoria virtuale ovvero astraendo da come è realmente 
 
 ![[Pasted image 20241005130127.png]]
 
-La parte del _Process Control Block_ quindi ricordiamo **non** essere sotto il controllo del processo ma bensì del Sistema Operativo.
+La parte del _Process Control Block_ quindi ricordiamo **non** essere sotto il controllo del processo ma bensì del Sistema Operativo. Da notare inoltre che l'ultima zona bianca in fondo è condivisa fra tutti i processi, infatti normalmente questo non potrebbe accadere ma se chi ha li ha scritto lo ha previsto allora è possibile.
 
+Il _Process Control Block_ quindi è una parte fondamentale del Sistema Operativo dato che descrive il suo stesso stato e proprio per questo richiede delle protezioni, un blocco non deve essere modificato in modo errato.
+
+## Modalità di Esecuzione
+Le avevamo accennate all'inizio, abbiamo la **kernel mode** dove si ha pieno controllo sul sistema, quindi possiamo accedere ovunque; e la **user mode** dove non possiamo accedere a zone di memoria protette, di solito viene usata per i programmi utente.
+Questo è anche un modo di protezione da utenti malintenzionati.
+
+### Kernel Mode
+È stata creata per le operazioni eseguite appunto dal kernel come ad esempio:
+- Gestione dei processi tramite PCB
+	- Creazione e terminazione
+	- Scheduling e dispatching
+	- Process Switching (La logica del dispatching)
+	- Sincronizzazione e comunicazione fra processi
+- Gestione della memoria principale
+	- Allocazione di spazio per i processi
+	- Gestione della memoria virtuale
+- Gestione I/O
+	- Gestione buffer e cache per I/O
+	- Assegnazione risorse I/O ai processi
+- Funzione di supporto
+	- Gestione di interrupt ed eccezioni, accounting e monitoraggio
+
+Spesso però i _programmi utente_ hanno bisogno degli I/O, per fare questo i programmi possono passare in modalità kernel per poi tornare in _user mode_.
+
+> [!summary] Da User Mode a Kernel Mode e ritorno
+> Un processo inizia sempre dalla _User Mode_, a seguito di un interrupt si porta a _Kernel Mode_:
+> - La prima cosa che fa l'hardware, prima ancora di copiare lo stato del processore, è cambiare la modalità, quindi adesso ci troviamo in modalità sistema.
+> 
+> A questo punto possiamo eseguire gli interrupt handler in modalità kernel, ed è proprio quello che vogliamo dato che questi si trovano nel kernel, che altrimenti sarebbe inaccessibile.
+> L'handler a questo punto una volta terminato, prima di restituire il controllo al processo, lo farà tornare in modalità utente.
+> > [!warning]
+> > Quando un processo va in modalità kernel può eseguire soltanto istruzioni presenti nel kernel stesso (software di sistema) e non comandi scritti nel suo codice sorgente.
+> > 
+> 
+
+L'interrupt handler può essere eseguito in diversi "modi", e in tutti questi dobbiamo essere in kernl mode:
+- Eseguito per conto dello stesso processo interrotto che lo ha esplicitamente voluto
+	- System calls oppure in risposta ad una sua richiesta di I/O
+- Eseguito per conto dello stesso processo interrotto ma non voluto:
+	- Errore fatale (_abort_): Il processo viene terminato
+	- Errore non fatale (_fault_): Trasparente rispetto al processo
+- Codice eseguito per conto di un altro processo
+	- È un caso particolare dove ad esempio un processo _A_ ha fatto richiesta di I/O e si trova adesso in stato _blocked_, se durante l'esecuzione di un altro processo _B_ viene eseguita la richiesta di _A_ allora l'interrupt viene eseguito per conto del processo _B_ ma è in risposta a quello che ha chiesto _A_. Questo è ormai "accettato" nei moderni sistemi operativi.
+
+## Creazione di un Processo
+Il Sistema Operativo deve:
+- Assegnargli un **PID**
+- Allocargli spazio in RAM
+- Inizializzare il suo **PCB**
+- Inserire il processo nella giusta coda, quindi se in _ready_ o _suspended_.
+- Creare o espandere strutture dati come ad esempio quelle per l'accounting
+
+## Switching tra Processi
+In questa logica di switching possono esserci alcuni problemi, ad esempio:
+- Quali fattori determinato uno switch?
+- Cosa deve fare il S.O. per tenere aggiornate tutte le strutture relative ai processi? (ad esempio le code _ready_)
+
+> [!warning] Switch modalità e switch processi
+> È importante non confondere le due cose, lo switch di modalità lo abbiamo visto prima e serve a permettere l'esecuzione degli handler in modalità sistema.
+> Lo switch tra processi è il meccanismo che decide quale processo mandare in esecuzione e quale in stato di sospensione.
+
+### Quando effettuare uno switch
+
+Questo può succedere quando il S.O. prende il controllo togliendolo al processo, questa cosa può accadere per vari motivi:
+
+![[Pasted image 20241005192035.png|500]]
+
+
+> [!abstract] Passaggi per switching fra processi
+> Ricordiamo che vanno tutti eseguiti in Kernel Mode
+> 1) Salvare il contesto del programma ovvero registri e PC (copiati nel PCB)
+> 2) Aggiornare il PCB attualmente in esecuzione
+> 3) Spostare il PCB nella coda appropriata
+> 4) Scegliere un altro processo da eseguire (potrebbe avvenire anche prima)
+> 5) Aggiornare il PCB del nuovo processo
+> 6) Aggiorna le strutture dati per la gestione della memoria
+> 7) Ripristina il conteso del processo (registri)
+> 
+> Notiamo quindi che escluso il processo 4 i primi 3 sono per un processo _A_ e gli ultimi 3 che fanno le stesse cose ma in ordine inverso sono per il nuovo processo _B_.
+
+## Esecuzione del SO
+
+> [!question] Il SO è un processo?
+> Il Sistema Operativo è un insieme di programmi ed è eseguito dal processore come ogni altro programma.
+> Molto spesso lascia che altri programmi vadano in esecuzione per poi riprendere il controllo tramite gli interrupt.
+> È un processo? Possiamo vedere che il comportamento è molto simile ma se si, come viene controllato?
+> 
+> **Dipende dal Sistema Operativo**
+
+### Kernel Separato
+
+![[Pasted image 20241005193546.png|300]]
+
+Il Kernel viene eseguito al di fuori dei processi, quindi in questo caso il sistema operativo **non è un processo**. Questo è **eseguito come entità separata** con privilegi elevati e zone di memoria riservate.
+
+### Kernel all'interno dei processi utente
+
+![[Pasted image 20241005193709.png|300]]
+
+In questo caso il Sistema Operativo viene eseguito nel contesto di un processo utente dopo un interrupt. Come visto prima questo interrupt è una parte del SO che viene eseguita e "delegata" al processo in esecuzione.
+
+**Comunque lo stack delle chiamate del processo e quello del SO è separato, questo per questioni di sicurezza**.
+
+Inoltre ricordiamo che non è necessario eseguire un process switch ma soltanto un mode switch.
+
+### Kernel basato sui Processi
+
+![[Pasted image 20241005194336.png|300]]
+
+Qui **tutto è un processo** anche gli interrupt del Sistema Operativo, l'unica cosa che non lo è sono le funzioni che permettono il **process switching**. In questo caso quindi anche i processi del sistema operativo si trovano all'interno delle varie code.
+
+### Linux - Misto tra 2 e 3
+Le funzioni del Kernel sono eseguito per lo più tramite interrupt per conto del processo corrente, ci sono però dei processi di sistema chiamati **kernel threads** che partecipano alla normale competizione del processore senza essere invocati, ci sono già all'accensione.
+
+Di solito sono periodici, quindi ogni "tot tempo" eseguono un'operazione come ad esempio:
+- Riorganizzare la RAM liberando spazio
+- Gestire dispositivi I/O
+- Operazioni di rete
+
+# Unix
+Usa il modello 2 dove la maggior parte del SO viene eseguito all'interno dei processi utente con le stesse tecniche che abbiamo visto prima.
+
+
+> [!info] Transizioni tra Stati dei Processi
+> 
+> ![[Pasted image 20241005195853.png|500]]
+> 
+> Qua abbiamo più stati ma il funzionamento è simile a quello visto prima.
+> Quando un processo chiama la funzione **fork** crea un processo figlio, va in _ready to run in memory_ dove è pronto per essere selezionate mentre se si trova in _ready to run swapped_ significa che si trova sul disco. Il running è diviso in _kernel running_ e _user running_ che indicano in che modalità è eseguito un processo, da notare che prima bisogna passare per la _kernel running_.
+> La _preemted_ indica quando togliamo il processore ad un processo prima che finisca, la _asleep in memory_ indica che non può essere eseguito finché non avviene un altro evento ma si trova comunque in memoria.
+> _Sleeping Swapped_ è come il precedente ma si trova in memoria.
+> Quando un processo finisce va nello stato _zombie_, più nello specifico quando un processo viene terminato deve mandare al suo padre un codice che indica la sua terminazione, finché non lo fa il processo figlio si trova in questo stato zombie. In questo stato inoltre non esiste più l'immagine del processo ma soltanto il suo PCB.
+
+## Il Processo Unix
+L'immagine di un processo Unix è divisa in diverse categorie.
+### Livello Utente
+Questi sono visti dai programmatori
+- Process Text: Codice Sorgente in linguaggio macchina
+- Process Data: Sezione di dati del processo ovvero i collegamenti ai valori delle variabili.
+- User Stack: Le chiamate del processo
+- Shared Memory: Memoria condivisa con altri processi se presente.
+
+### Livello Registro
+- Program Counter: Indirizzo della prossima istruzione del process text da eseguire
+- Processor status register: Registro di stato del processore, relativo a quando è stato swappato l'ultima volta
+- Stack Pointer: puntatore alla cima dello user stack
+- General purpose registers: Registri accessibili al programmatore, relativo a quando è stato swappato l'ultima volta.
+
+### Livello Sistema
+Gestire un proesso a livello di memoria
+
+- Process table entry: Puntatore alla tabella di tutti i processi che individua quello corrente
+- U Area: Informazioni per il controllo del processo
+- Process Region Table: Definisce il mapping tra indirizzi virtuali ed indirizzi fisici
+- Kernel Stack: Lo stack di chiamate separato da quello utente usato per le funzioni di sistema.
+
+**Formato del PCB di un processo UNIX**:
+
+![[Pasted image 20241005211418.png]]
+
+- Process Size: Indica la dimensione dell'immagine del file e **non** quella del PCB, quest'ultimo ha grandezza predefinita.
+- User Identification: Ad esempio se un processo è in esecuzione utente e va in modalità kernel, l'**effective user ID** diventa il "sistema operativo" mentre il **real user ID** rimane l'utente iniziale.
+- Event Descriptor: Indica perché il processo è in _asleep_
+- P_Link: Puntatore al prossimo processo in coda (coda ready o altre code).
+
+### Creazione di un Processo Unix
+- Viene effettuata una chiamata di sistema `fork()`
+- Il SO, in kernel mode:
+	1) Alloca una entry nella tabella dei processi
+	2) Assegna un PID al processo
+	3) Copia l'immagine del padre escludendo la memoria condivisa, una volta fatto questo sia padre che figlio vorranno eseguire la stessa istruzione successiva al fork.
+	4) Incrementa i contatori di ogni file aperto dal padre dato che ora sono anche del figlio
+	5) Assegna al processo lo stato _Ready to Run_
+	6) La fork ritorna il PID del figlio al padre e 0 al figlio, nello specifico all'interno del codice posso inserire un _if_ sul valore della fork, se è 0 sono nel figlio e posso eseguire le istruzioni che voglio, se non è 0 sono il padre e allora posso continuare con le vecchie istruzioni oppure ad esempio aspettare la terminazione del figlio.
+
+Quindi quando creiamo un processo figlio, inizialmente questo è una copia del padre, si è notato che è la cosa più efficiente dato che è la situazione più comune quella dove un figlio esegue una parte del codice del padre.
+
+Una volta creato, il kernel decide se continuare ad eseguire il padre, eseguire il figlio o un altro processo ancora.
+
+# Thread
+Circa 1:20:00
