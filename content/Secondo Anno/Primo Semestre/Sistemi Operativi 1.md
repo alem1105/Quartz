@@ -428,3 +428,274 @@ Quasi tutti i sistemi moderni sono a kernel monolitico ad eccezione di MacOS.
 Linux invece è principalmente monolitico ma ha dei moduli:
 - Alcune parti del sistema operativo possono essere caricate solo quando servono, la differenza è che in Linux cosa serve e cosa no lo decide l'utente e non il S.O.
 - Le cose che Linux non carica sono vari filesystem che non gestisce, driver per alcuni dispositivi, funzionalità di rete.
+
+---
+
+# I Processi
+Il compito fondamentale del Sistema Operativo è quello di **gestire i processi**, infatti ogni tipo di computazione può essere vista come _processo_.
+
+Il Sistema Operativo deve:
+- Permettere l'esecuzione di processi multipli in modo alternato, **interleaving**.
+- Assegnare risorse ai processi, come stampante, schermo, schede di rete, e inoltre proteggere da altri processi l'accesso a queste risorse.
+- Permettere lo scambio di informazioni tra processi.
+- Permettere la sincronizzazione tra processi.
+
+> [!info] Che cos'è un processo?
+> In modo semplice è un **programma in esecuzione**, ovvero quando un utente richiede la computazione svolta da quel programma.
+> Possiamo definirlo anche in altri modi, ad esempio un processo è un'istanza di un programma in esecuzione, e per alcuni programma possiamo avere anche più istanze ovvero più processi.
+> Ogni istanza viene assegnata ad un processore per l'esecuzione.
+> Ogni processo è caratterizzato da:
+> - Codice ovvero **una sequenza di istruzioni**
+> - Un insieme di dati
+> - Un numero di attributi che descrivono lo **stato del processo**
+> - Alcuni hanno anche delle **risorse associate** (stampante, rete, ecc...)
+
+Per adesso quando ci riferiamo ad un "_programma in esecuzione_" significa che un utente ha richiesto la sua esecuzione e che il programma non è ancora terminato, diciamo **per adesso** dato che più avanti vedremo altri casi di programmi in esecuzione.
+
+Questo non significa necessariamente che il processo è in esecuzione su un processore, ovvero dal momento in cui inizia fino al momento in cui termina, non è detto che sia sempre in esecuzione e molto spesso non è così; decidere quando mandare in esecuzione un processo sul processore abbiamo visto essere un ruolo fondamentale del Sistema Operativo.
+
+Dietro ad ogni processo c'è un programma:
+- Nei moderni S.O. di solito è memorizzato sul disco rigido.
+- Solo eseguendo un programma possiamo creare un processo ed eseguendo un programma creiamo **almeno un processo**.
+- Possono far eccezione a queste regole alcuni dei processi creati dal sistema operativo, questi non sono presenti nella memoria di massa ma nel _kernel_.
+
+## Fasi di un Processo
+Un processo ha 3 _macro-fasi_, **creazione, esecuzione, terminazione**:
+- La terminazione può essere **prevista**
+	- Un programma svolge dei calcoli e alla fine dell'ultima operazione si termina.
+	- Un programma viene terminato quando l'utente preme sulla "X" della finestra.
+	- Se l'utente non lo chiude, potrebbe anche rimanere per sempre in esecuzione.
+- **Non prevista**
+	- Il processo esegue un'operazione non consentita, viene generata un'eccezione che può portare alla chiusura forzata da parte del sistema operativo.
+- Da notare che la terminazione non è detto che sia sempre presente.
+
+## Elementi di un Processo
+Finché il processo è in esecuzione, ad esso sono associate delle informazioni:
+- Identificatore, uno per ogni processo.
+- Stato (esecuzione o anche altri).
+- Priorità, sarà utile per lo **scheduling**.
+- **Hardware Context**: È la situazione attuale dei registri della CPU, cioè i loro valori, fra questi è presente ad esempio il _Program Counter_.
+- Puntatori alla memoria RAM usata da questo processo, questa porzione prende il nome di **immagine del processo**.
+- Informazioni sullo stato input / output.
+- Informazioni di accounting, chi sta usando il processo.
+
+Ma come sono organizzate queste informazioni?
+
+Per ogni processo c'è un **Process Control Block**, questo contiene le informazioni viste prime e viene mantenuto nella zona di memoria riservata al _kernel_, questo significa quindi che nessun processo deve poter accedere a questa zona ma soltanto il Sistema Operativo.
+
+Questo Process Control Block quindi viene **creato e gestito dal sistema operativo** e permette a quest'ultimo di **gestire più processi contemporaneamente**, dato che il _blocco_ contiene sufficienti informazioni per bloccare l'esecuzione di un programma e farla riprendere più avanti sempre nello stesso punto in cui era stata fermata.
+
+> [!info] Trace di un processo
+> Il comportamento di un processo dipende dalle istruzioni che esegue, questa sequenza di istruzioni è detta **trace** ovvero **traccia del processo**.
+
+> [!info] Dispatcher
+> Il Dispatcher è un programma presente nel kernel che attraverso dei calcoli che vedremo più avanti decide quando sospendere un processo per mandarne in esecuzione un altro. Questo è presente sempre in memoria anche in sistemi _microkernel_.
+
+## Esecuzione di un Processo
+Si considerino 3 processi in esecuzione, quindi sono tutti presenti in memoria, ignoriamo la memoria virtuale:
+
+![[Pasted image 20241005110817.png|150]]
+
+Dal punto di vista di ciascuno dei processi, ognuno viene eseguito senza interruzioni fino al termine:
+
+![[Pasted image 20241005111008.png]]
+
+Adesso supponendo che su questo sistema ci sia soltanto un processo, in realtà i processi non sono stati eseguiti senza interruzioni:
+
+![[Pasted image 20241005111132.png|300]]
+
+Quindi sono stati eseguiti in ordine: A, Dispatcher, B, Dispatcher, C, Dispatcher, A, Dispatcher, C.
+Ogni programma è ripartito dall'ultima interruzione.
+
+Il vantaggio è per chi scrive i programmi dato che non devono preoccuparsi di queste interruzioni, infatti per il programma "non esistono". È ovviamente più difficile costruire un sistema operativo capace di fare ciò.
+
+## Modello dei Processi a 2 Stati
+Un processo visto in modo molto semplice può trovarsi in due stati:
+- In Esecuzione
+- Non in Esecuzione (ma comunque "attivo")
+
+![[Pasted image 20241005111554.png|500]]
+
+Da notare che un processo appena creato **non va subito in esecuzione**, deve mandarcelo il _Dispatcher_.
+
+Se ci fossero soltanto due stati a livello implementativo possiamo vederlo in questo modo:
+
+![[Pasted image 20241005111821.png|500]]
+
+Quindi c'è una coda dei processi _non in esecuzione_ dove il _dispatcher_ prende il processo in cima alla coda e lo mette in esecuzione sul processore e successivamente dalla CPU alla coda, questo ciclo continua finché un processo non finisce (se finisce).
+
+## Creazione di Processi
+In ogni istante in un sistema operativo **c'è sempre almeno 1 processo in esecuzione**, infatti come minimo è in esecuzione un gestore dell'interfaccia, che sia grafica o solo testuale.
+
+Se l'utente da un comando, quasi sempre viene creato un nuovo processo, ad esempio clicchiamo con il mouse su un programma oppure tramite un comando.
+
+> [!info] Process Spawning: Un processo crea un altro processo
+> Il processo **padre** è il processo originale ovvero quello che nell'esempio di prima è il gestore dell'interfaccia, mentre il processo **figlio** è quello nuovo appena creato.
+> Il vecchio processo è comunque in esecuzione e quindi si passa da $n$ processi a $n+1$.
+> Potrebbero anche crearsi più processi figli.
+
+## Terminazione di un Processo
+Abbiamo visto prima che c'erano più modi di terminazione, nel caso di un **normale completamento** del processo questo avviene tramite una particolare **istruzione macchina** che si chiama _HALT_, questa genera un'interruzione per il S.O.
+
+In linguaggi di programmazione ad alto livello questa viene invocata da *system call* come _exit_. Inoltre questa istruzione per terminare il programma di solito viene inserita automaticamente nei compilatori dopo l'ultima istruzione del _main_ del programma.
+
+L'altro caso era una terminazione forzata che chiamiamo **uccisioni** e possono avvenire:
+- Dal S.O. per errori come la terminazione di memoria o altri errori fatali.
+- Dall'utente come ad esempio premendo la "X" della finestra.
+- Da un altro processo, ad esempio dal terminale uccidiamo un altro processo.
+
+In entrambi i casi sicuramente diminuiamo il numero dei processi, però ci sarà sempre un processo **master** che non può essere terminato a meno che non si spenga il computer.
+
+## Modello dei Processi a 5 Stati
+
+![[Pasted image 20241005113110.png]]
+
+Adesso al posto dello stato _not running_ ne consideriamo altri 2, uno chiamato _ready_ e l'altro _blocked_, da notare che si potrebbe anche andare da _blocked_ ad _exit_ in alcuni casi di terminazione forzata.
+
+Il funzionamento è molto simile a prima, quindi:
+- Appena avviato non va subito in esecuzione ma in _Ready_.
+- Il Dispatcher decide quando mandarlo in _Running_ e anche quando farlo tornare in _Ready_.
+- Come visto prima, se ad esempio un programma deve aspettare un dispositivo I/O allora viene mandato in _Blocked_ cioè in attesa. Dopo che l'attesa è finita il processo torna in _Ready_.
+
+**Per il Dispatcher quindi non avrebbe senso mandare in Running un processo Blocked**.
+
+A livello implementativo possiamo vederlo così:
+
+![[Pasted image 20241005113707.png]]
+
+Basta quindi aggiungere una cosa per i processi in attesa.
+
+Possiamo migliorare questa implementazione nel seguente modo:
+
+![[Pasted image 20241005113818.png]]
+
+In questo modo abbiamo diverse code per ogni tipo di blocco, quindi ad esempio i processi in attesa della stampante si trovano sulla stessa coda; quelli in attesa di un input dalla tastiera sono sulla stessa coda ecc...
+
+In questo modo quando un blocco termina il Sistema Operativo può prendere il primo processo della coda corrispondente invece di andarlo a cercare in una coda generale come nell'implementazione precedente, questo quindi migliora le prestazioni.
+
+## Processi Sospesi
+Prima abbiamo detto che tutti i processi si trovano sulla RAM quando sono in esecuzione o bloccati, non sempre è così.
+
+Quando i processi sono in attesa di I/O questi abbiamo visto andare in stato di _blocked_, questo significa che stanno sprecando memoria RAM dato che non stanno svolgendo operazioni. Lo stato _blocked_ per alcuni processi diventa _suspended_ e quando questo accade il processo viene spostato("swappato") dalla RAM al disco rigido.
+
+Vengono introdotti due nuovi stati:
+- **blocked / suspended** ovvero quando viene swappato mentre era bloccato.
+- **ready / suspended** quando invece viene swappato mentre non era bloccato. (anche un processo pronto può venire sospeso per alcune ragioni)
+
+Quindi otteniamo in totale un **modello dei processi a 7 stati**:
+
+![[Pasted image 20241005121203.png]]
+
+Appena il processo viene creato va fatta subito una scelta da parte del S.O. ovvero se mandare il processo in stato di _ready_ e quindi metterlo in RAM oppure se caricarlo sul disco in stato di _ready / suspended_, poi come prima il _dispatcher_ decide chi mandare in esecuzione e chi lasciare in _ready_; se ci sono attese vengono mandate i processi in _blocked_ e questo viene "sbloccato" solo quando l'evento che si sta aspettando accade.
+
+Viene aggiunto che un programma _blocked_ potrebbe essere mandato in _blocked / suspended_ oppure che un programma in esecuzione venga mandato in _ready / suspended_, inoltre da notare che un programma _blocked / suspended_ può anche andare in _ready / suspended_ e quindi rimanere sul disco.
+
+**Da notare anche che da qualsiasi stato si può passare ad Exit, ad esempio se un processo ne uccide un altro**.
+
+### Motivi per Sospendere un Processo
+- Swapping: Il S.O. ha bisogno di memoria per eseguire un programma _ready_.
+- Interno al S.O.: Il S.O. sospetta che il processo stia causando problemi.
+- Richiesta utente interattiva: Ad esempio quando eseguiamo debugging, oppure collegato all'uso di risorse.
+- Periodicità: Il processo è stato pensato per eseguire poche istruzioni solo qualche volta al giorno (ad esempio monitoraggio per accounting), quindi durante il tempo in cui non esegue nulla non c'è motivo di tenerlo in RAM.
+- Richiesta del padre: Il processo padre vuole sospendere l'esecuzione del figlio per esaminarlo o modificarlo oppure per coordinarlo con altri figli.
+
+## Processi e Risorse
+![[Pasted image 20241005122210.png]]
+
+Vediamo che più processi quindi possono richiedere l'utilizzo delle stesse risorse, ad esempio la prima risorsa I/O possiamo dire che è esclusiva ovvero può essere utilizzata da un solo processo alla volta, infatti la sta utilizzando $P_{1}$ e $P_{2}$ è in attesa (freccia tratteggiata). Mentre altre risorse possono essere usate contemporaneamente come ad esempio la memoria, ovviamente non le stesse locazioni nello stesso momento ($P_n$ infatti sta aspettando per delle zone di memoria).
+
+# Strutture di Controllo del S.O.
+Dato che il Sistema Operativo gestisce l'uso delle risorse di sistema da parte dei processi ma anche le risorse che questi utilizzano deve conoscere lo stato di ogni processo e di ogni risorsa. Per fare questo il S.O. crea **una o più tabelle per ogni entità da gestire**.
+
+Con un livello di astrazione molto alto possiamo vederlo in questo modo:
+
+![[Pasted image 20241005122641.png|500]]
+
+Per ora noi abbiamo visto soltanto i **Process Control Block** e sono i blocchi che vediamo in _Primary Process Table_, uno per ogni processo, le _process image_ sempre come visto prima sono le zone di memoria che utilizzano i corrispettivi processi, questa non si trova quindi nel _PCB_.
+
+Da ricordare inoltre che tutto questo è **contenuto nel kernel** e quindi non accessibile ai processi.
+
+> ***!!! Tutte le tabelle di seguito verranno approfondite più avanti nel corso !!!***
+
+## Tabelle di Memoria
+Sono usate per la gestione della memoria principale e secondaria, la secondaria serve per la **memoria virtuale**. Contengono diverse informazioni:
+- Allocazione di memoria principale da parte dei processi.
+- Allocazione di memoria secondaria da parte dei processi.
+- Attributi di protezione per l'accesso a zone di memoria condivisa
+- Informazioni per gestire la memoria virtuale
+
+## Tabelle per I/O
+Sono usate per gestire i dispositivi I/O:
+- Sapere se il dispositivo è disponibile
+- Stato dell'operazione I/O
+- La locazione di memoria principale usata come sorgente o destinazione dell'operazione di trasferimento I/O
+
+## Tabelle dei File
+Hanno informazioni su:
+- Esistenza dei file
+- Locazione di memoria secondaria
+- Stato correnti
+- Altri attributi come nome ecc...
+Queste sono memorizzate su disco e una parte in RAM.
+
+## Tabelle dei Processi
+Il SO deve sapere:
+- Stato del processo
+- Identificatore
+- Locazione di memoria
+- altre info...
+Tutte queste informazioni si trovano nel **PCB** e queste informazioni prendono il nome di **attributi del processo**.
+
+Si dice **process image** "quello che vede il programmatore" o anche il processo vero e proprio quindi, come visto anche prima è la zona di memoria RAM utilizzata quindi:
+- Programma sorgente
+- Dati (variabili)
+- Stack delle chiamate
+Questi 3 visti si trovano in RAM mentre
+- Il PCB si trova nel kernel
+
+Da notare che se eseguiamo un'istruzione l'immagine del processo cambia, ad esempio viene modificata una cella di memoria o un registro, l'unica eccezione a questa regola è un _jump_ sulla stessa istruzione, infatti qualsiasi altra istruzione come minimo deve modificare il _Program Counter_.
+
+## Attributi dei Processi
+Le informazioni contenute in un _PCB_ possono essere raggruppate in 3 categorie:
+- Identificazione
+- Stato
+- Controllo
+
+Per identificare un processo abbiamo visto che gli viene assegnato un identificativo unico che si chiama **PID (Process IDentifier)**, un numero positivo che gli viene assegnato. Molte tabelle del SO usano i PID per realizzare collegamenti fra le varie tabelle e quella dei processi, ad esempio per tenere conto di quella processo sta utilizzando una determinata risorsa.
+
+> [!warning] Stato del Processo e Stato del Processore
+> È importante non confondere le due cose, gli stati del processo sono quelli visti prima come ad esempio _ready, blocked ecc..._ mentre lo stato del processore è il contenuto dei suoi registri, le sue **informazioni di stato**.
+
+## Process Control Block
+Contiene le informazioni necessarie al SO per controllare e coordinare i vari processi attivi.
+
+- **Identificatori**
+	- PID del processo
+	- PID del processo padre ovvero PPID (Parent PID)
+	- Identificatore dell'utente che lo ha avviato
+- **Informazioni sullo stato del Processore**, queste informazioni possono essere copiate sul PCB (RAM):
+	- Registri utente (accessibili dai programmatori)
+	- Program Counter
+	- Stack Pointer
+	- Registri di Stato
+- Informazioni di **controllo del processo**:
+	- Stato (_ready, blocked,..._)
+	- Priorità e altre info per lo scheduling (ultima volta che è stato eseguito ad esempio)
+	- L'evento da attendere per tornare _ready_ se in attesa.
+- Supporto per strutture dati:
+	- Puntatori ad altri processi
+	- Questi puntatori possono servire ad esempio a mantenere delle [[Strutture Dati#Liste Semplici con Puntatori|liste puntate]] di processi, come abbiamo visto per l'attesa delle risorse.
+- Comunicazione tra processi
+	- Flag, segnali e messaggi per supportare la comunicazione.
+- Permessi Speciali (a cosa può accedere il processo)
+- Gestione della Memoria
+	- **Puntatori** ad aree di memoria (**NON memoria effettiva**) che gestiscono l'utilizzo della memoria virtuale.
+- Uso delle risorse
+	- File aperti
+	- Uso di altre risorse come il processore o altri componenti
+
+_Process Image_ vista in memoria virtuale ovvero astraendo da come è realmente utilizzata (non sono tutte vicine queste informazioni):
+
+![[Pasted image 20241005130127.png]]
+
+La parte del _Process Control Block_ quindi ricordiamo **non** essere sotto il controllo del processo ma bensì del Sistema Operativo.
