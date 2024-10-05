@@ -16,7 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "en-US",
-    baseUrl: "quartz.jzhao.xyz",
+    baseUrl: "alem1105.github.io/Quartz",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "created",
     theme: {
@@ -40,11 +40,11 @@ const config: QuartzConfig = {
           textHighlight: "#fff23688",
         },
         darkMode: {
-          light: "#161618",
+          light: "#2d3440", //161618
           lightgray: "#393639",
           gray: "#646464",
-          darkgray: "#d4d4d4",
-          dark: "#ebebec",
+          darkgray: "#ffffff", // d4d4d4
+          dark: "#ffffff", //ebebec
           secondary: "#7b97aa",
           tertiary: "#84a59d",
           highlight: "rgba(143, 159, 169, 0.15)",

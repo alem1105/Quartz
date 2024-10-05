@@ -666,6 +666,7 @@ Per identificare un processo abbiamo visto che gli viene assegnato un identifica
 > [!warning] Stato del Processo e Stato del Processore
 > È importante non confondere le due cose, gli stati del processo sono quelli visti prima come ad esempio _ready, blocked ecc..._ mentre lo stato del processore è il contenuto dei suoi registri, le sue **informazioni di stato**.
 
+
 ## Process Control Block
 Contiene le informazioni necessarie al SO per controllare e coordinare i vari processi attivi.
 
