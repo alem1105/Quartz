@@ -2,7 +2,7 @@
 
 // put your custom CSS here!
 
-strong {
+strong, .page article p > strong {
     color: #eccb8a;
 }
 
@@ -26,4 +26,4 @@ img {
     display: block;
     margin-left: auto;
     margin-right: auto;
-  }
+}
