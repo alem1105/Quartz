@@ -883,4 +883,135 @@ Quindi quando creiamo un processo figlio, inizialmente questo è una copia del p
 Una volta creato, il kernel decide se continuare ad eseguire il padre, eseguire il figlio o un altro processo ancora.
 
 # Thread
-Circa 1:20:00
+Per ora abbiamo visto che ci sono più processi che si alternano lo stato di esecuzione sul computer, però non è sempre così, alcune applicazioni sono organizzate in modo parallelo e non perché lo decide il SO ma perché lo ha deciso il programmatore dell'applicazione, ogni esecuzione dell'applicazione si chiama **Thread** e ad esempio per un'applicazione grafica possiamo avere:
+- Un thread per gli input del mouse
+- Uno per disegnare su schermo
+- Un altro per effettuare i calcoli richiesti
+
+Ricordiamo che di per sé è un **processo unico** ma ci sono **più threads**.
+
+Diversi threads di uno stesso processo condividono tutte le risorse del processo tranne **lo stack delle chiamate** e **il processore** quindi se non ho abbastanza processori non è detto che tutti i thread vadano in esecuzione. Per le altre risorse invece se un thread ad esempio ha accesso ad un dispositivo I/O allora a questo dispositivo ha accesso l'intero processo.
+
+Il concetto di processo come visto prima ha 2 caratteristiche principale:
+- **Gestione delle risorse** che per quanto riguarda i processi vanno visti come blocco unico
+- **Scheduling** ovvero che i processi possono contenere diverse _tracce_ ovvero diversi _threads_
+Nel caso di più threads vanno trattati in maniera diversa.
+
+_Diversi casi nei Sistemi Operativi_:
+
+![[Pasted image 20241006093724.png|500]]
+
+_A Livello di Gestione:_ ^2d677e
+
+![[Pasted image 20241006093908.png|500]]
+
+Quindi in un sistema a singolo thread è gestito come abbiamo visto fino ad adesso con un PCB per ogni processo e i 2 stack.
+
+Su un sistema multithread abbiamo un PCB del processo, la _User Address Space_ che è la parte in comune fra tutti i thread, quindi variabili globali ecc.., e per ogni thread la gestione di quel thread quindi un **Thread Control Block** che serve a gestire lo scheduling fra questi e poi due stack separati per ogni thread, uno utente e uno kernel mode.
+
+> [!info] Vantaggio dei Thread
+> Prima abbiamo visto che è possibili creare più processi figli da un padre, a cosa servono quindi i Thread?
+> 
+> Questi sono più efficienti, è inoltre più semplice crearli, terminarli e fare lo switching.
+> 
+> Ogni processo viene creato con un thread al suo interno, dopo il programmatore può _creare_ altri thread con una chiamata di sistema (più leggera del fork dato che ha meno istruzioni da fare, non crea tutti gli spazi necessari per un processo), può _bloccare_ un thread per metterlo in attesa di altre operazioni, quindi c'è anche un _unblock_, infine con _finish_ si può eliminare un thread.
+> 
+> Ricordiamo che tutte queste operazioni vengono svolte all'interno dello stesso processo e che un processo deve sempre avere almeno un thread.
+
+
+## ULT vs KLT
+
+> [!info] Differenza nel sistema
+> Bisogna fare una differenza fra Thread a livello Utente (ULT) e Thread a livello di Sistema (KLT)
+> 
+> ![[Pasted image 20241006094654.png]]
+> 
+> Nel primo caso vediamo che se ci sono Thread a livello utente, per il sistema operativo i thread non esistono, ci sono delle librerie a livello utente che gestiscono i thread.
+> 
+> Nel secondo caso, il sistema operativo prevede i thread anche a livello di kernel e quindi li "vede".
+> 
+> Nel terzo caso vediamo come si potrebbero usare entrambe le cose.
+> 
+> Nella maggior parte dei sistemi operativi moderni si utilizza il secondo metodo, quindi il sistema operativo è a conoscenza dei thread.
+> 
+
+**Meglio ULT perché:**
+- Switch più efficiente dato che per thread dello stesso processo non è richiesto il mode switch.
+- Scheduling diverso per ogni applicazione utente
+- Permettono di usare i thread anche su sistemi operativi che non li supportano.
+**Peggio ULT perché**:
+- Se un thread si blocca, si bloccano tutti quelli di quel processo (a meno che non sia per un _block_) mentre con i KLT si blocca solo quel thread. Questo avviene perché il Sistema operativo con gli ULT non è a conoscenza dei thread.
+- Se ci sono più processori o cores, tutti i thread del processo ne possono usare soltanto uno sempre per lo stesso motivo di prima.
+- Se il sistema operativo non ha i KLT non può usarli nemmeno per le operazioni di sistema.
+
+## Processi e Thread in Linux
+In Linux di base ci sono i Thread che in questo caso prendono il nome di **LWP (Litghtweight Process)**, sono inoltre possibili sia gli ULT che i KLT, i KLT vengono usati dal sistema operativo mentre gli ULT sono scritti dagli utenti che se necessario vengono mappati in KLT con delle librerie (pthreads).
+
+A livello di identificazione c'è da notare che **utente e sistema sono termini diversi**.
+
+Se usiamo `ps -e` sul terminale possiamo vedere i processi in esecuzione:
+- PID: Questo è unico per tutti i thread di un processo
+- TID: Identifica ogni singolo thread
+- Il TID non è un semplice numero che va da 1 a $n$ con $n$ il numero di thread di quel processo, infatti c'è sempre un thread per il quale il TID coincide con il PID
+
+**Perché?**
+
+- Il PID (come entry del PCB) è unico per ogni thread, questo perché come visto prima per Linux ci sono soltanto thread.
+- L'entry del PCB che dà il PID comune a tutti i thread dello stesso processo è il **tgid (thread group identifier)** e questo coincide con il PID del primo thread creato dal processo.
+
+> [!question] Esempio
+> Creiamo un processo che ha quindi un thread, questi hanno lo stesso PID se adesso creiamo un nuovo thread questo avrà un nuovo PID ma il tgid di questo nuovo thread è uguale a quello dei precedenti.
+
+- Una chiamata a `getpid()` non restituisce il PID ma il tgid ovvero il PID del processo di cui fa parte
+- Per processi con un solo thread, `tgid e PID` coincidono.
+- C'è un PCB per ogni thread, è quindi diverso dalla [[#^2d677e|foto vista prima]], quindi ogni _thread control block_ è all'interno del PCB, questo porta a una ripetizione di informazioni per thread dello stesso processo, ma dato che sono solo puntatori non è così alto lo spazio sprecato.
+- Il comando `ps` visto prima confonde un po', il PID che ci mostra è a tutti gli effetti il `tgid`, il PID vero viene identificato come _LWP o SPID o TID_.
+
+_PCB di LINUX_:
+
+![[Pasted image 20241006101844.png|500]]
+
+All'interno troviamo il PID, univoco per ogni thread, e il tgid. Le frecce indicano i puntatori.
+
+All'interno notiamo un puntatore ad una struttura **thread info**, questa è organizzata per contenere anche il _kernel stack_ ovvero lo stack da usare quando il thread passa a modalità sistema.
+
+Nell'immagine non è riportato ma c'è un puntatore **thread group (lista concatenata)** che ci permette di rintracciare gli altri thread dello stesso processo.
+
+**parent e real_parent** puntano al padre del processo e inoltre ci sono anche altri puntatori a **fratelli e figli**.
+
+**Processi Parenti:**
+
+![[Pasted image 20241006102816.png|500]]
+
+> [!info] Stati dei processi Linux
+> È sostanzialmente il modello a 5 stati, non ci sono processi suspended, o meglio potrebbero esserci ma non per scelta del SO.
+> 
+> Ci sono diversi stati:
+> - `TASK_RUNNING`: include sia ready che running, quindi sono tutti "running".
+> - `TASK_INTERRUPTIBLE, TASK_UNINTERRUPTIBLE, TASK_STOPPED, TASK_TRACED:` Sono tuttti blocked la differenza la fa soltanto il motivo per cui lo sono.
+> - `EXIT_ZOMBIE, EXIT_DEAD`: Sono entrambi Exit, zombie ha lo stesso significato di Unix
+
+## Segnali ed Interrupt in Linux
+È importante **non confondere** segnali ed interrupt o eccezioni:
+- I segnali possono essere inviati **da un processo utente** ad un altro tramite _syscall_ (di solito con _kill_ che non sempre uccide il processo).
+- Quando questo succede il segnale appena ricevuto viene aggiunto al PCB di chi lo riceve (campo _signal pending_)
+
+Cosa succede poi?
+
+- Quando il processo viene mandato in esecuzione, il kernel per prima cosa controlla se ci sono segnali in attesa.
+- Se si, viene chiamato il **signal handler** eseguito in **modalità utente**.
+- I Signal Handler possono essere anche **di sistema**, questi sono sovrascritti dagli handler definiti dal programmatore, alcuni handler di sistema non possono essere sovrascritti.
+- **Anche gli handler di sistema sono eseguiti in modalità utente**.
+
+I gestori di interrupt ed eccezioni sono eseguiti invece in **modalità kernel**.
+
+- I segnali possono essere anche inviati da un processo che si trova in modalità sistema, spesso però se accade significa che sia dovuto ad un interrupt a monte, _esempio_:
+  
+  Eseguiamo un programma C scritto male, che accede ad una zona di memoria senza averla richiesta. Viene generata un'eccezione, successivamente viene eseguito il corrispondente handler in modalità kernel che manda un segnale `SIGSEGV` al processo colpevole.
+  
+  La prossima volta che verrà mandato in esecuzione il processo il kernel vedrà dal PCB che c'è un segnale in attesa ed eseguirà l'azione corrispondente, di default è la terminazione del processo ma l'utente può riscriverla, in ogni caso questa azione è eseguita in **modalità utente**. Ovviamente per la terminazione viene chiamata un'altra syscall che verrà eseguita in modalità kernel.
+
+In breve quindi:
+- I Signal Handler sono eseguiti in user mode mentre gli interrupt handler in kernel mode.
+- I signal handler potrebbero essere riscritto dal programmatore mentre gli interrupt handler no. (Anche 2 signal handler non possono essere riscritti `SIGKILL e SIGSTOP`).
+
