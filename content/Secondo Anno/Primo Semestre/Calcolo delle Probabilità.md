@@ -663,3 +663,14 @@ $$
 $$
 
 **Considerando o meno l'ordine, il risultato NON cambia, avrò sempre le stesse probabilità**
+
+## Principio di Inclusione / Esclusione
+
+- Con 2 eventi: $P(A\cup B) = P(A)+P(B)-P(A\cap B)$
+- Con 3 eventi: $P(A\cup B\cup C)=P(A)+P(B)+P(C)-P(A\cap B)-P(A\cap C)-P(B\cap C)+P(A\cap B\cap C)$
+- Con $n$ eventi: (***!!! NON FA PARTE DEL PROGRAMMA !!!***) 
+
+$$
+P\left( \bigcup_{i=1}^{n}E_{i} \right)=\sum_{i=1}^nP(E_{i})-\sum_{i\leq i\leq j\leq n}P(E_{i}E_{j})+\sum_{1\leq i\leq j\leq k\leq n}P(E_{i}\cap E_{j}\cap E_{k})\dots(-1)^nP(E_{1}\cap E_{2}\cap E_{n})
+$$
+
