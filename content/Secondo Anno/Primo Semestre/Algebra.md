@@ -735,3 +735,157 @@ Questo implica che $g|_{E_{n_{0}-1}}$ non è iniettiva.
 _Da capire meglio:_
 
 Infatti $(x_{1},f^{-1}(y)),(x_{2},f^{-1}(y))$ appartengono al suo grafo $\tilde{\Gamma}$ , ma il grafo $\Gamma$ di $g$ è dato da $\tilde{\Gamma}\bigsqcup\{ (n_{0},m_{0}) \}$ che contiene sempre i due elementi visti prima, per cui $g$ non è iniettiva -> **contraddizione**.
+
+# Anelli
+Possiamo prendere come esempio di anello l'insieme dei numeri relativi $\mathbb{Z}$.
+
+
+> [!info] Definizione Anello
+> Un **anello commutativo unitario** è una sestupla del tipo $(A,+,-,\cdot,0_{A},1_{A})$.
+
+Prendendo come esempio $\mathbb{Z}$ abbiamo che:
+- $A$ è un insieme $\neq\emptyset$
+- $+,\cdot$ sono applicazioni $A\times A\rightarrow A$ dette _somma e moltiplicazione_
+- $-$ è un'applicazione $A\rightarrow A$, e si chiama _opposto_; abbiamo che $a+(-a)=0$
+- $0_{A}$ è l'elemento neutro per l'operazione $+$
+- $1_{A}$ è l'elemento neutro per l'operazione $\cdot$
+
+Nel caso della moltiplicazione abbiamo che:
+
+$$
+a\cdot b=\begin{cases*}
+\text{se } b=0\rightarrow_{0}\\
+\text{se } b>0\rightarrow \underbrace{ a+\dots+a }_{ b\text{ volte} }\\
+\text{se } b<0 \rightarrow(-a)\cdot(-b)\text{ che è ben definita dall'opposto}
+\end{cases*}
+$$
+
+
+Deve soddisfare varie proprietà e le dividiamo in due categorie:
+
+1) **Proprietà Commutativa per la Somma**: $\forall a,b\in A,a+b=b+a$
+2) **Associatività dell'addizione**: $\forall a,b,c\in A,(a+b)+c=a+(b+c)$
+3) **Elemento Neutro addizione**: $\exists 0_{A}\in A \ t.c.\ \forall a\in A,a+0_{A}=0_{A}+a=a$
+4) **Elementro Opposto**: $\forall a\in A \ \ \exists(-a) \ t.c.\ a+(-a)=0_{A}$
+
+Queste 4 proprietà ci spiegano che $(A,+,-,0_{A})$ è un **gruppo commutativo abeliano**.
+
+5) **Commutatività moltiplicazione**: $\forall a,b\in A \ \ a\cdot b=b\cdot a$, grazie a questa si dice che l'anello è **commutativo**
+6) **Associtatività moltiplicazione**: $\forall a,b,c\in A \ \ (a\cdot b)\cdot c=a\cdot(b\cdot c)$, A è **associativo**
+7) **Elemento neutro moltiplicazione**: $\exists \ 1_{A}\in A \ t.c.\ \forall a\in A,a\cdot 1_{A}=1_{A}\cdot a=a$, si dice che A è **unitario**
+8) **Proprietà distributiva**: $\forall a,b,c\in A, a\cdot(b+c)=a\cdot b+a\cdot c$
+
+$(\mathbb{Z},+,\cdot)$ è un **anello commutativo unitario**. Questo perché l'addizione lo è sempre, quindi dobbiamo guardare se valgono le operazioni per la moltiplicazione.
+
+> [!info] Elementi Neutri
+> Se gli elementi neutri di moltiplicazione e addizione coincidono allora l'anello è un singleton 0. Se $1_{A}=0_{A}$ allora $A=\{ 0 \}$.
+
+Esistono anche altre due proprietà che valgono per $\mathbb{Z}$:
+
+**Proprietà di Tricotomia**:
+
+Esiste un sottoinsieme $\mathbb{N}^*\subset\mathbb{Z}$ che permette di definire una relazione su $\mathbb{Z}$:
+
+$$
+a>b\Leftrightarrow a-b\in\mathbb{N}^*
+$$
+
+Infatti:
+
+$$
+\forall a\in\mathbb{Z} \text{ si ha } \begin{cases*}
+a\in N^* \text{ oppure}
+\\ a=0 \text{ oppure } \\
+-a\in\mathbb{N}^*
+\end{cases*}
+$$
+
+Quindi: _Un intero può essere soltanto positivo, negativo o nullo._
+
+**Assioma di buon ordinamento**:
+
+Ogni sottoinsieme $E\subset\mathbb{N}^*$ non vuoto possiede un più piccolo elemento che per $< \text{ vale la proposizione } \exists c\in E\ t.c.\ \forall e\in E\backslash\{ c \}$ si ha $e>c$.
+
+_Un anello che rispetta buon ordinamento e triconomia è "essenzilamente $\mathbb{Z}$"_.
+
+Se $a<b,c<d$ allora $a+c<b+d$ e $-a>-b$, le operazioni $+,>$ sono compatibili e in modo simile c'è compatibilità anche tra $\cdot,>$.
+
+**Legge di Cancellazione in $\mathbb{Z}$**:
+
+**!!! Da riprendere le condizione sulle slide !!!**
+
+$$
+\begin{align*}
+&(a-1)\cdot b+b>(a-1)\cdot c+c \\
+\text{implica che } &ab=(a-1+1)\cdot b>(a-1+1)\cdot c=ac
+\end{align*}
+$$
+
+Per tricotomia è una contraddizione dato che otteniamo $ab>ac$ ma avevamo supposto $ab=ac$.
+
+**Elementi Invertivibili:**
+
+$A$ è un anello commutativo unitario dove $1_{A}\neq 0_{A}$.
+
+_Definizione_
+
+$a\in A \ t.c. \ \exists b\in A : ab=ba=1_{A}$, è detto **elemento invertibile** (si dice che $b$ è l'inverso di $a$ e si scrive $b=a^{-1}$)
+
+_Esempio_
+
+$1_{A}$ è invertibile con inverso $1_{A}^{-1}=1_{A}$
+
+_Esercizio_
+
+Se $a$ è invertibile allora $a^{-1}$ è unicamente determinato.
+
+$$
+\begin{align*}
+&a\cdot b=a\cdot b'=1\text{ con } b,b'\in A \\
+&\text{allora} \\
+&(a\cdot b)\cdot b'=1_{A}\cdot b'=b' \ \ e \ \ (a\cdot b')\cdot b=1_{A}\cdot b=b \\
+\\
+&\underbrace{ (a\cdot b)\cdot b' }_{ (a\cdot b)\cdot b' }=a(b\cdot b')\underbrace{ = }_{ = }a\cdot(b'\cdot b)=\underbrace{ (a\cdot b')\cdot b }_{ (a\cdot b')\cdot b }
+\end{align*}
+$$
+
+Quindi abbiamo ottenuto che le due proposizioni iniziali sono uguali e quindi $b=b'$ e l'inverso $a^{-1}$ di $a$ è ben determinato.
+
+
+**Altri Esempi**
+
+$A$ è sempre anello.
+
+---
+
+$\forall a\in A,a\cdot 0_{A}=0_{A}$
+
+Allora
+
+$$
+\begin{align*}
+a\cdot 0_{A}=a\cdot(0_{A}+(-0_{A}))=a\cdot0_{A}+a\cdot(-0_{A})&=a\cdot 0_{A}+(-a)\cdot 0_{A} \\
+&=a\cdot 0_{A}+(-a\cdot 0_{A}) \\
+&=\underbrace{ a\cdot 0_{A}+(-(a\cdot 0_{A})) }_{ \text{Somma fra opposti} } = 0_{A}
+\end{align*}
+$$
+
+---
+
+Supponiamo che $0_{A}=1_{A}$ mostriamo che $\forall a\in A$ si ha che $a=0_{A}$ ovvero $A=\{ 0_{A} \}$.
+
+$$
+a\in A: \ 1_{A}\Rightarrow a\cdot 1_{A}=a\cdot 0_{A}\overset{(1)}=0_{A} \text{ Quindi } \forall a\in A:a= 0_{A}
+$$
+
+---
+
+Se $1_{A}\neq 0_{A}$ allora $0_{A}\not\in A^X$ (non invertibile). Infatti supponiamo per assurdo che sia invertibile allora $\exists x\in A^X \ t.c\ 1_{A}=x\cdot 0_{A}\overset{(1)}=0_{A}$.
+
+**Nota:**
+
+Si pone $A^X=\{ a\in A \ t.c.\ \text{a è invertibile} \}$.
+
+> [!info] Elementi neutri pt2
+> Anello con $0_{A}\neq 1_{A}$ significa che $0_{A}$ non è invertibile, questa proprietà infatti vale solo in anelli $=\{ 0 \}$ ovvero quando $0_{A}=1_{A}$.
+ 
