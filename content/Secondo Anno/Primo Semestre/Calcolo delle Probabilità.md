@@ -674,3 +674,146 @@ $$
 P\left( \bigcup_{i=1}^{n}E_{i} \right)=\sum_{i=1}^nP(E_{i})-\sum_{i\leq i\leq j\leq n}P(E_{i}E_{j})+\sum_{1\leq i\leq j\leq k\leq n}P(E_{i}\cap E_{j}\cap E_{k})\dots(-1)^nP(E_{1}\cap E_{2}\cap E_{n})
 $$
 
+## Probabilità Condizionata
+
+Dati $E, F$ eventi con $P(F)>0$, la probabilità di $E$ condizionata a $F$ è definita come $P(E|F)=\frac{P(E\cap F)}{P(F)}$. Per $E,F$ eventi con $P(F)$ positiva.
+
+Si svolge l'esperimento e so che "si verifica F", questa informazione muta la mia speranza che si verifichi $E$ e la nuova probabilità di $E$ sapendo che si è verificato $F$ è data da $P(E|F)$.
+
+_Esempio_
+
+Lancio 1 dado.
+
+$E=\text{Esce 1 o 2}, P(E)=\frac{2}{6}=\frac{1}{3}$.
+
+Immaginiamo di sapere che si è verificato l'evento $F$ dove $F=\text{Uscito un numero } \leq 4$, se so che $F$ si realizza allora so che è uscito o 1 o 2 o 3 o 4. Ho 4 possibili esiti e c'è simmetria.
+
+Quindi in questo modo se si verifica $F$ allora $P(E)=\frac{2}{4}=\frac{1}{2}$, ci aspettiamo quindi $P(E|F)=\frac{1}{2}$, calcoliamolo usando la definizione:
+
+$$
+\begin{align*}
+&P(E|F)=\frac{P(E\cap F)}{P(F)}=\frac{\frac{2}{6}}{\frac{4}{6}}=\frac{1}{2} \\ \\
+&S=\{ 1,2,\dots,6 \} \\
+&F=\{ 1,2,3,4 \}
+\end{align*}
+$$
+
+_Proposizione_
+
+Se $S$ è finito e ha esiti equiprobabili allora $P(E|F)=\frac{|E\cap F|}{|F|}$ con $E,F$ eventi con $P(F)$ positiva.
+
+_Dimostrazione_
+
+$P(E|F)=\frac{P\cap F}{P(F)}$ e per ipotesi $P(F)>0$ quindi vale la definizione di $P(E|F)$
+
+$$
+P(E|F)=\frac{P(E\cap F)}{P(F)}=\frac{\frac{|E\cap F|}{|S|}}{\frac{|F|}{|S|}}=\frac{|E\cap F|}{|F|}
+$$
+
+_Esercizio_
+
+Estraggo 3 carte da un mazzo da 40 senza rimpiazzo, sapendo che ho estratto solo carte di bastoni, qual è la probabilità di aver estratto un asso?
+
+$$
+\begin{align*}
+&E=\text{Estraggo un asso} \\
+&F=\text{Le carte sono di bastoni} \\
+&S=\{ A\subset M:|A|=3 \}\text{ dove M = mazzo, S ha esiti equiprobabili} \\
+ \\
+&\underbrace{ P(E|F)=\frac{|E\cap F|}{|F|} }_{ \text{proposizione precedente} }=\frac{\binom{9}{2}}{\binom{10}{3}}=\frac{3}{10} \\
+ \\
+&\binom{9}{2} \text{ sono le terne non ordinate di bastoni dove non c'è asso}
+\end{align*}
+$$
+
+_Esempio_
+
+Ho un dado truccato dove 1 esce con probabilità $\frac{1}{2}$ mentre gli altri numeri $\frac{1}{10}$, qual è la probabilità che esca $1$ o $2$ sapendo che è uscito un numero $\leq 4$.
+
+$$
+\begin{align*}
+&S=\{ 1,2,3,4,5,6 \} \\
+&E=\{ 1,2 \} \\
+&F=\{ 1,2,3,4 \} \\
+\\
+&P(E|F)=\frac{P(E\cap F)}{P(F)}= \dots \\  \\
+&E\cap F=\{ 1,2 \},P(E\cap F)=P(\{ 1 \})+P(\{ 2 \})=\frac{1}{2}+\frac{1}{10}=\frac{3}{5} \\
+\\
+&P(F)=P(\{ 1,2,3,4 \})=\frac{1}{2}+\frac{3}{10}=\frac{4}{5} \\
+\\
+&\dots=\frac{\frac{3}{5}}{\frac{4}{5}}=\frac{3}{4}
+\end{align*}
+$$
+
+**Regola del Prodotto**
+
+Se $P(F)>0,P(E|F)=\frac{P(E\cap F)}{P(F)}$ quindi $P(E\cap F)=P(F)\cdot P(E|F)$
+
+_Esempio_
+
+Abbiamo un'urna con 10 palline bianche e 4 palline nero, estraggo 2 palline senza rimpiazzo. Qual è la probabilità che siano entrambe bianche? Lo avevamo già risolto con la combinatoria, vediamo senza:
+
+$$
+\begin{align*}
+&F=\text{La prima pallina estratta è bianca} \\
+&E=\text{La seconda pallina estratta è bianca} \\
+&G=E\cap F, P(G)=P(E\cap F)=P(F)\cdot P(E|F)=\frac{10}{14}\cdot \frac{9}{13}
+\end{align*}
+$$
+
+_Dimostrazione_
+
+Siano $E_{1},\dots,E_{n}$ eventi allora $P(E_{1}\cap\dots\cap E_{n})=P(E_1)\cdot P(E_{2}|E_{1})\cdot P(E_{3}|E_{1}\cap E_{2})\dots \cdot P(E_{n}|E_{1}\cap \dots\cap E_{n-1})$ supponendo che $P(E_{1}>0,P(E_{1}\cap E_{2})>0,\dots,P(E_{1}\cap\dots\cap E_{n-1})>0)$.
+
+_Dimostrazione per n=2 già fatta, vediamo con n=3_
+
+$$
+\begin{align*}
+&n=3  \\
+&\text{Dobbiamo provare che} \\
+&P(E_{1}\cap E_{2}\cap E_{3})=P(E_{1})\cdot P(E_{2}|E_{1})\cdot P(E_{3}|E_{1}\cap E_{2}) \\
+ \\
+&\text{Per definizione di prob cond.} \\
+ \\
+&P(E_{1})\cdot P(E_{2}|E_{1})\cdot P(E_{3}|E_{1}\cap E_{2})=P(E_{1})\cdot\frac{P(E_{2}\cap E_{1})}{P(E_{1})}\cdot\frac{P(E_{3}\cap E_{1}\cap E_{2})}{P(E_{1}\cap E_{2})}=\dots \\
+ \\
+&=P(E_{1}\cap E_{2}\cap E_{3})
+\end{align*}
+$$
+
+Per $n$ generico è simile.
+
+_Esempio_
+
+Estraggo 3 carte senza rimpiazzo da un mazzo da 40, qual è la probabilità che la prima carta è di bastoni, la seconda di denari e la terza di bastoni.
+
+$$
+\begin{align*}
+&P(G)=? \ G=\text{1 carta bastoni, 2 denari, 3 bastoni} \\
+ \\
+&\text{1° Metodo combinatoria} \\
+&S=\{ (a,b,c):a,b,c\in M, distinti \} \\
+&P(G)=\frac{|G|}{|S|}=\frac{10\cdot 10\cdot 9}{40\cdot 39 \cdot 38}=\dots \\
+ \\
+&\text{2° Metodo prob. cond.} \\
+&G=E_{1}\cap E_{2}\cap E_{3} \text{ dove} \\
+&E_{1}=\text{prima carta B},E_{2}=\text{seconda carta D},E_{3}=\text{terza carta B} \\
+ \\
+&\text{Per regola prodototto} \\
+&P(G)=P(E_{1}\cap E_{2}\cap E_{3})=P(E_1)\cdot P(E_{2}|E_{1})\cdot P(E_{3}|E_{1}\cap E_{2})= \\
+&=\frac{10}{40}\cdot \frac{10}{39}\cdot \frac{9}{38}=\dots
+\end{align*}
+$$
+
+**Teorema di Bayes**
+
+$$
+P(A|B)\overset{\text{Definizione}}=\frac{P(A\cap B)}{P(B)}\overset{\text{Regola prodotto}}=\frac{P(A)\cdot P(B|A)}{P(B)}
+$$
+
+Enunciato:
+
+$$
+P(A|B)=\frac{P(A)\cdot P(B|A)}{P(B)}
+$$
+
