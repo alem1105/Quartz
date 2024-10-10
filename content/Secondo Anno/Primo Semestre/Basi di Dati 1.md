@@ -640,3 +640,123 @@ Quindi quando le informazioni che vogliamo non sono nella stessa relazione:
 1) Troviamo tutte le relazioni che contengono le informazioni
 2) Selezioniamo soltanto dei sottoinsiemi rilevanti per le interrogazioni
 3) Combiniamo le informazioni attraverso i valori che in delle tuple fanno riferimento ad altre tuple
+
+## Quantificatore Universale
+Fino ad ora abbiamo visto query che implicano condizioni equivalenti al quantificatore esistenziale $\exists$ ovvero "esiste almeno un".
+
+Era possibile rispondere a queste query dato che la valutazione delle tuple avviene in modo sequenziale quando si incontra una tupla che soddisfa la condizione si aggiunge al risultato.
+
+La condizione però potrebbe richiedere la valutazione di gruppi interi di tuple prima di decidere se inserirerle o meno nel risultato, e le tuple una volta inserite non possono essere rimosse, in questo caso la query corrisponde al quantificatore universale $\forall$ oppure $\not \exists$.
+
+_Esempio_
+
+![[Pasted image 20241010092613.png]]
+
+![[Pasted image 20241010092645.png]]
+
+Notiamo che ad esempio la seconda tupla soddisfa la condizione di aver comprato più di 100 pezzi ma non possiamo inserirla, in qualche modo dovremmo memorizzare che "Rossi" compariva in una tupla precedente e non soddisfaceva la condizione.
+
+Anche scambiando l'ordine delle tuple non risolviamo il problema, infatti lo inseriremo ma successivamente dovremmo toglierlo dal risultato.
+
+> [!info] Negazione del quantificatore universale
+> La negazione di "per ogni" **non è** "per nessuno" ma "esiste almeno un elemento per cui la condizione è falsa".
+
+Grazie a questo possiamo risolvere il problema con una doppia negazione:
+- Eseguiamo la query con la condizione negata
+- In questo modo abbiamo trovato gli oggetti che almeno una volta soddisfano la condizione contraria e quindi non soddisfano sempre quella che ci interessa.
+- Eliminiamo questi oggetti ottenuti dal totale tramite la **differenza**
+
+Quindi in questo caso eseguiamo:
+
+$$
+\begin{align}
+&\sigma_{N-pezzi\leq 100}(Cliente\bowtie Ordine) \\
+&\text{Facciamo la proiezione sul nome e città} \\
+&\pi_{Nome,Città}(\sigma_{N-pezzi\leq 100}(Cliente\bowtie Ordine)) \\
+ \\
+&\text{E abbiamo ottenuto chi non ci interessa} \\
+ \\
+&\pi_{Nome,Città}(Cliente\bowtie Ordine)-\pi_{Nome,Città}(\sigma_{N-pezzi\leq 100}(Cliente\bowtie Ordine))
+\end{align}
+$$
+
+In questo modo ci sono rimasti soltanto chi **non ha mai** ordinato meno di 100.
+
+
+> [!warning] Nota
+> Se sappiamo di inserire un cliente nel struttura dati soltanto quando effettua un ordine allora nel primo operando della differenza potremmo scrivere semplicemente $\pi_{Nome,Città}(Cliente)$ ovvero i clienti totali.
+> 
+> Ma se questo non è vero allora nel risultato finale avremo anche clienti che non hanno mai effettuato ordine, per questo abbiamo effettuato un join cliente, in modo da avere soltanto chi avesse almeno un ordine.
+> 
+> Inoltre è importante anche valutare le proiezioni, nell'esempio precedente ci interessavano i nomi ma abbiamo proiettato anche su Città, questo perché altrimenti nella sottrazione sarebbe sparito anche il Rossi di Milano.
+
+_Esempio_
+
+![[Pasted image 20241010094224.png]]
+
+Seguendo lo stesso ragionamento di prima, prendiamo prima chi non ci interessa:
+
+$$
+\pi_{Nome,Città}(\sigma_{N-pezzi>100}(Cliente\bowtie Ordine))
+$$
+
+E poi eseguiamo una differenza:
+
+$$
+\pi_{Nome,Città}(Cliente\bowtie Ordine)-\pi_{Nome,Città}(\sigma_{N-pezzi>100}(Cliente\bowtie Ordine))
+$$
+
+La query in questo caso restituisce un risultato vuoto.
+
+## Condizioni che richiedono il prodotto di una relazione con se stessa
+Ci sono anche casi in cui sono associati oggetti della stessa relazione.
+
+_Esempio_
+
+![[Pasted image 20241010094616.png]]
+
+Le informazioni che ci servono sono tutte nella stessa relazione ma si trovano su tuple diverse e per poter confrontare valori, questi devono trovarsi sulla stessa tupla, come procediamo?
+
+Creiamo una copia della relazione ed effettuiamo un prodotto in modo da combinare le informazioni di un impiegato con quelle del suo capo, quindi creiamo una relazione _ImpiegatiC_ che con un join sarà collegata ad _Impiegati_ combinando le tuple che hanno il valore _C#_ uguale a _Capo#_. Utilizziamo anche la ridenominazione per aiutarci.
+
+$$
+ImpiegatiC=p_{Nome,C\#,Dipart,Stip,Capo\#\leftarrow CNome,CC\#,Cdipart,Cstip,Ccapo\#}(Impiegati)
+$$
+
+Poi eseguiamo:
+
+$$
+\sigma_{Capo\#=CC\#}(Impiegati\times ImpiegatiC)
+$$
+
+> [!info] Ridenominazione
+> Se non avessimo usato la ridenominazione il join naturale ci avrebbe fatto combinare anche ogni impiegato con se stesso, inoltre C3 non ha capo quindi non entra nel join dal lato impiegato.
+
+A questo punto ci basta confrontare gli stipendi e infine proiettare:
+
+$$
+r=(\sigma_{Stip\geq CStip}(\sigma_{Capo\#=CC\#}(Impiegati\times ImpiegatiC)))
+$$
+
+$$
+\pi_{Nome,C\#}(r)
+$$
+
+_Esempio_
+
+Abbiamo come query: "Nomi e codici dei capi che guadagnano più di tutti i loro impiegati".
+
+Possiamo prendere la query dell'esempio precedente che trova gli impiegati che guadagnano quanto o più del loro capo, i capi che compaiono **anche una sola volta** in questo risultato **non** ci interessano.
+
+$$
+r=(\sigma_{Stip\geq CStip}(\sigma_{Capo\#=CC\#}(Impiegati\times ImpiegatiC)))
+$$
+
+$$
+\pi_{CNome,CC\#}(\sigma_{Capo\#=CC\#}(Impiegati\times ImpiegatiC))-\pi_{CNome,CC\#}(r)
+$$
+
+_Note_
+
+![[Pasted image 20241010100522.png]]
+
