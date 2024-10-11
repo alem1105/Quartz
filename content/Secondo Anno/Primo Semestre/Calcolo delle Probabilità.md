@@ -817,3 +817,90 @@ $$
 P(A|B)=\frac{P(A)\cdot P(B|A)}{P(B)}
 $$
 
+---
+
+_Esempio_
+
+Ho un'urna con 10 palline di cui 1 d'oro, lancio 1 dado, se esce 1 estraggo 2 palline senza rimpiazzo altrimenti estraggo 1 sola pallina, con che probabilità estraggo la pallina d'oro?
+
+
+> [!info] Formula probabilità totale
+> Dati $E,F$ eventi allora $P(E)=P(F)\cdot P(E|F)\cdot P(F^C)\cdot P(E|F^C)$
+> 
+> _Dimostrazione_
+> 
+> $E=(E\cap F)\cup (E\cap F^C)$ quindi  dato che sono incompatibili $P(E)=P(E\cap F)+P(E\cap F^C)\overset{\text{Regola Prodotto}}=P(F)\cdot P(E|F)+P(F^C)\cdot P(E|F^C)$.
+
+Se so cosa da il dado allora posso calcolare la probabilità.
+
+$F=\text{Il dado da 1}$, $E=\text{La pallina d'oro viene estratta}$
+
+E quindi per la legge della probabilità totale:
+
+$$
+\begin{align*}
+&P(E)=P(F)\cdot P(E|F)\cdot P(F^C)\cdot P(E|F^C)=\dots  \\ \\
+&\text{Calcoliamo i valori:} \\
+&P(F)=\frac{1}{6} \\
+&P(E|F)=\frac{P(E\cap F)}{P(F)}=\frac{9}{\binom{10}{2}}=\frac{1}{5} \\
+&P(F^C)=\frac{5}{6} \\
+&P(E|F^C)=\frac{1}{10} \\ \\
+&\text{Quindi:} \\
+&\dots=\frac{1}{6}\cdot \frac{1}{5}+\frac{5}{6}\cdot \frac{1}{10}=\frac{7}{60}
+\end{align*}
+$$
+
+---
+
+Adesso invece sappiamo che la pallina d'oro è stata estratta, qual è la probabilità che dal dado è uscito 1?
+
+Noi sappiamo calcolare $P(E|F)$ e $P(E|F^C)$ ma adesso vogliamo ottenere $P(F|E)$.
+
+Per il teorema di Bayes:
+
+$$
+P(F|E)=\frac{P(F\cap E)}{P(E)}=\frac{P(F)\cdot P(E|F)}{P(E)}
+$$
+
+Quindi:
+
+$$
+P(F|E)=\frac{P(F)\cdot P(E|F)}{P(E)}=\frac{\frac{1}{6}\cdot \frac{1}{5}}{\frac{7}{60}}=\frac{2}{7}
+$$
+
+
+---
+
+_Esempio Parte I_
+
+In un'agenzia di assicurazioni le persone vengono divise in due categorie: _propense e non propense a fare incidenti_. 
+
+Le persone propense hanno una probabilità di 0.4 di fare un incidente in un anno mentre le non propense 0.2.
+
+Il 30% degli automobilisti è propensa agli incidenti.
+
+Qual è la probabilità che un nuovo cliente abbia un incidente in quell'anno?
+
+$$
+\begin{align*}
+&A:=\text{Il nuovo cliente è propenso agli incidenti} \\
+&A_{1}:= \text{Il nuovo cliente ha un incidente in un anno} \\
+&P(A_{1})=? \\
+&P(A_{1}|A)=0.4, P(A_{1}|A^C)=0.2, P(A)=0.3 \\
+ \\
+&\text{Per la formula di probabilità totale:} \\
+&P(A_{1})=P(A)\cdot P(A_{1}|A)+P(A^C)\cdot P(A_{1}|A^{C})=0.3\cdot 0.4+0.7\cdot 0.2=0.26=26\%
+\end{align*}
+$$
+
+_Parte II_
+
+Sapendo che il cliente ha avuto un incidente in quell'anno, qual è la probabilità che sia propenso agli incidenti?
+
+Quindi 
+
+$$
+P(A|A_{1})=\frac{P(A\cap A_{1})}{P(A_{1})}=\frac{P(A)\cdot P(A_{1}|A)}{P(A_{1})}=\frac{0.3\cdot 0.4}{0.26}=\frac{6}{13}
+$$
+
+

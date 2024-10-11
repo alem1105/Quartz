@@ -806,22 +806,25 @@ Quindi: _Un intero può essere soltanto positivo, negativo o nullo._
 
 Ogni sottoinsieme $E\subset\mathbb{N}^*$ non vuoto possiede un più piccolo elemento che per $< \text{ vale la proposizione } \exists c\in E\ t.c.\ \forall e\in E\backslash\{ c \}$ si ha $e>c$.
 
-_Un anello che rispetta buon ordinamento e triconomia è "essenzilamente $\mathbb{Z}$"_.
+_Un anello che rispetta buon ordinamento e triconomia è "essenzialmente $\mathbb{Z}$"_.
 
 Se $a<b,c<d$ allora $a+c<b+d$ e $-a>-b$, le operazioni $+,>$ sono compatibili e in modo simile c'è compatibilità anche tra $\cdot,>$.
 
 **Legge di Cancellazione in $\mathbb{Z}$**:
 
-**!!! Da riprendere le condizione sulle slide !!!**
+Se $ab=ac$ con $a\neq 0$ allora $b=c$ infatti si può supporre che $a>0$, nel caso $a=1$ è chiaro mentre prendiamo $(a-1)$ e vediamo per induzione:
 
 $$
 \begin{align*}
-&(a-1)\cdot b+b>(a-1)\cdot c+c \\
-\text{implica che } &ab=(a-1+1)\cdot b>(a-1+1)\cdot c=ac
+&(a-1)\cdot b=(a-1)\cdot c\\ 
+&\text{Se } b\neq c \text{ e } b>c \Rightarrow (a-1)\cdot b+b>(a-1)\cdot c+c \\
+&\text{E questo significa che } \underbrace{ (a-1+1)\cdot b }_{ ab }>\underbrace{ (a-1+1)\cdot c }_{ ac }
 \end{align*}
 $$
 
-Per tricotomia è una contraddizione dato che otteniamo $ab>ac$ ma avevamo supposto $ab=ac$.
+Abbiamo aggiunto $+b,+c$ anche se valori diversi per l'ipotesi perché abbiamo portato l'espressione da $=$ a $>$ e dato che abbiamo detto $b>c$ questo non altera il valore dell'espressione.
+
+Dato che avevamo supposto $ab=ac$ ma abbiamo ottenuto una contraddizione ovvero $ab>ac$ con $b\neq c$, per tricotomia deve essere necessariamente vero che $b=c$.
 
 **Elementi Invertivibili:**
 
@@ -875,12 +878,12 @@ $$
 Supponiamo che $0_{A}=1_{A}$ mostriamo che $\forall a\in A$ si ha che $a=0_{A}$ ovvero $A=\{ 0_{A} \}$.
 
 $$
-a\in A: \ 1_{A}\Rightarrow a\cdot 1_{A}=a\cdot 0_{A}\overset{(1)}=0_{A} \text{ Quindi } \forall a\in A:a= 0_{A}
+a\in A: \ 1_{A}=0_{A}\Rightarrow \underbrace{ a\cdot 1_{A} }_{ a }=a\cdot 0_{A}\overset{(1)}=0_{A} \text{ Quindi } \forall a\in A:a= 0_{A}
 $$
 
 ---
 
-Se $1_{A}\neq 0_{A}$ allora $0_{A}\not\in A^X$ (non invertibile). Infatti supponiamo per assurdo che sia invertibile allora $\exists x\in A^X \ t.c\ 1_{A}=x\cdot 0_{A}\overset{(1)}=0_{A}$.
+Se $1_{A}\neq 0_{A}$ allora $0_{A}\not\in A^X$ (non invertibile). Infatti supponiamo per assurdo che sia invertibile allora $\exists x\in A^X \ t.c\ 1_{A}=x\cdot 0_{A}\text{ Ma sappiamo che è}\overset{(1)}=0_{A}$ ed è quindi una contraddizione.
 
 **Nota:**
 
@@ -888,4 +891,349 @@ Si pone $A^X=\{ a\in A \ t.c.\ \text{a è invertibile} \}$.
 
 > [!info] Elementi neutri pt2
 > Anello con $0_{A}\neq 1_{A}$ significa che $0_{A}$ non è invertibile, questa proprietà infatti vale solo in anelli $=\{ 0 \}$ ovvero quando $0_{A}=1_{A}$.
+
+_Esercizio - Unico elemento neutro ad ogni anello commutativo unitario_
+
+Siano $u,u'$ due elementi neutri quindi significa che $\forall a\in A$ otteniamo:
+
+$$
+au=ua=a \ \ e \ \ au'=u'a=a
+$$
+
+Se prendiamo $a=u$? Otteniamo $uu'=u'u=u$
+
+Se prendiamo $a=u'$? Otteniamo $u'u=uu'=u'$
+
+Quindi notiamo che $u=u'$ e quindi l'elemento neutro per la moltiplicazione è unicamente determinato.
+
+## Relazione di Divisibilità
+
+Introduciamo la relazione che dati $a,b\in A$   $a|b\Leftrightarrow \exists c\in A \ t.c. \ b=a\cdot c$, ovvero "$a$ divide $b$" se e solo se esiste un certo $c$ in $A$ tale che possiamo scrivere $b=a\cdot c$. Ad esempio $2|6$ infatti $6=2\cdot 3$
+
+Innanzitutto notiamo che questa è una relazione **riflessiva** infatti $\forall a\in A, a=a\cdot 1_{A}$ ovvero $a$ divide sempre $a$.
+
+Inoltre è anche **transitiva** infatti supponiamo di avere $a,b,c\in A$ e supponiamo che $a|b$ e $b|c$:
+
+$$
+\begin{align*}
+&a|b\Leftrightarrow b =a\cdot a' \ \ \exists a'\in A \\
+&b|c\Leftrightarrow c=b\cdot b' \ \ \exists b'\in A \\
+&\text{Facendo una sostituzione notiamo che} \\
+&c=a\cdot \underbrace{ (a'\cdot b') }_{ a'' }=a\cdot a''
+\end{align*}
+$$
+
+Abbiamo mostrato che anche $c$ quindi è divisibile per $a$, infatti possiamo scriverlo come $a$ moltiplicato per un altro valore $a''$ e quindi $a|c$.
+
+**Non è simmetrica né antisimmetrica**.
+
+### Altre proprietà della divisibilità
+
+Se $a|b$ e $a|c$ allora $a|b+c$ (compatibilità con l'addizione), vediamo perché:
+
+$$
+\begin{align*}
+&a|b \Leftrightarrow \exists a'\in A \text{ t.c. } b=aa' \\
+&a|c \Leftrightarrow \exists a''\in A \text{ t.c. } c=aa'' \\
+ \\
+&\text{Quindi}\\
+&b+c=aa'+aa''=a\underbrace{ (a'+a'') }_{ a''' }=aa''' \Leftrightarrow a|b+c
+\end{align*}
+$$
+
+Più generalmente se $\alpha,\beta\in A$ e $a|b,a|c\Leftrightarrow a|\alpha b+\beta c$. Infatti facendo sempre lo stesso ragionamento di prima otteniamo tramite le sostituzioni otteniamo che:
+
+$$
+\alpha b+\beta c=\alpha aa'+\beta aa''=a\underbrace{ (\alpha a'+\beta a'') }_{ a''' }=aa'''
+$$
+
+E quindi, come prima, $a|\alpha b+\beta c$.
+
+---
+
+In $\mathbb{Z}$ la relazione di divisibilità è "quasi antisimmetrica", ovvero:
+
+$$
+\begin{align*}
+&\text{Prendiamo } a,b\in \mathbb{Z} \text{ t.c. } a|b \text{ e } b|a \\
+&a|b \text{ e } b|a \overset{?}{\Rightarrow} \exists c\in \mathbb{Z}^X \text{ t.c. } a=bc (\text{Ovvero } a\in \{ b,-b \} \text{ oppure } \{ a,-a \}=\{ b,-b \}) \\
+\\
+&(\text{nota dopo})\text{Possiamo supporre che } a,b\neq 0 \text{ e quindi:} \\
+&a|b,b|a \Leftrightarrow b=aa',a=bb' \ \exists a',b'\in \mathbb{Z} \\
+ \\
+&\text{Adesso facendo le sostituzioni:} \\
+&\cancel b=\cancel bb'a'\Rightarrow 1=a'b'\underbrace{ \Rightarrow a'b'\in \{ 1,-1 \} }_{ \text{Questo perchè a',b' sono invertibili} } \\
+ \\
+&\text{Questo significa che i due numeri devono essere o uguali o opposti, dato che } a'b'\in \{ 1,-1 \}\\
+\end{align*}
+$$
+
+Nota, possiamo supporre che i due numeri sono non nulli, questo perché 0 non divide mai un altro elemento non nullo e quindi se uno dei due fosse 0, questo significa che lo sarebbe anche l'altro.
+
+## Elementi Irriducibili e Primi
+
+### Numero irriducibile
+
+_Definizione:_ $a\in A\backslash A^X$ con $a\neq 0$, questo è detto irriducibile se $\forall b,c\in A$ con $a=bc$ allora si che o $b\in A^X$ oppure $c\in A^X$ .
+
+_Esempi con_ $A=\mathbb{Z}$, ricordiamo inoltre che $\mathbb{Z}^X=\{ -1,1 \}$
+
+$$
+\begin{align*}
+&12=4\cdot 3 \text{ ma } 4,3\not\in \mathbb{Z}^X \Rightarrow \text{12 non è irriducibile} \\
+&7 =1\cdot 7 \ \ \ 1\in \mathbb{Z}^X \Rightarrow \text{7 è irriducibile} \\
+&9=3\cdot 3 \Rightarrow \text{Non è irriducibile}
+\end{align*}
+$$
+
+### Numero Primo
+
+_Definizione:_ $a\in A\backslash A^X$ con $a\neq 0$ è detto primo se $\forall b,c \in A$ se $a|bc$ allora $a|b$ oppure $a|c$.
+
+Supponiamo che $A=\mathbb{Z}$
+
+**Lemma:** $p\in \mathbb{Z}$ primo allora $p$ è irriducibile, quindi primo $\Rightarrow$ irriducibile
+
+_Dimostrazione_
+
+Scegliamo $p$ primo, siano $a,b\in \mathbb{Z} \ t.c. \ p=a\cdot b$, per dimostrare che è irriducibile dobbiamo quindi dimostrare che o $a$ o $b$ sono uguali a 1 o -1.
  
+$$
+\begin{align*}
+&p=a\cdot b\Rightarrow p|a\cdot b\Rightarrow \underbrace{ \text{o } p|a \text{ o } p|b }_{ p\text{ è primo} } \\
+&\text{Prendiamo il primo caso, quindi supponiamo che } p|a: \\
+&p|a\Rightarrow a=p\cdot a' \ \ \ \exists a'\in \mathbb{Z} \\
+ \\
+&\text{Se adesso sostituiamo con la condizione iniziale } p=a\cdot b: \\
+&\cancel p=\cancel p\cdot a'\cdot b\Rightarrow 1=a'\cdot b\Rightarrow a',b\in \{ 1,-1 \}=\mathbb{Z}^X \\
+ \\
+&\text{Quindi:} \\
+&\text{Se } a'=1 \text{ allora } a=p\Rightarrow p=pb\Rightarrow b=1 \\
+&\text{Se } a'=-1 \text{ allora } a=-p\Rightarrow p=-pb\Rightarrow b=-1 \\ \\
+&\text{Quindi in entrambi i casi almeno un fattore è uguale a 1 o -1} \\
+&\text{Quindi p è irriducibile}
+\end{align*}
+$$
+
+## Valore Assoluto
+È un'applicazione che si denota $\mathbb{Z}\rightarrow \mathbb{N}$, prendiamo un $a\in \mathbb{Z}$:
+
+$$
+\begin{align*}
+&\text{Se } a=0 \text{ allora } |a|=0 \\
+&\text{Se } a\neq 0 \text{ allora } |a|= \text{L'unico elemento di } \mathbb{N} \text{ contenuto in } \{ a,-a \}
+\end{align*}
+$$
+
+### Teorema algoritmo divisione euclidea
+Prendiamo $a,n\in \mathbb{Z}$ con $n\neq 0$ allora esistono unicamente determinati $q\in \mathbb{Z}$ ed $r\in \{ 0,\dots,|n|-1 \}$ tali che $a=nq+r$, dove $n$ è il quoziente e $r$ il resto.
+
+Non facciamo dimostrazione dato che è una riformulazione del **principio del minimo su $\mathbb{N}$**.
+
+## Legame con le Congruenze
+$a\equiv b(\text{mod n})\Leftrightarrow n|a-b\Leftrightarrow \exists q\in \mathbb{Z} \ t.c. \ a-b=qn$ ovvero il resto della divisione euclidea di $a-b$ per $n$ è 0.
+
+Ricordiamo inoltre che la congruenza è una **relazione d'equivalenza**.
+
+_Esempio Congruenza Modulo 2_
+
+Nota, con la notazione $2\mathbb{Z}$ indichiamo l'insieme di tutti i numeri
+
+$\mathbb{Z}=\underbrace{ 2\mathbb{Z} }_{ \text{pari} }\bigsqcup \underbrace{ 2\mathbb{Z}+1 }_{ \text{dispari} }$
+
+E notiamo che: $2\mathbb{Z} = \overline 0$ e che $2\mathbb{Z}+1=\overline 1$ notiamo infatti che $\mathbb{Z}\backslash\equiv_{\text{mod2}}=\{ 2\mathbb{Z},2\mathbb{Z}+1 \}$
+
+Ad esempio con la congruenza modulo 3 otteniamo $\mathbb{Z}\backslash\equiv_{\text{mod3}}=\{ 3\mathbb{Z},3\mathbb{Z}+1,3\mathbb{Z}+2 \}$
+
+In generale otteniamo che:
+
+$$
+\mathbb{Z}\backslash\equiv_{\text{mod n}}=\{ \underbrace{ n\mathbb{Z} }_{ \overline 0 },\underbrace{ n\mathbb{Z}+1 }_{ \overline 1 },\dots,\underbrace{ n\mathbb{Z}+n-1 }_{ \overline{n-1} } \}
+$$
+
+Notiamo che:
+
+$$
+\overline 2_{3}=\{ m\in \mathbb{Z}:m\equiv 2\text{ mod3} \}=\{ m\in \mathbb{Z}:3|m-2 \}
+$$
+
+Con la notazione $\overline 2_{3}$ indichiamo la classe di equivalenza di $2$ nell'applicazione congruenza modulo 3.
+
+_Esempio_
+
+$m=5, m-2=3, 3|3$ quindi $5\in\overline 2_{3}$ oppure $m=-1, m-2=-3, 3|-3$ quindi $-1\in\overline 2_{3}$
+
+### Compatibilità con la congruenza modulo n
+Le operazione $+,\cdot,-$ di $\mathbb{Z}$ sono compatibili con $\equiv_{n}$ con $n>0$ se rispettano delle proprietà:
+
+1) $\forall a,a'\in \mathbb{Z}$ abbiamo che $a\equiv a'(\text{mod n})\Leftrightarrow -a\equiv -a'(\text{mod n})$.
+2) $a,a',b,b'\in \mathbb{Z}$ se $a\equiv a'$ e $b\equiv b'$ allora $a+b\equiv a'+b'$
+3) $a,a',b,b'\in \mathbb{Z}$ se $a\equiv a'$ e $b\equiv b'$ allora $ab\equiv a'b'$
+
+In tutti i casi intendiamo $\equiv_{n}$
+
+_Dimostrazione di 2_
+
+$a\equiv_{n} a'\Leftrightarrow n|a'-a$ e allo stesso modo $b\equiv_{n}b'\Leftrightarrow n|b'-b$ quindi:
+
+$$
+\begin{align*}
+&\text{Sappiamo che } a\equiv_{n} a'\Leftrightarrow n|a'-a \\
+&\text{E che } b\equiv_{n}b'\Leftrightarrow n|b'-b \\
+&\text{Inoltre:}\\
+&n|a'-a\Leftrightarrow \exists k\in \mathbb{Z} \ t.c. \ a'-a=nk \\
+&n|b'-b\Leftrightarrow\exists k'\in \mathbb{Z} \ t.c. \ b'-b=nk' \\
+ \\
+&\text{Addizionando termine a termine:} \\
+&a'+b'-(a+b)=n(k+k')\Leftrightarrow n|n(k+k') \\
+&\text{Quindi dato che n divide } a'+b'-(a+b) \text{ otteniamo che:} \\
+&a'+b'\equiv_{n}a+b
+\end{align*}
+$$
+
+---
+
+Adesso prendiamo l'insieme $\mathbb{Z}\backslash n\mathbb{Z}$ e data $\overline a\in \mathbb{Z}\backslash n\mathbb{Z}$ definiamo la classe $-(\overline a):=\overline{(-a)}$, questa applicazione $\mathbb{Z}\backslash n\mathbb{Z}\rightarrow \mathbb{Z}\backslash n\mathbb{Z}$ è ben definita ed è l'operazione di opposto.
+
+Date le classi $\overline a,\overline b\in \mathbb{Z}\backslash n\mathbb{Z}$ definiamo $\overline a+\overline b:= \overline{a+b}$ ed è ben definito quindi è indipendente dalla scelta di un rappresentante. Dimostriamolo:
+
+$$
+\begin{align*}
+&\text{Scelgo } a'\in\overline a,b'\in\overline b \text{ quindi } (\overline a=\overline{a'},\overline b=\overline{b'}) \\
+&\overline{a'+b'}=\{ m:n|m-a'-b' \}=\{ m:n|m-a-b \}\Leftrightarrow\overline{a+b}=\overline{a'+b'}
+\end{align*}
+$$
+
+Definiamo inoltre una funzione che date $\overline a,\overline b\in \mathbb{Z}\backslash n\mathbb{Z}$ allora $\overline a\cdot\overline b=\overline{a\cdot b}$, che è sempre ben definita.
+
+
+> [!info] Teorema
+> $(\mathbb{Z}\backslash n\mathbb{Z},+,-,\cdot,\overline 0,\overline 1)$ è un anello.
+
+## Alcuni sottoinsiemi di $\mathbb{Z}$
+
+$$
+\begin{align}
+&n\mathbb{Z}=\{ m\in \mathbb{Z} \ t.c. \ \exists k\in \mathbb{Z} \text{ con } m=kn \} = \text{multipli di } n \\
+&\mathbb{Z}\backslash\{ 0 \}=\mathbb{Z}^*
+\end{align}
+$$
+
+_Esercizio_
+
+Dati $a,b\in \mathbb{Z}^*$ con $a|b\Leftrightarrow b\mathbb{Z}\subset a\mathbb{Z}$:
+
+$$
+\begin{align*}
+&\text{Supponiamo che } a|b \text{ allora } \exists k\in \mathbb{Z}\ t.c. \ b=ka \\
+&\text{Sia } b'\in b\mathbb{Z} \text{ allora } \exists l\in \mathbb{Z} \ t.c. \ b'=lb \text{ ma sappiamo che } b=ka \text{ quindi:} \\
+&b'=\underset{:=l'}{(lk)}a\Rightarrow b'\in a\mathbb{Z}
+\end{align*}
+$$
+
+--- 
+
+Adesso vediamo insiemi nella forma $a\mathbb{Z}+b\mathbb{Z}:=\{ m\in \mathbb{Z}:\exists k,k'\in \mathbb{Z}\text{ con } m=ka+k'b \}$.
+
+Ad esempio possiamo scrivere che $2\mathbb{Z}+3\mathbb{Z}=\{ 0,2,4,6,\dots,-2,-4,-6,\dots,3,6,9,-3,-6,-9,\dots,5,8,7,\dots \}=\mathbb{Z}$
+
+Questo perché appunto prendiamo ogni volta due valori $k,k'$ con i quali moltiplicare 2 e 3 in questo caso, e sempre in questo caso notiamo che stiamo sommando i numeri pari e quelli dispari quindi otteniamo tutti i numeri.
+
+$a\mathbb{Z}+b\mathbb{Z}=MCD(a,b)\mathbb{Z}$ quindi ad esempio nel caso di prima $MCD(2,3)=1$ e infatti come abbiamo notato $2\mathbb{Z}+3\mathbb{Z}=1\mathbb{Z}$
+
+**Lemma**:
+
+Poniamo $\mathcal{E}:=a\mathbb{Z}+b\mathbb{Z}$ con $ab\neq 0$ allora esiste $\delta\in \mathbb{N}^*$ unico t.c. $\mathcal{E}=\delta \mathbb{Z}$.
+
+_Dimostrazione:_
+
+$$
+\begin{align*}
+&\text{Poniamo } \mathcal{E}^*:=\mathcal{E}\cap \mathbb{N}^*\subset \mathbb{N}^* \\
+&\text{Sappiamo che } \mathcal{E}^* \text{ sicuramente non è vuoto} \\
+&\text{Infatti se } a,b>0 \text{ esiste una coppia } (k,k')\in \mathbb{N}^2 \ t.c. \ \underbrace{ ka+k'b }_{ \in\mathcal{E}^* }>0 \\
+&\text{Se invece } a>0,b<0 \text{ allora esiste } (k,k')\in \mathbb{N}\times(-\mathbb{N}) \\
+&\text{Ci sono ancora 2 casi semplice che non vediamo} \\
+ \\
+&\text{Adesso poniamo } \delta=min(\mathcal{E}^*) \text{ ed è ben definito in } \mathbb{N}^* \text{(principio del minimo)} \\
+&\text{Osserviamo che } \delta <|a|, \delta <|b| \text{ infatti } |a|,|b|\in\mathcal{E}^* \\
+ \\
+&\text{Diciamo che } \delta|a \text{ e per il principio della divisione euclidea:} \\
+&a=q\delta+r \ \ \  r\in \{ 0,\dots,\delta-1 \} \text{ dobbiamo quindi dimostrare che } r = 0  \\
+&\text{Notiamo che } r =a-q\delta \\
+ \\
+&a\in\mathcal{E} \\
+&\delta\in\mathcal{E}^*\subset\mathcal{E}=a\mathbb{Z}+b\mathbb{Z} \text{ quindi:} \\
+&\delta=\underset{\in \mathbb{Z}}{ua}+\underset{\in \mathbb{Z}}{vb} \\
+ \\
+&r=a-q(ua+vb)=a(1-qu)+b(-qv) \Rightarrow r\in\mathcal{E} \\
+&\text{Quindi dato che } r \text{ può essere o uguale a 0 o positivo}: \\
+&\text{Se} = 0 \text{ abbiamo finito dato che } \delta|a  \\
+&\text{Altrimenti se > 0 otteniamo che } r\in\mathcal{E}^* \text{ e quindi } r>\delta \text{ ma è impossibile per la definizione di r iniziale}
+\end{align*}
+$$
+
+Per la stessa ragione abbiamo che $\delta|b$.
+
+$$
+\begin{align*}
+&\forall \alpha,\beta\in \mathbb{Z} \ \ \ \delta|\alpha a+\beta b\Rightarrow  \mathcal{E}\subset \delta \mathbb{Z} (\text{ Per la dimostrazione di prima } a|b\Leftrightarrow b\mathbb{Z}\subset a\mathbb{Z}) \\
+&\text{D'altronde } \delta\in\mathcal{E} \Leftrightarrow \delta=ka+k'b \\
+&\forall l\in \mathbb{Z}, l\delta=lka+lk'b\Rightarrow l\delta\in\mathcal{E}\Rightarrow \delta \mathbb{Z}\subset \mathcal{E} \\
+&\text{ Se i multipli di } \delta \text{ sono elementi di } \mathcal{E} \text{ allora } \delta \mathbb{Z} \text{ è contenuto in } \mathcal{E}. \\
+&\text{Abbiamo ottenuto quindi che } \mathcal{E}\subset \delta \mathbb{Z} \text{ e che } \delta \mathbb{Z}\subset\mathcal{E} \text{ quindi } \mathcal{E}=\delta \mathbb{Z}
+\end{align*}
+$$
+
+## Massimo Comun Divisore
+
+Data $(a,b)\in \mathbb{Z}\times \mathbb{Z}$ con $(a,b)\neq(0,0)$
+
+_Definizione_
+
+$d\in \mathbb{N}^*$ è MCD di $a$ e $b$ se:
+
+1) $d|a$ e $d|b$
+2) Se $d'\in \mathbb{N}^*$ t.c. $d'|a$ e $d'|b$ allora $d'|d$
+
+**Lemma**: Se $d$ soddisfa (1) e (2) allora è unicamente determinato
+
+_Dimostrazione_
+
+Supponiamo che $d_{1},d_{2}$ soddisfano (1) e (2) e mostriamo che $d_{1}=d_{2}$
+
+$$
+\begin{align*}
+&\text{Si ha che:} \\
+&d_{2}|d_{1} \text{ e che } d_{1}|d_{2}\Rightarrow \{ d_{1},-d_{1} \}=\{ d_{2},-d_{2} \}\Rightarrow d_{1}=d_{2} \text{ Dimostrato sopra nelle proprietà}
+\end{align*}
+$$
+
+Si scrive $d=MCD(a,b)$, inoltre se $MCD(a,b)=1$ si dice che $a,b$ sono primi fra loro (co-primi).
+
+**Lemma**: 
+
+$$
+\begin{align}
+&\delta=MCD(a,b) \\
+&a\mathbb{Z}+b\mathbb{Z}=\delta \mathbb{Z} \ (\delta>0; a,b\neq 0)
+\end{align}
+$$
+
+_Dimostrazione_
+
+$$
+\begin{align*}
+&\delta \mathbb{Z}=a\mathbb{Z}+b\mathbb{Z}\supset a\mathbb{Z}\Rightarrow \delta|a \\
+&\text{Allo stesso modo } \delta \mathbb{Z}=a\mathbb{Z}+b\mathbb{Z}\supset b\mathbb{Z}\Rightarrow \delta|b \\
+&\text{Abbiamo quindi verificato la prima condizione del MCD } \\
+ \\
+&\text{Sia } d'\in \mathbb{N}^* \ t.c. \ d'|a,d'|b \\
+&d'|a\Leftrightarrow a\mathbb{Z}\subset d'\mathbb{Z} \\
+&d'|b\Leftrightarrow b\mathbb{Z}\subset d'\mathbb{Z} \\
+&\text{Quindi} \\
+&\underbrace{ a\mathbb{Z}+b\mathbb{Z} }_{ \delta \mathbb{Z} }\subset \underbrace{ d'\mathbb{Z}+d'\mathbb{Z} }_{ d'\mathbb{Z} } \Rightarrow d'|\delta \\
+&\text{Abbiamo quindi verificato anche la seconda condizione}
+\end{align*}
+$$
+

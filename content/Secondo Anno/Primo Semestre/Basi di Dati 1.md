@@ -760,3 +760,164 @@ _Note_
 
 ![[Pasted image 20241010100522.png]]
 
+# Progettazione basi di dati - Problemi e Vincoli
+
+Vogliamo creare una base di dati per studenti universitari che contiene:
+
+Dati Anagrafici e identificativa:
+- Nome e cognome
+- Data, comune e provincia di nascita
+- matricola
+- codice Fiscale
+
+Dati curriculari, per ogni esame:
+- Voto
+- data
+- codice, titolo e docente del corso
+
+## Ipotesi 1
+
+Creiamo una sola relazione con schema:
+
+$$
+\text{Curriculum(Matr,CF,Cogn,Nome,DataN,Com,Prov,C\#,Tit,Doc,DataE,Voto)}
+$$
+
+Che problemi si presentano?
+
+![[Pasted image 20241010142811.png]]
+
+**Ridondanza:**
+
+I dati di uno studente vengono memorizzati ogni volta che questo sostiene un esame mentre i dati di un corso sono memorizzati per ogni esame sostenuto in quel corso, questo porta a spreco di memoria ed errori durante _aggiornamento, inserimento e cancellazione_.
+
+**Anomalia di Aggiornamento**:
+
+Se cambia il docente di un corso, dobbiamo cambiarlo per ogni esame sostenuto in quel corso, stessa cosa per ogni altro dato.
+
+**Anomalia di Inserimento**:
+
+Non posso inserire i dati di uno studente finché non ha sostenuto almeno uno esame, a meno che non inserisco molti valori NULL. Non posso comunque farlo dato che questi attributi fanno parte della chiave.
+
+**Anomalia di Cancellazione**:
+
+Se elimino i dati di uno studente sto cancellando anche i dati di un corso, se ad esempio lo studente è l'unico ad aver sostenuto l'esame di quel corso.
+
+Tutti questi problemi accadono perché ho messo insieme 3 informazioni di oggetti diversi, _corsi, esami e studenti_.
+
+## Ipotesi 2
+
+Possiamo passare quindi a tre schemi di relazione:
+
+- $\text{Studente(Matr,CF,Cogn,Nome,Data,Com,Prov)}$
+- $\text{Corso(C\#,Tit,Doc)}$
+- $\text{Esame(Matr,C\#,Data,Voto)}$
+
+![[Pasted image 20241010144018.png]] 
+
+Non abbiamo i problemi di prima però se ne presenta un atro con Comune e Provincia dato che il Comune determina la Provincia
+
+**Ridondanza**:
+
+Il fatto che un comune si trova in una provincia è ripetuto molte volte
+
+**Anomalia di aggiornamento**:
+
+Se un comune cambia provincia devono essere modificate più tuple
+
+**Anomalia di Inserimento**:
+
+Non è possibile memorizzare il fatto che un comune si trova in una provincia se non abbiamo almeno uno studente di quel comune
+
+**Anomalia di Cancellazione**:
+
+Cancellando studenti potremmo perdere informazioni relative ai comuni
+
+La base di dati adesso è formata da:
+
+- $\text{Studente(Matr,CF,Cogn,Nome,Data,Com)}$
+- $\text{Corso(C\#,Tit,Doc)}$
+- $\text{Esame(Matr,C\#,Data,Voto)}$
+- $\text{Comune(Com, Prov)}$
+
+In questo modo non abbiamo più ridondanze e anomalie
+
+![[Pasted image 20241010144510.png]]
+
+> [!info] Schema "buono"
+> Uno schema è buono se non presenta ridondanza e anomalie di aggiornamento, inserimento e cancellazione, come si progetta?
+> **Occorre rappresentare ogni concetto in una relazione distinta**
+
+> [!warning] Rappresentazione dei concetti
+> Tutti i problemi di prima derivano dal fatto che abbiamo rappresentanto in un'unica relazione tre concetti diversi, 4 considerando anche i comuni e le province.
+
+## Vincoli
+I vincoli sono delle condizioni sulla realtà che stiamo progettando, ad esempio:
+- Un voto va da 18 a 30
+- La matricola deve essere univoca
+- ecc..
+
+Quando rappresentiamo una realtà deve essere possibili rappresentare anche tutti i suoi vincoli, un'istanza **è legale** se soddisfa tutti i vincoli imposti. Più avanti vedremo che per questa definizione ci interessano soltanto le **dipendenze funzionali** e non ad esempio i vincoli di dominio.
+
+Un _DBMS_ permette di:
+- Definire insieme allo schema della base anche i suoi vincoli
+- Verificare che un'istanza sia legale
+- Impedire l'inserimento di tuple che violerebbero tali vincoli
+
+Le **dipendenze funzionali** di uno schema esprimono dei vincoli di dipendenza tra sottoinsiemi di attributi dello schema stesso, questi devono essere soddisfatti da ogni istanza dello schema. Se io ad esempio ho _Matricola e CF_ nel caso di matricola uguale dovrà essere uguale anche CF.
+
+# Dipendenze Funzionali
+
+## Schema di relazione
+Uno schema di relazione $R$ è un insieme di attributi $\{ A_{1},\dots,A_{n} \}$
+
+Notazione:
+- $R=A_{1},\dots,A_{n}$
+- Le prime lettere dell'alfabeto denotano singoli attributi
+- Le ultime lettere denotano insiemi di attributi
+- Se $X$ ed $Y$ sono insiemi di attributi $XY$ denota $X\cup Y$
+
+## Tupla
+Dato uno schema di relazione $R$ una tupla $t$ su $R$ è una funzione che associa ad ogni attributo $A$ in $R$ un valore $t[A_{i}]$ nel corrispondente $dom(A_{i})$.
+
+Se $X$ è un sottoinsieme di $R$ e $t_{1},t_{2}$ sono due tuple su $R$, $t_{1}\ e \ t_{2}$  coincidono su $X$ se $\forall A\in X(t_{1}[A]=t_{2}[A])$.
+
+## Istanza di Relazione
+Dato uno schema di relazione $R$ una istanza di $R$ è un insieme di tuple su $R$
+
+---
+
+**Dipendenze Funzionali**
+
+Dato uno schema di relazione $R$, una dipendenza funzionale su $R$ è una coppia ordinata di sottoinsiemi non vuoti $X,Y$ di $R$.
+
+Notazione:
+
+- $X\rightarrow Y$
+- $X$ **determina funzionalmente** $Y$ oppure $Y$ **dipende funzionalmente da** $X$
+- $X$ = **Determinante**
+- $Y$ = **Dipendente**
+
+Dati uno schema $R$ e una dipendenza funzionale $X\rightarrow Y$ su $R$, un'istanza $r$ di $R$ soddisfa la dipendenza funzionale $X\rightarrow Y$ se:
+
+$$
+\forall t_{1},t_{2}\in r(t_{1}[X]=t_{2}[X]\Rightarrow t_{1}[Y]=t_{2}[Y])
+$$
+
+Se $t_{1}[X]\neq t_{2}[X]$ allora la dipendenza è comunque **soddisfatta** qualsiasi siano i valori di $t_{1}[Y],t_{2}[Y]$.
+
+Quindi notiamo che il minimo numero per violare una dipendenza è 2, infatti istanze da 1 o 0 elementi è **impossibile che violino una qualsiasi dipendenza**.
+
+**Istanza Legale**
+
+Dati uno schema di relazione $R$ e un insieme $F$ di dipendenze funzionali, un'istanza di $R$ è legale se soddisfa tutte le dipendenze in $F$.
+
+![[Pasted image 20241010155443.png]]
+
+_Osservazione_
+
+![[Pasted image 20241010155527.png]]
+
+Notiamo che ogni istanza legale che quindi soddisfa $A\rightarrow B,B\rightarrow C$ soddisfa sempre anche la dipendenza $A\rightarrow C$, possiamo quindi considerarla come se fosse in $F$?
+
+Dato uno schema di relazione $R$ e un insieme $F$ di dipendenza funzionali su $R$ ci sono delle dipendenze funzionali che non sono in $F$ ma che sono comunque soddisfatte da tutte le istanze legali di $R$.
