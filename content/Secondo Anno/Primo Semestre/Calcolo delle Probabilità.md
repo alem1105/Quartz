@@ -904,3 +904,12 @@ P(A|A_{1})=\frac{P(A\cap A_{1})}{P(A_{1})}=\frac{P(A)\cdot P(A_{1}|A)}{P(A_{1})}
 $$
 
 
+## Legge probabilità totale generalizzata
+Siano $F_{1},\dots,F_{n}$ eventi 2 a 2 disgiunti tali che $S=\bigcup\limits^{n}_{i=1}F_{i}$ allora per ogni evento $E_{i}$ vale $P(E)=\sum\limits_{i=1}^n P(F_{i})\cdot P(E| F_{i})$.
+
+_Esempio con $n=2$_
+
+$$
+P(E)=P(F_{1})\cdot P(E | F_{1})+P(F_{2})\cdot P(E|F_{2})
+$$
+

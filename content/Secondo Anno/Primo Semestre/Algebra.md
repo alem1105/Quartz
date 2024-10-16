@@ -1237,3 +1237,87 @@ $$
 \end{align*}
 $$
 
+### Algoritmo di Euclide per trovare MCD
+Possiamo vederlo come una funzione che prende in input $a,b>0$ e restituisce un $\delta=MCD(a,b)$
+
+![[Pasted image 20241015183317.png|500]]
+
+_Esempio_
+
+![[Pasted image 20241015184302.png|500]]
+
+Prendendo l'esempio sopra allora sappiamo che $\exists u,v\in \mathbb{Z} \ t.c. \ 3=3522u+321v$ ma come si calcolano? **Identità di Bèzout**
+
+![[Pasted image 20241015185436.png]]
+
+**Lemma di Gauss**: Se $a,b\in \mathbb{Z}^X$ e $c\in \mathbb{Z}$ e se $MCD(a,b)=1$ allora $a|bc\Rightarrow a|c$
+
+_Dimostrazione_
+
+Sappiamo che $MCD(a,b)=1$ e quindi sappiamo che $a\mathbb{Z}+b\mathbb{Z}=\delta \mathbb{Z}=\mathbb{Z}$ (teoremi visti precedentemente). Questo inoltre significa che $\exists u,v\in \mathbb{Z} \ t.c. \ au+bv=1$, allora:
+
+$$
+\begin{align*}
+&\text{Moltiplichiamo per c} \\
+&auc+\underbrace{ bc }_{ \text{Divisibile per a} }v=c \\
+&\text{Questo significa che } \exists k \ t.c. \ b=k\cdot a \\
+&auc+kav=c\rightarrow a\underbrace{ (uc+kv) }_{ \exists l \ t.c. \ c=al }=c \\
+&\text{Questo significa quindi che } a|c
+\end{align*}
+$$
+
+**Lemma**: Dato $p\in \mathbb{N},p>1$ allora $p$ è irriducibile $\Rightarrow p$ è primo.
+
+_Dimostrazione_
+
+Prima di tutto dimostriamo una proprietà utile per dopo: Se $p$ è irriducibile e $p \not{|} a$ allora $a\mathbb{Z}+p\mathbb{Z}=\mathbb{Z}\Leftrightarrow MCD(a,p)=1$, altrimenti $\exists\delta>1 \ t.c. \ \delta|a \ e \ \delta|p$ ma visto che $p$ è irriducibile allora $\delta$ è $=p\Rightarrow p|a$ ma questo va in contraddizione con l'ipotesi ovvero che $p$ non divide $a$.
+
+Adesso passiamo alla dimostrazione del Lemma.
+
+Supponiamo che $p|ab$ con $p$ irriducibile. Allora $p$ deve dividere $a$ o $b$, senza perdere generalità possiamo quindi supporre che non divide $a$ e dobbiamo dimostrare che necessariamente divide $b$.
+
+$$
+\begin{align}
+&a\mathbb{Z}+p\mathbb{Z}=\mathbb{Z} \\
+&\text{Moltiplichiamo per b} \\
+&\underbrace{ \underbrace{ ab }_{ p|ab }\mathbb{Z}+\underbrace{ pb }_{ p|pb }\mathbb{Z} }_{ \subset p\mathbb{Z} }=b\mathbb{Z} \\
+&\text{Quindi dato che } b\mathbb{Z}\subset p\mathbb{Z}\Rightarrow p|b
+\end{align}
+$$
+
+
+_Esercizio_
+
+Calcolare $(\mathbb{Z}\backslash N\mathbb{Z})^X$ con $N\in \mathbb{N}$
+
+Premesse:
+- $A=\mathbb{Z}\backslash N\mathbb{Z}=\mathbb{Z}\backslash\equiv_{N}$
+- $[a]+[b]=[a+b]$ e $[a]\cdot[b]=[a\cdot b]$
+- Con l'elemento $[0]=(N\mathbb{Z})$ per l'elemento neutro di $+$ e con l'elemento $[1](=N\mathbb{Z}+1)$ per l'elemento neutro di $\cdot$, si ottiene che $A$ è un anello commutativo unitario
+
+Si cerca:
+- $A^*=\{ [n] \ t.c. \ \exists[m] \text{ con } [m]\cdot[n]=[1] \}$ "Insieme delle unità"
+
+1) Sia $[a]\in(\mathbb{Z}\backslash N\mathbb{Z})^X$ allora esiste $b\in \mathbb{Z}\backslash N\mathbb{Z}$ t.c. $[a]\cdot[b]=[1]$, $[ab]=[1]\Leftrightarrow N|ab-1\Leftrightarrow \exists k\in \mathbb{Z}$ t.c. $kN=ab-1$. (È invertibile se e solo se scelto un qualsiasi rappresentante, quando faccio $ab-1$ è divisibile per N).
+   
+   Spostando i termini di prima otteniamo $ab-kn=1$ che è un'**identità di Bèzout** per $a,N$ e questo significa che $a,N$ sono **primi fra loro**.
+
+Quindi otteniamo che $(\mathbb{Z}\backslash N\mathbb{Z})^X=\{ [a]:a\in \mathbb{Z} \ e \ MCD(a,N)=1 \}$.
+
+Esiste quindi un'applicazione biiettiva tra $\{ r\in \{ 0,\dots,N-1 \} \ t.c. \ MCD(r,N)=1 \}$ e $(\mathbb{Z}\backslash N\mathbb{Z})^X$,
+$r\rightarrow [r]$.
+
+_Esempio_
+
+$N=24=2^3\cdot 3$, verificare che $(\mathbb{Z}\backslash 24\mathbb{Z})^X=\{ r:2\not{|} r, 3\not{|}r \}$, quindi $(\mathbb{Z}\backslash 24\mathbb{Z})^X=\{ [5],[7],[11],[13],[17],[19],[23] \}$.
+
+_Cosa si osserva se N è primo?_
+
+- $N=p$ primo: Sia $r\in \{ [1],\dots,[p-1] \}$ allora $MCD(p,r)=1$ altrimenti qualora si avesse $\delta=MCD(p,r)>1$ avrei che $\delta|p,\delta|r\Rightarrow \delta=p$ e quindi si avrebbe che $p|r$ ma $r<p$ siccome è resto e quindi è una contraddizione, abbiamo quindi che $r,p$ sono coprimi.
+
+Si ottiene $(\mathbb{Z}\backslash p\mathbb{Z})^X=\{ [r]:1\leq r\leq p-1 \} \ (\forall r\in \mathbb{Z} \backslash p\mathbb{Z} - \{ 0 \},r \text{ è invertibile})$
+
+> [!info] Terminologia
+> Dato un anello $A$ commutativo t.c. $\forall a\in A\backslash\{ 0 \}$ invertibile, si dice **campo**. Ad esempio $\mathbb{Z}\backslash p\mathbb{Z}=\mathbb{F}_{p}$ è un campo.
+
+ 
