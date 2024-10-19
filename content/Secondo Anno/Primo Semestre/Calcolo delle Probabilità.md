@@ -913,3 +913,248 @@ $$
 P(E)=P(F_{1})\cdot P(E | F_{1})+P(F_{2})\cdot P(E|F_{2})
 $$
 
+_Esempio Test Malattia_
+
+Abbiamo un esame efficace al 95% quando la malattia è presente, 1% di falsi positivi e il 5x1000 della popolazione ha effettivamente la malattia.
+
+$D=\text{La persona testata ha la malattia}$
+
+$E=\text{Persona è positiva all'esame}$
+
+$$
+\begin{align*}
+&P(E|D)=0.95 \\
+&P(E|D^C)=0.01 \\
+&P(D)=0.005 \\
+&\text{Qual è la probabilità che una persona testata abbia la malattia?} \\
+&P(D|E)=? \\
+&P(D|E)=\frac{P(D\cap E)}{P(E)}=\frac{P(D)\cdot P(E|D)}{P(D)\cdot P(E|D)\cdot P(D^C)\cdot P(E|D^C)}=\frac{0.005\cdot 0.95}{0.005\cdot 0.95+0.995\cdot 0.01}=0.323 \\
+&\text{Quindi se il test dice che siamo malati, lo siamo veramente in un caso su 3 circa.}
+\end{align*}
+$$
+
+Il test è buono se $P(D|E)$ è vicina al 100% e anche se $P(D^C|E^C)$ è vicina al 100%.
+
+Questo non è un buon test per la popolazione e la malattia presa in esame, infatti ci sono troppi pochi malati e se vengono effettuati tanti test con questa probabilità di falsi positivi avremo più test sbagliati che veri malati.
+
+Infatti con 995 sani e 5 malati abbiamo molti falsi positivi.
+
+Infatti:
+
+$P(D|E)=\frac{P(D\cap E)}{P(E)}=\frac{\text{\#Persone malate con test positivo}}{\text{\#Persone con test positivo}}$ dove il numero di persone con test positivo (denominatore) è dato da $\text{\#Persone malate con test positivo + \#Persone sane con test positivo}$.
+
+Prendiamo ad esempio 995.000 sani testati allora 9950 sani avranno un test positivo ovvero test sbagliati mentre i malati che sono 5000, solo il 95% ovvero 4750 avranno un test positivo e quindi corretto.
+
+Notiamo quindi che i testi sbagliati 9950 sono molto maggiori rispetto ai test corretti 4750.
+
+Questo test sarebbe più corretto se usato per una malattia con più infetti.
+
+## Rapporto a Favore
+
+_Definizione_: Il rapporto a favore di un evento $A$ è dato da:
+
+$$
+\frac{P(A)}{P(A^C)}=\frac{P(A)}{1-P(A)}
+$$
+
+_Esempio_:
+
+Abbiamo la partita di calcio Italia - Brasile. Se la vittoria dell'italia è data 1 a 5 intendiamo che il rapporto a favore dell'evento "l'italia vince" è $\frac{1}{5}$ e quindi $\frac{P(A)}{P(A^C)}=\frac{1}{5}$.
+
+Data l'espressione possiamo calcolare A:
+
+$$
+\begin{align}
+&P(A)=\frac{1}{5}\cdot(1-P(A)) \\
+&P(A)=\frac{1}{5}-\frac{P(A)}{5} \\
+&\frac{6}{5}P(A)=\frac{1}{5} \\
+&P(A)=\frac{1}{6};P(A^C)=\frac{5}{6}
+\end{align}
+$$
+
+_Esempio di Criminologia_
+
+Abbiamo $H$ ipotesi "Mario Rossi è l'assassino", abbiamo una stima di $P(H)$, ad esempio per Sherlock Holmes $P(H)=0.8$.
+
+Introduciamo una nuova prova $E$ e questa modifica la nostra stima in $P(H|E)$, avendo introdotto una nuova prova, come cambia il rapporto a favore? Questo è dato da:
+
+$$
+\frac{P(H|E)}{P(H^C|E)} \text{ Mentre prima era } \frac{P(H)}{P(H^C)}
+$$
+
+Inoltre per il teoria di Bayes sappiamo che:
+
+$$
+P(H|E)=\frac{P(H)\cdot P(E|H)}{P(E)};P(H^C|E)=\frac{P(H^C)\cdot P(E|H^C)}{P(E)}
+$$
+
+Quindi il nuovo rapporto è dato da:
+
+$$
+\frac{P(H|E)}{P(H^C|E)}=\frac{\frac{P(H)\cdot P(E|H)}{P(E)}}{\frac{P(H^C)\cdot P(E|H^C)}{P(E)}}=\frac{P(H)}{P(H^C)}\cdot\frac{P(E|H)}{P(E|H^C)}
+$$
+
+Quindi possiamo vederlo anche come:
+
+$$
+\text{Vecchio rapporto }\cdot \frac{P(E|H)}{P(E|H^C)}
+$$
+
+Il nostro rapporto a favore quindi aumenta se $P(E|H)>P(E|H^C)$ ovvero se il loro rapporto > 1. Aumenta se appunto l'ipotesi è vera piuttosto che quando è falsa.
+
+## Bayes Generalizzato
+Avevamo visto la probabilità totale generalizzata, possiamo generalizzare anche il teorema di Bayes:
+
+$$
+P(F_{i}|E)=\frac{P(F_{i})\cdot P(E|F_{i})}{\sum\limits_{j=i}^{n}P(F_{j})\cdot P(E|F_{j})}
+$$
+
+_Esercizio_
+
+Un aereo è scomparso, si presume sia finito con uguale probabilità in una di 3 zone $Z_{1},Z_{2},Z_{3}$.
+
+Abbiamo:
+- $1-\beta_{i}$ = Probabilità di trovare l'aereo in $Z_{i}$ se è effettivamente in $Z_{i}$.
+- Sapendo che le ricerche in $Z_{1}$ hanno dato esito negativo, qual è la probabilità che l'aereo sia in $Z_{i}$ con $i=1,2,3$?
+- $R_{i}=\text{L'aereo è in } Z_{i}$
+- $E=\text{La ricerca in } Z_{1}\text{ ha dato esito negativo}$
+- $P(R_{1})=P(R_{2})=P(R_{3})=\frac{1}{3}$
+- $P(R_{i}|E)=?$
+
+$$
+\begin{align*}
+P(R_{1}|E)=\frac{P(E\cap R_{1})}{P(E)}=\frac{P(R_{1})\cdot P(E|R_{1})}{P(E)}=\frac{P(R_{1})\cdot P(E|R_{1})}{\sum\limits_{k=1}^3 P(R_{k})\cdot P(E|R_{k})}=\frac{\frac{1}{3}\cdot \beta_{1}}{\frac{1}{3}\beta_{1}+\frac{1}{3}\cdot 1+ \frac{1}{3}\cdot 1}=\frac{\beta_{1}}{\beta_{1}+2}
+\end{align*}
+$$
+
+Adesso prendiamo $j=2,3$
+
+$$
+\begin{align}
+P(R_{j}|E)=\frac{P(R_{j})\cdot P(E|R_{j})}{P(E)}=\frac{\frac{1}{3}\cdot 1}{\frac{1}{3}\beta_{1}+\frac{1}{3}+\frac{1}{3}}=\frac{1}{\beta_{1}+2}
+\end{align}
+$$
+
+**Proposizione**
+
+Sia $F$ evento con $P(F)>0$ allora la funzione $E\rightarrow P(E|F)$ al variare di $E$ eventi è una funzione di probabilità. Abbiamo quindi una serie di indentità:
+
+1) $P(E^C|F)=1-P(E|F)$
+2) $P(A\cup B|F)=P(A|F)+P(B|F)-P(A\cap B|F)$
+3) $A_{1},\dots,A_{n}$ eventi 2 a 2 disgiunti allora $P\left( \bigcup\limits_{i=1}^n A_{i}|F \right)=\sum\limits_{i=1}^n P(A_{i}|F)$
+
+_Dimostrazioni negli appunti non so se le metto =P dato che dobbiamo solo fare esercizi_
+
+_Esempio_: lanciamo 2 dadi e valutiamo la speranza degli eventi con $P$. Sappiamo che "il primo dado ha dato un numero pari" e chiamiamo questo evento $A$ quindi adesso la calcoliamo $P(\cdot,A)$. Se poi sappiamo che si verifica $B=\text{"Il 2 dato da un numero dispari"}$ allora valutiamo $Q(\cdot,B)$ dove $Q=P(\cdot,A)$ ottenendo quindi che $Q=(\cdot,A\cap B)$.
+
+## Indipendenza di Eventi
+Due eventi $E$ e $F$ si dicono indipendenti se $P(E\cap F)=P(E)\cdot P(F)$ e si scrive $E\perp\!\!\!\!\!\!\perp F$, sarebbe più intuitivo dire che $E$ ed $F$ sono indipendenti se $P(E|F)=P(E)$ e $P(F|E)=P(F)$ però per dare un senso a $P(E|F)$ è necessario che $P(F)>0$ e analogamente per $P(F|E)$ serve che $P(E)>0$.
+
+Tolto il caso in cui uno tra $E$ ed $F$ abbia probabilità 0, la formulazione intuitiva e la definizione coincidono.
+
+Infatti vale:
+
+$$
+\begin{align*}
+\text{Sia } F \text{ con } P(F)>0 \text{ allora, per ogni evento } E \\
+ \\
+P(E|F)=P(E)\Leftrightarrow P(E\cap F)=P(E)\cdot P(F)
+\end{align*}
+$$
+
+_Dimostrazione_
+
+$$
+\begin{align*}
+&\text{Sia } P(E|F)=P(E) \text{ allora siccome } P(E|F)=\frac{P(E\cap F)}{P(F)} \text{ abbiamo che } \frac{P(E\cap F)}{P(F)}=P(E) \\
+ \\
+&\text{Moltiplichiamo per } P(F) \to P(F)\cdot\frac{P(E\cap F)}{P(F)}=P(E)\cdot P(F) \Leftrightarrow P(E\cap F)=P(E)\cdot P(F) \\
+ \\
+&\text{Quindi supponiamo che } P(E\cap F)=P(E)\cdot P(F) \text{ e dividiamo per } P(F)>0 \\
+ \\
+&\underbrace{ \frac{P(E\cap F)}{P(F)} }_{ P(E|F) }=P(E)
+\end{align*}
+$$
+
+Analogamente possiamo provare che se $P(E)>0$ allora $P(F|E)=P(F)\Leftrightarrow P(E\cap F)=P(E)\cdot P(F)$.
+
+_Osservazione_
+
+Se $P(E)=0$ allora $E,F$ sono indipendenti per ogni $F$ evento, ovvero esistono eventi con probabilità nulla ma possibili.
+
+Sia $E$ con $P(E)=0$ e sia $F$ evento dobbiamo verificare che $P(E\cap F)=\overbrace{ P(E) }^{ 0 }\cap P(F)$.
+
+Quindi dobbiamo provare che $P(E\cap F)=0$, sappiamo che $E\cap F\subset E$ e per monotonia $P(E\cap F)\leq P(E)=0$.
+
+_Esempio_
+
+Lancio due volte un dado $E=\{ \text{Il 1° lancio dà 4} \},F=\{ \text{La somma dei lanci dà 6} \}$. $E\perp\!\!\!\!\!\!\perp F$?
+
+$$
+\begin{align*}
+&S=\{ (a,b):a,b\in \{ 1,2,3,4,5,6 \} \} \text{ esiti equiprobabili} \\
+&P(E)=\frac{1}{6} \\
+&F=\{ (a,b)\in S:a+b=6 \}=\{ (1,5),(2,4),(3,3),(4,2),(5,1) \} \\
+&P(F)=\frac{5}{36} \\
+&P(E\cap F)=\{ (4,2) \}=\frac{1}{36} \\
+ \\
+&P(E\cap F)\neq P(E)\cdot P(F) \text{ quindi } E\not{\perp\!\!\!\!\!\!\perp} F
+\end{align*}
+$$
+
+_Esempio_
+
+Lancio due volte un dado $E=\{ \text{Il 1° lancio dà 4} \},F=\{ \text{La somma dei lanci dà 7} \}$. $E\perp\!\!\!\!\!\!\perp F$?
+
+$$
+\begin{align*}
+&S=\{ (a,b):a,b\in \{ 1,2,3,4,5,6 \} \} \text{ esiti equiprobabili} \\
+&P(E)=\frac{1}{6} \\
+&F=\{ (a,b)\in S:a+b=6 \}=\{ (1,6),(2,5),(3,4),(4,3),(5,2),(6,1) \} \\
+&P(F)=\frac{6}{36}=\frac{1}{6} \\
+&P(E\cap F)=\{ (4,3) \}=\frac{1}{36} \\
+ \\
+&P(E\cap F)= P(E)\cdot P(F) \text{ quindi } E\perp\!\!\!\!\!\!\perp F
+\end{align*}
+$$
+
+Se ho un esperimento composto da sottoesperimenti che non si influenzano allora eventi riferiti a sottoesperimenti diversi risultano indipendenti.
+
+_Esempio_
+
+Lancio due volte un dado e ho due sottoesperimenti: primo e secondo lancio. I due sottoesperimenti non si possono influenzare.
+
+$E=\text{1° dà pari},F=\text{2° dà multiplo di 3}$, trattandosi di eventi che si riferiscono a lanci diversi ci aspettiamo che siano indipendenti, verifichiamo che $P(E\cap F)=P(E)\cdot P(F)$.
+
+$$
+\begin{align*}
+&S=\{ (a,b):a,b\in \{ 1,2,3,4,5,6 \} \} \text{ esiti equiprobabili} \\
+&P(E)=\frac{3}{6}=\frac{1}{2} \\
+&P(F)=\frac{2}{6}=\frac{1}{3} \\
+&E\cap F=\{ (a,b):a\in \{ 2,4,6 \},b\in \{ 3,6 \} \} \\
+&P(E\cap F)=\frac{|E\cap F|}{|S|}=\frac{6}{36}=\frac{1}{6} \text{ che è uguale a }\frac{1}{2}\cdot \frac{1}{3} \text{ quindi } E\perp\!\!\!\!\!\!\perp F
+\end{align*}
+$$
+
+**Proposizione**: Dati $E,F$ eventi, $E\perp\!\!\!\!\!\!\perp F\Rightarrow E^C\perp\!\!\!\!\!\!\perp F$
+
+_Dimostrazione_
+
+Supponiamo $E\perp\!\!\!\!\!\!\perp F$ e quindi $P(E\cap F)=P(E)\cdot P(F)$, dobbiamo provare che $E^C\perp\!\!\!\!\!\!\perp F$, cioè $P(E^C\cap F)=P(E^C)\cdot P(F)$.
+
+$$
+\begin{align*}
+\text{Abbiamo che } P(E^C)=1-P(E) \\ \\
+P(E^C\cap F)=(1-P(E))\cdot P(F)&=P(F)-\underbrace{ P(E\cap F) }_{ E\perp\!\!\!\!\perp F\Rightarrow P(E)\cdot P(F) } \\
+&=P(F)-P(E)\cdot P(F) \\
+\text{ Raggruppando } P(F)\to \ &=P(F)\cdot(1-P(E))  \\
+&=P(F)\cdot P(E^C)
+\end{align*}
+$$
+
+
+
+
+
+
+

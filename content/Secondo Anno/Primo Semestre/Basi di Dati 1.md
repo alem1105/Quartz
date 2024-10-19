@@ -921,3 +921,221 @@ _Osservazione_
 Notiamo che ogni istanza legale che quindi soddisfa $A\rightarrow B,B\rightarrow C$ soddisfa sempre anche la dipendenza $A\rightarrow C$, possiamo quindi considerarla come se fosse in $F$?
 
 Dato uno schema di relazione $R$ e un insieme $F$ di dipendenza funzionali su $R$ ci sono delle dipendenze funzionali che non sono in $F$ ma che sono comunque soddisfatte da tutte le istanze legali di $R$.
+
+## Chiusura di un insieme di Dipendenze Funzionali
+Dato uno schema di relazione $R$ e un insieme $F$ di dipendenze funzionali su $R$ la **chiusura di $F$** è l'insieme delle dipendenze funzionali che sono soddisfatte da ogni istanza legale di $R$.
+
+Lo scriviamo $F^+$.
+
+Otteniamo quindi che $F\subseteq F^+$.
+
+## Chiave
+Dati uno schema di relazione $R$ e un insieme di dipendenze funzionali $F$, un sottoinsieme $K$ di uno schema di relazione $R$ è una **chiave** se:
+- $K\rightarrow R\in F^+$
+- Non esiste un sottoinsieme proprio $K'$ di $K$ tale che $K'\rightarrow R\in F^+$
+
+Se rispettiamo soltanto la prima condizione allora $K$ è detta **superchiave**. Se soddisfa la seconda e quindi non ha altri sottoinsiemi che soddisfano la prima condizione allora è detta **chiave**. Possiamo anche diri quindi che una chiave è sempre superchiave dato che contiene se stessa ma una superchiave non è detto che sia sempre chiave, ma ne contiene sempre una.
+
+$K\rightarrow R$ significa che se due tuple sono uguali su $K$ allora le tuple devono essere uguali e dato che non possiamo avere due tuple uguali significa che non possiamo avere due chiavi uguali.
+
+_Esempio_
+
+Consideriamo lo schema $\text{Studente = (Matr, Cognome, Nome, Data)}$. Il numero di matricola viene assegnato allo studente per identificarlo e quindi non ci possono essere 2 studenti con la stessa matricola e un'istanza di Studente non può contenere due tuple con lo stesso numero di matricola.
+
+Otteniamo quindi che $\text{Matr}\rightarrow \text{Matr, Cognome, Nome, Data}$ deve essere soddisfatta da ogni istanza legale. **Matr è chiave per lo schema Studente**.
+
+### Chiave Primaria
+Dati uno schema $R$ e un insieme $F$ di dipendenze funzionali, possono esistere più chiavi, in SQL una di esse verrà scelta come **chiave primaria** (non può avere valore nullo).
+
+Di solito si sceglie quella con meno attributi (**non minimale, minimale significa che non ha altri sottoinsiemi chiave, superchiave**) questo perché migliora la velocità di ricerca nella base di dati. Quindi una volta scelta chiave primaria le altre chiavi devo impostarle come attributi **unique** per rispettare il fatto che non si deve ripetere.
+
+## Dipendenze Funzionali Banali
+Dati uno schema di relazione $R$ e due sottoinsiemi non vuoti $X,Y$ di $R$ tali che $Y\subseteq X$ si ha che ogni istanza $r$ di $R$ soddisfa la dipendenza funzionali $X\rightarrow Y$.
+
+Queste dipendenze sono soddisfatte da ogni tupla anche da quelle non legali.
+
+Quindi ad esempio se io ho due tuple uguali su $X=ABC$ allora saranno uguali anche su $Y=AB$ e quindi $X\rightarrow Y$ è soddisfatta.
+
+Quindi se $Y\subseteq X$, $X\rightarrow Y\in F^+$, questa è detta **dipendenza banale**.
+
+### Proprietà delle dipendenze funzionali
+Dati uno schema di relazione $R$ e un insieme di dipendenze funzionali $F$ si ha:
+
+$$
+X\rightarrow Y\in F^+ \Leftrightarrow \forall A\in Y(X\rightarrow A\in F^+)
+$$
+
+Quindi se $A\rightarrow BC\in F^+$ allora anche $A\rightarrow B\in F^+$ e $A\rightarrow C\in F^+$.
+
+---
+
+Per la terza forma normale l'insieme $F^+$ è molto importante, è l'insieme di tutte le dipendenze soddisfatte da tutte le istanze legali. Ma come si calcola questo insieme $F^+$?
+
+---
+
+Dato che calcolare $F^+$ è molto "pesante" ci limiteremo a capire se una dipendenza ne fa parte o meno.
+
+## Assiomi di Armstrong
+
+Introduciamo $F^A$, con gli **Assiomi di Armstrong**
+
+Denotiamo $F^A$ come l'insieme di dipendenze funzionali definito:
+- Se $f\in F$ allora $f\in F^A$
+- Se $Y\subseteq X\subseteq R$ allora $X\rightarrow Y\in F^A$ **Assioma della Riflessività**
+- Se $X\rightarrow Y\in F^A$ allora $XZ\rightarrow YZ\in F^A$, per ogni $Z\subseteq R$, **Assioma dell'aumento**
+- Se $X\rightarrow Y\in F^A$ e $Y\rightarrow Z\in F^A$ allora $X\rightarrow Z\in F^A$, **Assioma della transitività**
+
+Dimostreremo che $F^+=F^A$, ma prima alcune osservazioni su questi assiomi:
+
+**Riflessività**:  Se $Y\subseteq X\subseteq R$ allora $X\rightarrow Y\in F^A$
+
+Ad esempio $\text{Nome} \subseteq (\text{Nome, Cognome})$ e quindi se due tuple hanno uguale la coppia (Nome, Cognome) allora avranno uguale l'attributo Nome e stesso ragionamento per Cognome. Questo significa che $\text{(Nome,Cognome)}\rightarrow\text{Nome (o Cognome)}$ è sempre soddisfatta.
+
+**Aumento**:  Se $X\rightarrow Y\in F^A$ allora $XZ\rightarrow YZ\in F^A$, per ogni $Z\subseteq R$
+
+Ad esempio $\text{CodiceFiscale}\rightarrow\text{Cognome}$ è soddisfatta quando tutte le tuple che hanno lo stesso CodiceFiscale hanno anche lo stesso Cognome.
+
+Se aggiungiamo un altro attributo Indirizzo avremo che se due tuple sono uguali su (CodFiscale, Indirizzo) lo saranno anche su (Cognome, Indirizzo), quindi se viene soddisfatta $\text{CodFiscale}\rightarrow\text{Cognome}$ viene soddisfatta anche $\text{CodFiscale,Indirizzo}\rightarrow\text{Cognome,Indirizzo}$.
+
+**Transitività**: Se $X\rightarrow Y\in F^A$ e $Y\rightarrow Z\in F^A$ allora $X\rightarrow Z\in F^A$
+
+Ad esempio $\text{Matricola}\rightarrow\text{CodFiscale}$ è soddisfatta quando tutte le tuple con la stessa Matricola hanno anche lo stesso CodFiscale.
+
+$\text{CodFiscale}\rightarrow\text{Cognome}$ è soddisfatta quando tutte le tuple con stesso CodFiscale hanno anche lo stesso Cognome.
+
+Se entrambe le dipendenze sono soddisfatte quindi possiamo dire che ogni volta che le tuple hanno la stessa Matricola avranno hanno lo stesso Cognome, è soddisfatta quindi anche la dipendenza $\text{Matricola}\rightarrow\text{Cognome}$.
+
+_Vediamo altre regole che ci permettono di derivare altre dipendenze in $F^A$_:
+
+1) Se $X\rightarrow Y\in F^A$ e $X\rightarrow Z\in F^A$ allora $X\rightarrow YZ\in F^A$, **Regola dell'unione**
+2) Se $X\rightarrow Y\in F^A$ e $Z\subseteq Y$ allora $X\rightarrow Z\in F^A$, **Regola della decomposizione**
+3) Se $X\rightarrow Y\in F^A$ e $WY\rightarrow Z\in F^A$ allora $WX\rightarrow Z\in F^A$, **Regola della pseudotransitività**
+
+**Teorema**: Sia $F$ un insieme di dipendenze funzionali dove valgono le implicazioni viste sopra.
+
+**Dimostrazione 1)** 
+
+Se $X\rightarrow Y\in F^A$ per l'assioma dell'aumento si ha $X\rightarrow XY\in F^A$ (aggiungiamo X da entrambe le parti quindi XX=X). Analogamente $X\rightarrow Z\in F^A$ diventa $XY\rightarrow YZ\in F^A$  e quindi per transitività si ha che $X\rightarrow YZ\in F^A$.
+
+**Dimostrazione 2)**
+
+Se $Z\subseteq Y$ allora per riflessività si ha $Y\rightarrow Z\in F^A$. Quindi poiché $X\rightarrow Y\in F^A$ e $Y\rightarrow Z\in F^A$ per transitività $X\rightarrow Z\in F^A$
+
+**Dimostrazione 3)**
+
+Se $X\rightarrow Y\in F^A$ per aumento si ha $WX\rightarrow WY\in F^A$, quindi dato che $WX\rightarrow WY\in F^A$ e $WY\rightarrow Z\in F^A$ allora per transitività abbiamo $WX\rightarrow Z\in F^A$.
+
+
+> [!info] Osservazione
+> Da riscrivere
+> ![[Pasted image 20241017132946.png]]
+
+## Chiusura di un insieme di attributi
+Siano $R$ uno schema di relazione, $F$ un insieme di dipendenze funzionali su $R$ e $X$ un sottoinsieme di $R$.
+
+La chiusura di $X$ rispetto ad $F$ denotata con $X^+_{F}$ o anche $X^+$ è definito da:
+
+$$
+X^+_{F}=\{ A|X\rightarrow A\in F^A \}
+$$
+
+Fanno parte della chiusura, gli attributi che vengono determinati direttamente da $X$ (da dipendenze che sono in $F$), oppure indirettamente (da dipendenze che sono in $F^A$). Quindi otteniamo che:
+
+$$
+X\subseteq X^+_{F} \text{ Riflessività}
+$$
+
+Quindi in ogni istanza legale se due tuple sono uguali su $X$ allora sono uguali su tutti gli attributi della chiusura di $X$, ovviamente se $F^A=F^+$.
+
+
+> [!info] Chiusure
+> La chiusura di $F$ non è mai vuota dato che abbiamo sempre almeno le dipendenze banali stessa cosa per la chiusura di $X$, infatti $X$ determina sicuramente se stesso.
+
+**Lemma**:
+
+Siano $R$ uno schema di relazione ed $F$ un insieme di dipendenze funzionali su $R$ si ha che: $X\rightarrow Y\in F^A$ se e solo se $Y\subseteq X^+$
+
+_Dimostrazione_
+
+Sia $Y=A_{1},A_{2},\dots,A_{n}$
+
+**PARTE SE**:
+
+Poiché $Y\subseteq X^+$ per ogni $i, i=1,\dots,n$ si ha che $X\rightarrow A_{i}\in F^A$, pertanto per la **regola dell'unione** $X\rightarrow Y\in F^A$
+
+**PARTE SE E SOLO SE**
+
+Poiché $X\rightarrow Y\in F^A$ per la regola **della decomposizione** si ha che per ogni $i,i=1,\dots,n,X\rightarrow A_{i}\in F^A$ cioè $A_{i}\in X^+$ per ogni $i,i=1,\dots,n$ e quindi $Y\subseteq X^+$.
+
+---
+
+**Teorema** $F^+=F^A$
+
+Siano $R$ uno schema di relazione ed $F$ un insieme di dipendenze funzionali su $R$ si ha $F^+=F^A$.
+
+_Dimostrazione_, dobbiamo dimostrare che $F^A\subseteq F^+\wedge F^+\subseteq F^A$.
+
+Iniziamo dimostrando $F^A\subseteq F^+$, Sia $X\rightarrow Y$ una dipendenza funzionale in $F^A$, dimostriamo che $X\rightarrow Y\in F^+$ per induzione sul numero $i$ di applicazioni degli assiomi di Armstrong.
+
+Base dell'induzione: $i=0$, in questo caso $X\rightarrow Y$ è in $F$ e quindi $X\rightarrow Y\in F^+$, questo perché appunto non abbiamo applicato nessun assioma e $F\subseteq F^+$.
+Inoltre questo significa che $X\rightarrow Y\in F^+$ significa che è rispettata da ogni istanza legale.
+
+Ipotesi Induttiva: $i>0$, Prendiamo $i-1$ applicazioni e per ipotesi induttiva abbiamo $X\rightarrow Y\in F^A\Rightarrow X\rightarrow Y\in F^A$
+
+Passo Induttivo: Ci troviamo a $i-1$ e per ipotesi ogni dipendenza ottenuta da $F$ applicando gli assiomi fino a $i-1$ si trova in $F^+$ dobbiamo dimostrarlo anche per $i$ e si possono presentare 3 casi, ovvero l'applicazioni di ognuno dei 3 assiomi:
+
+1) Riflessività
+   
+   All'i-esimo passo decidiamo di applicare la riflessività, quindi se $X\rightarrow Y$ è stata ottenuta per riflessività allora implica che $Y\subseteq X$.
+   
+   $$
+   \forall r(legale) \text{ se } t_1[X]=t_{2}[X]\Rightarrow t_{1}[Y] \ (Y\subseteq X)=t_{2}[Y]\Rightarrow X\rightarrow Y\in F^+
+   $$
+
+2) Aumento
+   
+   Se  $X\rightarrow Y$ è stata ottenuta per aumento, quindi in $i-1$ passi avevamo $V\to W\in F^+,F^A$ al quale possiamo applicare l'aumento con $Z$ ottenendo $VZ\to WZ\in F^A$ e possiamo chiamare $VZ=X$ e $WZ=Y$.
+   
+   $$
+   \begin{align}
+   &\forall r(legale) \ t_{1}[X]=t_{2}[X]\Rightarrow t_{1}[VZ]=t_{2}[VZ]\Rightarrow t_{1}[V]=t_{2}[V]\wedge t_{1}[Z]=t_{2}[Z] \\
+   &\text{Per ipotesi so che } V\to W\in F^+ \text{ e quindi } t_{1}[V]=t_{2}[V]\Rightarrow t_{1}[W]=t_{2}[W] \\
+   &t_{1}[W]=t_{2}[W]\wedge t_{1}[Z]=t_{2}[Z]\Rightarrow t_{1}[WZ]=t_{2}[WZ]\Rightarrow t_{1}[Y]=t_{2}[Y]
+   \end{align}
+   $$
+   
+   Essendo quindi soddisfatta da ogni istanza legale abbiamo che la nuova dipendenza è in $F^+$.
+
+
+3) Transitività
+   
+   $X\to Y\in F^A$ è stata ottenuta per transitività quindi a $i-1$ $X\to Z\in F^A\Rightarrow Z\to Y\in F^A$. E per ipotesi induttiva si trovano in $F^+$ quindi:
+   
+   $$
+   \forall r(legale) \ t_{1}[X]=t_{2}[X]\Rightarrow t_{1}[Z]=t_{2}[Z]\Rightarrow t_{1}[Y]=t_{2}[Y]
+   $$
+
+Quindi qualunque sia il numero di applicazioni di Armstrong, ogni dipendenza di $F^A$ si troverà anche in $F^+$.
+
+---
+
+Adesso dobbiamo dimostrare che se una dipendenza si trova in $F^+$ allora si trova in $F^A$. $F^+\subseteq F^A$ ovvero:
+
+$$
+X\to Y\in F^+\Rightarrow X\to Y\in F^A
+$$
+
+![[Pasted image 20241017152218.png]]
+
+Prendiamo una qualunque dipendenza $V\to W\in F$ e mostriamo per prima cosa che $r$ è un'istanza legale perché la soddisfa:
+
+Se $t_{1}[V]\neq t_{2}[V]$ ovvero se $V\cap R-X^+\neq \emptyset$ allora è soddisfatta.
+
+Se $t_{1}[V]=t_{2}[V]\Rightarrow V\subseteq X^+$ (sappiamo che sono uguali sicuramente solo in $X^+$).
+Per il **lemma 1** sappiamo che $V\subseteq X^+\Rightarrow X\to V\in F^A$ e per transitività insieme a $V\to W\in F\Rightarrow X\to W\in F^A\underbrace{ \Rightarrow W\subseteq X^+ }_{ \text{Lemma 1} }\Rightarrow t_{1}[W]=t_{2}[W]$. Quindi le due tuple sono uguali sia sui valori di $V$ che su quelli di $W$. L'istanza è legale.
+
+Adesso mostriamo che se $X\to Y\in F^+$ allora $X\to Y\in F^A$.
+
+Dato che è un'istanza legale significa che $X\to Y\in F^+$, quindi se $t_{1}[X]=t_{2}[X]\Rightarrow t_{1}[Y]=t_{2}[Y]$, noi sappiamo che le tuple sono uguali per gli attributi di $X^+$ e per riflessività $X\subseteq X^+$, quindi le tuple sono sicuramente uguali sui valori di $X$ e quindi l'implicazione ci dice che lo sono anche sui valori di $Y$.
+
+Se sono uguali sui valori di $Y$ significa che anche $Y\subseteq X^+$ e per il **lemma** che $X\to Y\in F^A$.

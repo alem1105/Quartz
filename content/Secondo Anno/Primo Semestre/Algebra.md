@@ -1296,11 +1296,11 @@ Premesse:
 - Con l'elemento $[0]=(N\mathbb{Z})$ per l'elemento neutro di $+$ e con l'elemento $[1](=N\mathbb{Z}+1)$ per l'elemento neutro di $\cdot$, si ottiene che $A$ è un anello commutativo unitario
 
 Si cerca:
-- $A^*=\{ [n] \ t.c. \ \exists[m] \text{ con } [m]\cdot[n]=[1] \}$ "Insieme delle unità"
+- $A^X=\{ [n] \ t.c. \ \exists[m] \text{ con } [m]\cdot[n]=[1] \}$ "Insieme delle unità"
 
 1) Sia $[a]\in(\mathbb{Z}\backslash N\mathbb{Z})^X$ allora esiste $b\in \mathbb{Z}\backslash N\mathbb{Z}$ t.c. $[a]\cdot[b]=[1]$, $[ab]=[1]\Leftrightarrow N|ab-1\Leftrightarrow \exists k\in \mathbb{Z}$ t.c. $kN=ab-1$. (È invertibile se e solo se scelto un qualsiasi rappresentante, quando faccio $ab-1$ è divisibile per N).
    
-   Spostando i termini di prima otteniamo $ab-kn=1$ che è un'**identità di Bèzout** per $a,N$ e questo significa che $a,N$ sono **primi fra loro**.
+   Spostando i termini di prima otteniamo $ab-kN=1$ che è un'**identità di Bèzout** per $a,N$ e questo significa che $a,N$ sono **primi fra loro** perché il loro MCD è 1.
 
 Quindi otteniamo che $(\mathbb{Z}\backslash N\mathbb{Z})^X=\{ [a]:a\in \mathbb{Z} \ e \ MCD(a,N)=1 \}$.
 
@@ -1320,4 +1320,421 @@ Si ottiene $(\mathbb{Z}\backslash p\mathbb{Z})^X=\{ [r]:1\leq r\leq p-1 \} \ (\f
 > [!info] Terminologia
 > Dato un anello $A$ commutativo t.c. $\forall a\in A\backslash\{ 0 \}$ invertibile, si dice **campo**. Ad esempio $\mathbb{Z}\backslash p\mathbb{Z}=\mathbb{F}_{p}$ è un campo.
 
+---
  
+_Esercizio 5_
+
+Dimostrare il Piccolo Teorema di Fermat.
+
+Dato un numero $p$ primo e un intero $n$ tali che $n^p\equiv n\text{(mod p)}$ mostrare che se $n$ e $p$ sono primi fra loro allora $n^{p-1}\equiv 1\text{(mod p)}$.
+
+A cosa serve il teorema di Fermat? Serve a ridurre l'esponente nel calcolo delle potenze quando il numero è molto grande.
+
+---
+
+**Proprietà**: Sappiamo che $\mathbb{F}_{p}=\mathbb{Z}/p\mathbb{Z}$ è un campo ovvero $\mathbb{F}^X_{p}=\{ [1],[2],\dots,[p-1] \}$ inoltre sappiamo anche che $([a]+[b])^p=[a]^p+[b]^p$ con $[a],[b]\in\mathbb{F}_{p}$, (non vera in $\mathbb{Z}$).
+
+Scegliamo come $a,b$ come rappresentanti e scriviamo:
+
+$$
+(a+b)^p=a^p+\binom{p}{1}\cdot a^{p-1}\cdot b+\binom{p}{2}\cdot a^{p-2}\cdot b^2+\dots+\binom{p}{p-2}\cdot a^2\cdot b^{p-2}+\binom{p}{p-1}\cdot a\cdot b^{p-1}+b^p
+$$
+
+- Prendiamo $0<i<p$ e scriviamo $\binom{p}{i}=\frac{p!}{i!\cdot (p-i)!}\in \mathbb{N}$ e quindi si ha che $p|i!\cdot (p-i)!$
+- Supponiamo che $1\leq i\leq p-1$ e inoltre $i\neq i(i-1)\dots 3 \cdot 2 \cdot 1$ e quindi siccome $p>i$ ed $i$ si scompone in tutti fattori più piccoli di $p$ e quindi non divisibili per $p$ (nemmeno il loro prodotto dato che $p$ è primo) abbiamo che $p\not{|}\ i$
+- Allo stesso modo otteniamo che $p>p-i$ e quindi $p\not{|} \ (p-i)!$
+
+Quindi abbiamo che:
+
+$$
+p\neq \underbrace{ k }_{ a }\cdot \underbrace{ i!\cdot (p-i)! }_{ b } \ \ \exists k\in N^*
+$$
+
+E per le condizioni viste sopra sappiamo che $p\not{|} \ b$, ma per definizione di fattoriale sappiamo che $p|p! = ab$, quindi visto che $p$ è primo e non divide $b$ allora deve sicuramente dividere $a$ per **il lemma di Gauss**.
+
+Noi sappiamo però che $a=k=\binom{p}{i}$ dato che $\binom{p}{i} = \frac{p!}{i!(p-i)!}\to p! = \binom{p}{i}\cdot i!\cdot(p-i)!$.
+
+Quindi siccome $p$ dividi tutti i $\binom{p}{i}$ questi si riducono tutti a $\overline 0$ nella formula vista sopra, ad eccezione del primo e l'ultimo.
+
+Abbiamo dimostrato che $([a]+[b])^p=[a]^p+[b]^p$ dato che se $1\leq i\leq p-1$ e $p$ primo abbiamo che $\binom{p}{i}=\binom{p}{p-i}\equiv_{p}0$.
+
+---
+
+**Tornando alla dimostrazione del teorema di Fermat**
+
+$$
+\begin{align}
+&[0]^p=[0] \\
+&[1]^p=[1] \\
+&[2]^p=([1]+[1])^p=[1]^p+[1]^p=[1]+[1]=[2]
+\end{align}
+$$
+
+Facciamo una dimostrazione per induzione, la nostra ipotesi è $[n-1]^p=[n-1]$, quindi:
+
+$$
+[n]^p=([n-1]+[1])^p=[n-1]^p+[1]^p=[n-1]+[1]=[n]
+$$
+
+In questo modo abbiamo dimostrato che $\forall n\in \mathbb{Z}, n^p\equiv_{p} n$ con $p$ primo.
+
+_Precisazione_
+
+Se $[n]\neq [0]$ in $\mathbb{F}_{p}$ ovvero se $[n]\in\mathbb{F}_{p}^X$ allora $[n]$ è invertibile di inverso $[n]'$, per il PTF sappiamo che $[n]^p=[n]$, moltiplichiamo per $[n]'$:
+
+$$
+\underbrace{ [n]^p[n]' }_{ [n]'[n][n]^{p-1}=[n]^{p-1} }=\underbrace{ [n][n]' }_{ 1 }
+$$
+
+Otteniamo quindi che $[n]^{p-1}=[1]$
+
+_Difetti del PTF_
+
+Se $[a]\in F_{p}^X$ e quindi è invertibile, calcolare il suo inverso $[a]^{-1}$ usando il PTF, ricordiamo che $[a]^{p-1}=[1]$
+
+So che $[a]^{p-1}=[a]^{p-2}\cdot[a]$, quindi:
+
+$$
+\begin{align*}
+&[1]=\underbrace{ [a]^{p-2}\cdot[a] }_{ \text{Inversi} } \\
+&[a]^{-1}=[a]^{p-2}
+\end{align*}
+$$
+
+Questo però per numeri molto grandi risulta scomodo, infatti se ad esempio vogliamo calcolare $[2]^{-1}$ con $p=691$, dobbiamo calcolare $[2]^{p-2}=[2]^{689}$.
+
+![[Pasted image 20241018161511.png]]
+
+Svolgendo i calcoli però, ovvero calcolando $2^i \% 691$ per $i$ che va da $1$ a $690$ notiamo che si l'ultima è 1 e quindi il suo inverso (689) ma ci sono anche altri 1 prima, perché le classi sono cicliche.
+
+_Esercizio_
+
+Dimostrare che in $4\mathbb{Z}+3$ nessun intero è somma di due quadrati.
+
+Calcoliamo le classi dei resti modulo 4 e i loro quadrati.
+
+![[Pasted image 20241018162201.png|400]]
+
+# Successione di Fibonacci
+La successione di Fibonacci è definita induttivamente da $F_{0}=0,F_{1}=1,F_{n}=F_{n-1}+F_{n-2}$, i numeri della successione di Fibonacci hanno alcune proprietà:
+
+- $MCD(F_{m},F_{n})=F_{MCD(m,n)}$ 
+- $MCD(F_{m},F_{m+1})=F_{1}=1$
+
+_Dimostriamolo per Induzione_
+
+Quindi sappiamo che:
+
+$$
+F_{0}=0; F_{1}=1;F_{n+1}=F_{n}+F_{n-1}
+$$
+
+Definiamo $MCD(F_{n},F_{n+1})=\delta_{n}$, possiamo inoltre scrivere $\mathbb{Z}F_{n}+\mathbb{Z}F_{n+1}=\mathbb{Z}\delta_{n}$ e dobbiamo dimostrare che $\mathbb{Z}\delta_{n}=1\mathbb{Z}$ ovvero che il loro $MCD$ è 1.
+
+$$
+\begin{align}
+\mathbb{Z}F_{n}+\mathbb{Z}F_{n+1}=\{ aF_{n}+bF_{n+1}:a,b\in \mathbb{Z} \}=\underbrace{ \{ aF_{n}+b\overbrace{ (F_{n}+F_{n-1}) }^{ \text{Definizione Fib.} } :a,b\in \mathbb{Z}\} }_{ \text{Dobbiamo dimostrare che } = \mathbb{Z}F_{n-1}+\mathbb{Z}F_{n}}
+\end{align}
+$$
+
+Quell'insieme possiamo scriverlo come:
+
+$$
+\{ (a+b)F_{n}+bF_{n-1}:a,b\in \mathbb{Z} \}
+$$
+
+E quindi possiamo scrivere:
+
+$$
+\underbrace{ \{ (a+b)F_{n}+bF_{n-1}:a,b\in \mathbb{Z} \} }_{ A }\subseteq \mathbb{Z}F_{n-1}+\mathbb{Z}F_{n}
+$$
+
+Quindi l'insieme a sinistra è sicuramente sottoinsieme di quello a destra, ma per dimostrare che sono uguali devo dimostrare che esiste un'applicazione biiettiva $f:\mathbb{Z}^2\to \mathbb{Z}^2$ che manda $(a,b)\to(\underbrace{ a+b }_{ u },\underbrace{ b }_{ v })$. Sia $f(\mathbb{Z}^2)$ l'immagine noi sappiamo che $A=\{ uF_{n-1}+vF_{n}:(u,v)\in \mathbb{Z}^2 \}$  quindi se dimostriamo che l'applicazione è suriettiva abbiamo dimostrato che qualsiasi $a,b$ prendo raggiungo tutti gli $u,v$ e quindi i due insiemi sono uguali.
+
+Dimostreremo che l'applicazione è biiettiva che comprende anche suriettiva.
+
+> [!info] Richiamo
+> $A\xrightarrow{f}B$ è biiettiva $\Leftrightarrow \forall b\in B, f^{-1}(\{ b \})$ è un singleton, ma deve esserci anche un'inversa $\exists g:B\to A$ t.c. $f\circ g=Id_{B}$ e simultaneamente $g\circ f(A)=Id_{A}$.
+> 
+
+Quindi noi sappiamo che $f(a,b)=(a+b,b)=:(u,v)$ e questo è equivalente a un sistema:
+
+$$
+\begin{cases*}
+a+b=u \\
+b=v
+\end{cases*}
+\Leftrightarrow
+\begin{cases*}
+a=u-v \\
+b=v
+\end{cases*}
+$$
+
+Adesso poniamo l'inversa $g:\mathbb{Z}^2\to \mathbb{Z}^2$ e quindi abbiamo le coppie $(u,v)\to(u-v,v)$ adesso verifichiamo se le funzioni composte ci danno le Identità.
+
+$$
+\begin{align*}
+&(f\circ g)(u,v)=f(g(u,v))=f(u-v,v)=(u-v+v,v)=(u,v) \text{ La prima è verificata} \\
+&(g\circ f)(a,b)=g(f(a,b))=g(a+b,b)=(a+b-b,b)=(a,b) \text{ Anche la seconda è verificata}
+\end{align*}
+$$
+
+Quindi l'applicazione è biiettiva e quindi suriettiva e quindi i due insiemi sono uguali.
+
+Sapendo che è sempre verificato possiamo sempre diminuire il numero di Fibonacci e ottenere:
+
+$$
+\forall n>0 \ \ \ F_{n+1}\mathbb{Z}+F_{n}\mathbb{Z}=F_{n}\mathbb{Z}+F_{n-1}\mathbb{Z}=F_{n-1}\mathbb{Z}+F_{n-2}\mathbb{Z}=\dots=F_{1}\mathbb{Z}+F_{0}\mathbb{Z}
+$$
+
+Quindi $F_{1}\mathbb{Z}+\{ 0 \}=\mathbb{Z}$ che può essere anche scritto $\forall n>0, F_{n}\mathbb{Z}+F_{n-1}\mathbb{Z}=\mathbb{Z}$ e questo equivale anche a dire che $MCD(F_{n-1},F_{n})=1$.
+
+# Teorema Fondamentale Dell'Aritmetica
+$\forall a\in \mathbb{Z}^*$ abbiamo che:
+1) $I_{a}=\{ p \text{ primo}:p|a \}$ è finito, quindi c'è solo un numero finito di primi che dividono $a$.
+2) Inoltre $a=(\pm 1)\cdot \prod\limits_{p}p^{v_{p}(a)}$ dove $v_{p}(a)$ è un certo esponente in $\mathbb{N}$ e sono unicamente determinati. Ovvero ogni numero intero diverso da 0 è il prodotto di alcuni numeri primi elevati a determinati esponenti.
+
+Notiamo che nella seconda condizione i numeri primi sono infiniti e quindi otterremmo un valore infinito, però ad un certo punto $v_{p}(a)$ sarà uguale a 0 e quindi avremo un numero finito di primi e poi un numero infinito di 1 che non cambia il nostro valore. Formalizziamolo
+
+_Osservazione_
+
+Si sa che $\mathbb{P}=\{ p\in \mathbb{N},\text{p primo} \}$ è infinito però siccome $\forall a\in \mathbb{Z}^*$ abbiamo che $I_{a}$ è finito:
+
+$$
+\prod_{p}p^{v_{p}(a)}=\underbrace{ \prod_{p\in I_{a}}p^{v_{p}(a)} }_{ \text{Questo è finito} }\cdot \underbrace{ \prod_{p\not\in I_{a}}p^{v_{p}(a)} }_{ \text{Questo è infinito} }
+$$
+
+Però nell'insieme infinito avremo che $v_{p}(a)=0$ e quindi tutto quel prodotto sarà uguale a $1\cdot ... \cdot 1=1$.
+
+_Esempi_
+
+$$
+\begin{align*}
+&a=1 \\
+&1=+1\cdot \prod_{p}p^{v_{p}(1)} \text{ Con } v_{p}(1)=0 \ \forall p \\
+&\text{Questo ci dice che } I_{1}=\emptyset\text{ Ovvero non abbiamo nessun primo}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+&a=2 \\
+&2=+1\cdot \prod_{p}p^{v_{p}(2)} \\
+&v_{p}(2)=1 \text{ se } p=2, \text{altrimenti } v_{p}(2)=0 \\ \\
+&\text{Quindi possiamo scrivere } 2=2\cdot \prod_{p\neq 2}p^{0}
+\end{align*}
+$$
+
+$$
+\begin{align*}
+&a=7! = 7\cdot 5\cdot 3^2 \cdot 2^4 \\
+&\text{Possiamo definire:} \\
+&v_{p}(a)=
+\begin{cases*}
+1 \ \ \ p=7 \\
+1 \ \ \ p=5 \\
+2 \ \ \ p=3 \\
+4 \ \ \ p=2 \\
+0 \ \ \ p>7
+\end{cases*} \\
+&\text{Possiamo poi utilizzare la formula:} \\
+&7! = +1\cdot \prod_{p}p^{v_{p}(a)}
+\end{align*}
+$$
+
+Cosa possiamo dedurre con queste notazioni? Scriviamo due numeri $a,b$:
+
+$$
+\begin{align*}
+&a=\prod_{p}p^{v_{p}(a)} \ \ \ b=\prod_{p}p^{v_{p}(b)} \\
+ \\
+&\text{Scriviamo } a\cdot b=\prod_{p}p^{v_{p}(a)}\cdot\prod_{p'}{p'}^{v_{p'}(b)} \\ \\
+&\text{Che è uguale a: } \prod_{p}p^{v_{p}(a)+v_{p}(b)} \\
+ \\
+&\text{Cosa ci dice questo? Che } v_{p}(ab)=v_{p}(a)+v_{p}(b)
+\end{align*}
+$$
+
+Vediamo un _esempio:_
+
+$$
+\begin{align*}
+&a=12=2^2 \cdot 3 \\
+&b=15=5\cdot 3 \\
+&\begin{cases*}
+v_{2}(a)=2 \\
+v_{3}(a)=1 \\
+v_{5}(a)=0
+\end{cases*} \ \ \ 
+\begin{cases*}
+v_{2}(b)=0 \\
+v_{3}(b)=1 \\
+v_{5}(b)=1
+\end{cases*} \\ \\
+&v_{p}(a\cdot b)=v_{p}(12\cdot 15)=v_{p}(a)+v_{p}(b) \\ \\
+&\text{Otteniamo quindi, facendo le somme:} \\
+&v_{2}(ab)=2; v_{3}(ab)=1; v_{5}(ab)=1; v_{p}(ab)=0 \text{ Quando } p>5
+\end{align*}
+$$
+
+---
+
+Dimostriamo il teorema ovvero che:
+
+$$
+a=(\pm 1)\cdot \prod_{p}p^{v_{p}(a)}
+$$
+
+Per prima cosa dimostriamo che $I_{a}$ è un insieme finito. (1)
+
+Supponiamo per assurdo che $I_{a}$ sia infinito e questo significa che esiste una collezione infinita di primi $p$ t.c. $p|a$ e questo significa che ogni  $p\leq a$. Supponiamo anche $a>0$.
+
+Abbiamo ottenuto una contraddizione, infatti essendo $a$ un intero, non esiste un numero infinito di numero inferiori a lui. Abbiamo provato che $I_{a}$ è finito.
+
+Adesso dimostriamo la fattorizzazione per induzione (2).
+
+ Per $a=1$ lo abbiamo già mostrato prima, abbiamo che per ogni $\forall p,v_{p}(a)=0$ e otteniamo un prodotto infinito di 1 che fa 1.
+
+Adesso supponiamo che $a>1$, abbiamo due casi: 
+- Se $a$ è primo non abbiamo nulla da dimostrare infatti il $v_p(a)$ è sempre 0 tranne quando $p=a$.
+- Se $a$ non è primo allora non è irriducibile e allora posso scrivere $a=u\cdot v$ con $1<u<a,1<v<a$ ovvero due divisori di $a$ diversi da 1.
+  
+  Per ipotesi induttiva visto che $u,v<a$ posso scrivere:
+  
+  $$
+   \begin{align*}
+   &u=\prod_{p}p^{v_{p}(u)} \\
+   &v=\prod_{p}p^{v_{p}(v)} \\
+   &a=u\cdot v=\prod_{p}p^{v_{p}(u)+v_{p}(v)} \\
+   &\text{Per la formula di prima sappiamo che } v_{p}(uv)=v_{p}(u)+v_{p}(v) \\
+   &\text{Quindi dato che } uv=a \text{ allora quell'esponente è } =v_{p}(a)
+   \end{align*}
+   $$
+
+---
+
+_Enunciato Teorema_
+
+$\forall a>0, \exists$ un numero finito di primi distinti $p_{1},\dots,p_{r}$ tali che $a=p^{\alpha_{1}}_{1},\dots,p_{r}^{\alpha_{r}}$ e questa fattorizzazione è unicamente determinata.
+
+Questo è un enunciato differente ma con lo stesso significato di quello visto sopra, ma qui dobbiamo numerare i $p$.
+
+_Esercizio_
+
+Prendiamo $a,b\in \mathbb{N}^*$ e quindi possiamo scriverli come:
+
+$$
+\begin{align*}
+a=\prod_{p}p^{v_{p}(a)} \\
+b=\prod_{p}p^{v_{p}(b)} \\
+\end{align*}
+$$
+
+Mostrare che $a|b\Leftrightarrow\forall p, v_{p}(a)\leq v_{p}(b)$.
+
+1:
+
+Supponiamo che $v_{p}(a)\leq v_{p}(b)$ e questo è equivalente a dire che $\underbrace{ v_{p}(b)-v_{p}(a) }_{ \in \mathbb{N} }\geq 0$ .
+
+Adesso poniamo $k=\prod\limits_{p}p^{v_{p}(b)-v_{p}(a)}$ e quindi l'esponente è un intero.
+
+Adesso calcoliamo $k\cdot a$:
+
+$$
+\prod\limits_{p}p^{v_{p}(b)-v_{p}(a)} \cdot \prod_{p}p^{v_{p}(a)}=\prod_{p}p^{v_{p}(b)-\cancel{v_{p}(a)}+\cancel{v_{p}(a)}}=b
+$$
+
+Questo implica che $b=k\cdot a, \exists k\in \mathbb{N}^*$ e quindi $a|b$.
+
+2:
+
+Supponiamo che $a|b$ questo implica che $b=k\cdot a,\exists k\in \mathbb{N}^*$, applichiamo il teorema fondamentale dell'aritmetica:
+
+$$
+\prod_{p}p^{v_{p}(b)}=\prod_{p}p^{v_{p}(k)}\cdot\prod_{p}p^{v_{p}(a)}=\prod_{p}p^{v_{p}(k)+v_{p}(a)}
+$$
+
+Per unicità della fattorizzazione (quando prendo un primo, gli esponenti devono essere uguali da entrambe le parti) $v_{p}(b)=\underbrace{ v_{p}(k) }_{ \geq 0 }+v_{p}(a),\forall p$ quindi questo significa che $v_{p}(b)\geq v_{p}(a)$.
+
+---
+
+_Esercizio_
+
+Prendiamo $a,b\in \mathbb{N}^*$ dimostriamo che:
+
+$$
+MCD(a,b)=\prod_{p}p^{min(v_{p}(a),v_{p}(b))}
+$$
+
+Come abbiamo definito $MCD(a,b)$? L'abbiamo definito come l'unico intero $\delta$ in $N^*$ tale $\delta|a,\delta|b$ (1) e $\forall d'\in \mathbb{N}^*$ tale che $d'|a,d'|b$ allora $d'|\delta$ (2)
+
+Come traduciamo queste condizioni in termini di produttorie usando il teorema fondamentale?
+
+Ricordiamo che nell'esercizio precedente abbiamo dimostrato che $a|b\Leftrightarrow \forall p, v_{p}(a)\leq v_{p}(b)$, quindi:
+
+1) Equivale a dire $\forall p,v_{p}(\delta)\leq v_{p}(a)$ e $v_{p}(\delta)\leq v_{p}(b)$
+2) Se $d'$ soddisfa la condizione 1 (al posto di $\delta$) allora soddisfa anche $v_{p}(d')\leq v_{p}(\delta)$ 
+
+La condizione (1) ci suggerisce che $v_{p}(\delta)\leq min(v_{p}(a),v_{p}(b))$ allora (2) vuol dire che se $d'$ è tale che $v_{p}(d')\leq min(v_{p}(a),v_{p}(b))$ allora $v_{p}(d')\leq v_{p}(\delta)$
+
+Quindi $\forall p, v_{p}(\delta)$ è il più grande degli interi $n$ t.c. $n\leq min(v_{p}(a),v_{p}(b))$ questo implica che $v_{p}(\delta)=min(v_{p}(a),v_{p}(b))$.
+
+# Divisori di Zero
+
+Iniziamo da degli _esempi_:
+
+Prendiamo $\mathbb{Z}/6\mathbb{Z}=\{ [0],[1],[2],[3],[4],[5] \}$, notiamo che ad esempio le classi $[2],[3]$ non sono nulle ma il loro prodotto da $[6]$ che è uguale a $[0]$. In $\mathbb{Z}$ questo non può accadere, non ci sono due elementi non nulli che moltiplicati fra loro danno come risultato zero, qui invece può succedere.
+
+_Definizione_
+
+Dato $A$ anello, $a\in A$ è divisore di zero se $\exists b\in A\backslash\{ 0 \}\ t.c.\ ab=0_{A}$, non impostiamo che $a\neq 0$ perché vogliamo ammettere 0 come divisore di 0.
+
+_Esempi_
+
+In $\mathbb{Z}/6\mathbb{Z}$ come divisori di zero abbiamo $[0],[2],[3]$.
+
+In $A$ qualsiasi $0_{A}$ è divisore di zero. Con $A\neq \{ 0 \}$ ovvero quando i due elementi neutri sono distinti.
+
+Invece, dove **non abbiamo divisori di zero**? Nei campi, se $A=K$ campo (ad esempio $A=\mathbb{Q},\mathbb{R},\mathbb{C},\mathbb{F}_{p}$ primo) cioè $\forall a\in K\backslash\{ 0 \}, a$ è invertibile ovvero $K^X=K^*$. L'unico di divisore di zero in un $K$ campo è $0_{K}$, perché?
+
+Supponiamo di avere $a$ divisore di zero, allora $\exists b\neq 0 \ t.c. \ ab=0$, però $b$ è invertibile perché **non nullo**, quindi $\exists b^{-1}\in K^X \ t.c. \ b\cdot b^{-1}=1$.
+
+Adesso moltiplichiamo termine a termine $ab=0$ per $b^{-1}$ e otteniamo:
+
+$$
+\begin{align*}
+&a\cdot \overbrace{ b\cdot b' }^{ 1 }=0\cdot b' \\
+&a\cdot 1=0
+\end{align*}
+$$
+
+Quindi se $a$ è divisore di 0 allora $a=0$.
+
+---
+
+In $\mathbb{Z}$ se $a$ è divisore di zero allora $a=0$ **anche se $\mathbb{Z}$ non è campo**, dimostriamolo:
+
+Sia $a$ divisore di zero allora $\exists b\in \mathbb{Z}^* \ t.c. \ ab=0$, e anche $-a$ è divisore di zero:
+
+$$
+\begin{align*}
+&(-a)\cdot(-b)=a\cdot b=0 \\
+&\text{Questo vuol dire a divisore di zero} \Leftrightarrow -a \text{ è divisore di zero}
+\end{align*}
+$$
+
+Possiamo supporre quindi, senza perdere generalità, che $a$ sia $\geq 0$.
+
+Quindi abbiamo detto che $\exists b\neq 0 \ t.c. \ ab=0$ e quindi possiamo scrivere:
+
+$$
+0=a\cdot b=\underbrace{ b+b+\dots+b }_{ \text{a volte} } \geq b >0
+$$
+
+Se $a>0$ questo non è possibile e allora l'unica scelta che ci rimane è $a=0$, quindi abbiamo dimostrato che $\mathbb{Z}$ ha come unico divisore di zero, 0.
+
+**Definzione Dominio**
+
+Dato un anello $A\neq \{ 0 \}$ si dice che è un dominio se l'unico divisore di zero in $A$ è zero. Quindi **ogni campo è un dominio**, ma anche $\mathbb{Z}$ è un dominio. Invece ad esempio $\mathbb{Z}/6\mathbb{Z}$ non è un dominio.
+
