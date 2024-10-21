@@ -753,11 +753,11 @@ Prendendo come esempio $\mathbb{Z}$ abbiamo che:
 Nel caso della moltiplicazione abbiamo che:
 
 $$
-a\cdot b=\begin{cases*}
+a\cdot b=\begin{cases}
 \text{se } b=0\rightarrow_{0}\\
 \text{se } b>0\rightarrow \underbrace{ a+\dots+a }_{ b\text{ volte} }\\
 \text{se } b<0 \rightarrow(-a)\cdot(-b)\text{ che è ben definita dall'opposto}
-\end{cases*}
+\end{cases}
 $$
 
 

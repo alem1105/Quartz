@@ -928,7 +928,7 @@ $$
 &P(D)=0.005 \\
 &\text{Qual è la probabilità che una persona testata abbia la malattia?} \\
 &P(D|E)=? \\
-&P(D|E)=\frac{P(D\cap E)}{P(E)}=\frac{P(D)\cdot P(E|D)}{P(D)\cdot P(E|D)\cdot P(D^C)\cdot P(E|D^C)}=\frac{0.005\cdot 0.95}{0.005\cdot 0.95+0.995\cdot 0.01}=0.323 \\
+&P(D|E)=\frac{P(D\cap E)}{P(E)}=\frac{P(D)\cdot P(E|D)}{P(D)\\cdot P(E|D)+ P(D^C)\cdot P(E|D^C)}=\frac{0.005\cdot 0.95}{0.005\cdot 0.95+0.995\cdot 0.01}=0.323 \\
 &\text{Quindi se il test dice che siamo malati, lo siamo veramente in un caso su 3 circa.}
 \end{align*}
 $$
@@ -1152,9 +1152,102 @@ P(E^C\cap F)=(1-P(E))\cdot P(F)&=P(F)-\underbrace{ P(E\cap F) }_{ E\perp\!\!\!\!
 \end{align*}
 $$
 
+Supponiamo adesso di avere tre, eventi $E,F,G$: sappiamo che $E,F$ sono indipendenti e anche $E,G$ sono indipendenti. Possiamo dire che $E$ è indipendente da $F\cap G$? **No, possono essere dipendenti**.
 
+_Esempio_
 
+Lancio 2 dadi e definisco gli eventi:
 
+$$
+\begin{align*}
+&E=\text{La somma dei dadi dà 7} \\
+&F=\text{Il primo dado dà 4} \ \ \ G=\text{Il secondo dado dà 3}
+\end{align*}
+$$
 
+Prendendo gli esempi precedenti sappiamo che $E\perp\!\!\!\perp F$, quindi dobbiamo provare che $E\perp\!\!\!\perp F$:
 
+$$
+\begin{align*}
+&P(E)=\frac{6}{36}=\frac{1}{6} \\
+&P(G)=\frac{1}{6} \\
+&P(E\cap G)=\frac{1}{36} \\
+&\text{Abbiamo che } P(E)\cdot P(G)=\frac{1}{6}\cdot \frac{1}{6}=\frac{1}{36}=P(E\cap G) \\
+&\text{Quindi abbiamo mostrato che } E\perp\!\!\!\perp G \\
+ \\
+&\text{Notiamo però che } E\cancel{\perp\!\!\!\perp} (F\cap G) \text{ infatti } P(E|F\cap G)=1\neq P(E)
+\end{align*}
+$$
+
+**Definizione**
+
+Dati 3 eventi $E,F,G$ si dice che sono indipendenti se:
+
+$$
+\begin{align*}
+&P(E\cap F) = P(E)\cdot P(F) \to E\perp\!\!\!\perp F \\
+&P(E\cap G) = P(E)\cdot P(G) \to E\perp\!\!\!\perp G \\
+&P(F\cap G) = P(F)\cdot P(G) \to F\perp\!\!\!\perp G \\
+&P(E\cap F\cap G)=P(E)\cdot P(F)\cdot P(G)
+\end{align*}
+$$
+
+**Teorema**
+
+Se $E,F,G$ sono indipendenti, allora $E$ è indipendente da ogni evento costruito a partire da $F$ e $G$ usando unione, intersezione e complementare.
+
+_Quindi, ad esempio:_
+
+Se $E,F,G$ sono indipendenti, allora:
+
+$$
+\begin{align*}
+&E\perp\!\!\!\perp(F\cap G) \\
+&E\perp\!\!\!\perp(F\cup G) \\
+&E\perp\!\!\!\perp(F^C \cup G) \\
+&E\perp\!\!\!\perp F^C \\
+&ecc\dots
+\end{align*}
+$$
+
+E se ho più di 3 eventi?
+
+**Definizione**
+
+Dati $n$ eventi $E_1,\dots,E_{n}$ questi sono detti indipendenti se $\forall A\subset \{ 1,2,\dots,n \}$ con $A\neq \emptyset$ vale:
+
+$$
+P\left( \bigcap_{i\in A}E_{i} \right)=\prod_{i\in A}P(E_{i})
+$$
+
+Questa formula è interessante per $A$ tale che $|A|\geq 2$ infatti se $A=\{ i_{0} \}$ allora diventa $P(E_{i_{0}})=P(E_{i_{0}})$ che è banalmente vero.
+
+_Esempio_
+
+![[Pasted image 20241021200031.png|300]]
+
+Prendiamo questi ponti, ogni ponte è integro con probabilità $p$ (e quindi distrutto con probabilità $1-p$), indipendentemente da ponte a ponte. Supponiamo $p=0.3$
+
+Calcolare $P(\text{Partendo da A arrivo B})$.
+
+Definiamo l'evento $E_{i}=\text{Il ponte i è integro}$.
+
+Le strade che posso percorrere sono date da $(E_{1}\cap E_{2})\cup E_{3}$, quindi:
+
+$$
+\begin{align*}
+P(A\to B)&= P((E_{1}\cap E_{2})\cup E_{3}) \\
+&=P(E_{1}\cap E_{2})+P(E_{3})-P(E_{1}\cap E_{2}\cap E_{3}) \\
+&=P(E_{1})\cdot P(E_{2})+P(E_{3})-P(E_{1})\cdot P(E_{2})\cdot P(E_{3}) \\
+&=p^2+p-p^3=(0.3)^2+0.3-(0.3)^3
+\end{align*}
+$$
+
+_Oppure possiamo calcolare_
+
+$$
+\begin{align*}
+1-\underbrace{ P(\text{Da A non arrivo B}) }_{ E_{3}^C\cap(E_{1}^C\cup E_{2}^C) } =\overbrace{ P(E_{3}^C\cap(E_{1}^C\cup E_{2}^C))U }^{ \text{3 rotto e almeno 1 o 2 rotto} }=\text{Da finire :(}
+\end{align*}
+$$
 
