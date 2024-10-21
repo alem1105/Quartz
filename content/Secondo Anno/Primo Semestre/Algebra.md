@@ -793,11 +793,11 @@ $$
 Infatti:
 
 $$
-\forall a\in\mathbb{Z} \text{ si ha } \begin{cases*}
+\forall a\in\mathbb{Z} \text{ si ha } \begin{cases}
 a\in N^* \text{ oppure}
 \\ a=0 \text{ oppure } \\
 -a\in\mathbb{N}^*
-\end{cases*}
+\end{cases}
 $$
 
 Quindi: _Un intero può essere soltanto positivo, negativo o nullo._
@@ -1460,15 +1460,15 @@ Dimostreremo che l'applicazione è biiettiva che comprende anche suriettiva.
 Quindi noi sappiamo che $f(a,b)=(a+b,b)=:(u,v)$ e questo è equivalente a un sistema:
 
 $$
-\begin{cases*}
+\begin{cases}
 a+b=u \\
 b=v
-\end{cases*}
+\end{cases}
 \Leftrightarrow
-\begin{cases*}
+\begin{cases}
 a=u-v \\
 b=v
-\end{cases*}
+\end{cases}
 $$
 
 Adesso poniamo l'inversa $g:\mathbb{Z}^2\to \mathbb{Z}^2$ e quindi abbiamo le coppie $(u,v)\to(u-v,v)$ adesso verifichiamo se le funzioni composte ci danno le Identità.
@@ -1531,13 +1531,13 @@ $$
 &a=7! = 7\cdot 5\cdot 3^2 \cdot 2^4 \\
 &\text{Possiamo definire:} \\
 &v_{p}(a)=
-\begin{cases*}
+\begin{cases}
 1 \ \ \ p=7 \\
 1 \ \ \ p=5 \\
 2 \ \ \ p=3 \\
 4 \ \ \ p=2 \\
 0 \ \ \ p>7
-\end{cases*} \\
+\end{cases} \\
 &\text{Possiamo poi utilizzare la formula:} \\
 &7! = +1\cdot \prod_{p}p^{v_{p}(a)}
 \end{align*}
@@ -1561,17 +1561,17 @@ Vediamo un _esempio:_
 $$
 \begin{align*}
 &a=12=2^2 \cdot 3 \\
-&b=15=5\cdot 3 \\
-&\begin{cases*}
+&b=15=5\cdot 3 \\ \\
+&\begin{cases}
 v_{2}(a)=2 \\
 v_{3}(a)=1 \\
 v_{5}(a)=0
-\end{cases*} \ \ \ 
-\begin{cases*}
+\end{cases} \ \ \ 
+\begin{cases}
 v_{2}(b)=0 \\
 v_{3}(b)=1 \\
 v_{5}(b)=1
-\end{cases*} \\ \\
+\end{cases} \\ \\
 &v_{p}(a\cdot b)=v_{p}(12\cdot 15)=v_{p}(a)+v_{p}(b) \\ \\
 &\text{Otteniamo quindi, facendo le somme:} \\
 &v_{2}(ab)=2; v_{3}(ab)=1; v_{5}(ab)=1; v_{p}(ab)=0 \text{ Quando } p>5
