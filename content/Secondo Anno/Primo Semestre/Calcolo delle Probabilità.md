@@ -1165,7 +1165,7 @@ $$
 \end{align*}
 $$
 
-Prendendo gli esempi precedenti sappiamo che $E\perp\!\!\!\perp F$, quindi dobbiamo provare che $E\perp\!\!\!\perp F$:
+Prendendo gli esempi precedenti sappiamo che $E\perp\!\!\!\perp F$, quindi dobbiamo provare che $E\perp\!\!\!\perp G$:
 
 $$
 \begin{align*}

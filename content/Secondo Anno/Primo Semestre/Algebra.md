@@ -1738,3 +1738,176 @@ Se $a>0$ questo non è possibile e allora l'unica scelta che ci rimane è $a=0$,
 
 Dato un anello $A\neq \{ 0 \}$ si dice che è un dominio se l'unico divisore di zero in $A$ è zero. Quindi **ogni campo è un dominio**, ma anche $\mathbb{Z}$ è un dominio. Invece ad esempio $\mathbb{Z}/6\mathbb{Z}$ non è un dominio.
 
+---
+
+Se $a\in A$ non è divisore di zero e se $ax=0$ allora $x=0$, da questo possiamo scrivere il seguente **lemma**
+
+
+> [!info] Lemma - Legge di Cancellazione
+> Prendiamo $a\in A$ non divisore di zero, allora se $ab=ac\Rightarrow b=c$.
+> 
+> **Dimostrazione**:
+> 
+> Supponiamo $ab=ac$, che è equivalente a $a(b-c)=0$, se $a$ non è divisore di zero allora $b-c=0\Rightarrow b=c$.
+> 
+> _Osservazione_, questo implica la legge di cancellazione in $\mathbb{Z}$.
+
+# Risoluzione di Equazioni in A
+
+Come anello $A$ prendiamo $A=\mathbb{Z},A=\mathbb{Z}/n\mathbb{Z}$.
+
+Studieremo l'equazione lineare:
+
+$$
+aX=b \ \ a,b\in A
+$$
+
+$X$ viene detta **Indeterminata**. Se vogliamo risolverla significa che vogliamo trovare tutti gli $X$ tali che la soddisfano. Vediamo i casi semplici:
+
+$$
+A=\mathbb{Z}:2X=3 \text{ L'insieme delle soluzioni è } \{ x\in \mathbb{Z}:2x=3 \}=\emptyset
+$$
+
+Infatti sia $x$ soluzione dell'equazione $2x=3$ allora $x$ è un intero tale che moltiplicato per 2 mi dà 3 ovvero che $2|3$ che è impossibile. 
+
+Cambiamo l'equazione:
+
+$$
+2X=6 \text{ Soluzioni:} \{ x\in \mathbb{Z}:2x=6 \}=\{ 3 \}
+$$
+
+In questo caso abbiamo una soluzione, in $\mathbb{Z}$. Osserviamo che utilizzando il T.F.A (Teorema Fondamentale dell'Aritmetica) $6=2\cdot 3$ e sia $x$ una soluzione allora $2x=2\cdot 3$ e utilizzando la legge di cancellazione su $2$ otteniamo $x=3$.
+
+In generale una soluzione di $aX=b$ (sempre con $A=\mathbb{Z}$) esiste $\Leftrightarrow a|b$. Infatti se l'insieme delle soluzioni è _non vuoto_ e se $x$ è soluzione, si ha $ax=b\Leftrightarrow a|b$.
+
+Allo stesso tempo se $a|b$ allora $\exists k\in \mathbb{Z} \ t.c. \ ak=b$ e posso prendere $x=k$.
+
+---
+
+Adesso vediamo cosa succede nel caso $A=\mathbb{Z}/n\mathbb{Z}$ con $n\in N^*$. Vogliamo risolvere:
+
+$$
+aX=b
+$$
+
+Nel caso in cui $A$ è un anello qualsiasi e $a\in A^X$ di inverso $a^{-1}$, possiamo moltiplicare termine a termine e ottenere:
+
+$$
+\underbrace{ a^{-1}\cdot a }_{ 1 } \cdot X=b\cdot a^{-1}
+$$
+
+E quindi otteniamo che $x=b\cdot a^{-1}$ che è **un'unica soluzione**.
+
+> [!info] Indeterminata X
+> Con $X$ indichiamo l'insieme delle soluzioni mentre con $x$ un elemento di questo insieme.
+
+Se per esempio $A=K$ campo (anelli dove ogni elemento non nullo è invertibile, visto che un elemento invertibile non è divisore di zero allora un campo è **sempre dominio di integrità**, infatti l'unico divisore di zero è zero), allora in questo caso l'equazione $aX=b$ con $a\neq 0$ ammette sempre l'unica soluzione $x=a^{-1}\cdot b$.
+
+Torniamo nel caso $\mathbb{Z}/n\mathbb{Z}$ e scriviamo la seguente
+
+**Proposizione**: 
+
+$$
+aX=b \ \ a,b\in A=\mathbb{Z}/n\mathbb{Z}
+$$
+
+L'equazione ammette soluzioni **se e solo se** dati $a=\overline\alpha,b=\overline\beta \ (\alpha,\beta\in \mathbb{Z})$, $MCD(\alpha,n)|\beta$ 
+
+**Dimostrazione**:
+
+Sia $\overline{x}$ una soluzione, questo significa che $a\overline{x}=b$, quindi sostituendo $\overline{a}\cdot\overline{x}=\overline{\beta}$ e questo significa che $\alpha x-\beta=nk \ \ \  \exists k\in \mathbb{Z}$. Se spostiamo i membri possiamo scrivere $\alpha x-nk=\beta$ e questo implica che $\beta\in \alpha \mathbb{Z}+n\mathbb{Z}$, notiamo che $\alpha \mathbb{Z}+n\mathbb{Z}=\delta \mathbb{Z}$ dove $\delta=MCD(\alpha,n)$ e quindi possiamo scrivere che $\delta|\beta$ e questo dimostra che **se ammette soluzioni allora $MCD(\alpha,n)|\beta$**.
+
+Adesso dimostriamola nel senso opposto.
+
+Supponiamo quindi che $\delta=MCD(\alpha,n)|\beta$ quindi possiamo scrivere che $\beta=\delta x$ e questo significa che $\beta\in \alpha \mathbb{Z}+n\mathbb{Z}\Leftrightarrow\exists u,v\in \mathbb{Z} \ t.c. \ \beta=u\alpha+vn\Leftrightarrow(\text{Riduzione modulo n})\beta\equiv u\alpha(mod \ n.)\Leftrightarrow\overline{\beta}=\overline{u}\overline{\alpha}$. Possiamo chiamare $\overline{u}=x$ e abbiamo trovato la soluzione.
+
+---
+
+_Esempio_
+
+L'equazione $\overline{3}\cdot x=\overline{0}$ in $A=\mathbb{Z}/6\mathbb{Z}$ quindi abbiamo che $\alpha=3,\beta=0, n=6$ e $MCD(\alpha,6)=3|\beta$ e quindi ci sono soluzioni: $x=\overline{2}, x=\overline{4}, x=\overline{0}$, questo è l'insieme delle soluzioni.
+
+**Lemma**
+
+Prendiamo $a,b,c\in \mathbb{Z}$ se $a,b|c$ e $MCD(a,b)=1$ allora $ab|c$.
+
+**Dimostrazione**
+
+Sappiamo che $a,b|c\Leftrightarrow c=ak=bh$ ma questo vuol anche dire che $ak=bh$ e quindi $a|bh$. Notiamo che se $MCD(a,b)=1$ allora implica che $a|h$ e quindi $ab|c$, mostriamolo.
+
+$MCD(a,b)=1\Leftrightarrow b\text{ è invertibile modulo a}\Rightarrow \exists b' \ t.c. \ bb'\in 1+a\mathbb{Z}$ (equivalente a dire che $bb'$ appartiene alla classe di 1 modulo $a$).
+
+Possiamo dire che $a|bh\Rightarrow ab'|\underbrace{ b\cdot b'\cdot h }_{ (1+ak)\cdot h \ \exists k\in \mathbb{Z}}$ adesso facendo un po' di manipolazioni:
+
+$$
+\begin{align*}
+&ab'=h+ahk \\
+&ab'-ahk=h \\
+&a(b'-hk)=h\Rightarrow a|h
+\end{align*}
+$$
+
+---
+
+# Teorema Cinese dei Resti
+È un modo di risoluzione di sistemi di equazioni lineari a coefficienti interi, queste equazioni sono di tipo congruenziale.
+
+Prendiamo $r_{1},\dots,r_{s}\in \mathbb{N}^*$ e supponiamo che $MCD(r_{i},r_{j}=1) \ \forall i\neq j$ quindi sono 2 a 2 primi fra loro. Inoltre consideriamo degli interi $c_{1},\dots,c_{s}\in \mathbb{Z}$, allora il sistema di congruenze:
+
+$$
+*\begin{cases}
+X\equiv c_1 \ \text{mod }r_{1} \\
+X\equiv c_{2} \ \text{mod }r_{2} \\
+\dots \\
+X\equiv c_{s} \ \text{mod }r_{s}
+\end{cases}
+$$
+
+Questo sistema ha un'unica soluzione modulo $R:=r_{1}\cdot ... \cdot r_{s}$. Ovvero, l'insieme $\mathcal{E}_{*}=\{ x \text{ soluzione in } \mathbb{Z} \text{ di *} \}$ è della forma $x_{0}+\mathbb{Z}R$. Ricordiamo che abbiamo $X$ indeterminata che è una sola e abbiamo $s$ equazioni congruenziali.
+
+Calcoliamo una soluzione particolare $x_{0}$ del sistema.
+
+Poniamo $R_{i}:=\frac{R}{r_{i}}=r_{1}\cdot...\cdot \cancel{r_{i}}\cdot...\cdot r_{s}$ ovvero il prodotto fra tutti gli $r$ senza $r_{i}$, notare che $MCD(R_{i},r_{i})=1$ questo vuol dire che $\overline{R_{i}}$ con $R_{i}\in \mathbb{Z}/r_{i}\mathbb{Z}$ è invertibile, ovvero $\exists\overline{S_{i}}\in \mathbb{Z}/r_{i}\mathbb{Z} \ t.c. \ \overline{R_{i}}\cdot \overline{S_{i}}=\overline{1}$ allora questo implica che moltiplicando possiamo scrivere $\overline{R_{i}}\cdot\underbrace{ \overline{S_{i}}\cdot \overline{c_{i}} }_{ =:\overline{y_{i}}\in \mathbb{Z}/r_{i}\mathbb{Z} }=\overline{c_{i}}$, in questo modo abbiamo costruito elementi $\overline{y_{i}},\dots,\overline{y_{s}}$ ciascuno in $\mathbb{Z}/r_{i\mathbb{Z}}$.
+
+_Dimostriamo che_ $x_{0}=\sum\limits_{{i=1}}^s y_{i}R_{i}\in \mathbb{Z}$ è soluzione di $*$.
+
+Se $i\neq j$ allora abbiamo che $r_{i}|R_{j}$ quindi $x_{0}=\sum\limits_{j=1}^s y_{j}R_{j}$ e siccome $R_{j}$ è divisibile da tutti gli $r_{i}$ che sono diversi da $r_{j}$ possiamo scrivere $x_{0}=\underbrace{ \sum\limits_{j=1,j\neq i}^s y_{j}R_{j} }_{ \equiv 0 \text{ mod }r_{i} }+y_{i}R_{i}\equiv y_{i}R_{i}\text{ mod }r_{i}\equiv c_{i}\text{ mod }r_{i}$ e questo è valido $\forall i=1,\dots ,s$. Dunque $x_{0}=\sum\limits_{j} y_{j}R_{j}$ è una soluzione particolare del nostro sistema $*$.
+
+Adesso vogliamo trovare tutte le soluzioni e non soltanto una. **Sistema Omogeneo Associato**
+
+$$
+*_{H}\begin{cases}
+X\equiv 0 \ \text{mod }r_{1} \\
+X\equiv 0 \ \text{mod }r_{2} \\
+\dots \\
+X\equiv 0 \ \text{mod }r_{s}
+\end{cases}
+$$
+
+Ovvero $x\equiv 0\text{ mod } r_{i}$ con $i=1,\dots,s$, quali sono tutte le soluzioni?
+
+$$
+\begin{align*}
+&x\equiv 0\text{ mod} r_{1}\Leftrightarrow r_{1}|x \\
+&x\equiv 0\text{ mod} r_{2}\Leftrightarrow r_{2}|x \\
+&\text{Ma } r_{1} \ e \ r_{2} \text{ sono primi fra loro quindi (lemma) } r_{1}r_{2}|x \\
+&x\equiv 0\text{ mod} r_{3}\Leftrightarrow r_{3}|x \\
+&\text{Ma } MCD(r_{3},r_{1},r_{2})=1 \Rightarrow r_{1},r_{2},r_{3}|x \\
+&\text{Iterando fino a }r_{s} \to R:=r_{1}\cdots r_{s}|x
+\end{align*}
+$$
+
+Le soluzioni di questo sistema quindi sono tutti i multipli di $R$ e quindi $R\mathbb{Z}$. Scriviamolo:
+
+L'insieme delle soluzioni $\mathcal{E}_{H}:=R\mathbb{Z}$, concludiamo con la **proposizione**: L'insieme delle soluzioni di $*$ denotato $\mathcal{E}_{*}$ è dato da $x_{0}+R\mathbb{Z}$ ovvero il "traslato" dell'insieme di tutti i multipli di $R$ appunto traslato dalla soluzioni particolare $x_{0}$, dimostriamolo.
+
+**Dimostrazione**:
+
+$x_{0}+R\mathbb{Z}$ è contenuto nell'insieme delle soluzioni, infatti se $x\in x_{0}+R\mathbb{Z}$ allora posso scrivere $x=x_{0}+Rk, \exists k\in \mathbb{Z}$ ma $Rk\equiv 0$ mod $r_{i}$ $\forall i=1,\dots,s$ infatti $r_{i}|Rk$ e addizionando con $x_{0}$ che è soluzione particolare ottengo che $x\equiv c_{i}+0\equiv c_{i}$ mod $r_{i}$.
+
+Dimostriamo adesso che l'insieme delle soluzioni è contenuto in $x_{0}+R\mathbb{Z}$, sia $x$ una soluzione di $*$, allora $x-x_{0}\equiv 0$ mod $r_{i}$ $\forall i=1,\dots,s$ e questo vuol dire che $x-x_{0}\in R\mathbb{Z} (lemma)$, questo implica che $x\in x_{0}+R\mathbb{Z}\Rightarrow\mathcal{E}_{*}\subset x_{0}+R\mathbb{Z}$.
+
+![[are-we-cooked-cooked.gif]]
+
+_We're so cooked :'(_
+
