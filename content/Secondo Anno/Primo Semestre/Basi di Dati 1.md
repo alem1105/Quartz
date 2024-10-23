@@ -1073,7 +1073,7 @@ Poiché $X\rightarrow Y\in F^A$ per la regola **della decomposizione** si ha che
 
 Siano $R$ uno schema di relazione ed $F$ un insieme di dipendenze funzionali su $R$ si ha $F^+=F^A$.
 
-_Dimostrazione_, dobbiamo dimostrare che $F^A\subseteq F^+\wedge F^+\subseteq F^A$.
+_Dimostrazione_, dobbiamo dimostrare che $F^A\subseteq F^+\wedge F^+\subseteq F^A$. La parte a sinistra ci indica che tutte le dipendenze calcolate con Armstrong sono soddisfatte dalle istanze, mentre a sinistra che tutte le dipendenza soddisfatte dalle istanze sono calcolabili con Armstrong.
 
 Iniziamo dimostrando $F^A\subseteq F^+$, Sia $X\rightarrow Y$ una dipendenza funzionale in $F^A$, dimostriamo che $X\rightarrow Y\in F^+$ per induzione sul numero $i$ di applicazioni degli assiomi di Armstrong.
 
@@ -1139,3 +1139,10 @@ Adesso mostriamo che se $X\to Y\in F^+$ allora $X\to Y\in F^A$.
 Dato che è un'istanza legale significa che $X\to Y\in F^+$, quindi se $t_{1}[X]=t_{2}[X]\Rightarrow t_{1}[Y]=t_{2}[Y]$, noi sappiamo che le tuple sono uguali per gli attributi di $X^+$ e per riflessività $X\subseteq X^+$, quindi le tuple sono sicuramente uguali sui valori di $X$ e quindi l'implicazione ci dice che lo sono anche sui valori di $Y$.
 
 Se sono uguali sui valori di $Y$ significa che anche $Y\subseteq X^+$ e per il **lemma** che $X\to Y\in F^A$.
+
+---
+
+Adesso abbiamo un modo per conoscere tutte le dipendenze in $F^+$, queste sono le stesse che si possono inserire in $F^A$ partendo da $F$ e applicando gli assiomi di Armstrong e le regole derivate, notiamo però che abbiamo una complessità esponenziale e quindi calcolare questi insiemi richiede molto tempo.
+
+Vedremo la terza forma normale che si basa come già detto sul fatto di decomporre il nostro schema e non rappresentare più concetti in un'unica tabella, ovviamente tutte le dipendenza soddisfatte nei vecchi schemi devono essere soddisfatte anche nei nuovi, in poche parole devono **essere preservate tutte le dipendenze in $F^+$**.
+

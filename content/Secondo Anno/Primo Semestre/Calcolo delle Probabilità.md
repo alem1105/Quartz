@@ -1251,3 +1251,45 @@ $$
 \end{align*}
 $$
 
+---
+
+## Problema Monty Hall
+Siamo in un gioco dove dobbiamo scegliere 1 fra 3 porte, in una di queste è presente una macchina mentre nelle altre due abbiamo delle pecore, dopo che scegliamo una porta il conduttore ci apre un'altra porta che contiene una pecora e ci propone uno scambia, conviene accettarlo o no?
+
+![[Pasted image 20241023220706.png]]
+
+Quindi se cambiamo abbiamo una possibilità di vittoria di $\frac{2}{3}$ mentre se manteniamo la nostra scelta di $\frac{1}{3}$.
+
+---
+
+Tornando agli eventi indipendenti
+
+_Esempio_
+
+Siano $A,B,C,D$ eventi indipendenti con $P(A)=0.2,P(B)=0.5,P(C)=0.7,P(D)=0.1$ calcolare $P(A\cap C),P(B\cap C\cap D),P(B\cup C)$.
+
+$$
+\begin{align*}
+&P(A\cap C)=P(A)\cdot P(C)=0.2\cdot 0.7=0.14 \\
+&P(B\cap C\cap D)=P(B)\cdot P(C)\cdot P(D) = 0.5\cdot 0.7 \cdot 0.1=0.035 \\
+&P(B\cup C)=P(B)+P(C)-P(B\cap C)=0.5+0.7-(0.5\cdot 0.7)=0.85 \\
+ \\
+&\text{In alternativa:} \\
+ \\
+&P(B\cup C)=1-P((B\cup C)^C)=1-P(B^C\cap C^C)=1-P(B^C)\cdot P(C^C) \\
+&=1-(1-0.5)\cdot (1-0.7)=0.85
+\end{align*}
+$$
+
+_Esempio con percorsi_
+
+Se prendiamo come esempio un circuito con componenti in parallelo ci basta che un solo componente funzioni per permettere il passaggio di corrente, mettiamo caso che ogni componente è indipendente dalle altre e che $p_{i}=P(\text{La componente i è funzionante})$, come si calcola $P(\text{Il sistema funziona})$?
+
+$$
+\begin{align*}
+&P\left(\bigcup_{i=1}^n E_{i}\right) \text{ con } E_{i}=\text{"La componente funziona"} \\
+&P\left(\bigcup_{i=1}^n E_{i}\right)=1-\left( P\left( \bigcup_{i=1}^n E_{i} \right)^C \right)=1-P\left( \bigcap_{i=1}^n E_{i}^C \right) \\
+&=1-\prod_{i=1}^n P(E_{i}^C)=1-\prod_{i=1}^n(1-p_{i})
+\end{align*}
+$$
+

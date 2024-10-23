@@ -1892,7 +1892,7 @@ $$
 &x\equiv 0\text{ mod} r_{2}\Leftrightarrow r_{2}|x \\
 &\text{Ma } r_{1} \ e \ r_{2} \text{ sono primi fra loro quindi (lemma) } r_{1}r_{2}|x \\
 &x\equiv 0\text{ mod} r_{3}\Leftrightarrow r_{3}|x \\
-&\text{Ma } MCD(r_{3},r_{1},r_{2})=1 \Rightarrow r_{1},r_{2},r_{3}|x \\
+&\text{Ma } MCD(r_{3},r_{1},r_{2})=1 \Rightarrow r_{1}\cdot r_{2}\cdot r_{3}|x \\
 &\text{Iterando fino a }r_{s} \to R:=r_{1}\cdots r_{s}|x
 \end{align*}
 $$
@@ -1910,4 +1910,179 @@ Dimostriamo adesso che l'insieme delle soluzioni è contenuto in $x_{0}+R\mathbb
 ![[are-we-cooked-cooked.gif]]
 
 _We're so cooked :'(_
+
+_Esercizio 8_
+
+Trovare le indeterminate.
+
+$(i) \ 4x\equiv 7(mod.15)$
+
+Dato che $MCD(4,15)=1$ allora significa che $\overline{4}$ è invertibile e quindi $\exists n\in \mathbb{Z}$ tale che $4n\equiv 1(mod.15)$, ad esempio $n=4$.
+
+Quindi moltiplicando $4$ termine a termine otteniamo $4\cdot 4\cdot x\equiv 28(mod.15)$ siccome $4\cdot 4$ ci darà resto 1 possiamo toglierlo e ottenere $x\equiv 13(mod.15)$ che è congruente alla congruenza iniziale, possiamo quindi dire che l'insieme delle soluzioni $\mathcal{E}=15\mathbb{Z}+13$.
+
+$(ii)$  $6x\equiv 8(mod.9)$
+
+Possiamo scrivere quindi che $6x-8=9k$ per un certo $k$ intero e spostando i termini otteniamo $8=6x-9k$. Dato che $MCD(6,9)=3$ e quindi che $3|6x$ e $3|9k$, implica che $3|8$ ma è impossibile e quindi l'insieme delle soluzioni $\mathcal{E}=\emptyset$ 
+
+$(iii)$ Sistema
+
+$$
+\begin{cases}
+1025x\equiv 5312065(mod.8) \\
+36x\equiv 322(mod.5) \\
+4x\equiv 7(mod.3)
+\end{cases}
+$$
+
+Abbiamo che $r_{1}=8,r_{2}=5,r_{3}=3$ che sono tutti primi fra loro. Riduciamo nei rispettivi moduli i vari coefficienti.
+
+$$
+\begin{align}
+&1025=2^{10}+1=(2^3)^3\cdot 2+1\equiv 1 (mod.8) \\
+&36=35+1\equiv 1 (mod.5) \\
+&4\equiv 1 (mod.3)
+\end{align}
+$$
+
+Quindi dato che sono tutti congruenti a 1 possiamo toglierli dal sistema e semplificarlo in:
+
+$$
+\begin{cases}
+x\equiv 5312065(mod.8) \\
+x\equiv 322(mod.5) \\
+x\equiv 7(mod.3)
+\end{cases}
+$$
+
+Adesso passiamo a semplificare i resti:
+
+$$
+\begin{align*}
+&5312065 \ \ \ 8|4\cdot 10^6 \Rightarrow 5312065\equiv_{8} 1312065 \\
+&8|1200000\Rightarrow 1312065\equiv_{8} 112065 \\
+&8|120000\Rightarrow 112065\equiv_{8} -7935 \\
+&8|8000\Rightarrow -7935\equiv_{8} 65\equiv_{8} 1
+\end{align*}
+$$
+
+Per gli altri valori è più semplice infatti:
+
+$$
+\begin{align*}
+&322\equiv_{5} -3\equiv_{5} 2 \\
+&7\equiv_{3} 1
+\end{align*}
+$$
+
+Quindi possiamo riscrivere il nostro sistema nel seguente modo:
+
+$$
+\begin{cases}
+x\equiv 1(mod.8) \\
+x\equiv 2(mod.5) \\
+x\equiv 1(mod.3)
+\end{cases}
+$$
+
+E applicare il **Teorema Cinese dei Resti** quindi denominiamo $c_{1}=1,c_{2}=2,c_{3}=1$ e $r_{1}=8,r_{2}=5,r_{3}=3$ poi scriviamo $R=3\cdot 5 \cdot 8=120$ e inoltre $R_{1}=5\cdot 3 =15,R_{2}=8\cdot 3=24,R_{3}=8\cdot 5=40$.
+
+Calcoliamo gli inversi:
+
+$$
+\begin{align*}
+R_{1} \text{ invertibile mod }r_{1} \to S_{1}=7 (15\equiv_{8} 7) \\
+R_{2} \text{ invertibile mod }r_{2} \to S_{2}=4 (24\equiv_{5} 4) \\
+R_{3} \text{ invertibile mod }r_{3} \to S_{3}=1 (40\equiv_{3} 1)
+\end{align*}
+$$
+
+Adesso calcoliamo i vari $y_{i}=S_{i}c_{i}$ che utilizziamo per calcolare $x_{0}$
+
+$$
+x_{0}=\sum_{i=1}^3 y_{i}R_{i}=7\cdot 15+3\cdot 24+1\cdot 40=217
+$$
+
+Quindi la soluzione generale del sistema è data da $x_{0}+R\mathbb{Z}=217+120\mathbb{Z}$ e possiamo scrivere $\mathcal{E}=97+120\mathbb{Z}$. (97 = 217-120 _anche se non ho ben capito perché lo abbiamo fatto ma credo perché sia resto (?)_)
+
+# Polinomi in una Indeterminata a Coefficienti in un Campo
+
+Dato un $K$ campo, abbiamo un polinomio in $X$ a coefficienti in $K$ nella forma:
+
+$$
+P=\sum_{i=0}^{n} a_{i}X^i
+$$
+
+Dove $i$ coefficienti con $a_{i}\in K$ mentre $n$ è un intero che dipende dal polinomio.
+
+Ad esempio possiamo prendere $3x^2+2x+1$ con $K=\mathbb{R}$. Oppure con $K=\mathbb{F}_{2}$ abbiamo $\overline{1}x^5 + \overline{0} x^4+\overline{2}x^3+\overline{6}x^2+\overline{1}x+\overline{1}$ che dato che siamo in modulo 2 possiamo scriverlo anche $x^5+x+\overline{1}$.
+
+---
+
+Possiamo scrivere $A=K[X]$ come l'insieme dei polinomi dove ogni $P\in A$ è definito come:
+
+$$
+P=\sum_{i\geq 0} a_{i}X^i \ \ \ a_{i}=0\ \forall i \gg 0
+$$
+
+Con $\gg$ intendiamo per ogni $i$ abbastanza grande il coefficiente diventa 0, ovvero fino ad un certo punto avremo dei valori non nulli e poi sempre 0.
+
+Possiamo appunto notare che c'è una struttura ad anello, definiamo quindi le operazioni di _somma e moltiplicazione_.
+
+Abbiamo i due polinomi:
+
+$$
+\begin{align}
+P=\sum_{i\geq 0} a_{i} X^i \ \ \ a_{i}=0 \ \forall i\gg 0 \\
+Q=\sum_{i\geq 0} b_{i} X^i \ \ \ b_{i}=0 \ \forall i\gg 0
+\end{align}
+$$
+
+Possiamo scrivere la somma come:
+
+$$
+P+Q:=\sum_{i\geq 0}(a_{i} + b_{i})X^i
+$$
+
+Mentre per la moltiplicazione:
+
+$$
+P\cdot Q=\sum_{k\geq 0}c_{k}X^k \ \ \ \text{dove } c_{k}=\underbrace{ \sum_{{i+j=k}} a_{i}b_{j} }_{ \text{Formula Cauchy} }
+$$
+
+Si nota che $c_{k}=0$ per ogni $k$ abbastanza grande perché avremo che $a_{i}$ oppure $b_{j}$ nullo.
+
+Possiamo quindi definire l'anello $(A,-,+,\cdot,0,1)$
+
+## Grado di un Polinomio
+Prendiamo un polinomio $P\in A[X]$ e quindi definito come $P=\sum\limits_{i\geq_{0}}a_{i}X^i$ con $a_{i}=0 \ \forall i\gg 0$ e inoltre $P\neq 0 \ \{ j\in \mathbb{N} \ t.c. \ a_{j}\neq 0 \}$ ovvero finito non vuoto.
+
+$deg(P)=max\{ j\in \mathbb{N} \ a_{j}\neq 0 \}$ (_credo con j intenda i (?)_).
+
+### Grado di P
+
+Si pone per definizione $deg(0)=-\infty$ e quindi l'insieme dei gradi possibili è dato da $\mathbb{N}\sqcup \{ -\infty \}$.
+
+_Esempio_
+
+$\{ P\in K[X]:deg(P)=0 \}=K^X$
+
+**Applicazione deg**
+
+La funzione $deg$ è definita $\underbrace{ K[X] }_{ A }\to \mathbb{N}\sqcup \{ -\infty \}$
+
+**Lemma**: Dati $a,b\in A$ abbiamo 3 proposizioni:
+
+1) $deg(a)=-\infty\Leftrightarrow a=0$
+2) $deg(ab)=deg(a)+deg(b)$
+3) $deg(a+b)\leq max(deg(a),deg(b))$ e per l'uguaglianza nello specifico: $deg(a+b)=max(deg(a),deg(b))\Leftrightarrow deg(a)\neq deg(b)$
+
+_Esempi_
+
+$a=x^2+x+1$ e $b=x+1$ abbiamo che $deg(a+b)=2=max(1,2)$ e infatti $deg(a)\neq deg(b)$
+
+$a=x^5+6x-3$ e $b=-x^5+4x^2+2x-1$ dato che $a+b=4x^2+8x-4$ abbiamo che $deg(a+b)=2<max(5,5)$
+
+> [!bug] Casi Particolari
+> In alcuni casi può comunque capitare che $deg(a)=deg(b)=d$ e $deg(a+b)=d$
 
