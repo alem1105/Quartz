@@ -1293,3 +1293,94 @@ $$
 \end{align*}
 $$
 
+# Variabili Aleatorie
+
+## Reali
+
+Dato uno spazio di probabilità $(S,P)$, una variabile aleatoria è una funzione $X:S\to \mathbb{R}$ quindi una funzione che mappa elementi dello spazio campionari in numeri reali.
+
+_Esempio_
+
+Lancio una moneta due volte abbiamo $X:=\#\text{volte in cui esce testa}$, $X$ è una variabile aleatoria.
+
+Abbiamo $S=\{ (T,T),(C,C),(T,C),(C,T) \}$ e sono tutti esiti equiprobabili, abbiamo:
+
+$X((T,T))=2,X((T,C))=1,X((C,T))=1,X((C,C))=0$
+
+_Esempio_
+
+Lancio due volte un dado e abbiamo $X:=\#\text{Somma dei numeri usciti}$, otteniamo quindi
+
+$S=\{ (a,b):a,b\in \{ 1,2,3,4,5,6 \} \}$ e quindi abbiamo esiti equiprobabili.
+
+$X((a,b))=a+b$ quindi ad esempio $X((1,5))=6$
+
+## Discrete
+Una variabile aleatorie $X$ è detta **discreta** se i valori che può assumere $\{ X_{i} \}_{i\in I}$ formano un insieme finito o infinito numerabile. Quindi ad esempio la variabile aleatori degli esempi sopra è discreta.
+
+## Densità di probabilità discreta
+Data $X$ variabile aleatoria che assume $\{ X_{i} \}_{i\in I}$, la **densità di probabilità discreta** di $X$ è la funzione:
+
+$$
+P_{X}:\{ X_{i} \}_{i\in I}\to[0,1], P_{X}:=P(X=X_{i})
+$$
+
+È quindi una funzione che descrive la probabilità associata a ciascun valore possibile di una variabile aleatoria discreta.
+
+_Esempio_
+
+Lancio due volte una moneta e v.a. $X:=\#\text{Teste Uscite}$ quindi $X(T,T)=2,X(T,C)=X(C,T)=1, X(C,C)=0$.
+
+Quindi $X$ è una variabile aleatoria che assume i valori 0,1,2.
+
+$p_{X}:\{ 0,1,2 \}\to[0,1]$ e $P_{X}(a)=P(X=a)$, quindi calcoliamo:
+
+$P_{X}(0)=P(X=0)=\frac{1}{4}$ poi $P_{X}(1)=P(X=1)=\frac{2}{4}$ e $P_{X}(2)=P(X=2)=\frac{1}{4}$
+
+_Esempio_
+
+Lancio due volte un dado e la variabile aleatoria è $X:=\#\text{Somma dei valori usciti}$.
+
+Quindi abbiamo esiti equiprobabili in $S=\{ (a,b):a,b\in \{ 1,2,3,4,5,6 \} \}$.
+
+$X(a,b)=a+b$ assume i valori $\{ 2,3,\dots,12 \}$ e calcoliamo:
+
+$$
+\begin{align*}
+&PX(2)=P(X=2)=P(\{ (1,1) \})=\frac{1}{36} \\
+&PX(3)=P(X=3)=P(\{ (1,2),(2,1) \})=\frac{2}{36} \\
+&\text{In generale } P_{X}(k)=
+\begin{cases}
+\frac{k-1}{36} \text{ k=2,3,4,5,6,7} \\
+\frac{13-k}{36} \text{ k=7,8,9,10,11,12}
+\end{cases}
+\end{align*}
+$$
+
+---
+
+Possiamo rappresentare la densità di probabilità discreta con un istogramma.
+
+Ad esempio sia $X$ il numero di teste nel lancio di due monete, sappiamo che:
+
+$P_{X}(0)=\frac{1}{4},P_{X}(1)=\frac{2}{4},P_{X}(2)=\frac{1}{4}$
+
+![[Pasted image 20241025213151.png|500]]
+
+## Valore Atteso
+Data una variabile aleatorie discreta $X$ che assume valore $\{ X_{i} \}_{i\in I}$, definiamo il valore atteso di $X$ come:
+
+$$
+E[X]=\sum_{i\in I}X_{i}P(X=X_{i})=\sum_{i\in I}X_{i}P_{X}(X_{i})
+$$
+
+Dove $E$ indica _expected value of X_.
+
+_Esempio_
+
+Lanciamo una moneta 2 volte e come variabile aleatoria abbiamo $X=\#\text{Teste Uscite}$.
+
+$$
+E[X]=0\cdot \frac{1}{4}+1\cdot \frac{2}{4}+2\cdot \frac{1}{4}=1
+$$
+

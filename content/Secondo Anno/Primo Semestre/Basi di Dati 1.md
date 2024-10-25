@@ -1146,3 +1146,198 @@ Adesso abbiamo un modo per conoscere tutte le dipendenze in $F^+$, queste sono l
 
 Vedremo la terza forma normale che si basa come già detto sul fatto di decomporre il nostro schema e non rappresentare più concetti in un'unica tabella, ovviamente tutte le dipendenza soddisfatte nei vecchi schemi devono essere soddisfatte anche nei nuovi, in poche parole devono **essere preservate tutte le dipendenze in $F^+$**.
 
+---
+
+Prendiamo lo schema visto un po' sopra degli studenti, la base consiste in quattro schemi:
+
+$$
+\begin{align*}
+&\text{Studente (Matr, CF, Cogn, Nome, Data, Com)} \\
+&\text{Corso (C\#, Tit, Doc)} \\
+&\text{Esame (Matr, C\#, Data, Voto)} \\
+&\text{Comune (Com, Prov)}
+&\end{align*}
+$$
+
+Dato che una matricola identifica univocamente uno studente, significa che ogni istanza per essere legale deve rispettare:
+
+$$
+\text{Matr} \to \text{Matr CF Cogn Nome Data Com}
+$$
+
+E allo stesso modo anche un $CF$ identifica univocamente uno studente  pertanto sia _Matr_ che _CF_ sono chiavi di Studente.
+
+Possiamo anche osservare che ci possono essere studenti che con lo stesso cognome hanno nome diverso, quindi alcune istanze di studente non soddisfano $Cogn\to Nome$. Possiamo dire che le **uniche dipendenze funzionali non banali che devono essere soddisfatte** da un'istanza legale sono del tipo:
+
+$$
+K\to X
+$$
+
+Dove $K$ contiene una chiave, in questo caso _Matr_ o _CF_.
+
+Guardando gli altri schemi notiamo che un esame viene registrato **una sola volta** e quindi ogni istanza di esame per essere legale deve rispettare:
+
+$$
+\text{Matr C\#} \to \text{Data Voto}
+$$
+
+Notiamo però che uno studente può sostenere esami in date differenti e avere anche voti diversi in vari esami. Quindi abbiamo delle dipendenze che non vengono soddisfatte sempre:
+
+$$
+Matr \to Data
+$$
+
+$$
+Matr\to Voto
+$$
+
+Possiamo osservare anche che l'esame relativo ad un corso viene superato da diversi studenti in diverse date e con voti diversi, per cui alcune istanze non soddisfano:
+
+$$
+\begin{align*}
+\text{C\#}\to\text{Data} \\
+\text{C\#}\to\text{Voto}
+\end{align*}
+$$
+
+La chiave dello **schema Esame** è quindi **Matr C#**.
+
+Completiamo la definizione di terza forma normale, per ora sappiamo solo che tutte le dipendenze non banali che devono essere soddisfatte devono essere del tipo $K\to X$ dove $K$ contiene una chiave oppure $X$ è contenuto in una chiave.
+# Terza Forma Normale
+Dati uno schema di relazione R e un insieme di dipendenze funzionali $F$ su $R$, $R$ è in 3NF se:
+
+$$
+\forall X\to A\in F^+,A\not\in X
+$$
+
+(Con $A\not\in X$ escludiamo le dipendenze banali)
+
+- $A$ appartiene ad una chiave (si dice che è **primo**)
+Oppure
+- $X$ contiene una chiave (è una **superchiave**)
+
+È sbagliato scrivere $\forall X\to A\in F$ perché poi non sapremmo come valutare dipendenze del tipo $X\to AB$ ovvero con 2 o più attributi a destra, infatti in $F^+$ una dipendenza del tipo $X\to AB$ possiamo scomporla in $X\to A$ e $X\to B$.
+
+E se cambio la condizione in $\forall X\to Y\in F$ non so come comportarmi, infatti in $Y$ potremmo avere sia attributi primi che non, dovremmo cambiare la condizione in modo tale che tutti gli elementi di $Y$ siano primi.
+
+_Esempio_
+
+$R=ABCD$, $F=\{ AB\to CD,AC\to BD,D\to BC \}$
+
+Abbiamo come chiavi $AB,AC,AD$
+
+$D\to BC$ ha come determinante un attributo che non è superchiave però se scomponiamo otteniamo $D\to B$ e $D\to C$ e notiamo che $B \ C$ appartengono a delle chiave, sono quindi primi, **rispettiamo la 3NF**.
+
+_Esempio 2_
+
+$R=ABCD$ $F=\{ A\to B,B\to CD \}$
+
+La chiave è $A$, infatti per ogni istanza legale:
+
+- $t_{1}[A]=t_{2}[A]$ allora $t_{1}[B]=t_{2}[B]$ ma allora se $t_{1}[B]=t_{2}[B]$ implica che $t_{1}[CD]=t_{2}[CD]$
+- Quindi se $t_{1}[A]=t_{2}[A]$ allora $t_{1}[CD]=t_{2}[CD]$ e quindi $A\to CD\in F^A$
+- Per la regola dell'unione $A\to BCD\in F^A$ e sappiamo che $F^A=F^+$ e quindi $A\to R\in F^+$, inoltre $A$ è un singleton e quindi $A$ è una chiave.
+- $A$ è l'unica chiave perché $B$ non determina $A$ e nè $C$ nè $D$ determinato attributi.
+
+Vediamo se siamo in 3NF:
+
+- $A\to B$ va bene dato che $A$ è chiave.
+- $B\to CD$ dobbiamo studiare le dipendenze $X\to A$ con $A$ singleton, quindi passando ad $F^+$ possiamo studiare $B\to C$ e $B\to D$, notiamo che $B$ non è superchiave e inoltre $C$ e $D$ non sono primi, **non rispettiamo la 3NF**.
+
+_Esempio 3_
+
+$R=ABCD$ $F=\{ AC\to B,B\to AD \}$
+
+La chiave è $AC$ per ogni istanza legale.
+
+- Se $t_{1}[AC]=t_{2}[AC]$ allora $t_{1}[B]=t_{2}[B]$
+- Se $t_{1}[B]=t_{2}[B]$ allora $t_{1}[AD]=t_{2}[AD]$
+- Quindi $AC\to AD\in F^A$
+- $AC\to ABCD\in F^A$ e quindi sapendo che $F^A=F^+$ possiamo scrivere $AC\to R\in F^+$, $AC$ è chiave dato che $A$ e $C$ da soli non determinano altri attributi.
+ - $BC$ è un'altra chiave e quindi infatti applicando l'aumento a $B\to AD$ otteniamo $BC\to ACD$.
+ - Anche $ABC$ è una chiave, o meglio una superchiave dato che contiene $AC$ e $BC$ che sono chiavi.
+
+3NF?
+
+- $AC\to B$ è ok dato che $AC$ è superchiave.
+- $B\to AD$ scomponiamola in $B\to A$ e $B\to D$ abbiamo $B$ che non è superchiave in entrambi i casi però $A$ appartiene ad una chiave e quindi ok ma $D$ non appartiene a chiavi e quindi violiamo la 3NF.
+
+Questo caso è utile con la "scappatoia" vista prima di scrivere $X\to Y$ per la definizione, infatti in questo caso come valutiamo $B\to AD$? abbiamo $A$ primo ma $D$ no, dovremmo dare definizioni più complesse per valutare ogni attributo a destra. Dato che possiamo applicare la decomposizione, è più semplice fare così.
+
+> [!info] Violare 3NF
+> Per violare la 3NF è sufficiente trovare anche una sola dipendenza che viola la condizione.
+
+## Dipendenze Parziali e Transitive
+
+### Dipendenze Parziali
+
+Prendiamo come esempio $\text{Curriculum(Matr, CF, Cogn, Nome, DataN, Com, Prov, C\#, Tit, Doc, DataE, Voto)}$, dove le chiavi sono *Matr* e *C#* notiamo che ad un numero di matricola corrisponde un solo cognome otteniamo quindi che $\text{Matr C\#} \to\text{Cogn}$ e questa dipendenza è una conseguenza di quella vista prima $\text{Matr}\to\text{Cogn}$.
+
+La dipendenza $\text{Matr C\#}\to\text{Cogn}$ viene detta **dipendenza parziale**, vediamo la loro definizione formale:
+
+Siano $R$ uno schema di relazione e $F$ un insieme di dipendenze funzionali su $R$.
+
+$X\to A\in F^+ | A\not\in X$ è una **dipendenza parziale** su $R$ se $A$ non è primo ed $X$ è contenuto propriamente in una chiave di $R$.
+
+Per capirlo meglio abbiamo che l'attributo Cognome **dipende parzialmente** dalla chiave *Matr C#* ovvero non mi serve la chiave intera per determinarlo ma soltanto una parte della chiave, infatti _Matr_ appartiene alla chiave.
+
+### Dipendenze Transitive
+
+Prendiamo come esempio lo schema $\text{Studente (Matr, CF, Cogn, Nome, Data, Com, Prov)}$ che ha come chiave *Matr* e *CF*. Notiamo che ad un numero di matricola corrisponde un solo comune di nascita $\text{Matr}\to\text{Com}$ e che un comune si trova in una sola provincia $\text{Com}\to\text{Prov}$, in conclusione possiamo dire che $\text{Matr}\to\text{Prov}$ ovvero che ad una matricola corrisponde una sola provincia.
+
+Possiamo dire quindi che $\text{Matr}\to\text{Prov}$ è una conseguenza delle altre due dipendenze e $\text{Com}\to\text{Prov}$ è detta **dipendenza transitiva**, vediamo le definizione formale:
+
+Siano $R$ uno schema di relazione e $F$ un insieme di dipendenze funzionali su $R$:
+
+$X\to A\in F^+|A\not\in X$ è una **dipendenza transitiva** su $R$ se $A$ non è primo e per ogni chiave $K$ di $R$ abbiamo che $X$ non è contenuto propriamente in $K$ e $K-X\neq \emptyset$.
+
+In questo caso abbiamo che l'attributo provincia non dipende direttamente da una chiave, ma dipende **transitivamente** infatti $\text{Matr}\to\text{Prov}$ è una conseguenza di $\text{Matr}\to\text{Com}$ e $\text{Com}\to\text{Prov}$, inoltre è importante ricordare che la dipendenza transitiva è quella che "causa" la transitività e quindi in questo caso $\text{Com}\to\text{Prov}$.
+
+### Definizione Alternativa 3NF
+Dato uno schema $R$ un insieme di dipendenze funzionali $F$, $R$ è in 3NF se e solo se non ci sono attributi che dipendono parzialmente o transitivamente da una chiave, o meglio se non ci sono né dipendenze parziali né transitive
+
+## Definizioni a Confronto
+Le due definizioni sono equivalenti, dimostriamolo.
+
+**Teorema**: Siano $R$ uno schema di relazione e $F$ un insieme di dipendenze funzionali su $R$. Uno schema $R$ è in 3NF **se e solo se** non esistono né dipendenze parziali né transitive in $R$.
+
+_Dimostriamo partendo dal fatto che lo schema è in 3NF_
+
+- Siamo in 3NF quindi $\forall X\to A\in F^+, A\not\in X$, $A$ appartiene ad una chiave oppure $X$ contiene una chiave.
+
+Se $A$ è parte di una chiave allora già è impossibile che ci siano dipendenze parziali o transitive, infatti questa è la prima condizione che devono rispettare entrambe.
+Se $A$ non è primo allora sappiamo che $X$ è superchiave, in quanto tale può contenere una chiave ma non essere contenuto propriamente in una chiave quindi non possiamo avere dipendenze parziali.
+Inoltre sapendo che $X$ è superchiave non può verificarsi che per ogni chiave $K$ di $R$ non è contenuto propriamente in $K$ e $K-X=\emptyset$ infatti ne contiene almeno una completamente e quindi facendo la differenza otteniamo il vuoto.
+
+_Dimostriamo partendo dal fatto che non esistono dipendenze parziali e transitive_
+
+Quindi sappiamo che **non esistono dipendenze parziali e transitive**, supponiamo per assurdo che $R$ non sia 3NF allora in questo caso esiste una dipendenza funzionale $X\to A\in F^+$ tale che $A$ non è primo e $X$ non è una superchiave, dato che $X$ non è una superchiave abbiamo due casi:
+
+- Per ogni chiave $K$ di $R$ abbiamo che $X$ non è contenuto propriamente in $K$ (infatti X non ha chiavi) e $K-X\neq\emptyset$ (non faremo mai la differenza con una chiave). In questo caso abbiamo che $X\to A$ è **transitiva**, otteniamo una contraddizione.
+- Esiste una chiave $K$ di $R$ tale che $X\subset K$ e quindi $X$ è contenuto in una chiave, significa quindi che $X\to A$ è una dipendenza **parziale**, otteniamo una contraddizione.
+
+---
+
+Uno schema 3NF come abbiamo visto è quindi preferibile ad uno non, quando ne progettiamo uno è bene quindi mantenere questa struttura.
+Quando si progetta uno schema ovvero nella fase di individuazione dei concetti da rappresentare, se questa progettazione viene fatta bene lo schema derivato sarà 3NF, altrimenti dovremmo procedere ad una fase di decomposizione per portarcelo, come abbiamo visto con l'esempio dell'università.
+
+Uno schema che non è in 3NF infatti può essere decomposto in più modi in un insieme di schemi che invece rispettano la 3NF.
+
+Vediamo un esempio semplice con lo schema $\text{R=ABC}$ con l'insieme $F=\{ A\to B,B\to C \}$ questo non è in 3NF per via della dipendenza transitiva $B\to C$ dato che la chiave è $A$. Possiamo però decomporre $R$ in:
+- $\text{R1=AB}$ e con $F=\{ A\to B \}$
+- $\text{R2=BC}$ e $F=\{ B\to C \}$
+Oppure
+- $\text{R1=AB}$ e con $F=\{ A\to B \}$
+- $\text{R2=AC}$ e $F=\{ A\to C \}$
+
+Entrambi gli schemi sono in 3NF, tuttavia la seconda soluzione non va bene, perché?
+
+Consideriamo due istanze legali degli schemi ottenuti:
+
+![[Pasted image 20241025143257.png|300]]
+
+Ricostruiamo lo schema originale tramite un join naturale:
+
+![[Pasted image 20241025143320.png|300]]
+
+Notiamo che non è un'istanza legale di $R$ infatti non rispettiamo la dipendenza $B\to C$, **dobbiamo preservare tutte le dipendenze presenti in $F^+$**.

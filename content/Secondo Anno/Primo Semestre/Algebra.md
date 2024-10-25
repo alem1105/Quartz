@@ -2086,3 +2086,288 @@ $a=x^5+6x-3$ e $b=-x^5+4x^2+2x-1$ dato che $a+b=4x^2+8x-4$ abbiamo che $deg(a+b)
 > [!bug] Casi Particolari
 > In alcuni casi può comunque capitare che $deg(a)=deg(b)=d$ e $deg(a+b)=d$
 
+# Analogia tra Interi e Polinomi
+Vedremo che tutti gli enunciati visti per gli interi valgono anche sui polinomi, per alcuni di questi vedremo anche le loro dimostrazioni mentre altri li prenderemo per giusti.
+
+## Valore Assoluto
+Su $\mathbb{Z}$ abbiamo l'applicazione _valore assoluto_: $\mathbb{Z}\xrightarrow{|\cdot|}\mathbb{N}$, questa soddisfa alcune proprietà:
+1) $|a|=0\Leftrightarrow a=0$
+2) $|ab|=|a|\cdot |b|$ - Compatibilità con la moltiplicazione
+3) $|a+b|\leq |a|+|b|$ - Disuguaglianza Triangolare
+Invece su $A$ (anello di polinomi) abbiamo visto il _grado_: $A\xrightarrow{deg}\mathbb{N}\sqcup\{ -\infty \}$, queste soddisfa:
+1) $deg(a)=-\infty\Leftrightarrow a=0$
+2) $deg(ab)=deg(a)+deg(b)$
+3) $deg(a+b)\leq max(deg(a),deg(b))$
+
+**Notiamo che ci sono delle somiglianze**, ma ci serve un'altra struttura per rendere queste operazioni ancora più simili e avere quindi un **valore assoluto** anche sui polinomi.
+
+Scegliamo un numero reale $c>1$, poi dato un polinomio $P\in A\backslash\{ 0 \}$ definiamo:
+
+$$
+|P|_{c}:=c^{deg(P)} \text{ Valore assoluto di P relativo a c (dipende da c)}
+$$
+
+Poniamo anche $|0|_{c}:=0$ che non è altro che $c^{-\infty}$, questa è una nostra **convenzione**.
+
+Allora le 3 proprietà viste prima sono equivalenti a:
+1) $|a|_{c}=0\Leftrightarrow a=0$
+2) $|a\cdot b|_{c}=|a|_{c} \cdot |b|_{c}$
+3) $|a+b|_{c}\leq max(|a|_{c},|b|_{c})\leq |a|_{c}+|b|_{c}$
+
+Vediamo perché 2 funziona:
+
+$|a\cdot b|_{c}=c^{deg(a\cdot b)}=c^{deg(a)+deg(b)}=c^{deg(a)}\cdot c^{deg(b)}=|a|_{c}\cdot |b|_{c}$
+
+Vediamo perché 3 funziona:
+
+$|a+b|_{c}=c^{deg(a+b)}\leq c^{max(deg(a),deg(b))}\leq c^{deg(a)}+c^{deg(b)}=|a|_{c}+|b|_{c}$
+
+## Algoritmo della Divisione Euclidea (per polinomi)
+
+**Teorema**: Dati $a,b\in A=K[X]$ con $(a,b)\neq(0,0)$:
+
+$$
+\exists ! (q,r)\in A\times A \ t.c. \ a=q\cdot b + r \text{ dove } \underbrace{ deg(r)<deg(b)  }_{ |r|_{c} < |b|_{c} }
+$$
+
+Se usiamo il valore assoluto in relazione a $c$, notiamo che siamo molto vicini alla definizione di divisione euclidea in $\mathbb{Z}$ infatti abbiamo che il resto deve essere strettamente inferiore al divisore ma in questo caso abbiamo il suo grado.
+
+## Analogie
+Vediamo nel dettaglio le analogie tra $\mathbb{Z}$ e $A=K[X]$.
+
+- In entrambi i casi abbiamo la **divisione euclidea**.
+- In $\mathbb{Z}$ abbiamo il valore assoluto $|\cdot|$ mentre per i polinomi abbiamo $|\cdot|_{c}$ e il grado $deg(\cdot)$.
+
+---
+
+A cosa corrisponde $\mathbb{N}^*$ di $\mathbb{Z}$? Ovvero l'insieme degli interi positivi.
+
+Nei polinomi abbiamo i **polinomi monici** $A^+=\{ \text{polinomi monici} \}$, i polinomi monici sono quei polinomi che hanno il coefficiente del termine con grado più alto uguale a 1. In altre parole il termine che rappresenta il grado del polinomio deve avere coefficiente 1.
+
+---
+
+In $\mathbb{Z}$ come elementi invertibili abbiamo $\mathbb{Z}^X=\{ \pm 1 \}$.
+
+Per quanto riguarda $A^X$? Sia $a\in A^X$ allora $\exists b\in A^X$ tale che $ab=1$, adesso calcoliamo il grado da entrambe le parti.
+
+$ab=1\Rightarrow deg(a)+deg(b)=0$ notiamo che $deg(a)$ e $deg(b)$ sono sicuramente in $\mathbb{N}$ infatti non possono essere $-\infty$ altrimenti non otterremmo 0 come risultato. Ma la somma di due interi superiori uguali a 0 è 0 se e solo se sono entrambi 0. Quindi $deg(a)=deg(b)=0$.
+
+Questo implica che $a,b\in K^X$ ovvero che sono due numeri.
+
+Tutto questo significa che $A^X=K^X$ ed è quindi l'analogo di $\mathbb{Z}^X$ in $A$.
+
+_Ricordiamo che gli elementi invertibili di un campo sono tutti gli elementi tranne zero_
+
+---
+
+Per la divisibilità in $\mathbb{Z}$ abbiamo una relazione sugli interi tale che $a|b\Leftrightarrow b=ak \ \exists k\in \mathbb{Z}$ che è equivalente anche alle scritture:
+- $b\in a\mathbb{Z}$
+- $b\mathbb{Z}\subset a\mathbb{Z}$
+
+Vediamo cosa succede in $A$:
+
+$a|b\Leftrightarrow \exists H\in A \ t.c. \ b=aH$ che è equivalente alle scritture:
+- $b\in aA = \{ al:l\in A \}$
+- $bA\subset aA$
+
+**Proprietà della divisibilità di polinomi**
+
+- Riflessiva dato che ogni polinomio divide se stesso
+- Transitiva:
+  Se abbiamo $a|b$ e $b|c$ è equivalente a dire $cA\subset bA\subset aA\Rightarrow cA\subset aA\Rightarrow a|c$.
+
+---
+
+_Esercizio_
+
+Prendiamo $a,b\in A\backslash \{ 0 \}$ e supponiamo che $a|b\wedge b|a$ questo equivale a dire:
+- $\exists U\in A \ t.c. \ b=aU$
+- $\exists V\in A \ t.c. \ a=bV$
+Adesso se sostituiamo: $a=UVa$ e calcoliamo il grado:
+
+$$
+deg(a)=deg(a)+deg(U)+deg(V) \to 0=deg(U)+deg(V)
+$$
+
+Questo significa, come visto prima, $deg(U)=deg(V)=0$ e quindi significa che i miei polinomi sono $U=\lambda\in K^X$ e $V=\mu\in K^X$ 
+
+Abbiamo dimostrato quindi che $\exists\lambda\in K^X=A^X$ tale che $b=\lambda a$ che è analogo a quello che abbiamo visto in $\mathbb{Z}$ ovvero:
+
+$$
+a,b \ t.c. \ a|b \wedge b|a\Rightarrow \exists\lambda\in \mathbb{Z}^X \ t.c. \ b=\lambda a
+$$
+
+---
+
+**Lemma**: $A=K[X]$ è un dominio d'integrità (non ha divisori di zero escluso zero).
+
+**Dimostrazione**:
+
+Sia $P\in A$ un divisore di zero allora $\exists Q\in A\backslash\{ 0 \}$ tale che $PQ=0$, calcoliamo i gradi.
+
+$$
+deg(PQ)=deg(P)+deg(Q)=deg(0) \Rightarrow deg(P)+deg(Q)=-\infty
+$$
+
+Però sappiamo che $Q$ non è nullo e quindi non può avere grado $-\infty$, questo significa che è $P$ ad avere grado $-\infty$, questo grado implica che $P=0$
+
+## Congruenze con i Polinomi
+
+In $\mathbb{Z}$ abbiamo che $a\equiv_{n} b\Leftrightarrow n|a-b$ e questo porta ad una struttura di anello che si scrive $\mathbb{Z}/n\mathbb{Z}$ e gli elementi di questo anello sono le classi di equivalenza che sono dei traslati per degli interi di tutti i multipli di $n$, quindi ad esempio se $a\in \mathbb{Z}$ allora $[a]:=a+n\mathbb{Z}$.
+
+Per $A$ cosa possiamo dire?
+
+Prendiamo $a,b\in A$ e $H\in A\backslash\{ 0 \}$. Diciamo che $a\equiv_{H} b$ e questo è equivalente alle congruenze in $\mathbb{Z}$, proviamo a osservare la transitività.
+
+Supponiamo quindi che $a\equiv_{H} b$ e $b\equiv_{H} c$ quindi questo significa che $H|a-b$ e $H|b-c$.
+Inoltre possiamo dire che $a-b=HU$ per un certo $U$ e $b-c=HV$ per un certo $V$. Addizioniamo termine a termine:
+
+$$
+a-b+b-c=H(U+V) \to a-c=H(U+V) \Leftrightarrow H|a-c\Leftrightarrow a\equiv_{H} c
+$$
+
+Quindi troviamo l'anello $A/HA$ e notiamo che la congruenza è compatibili con le varie operazioni come in $\mathbb{Z}$. Quindi ad esempio $[a]=a+HA$ che è anche $\subset A$.
+
+---
+
+Quindi $A/HA=\{ [a]:a\in A \}$, però vogliamo trovare un SCR modulo H, quindi scriviamo l'insieme di prima come $A/HA=\{ a+HA:a\in A \ t.c. \ deg(a)<deg(H) \}$ e notiamo che l'insieme $\{ a\in A:deg(a)<deg(H) \}$ è un SCR per la congruenza modulo H.
+
+## Massimo Comun Divisore
+Dati $a,b\in A$ poniamo $aA+bA=\{ m\in A: \exists u,v\in A \text{ con } m=ua+vb \}$ è valido quindi il lemma di Bezout.
+
+**Lemma**: Dati $a,b\in A$ supponiamo che $(a,b)\neq(0,0)$ e allora $aA+bA=\delta A$ con $\exists!\delta\in A^+$ (monico).
+
+Confrontiamo i due insiemi.
+
+Su $\mathbb{Z}$ abbiamo per definire MCD abbiamo $(a,b)\in \mathbb{Z}^2\backslash\{ (0,0) \}$ deve $\exists!d\in \mathbb{N}^*$ tale che:
+- $d|a\wedge d|b$
+- Se $d'\in \mathbb{Z}$ tale che $d'|a\wedge d'|b$ allora $d'|d$
+
+Su $A$ prendiamo $(a,b)\in A^2\backslash\{ (0,0) \}$ e abbiamo che $\exists!d\in A^+$ (monico) tale che:
+- $d|a\wedge d|b$
+- Se $d'\in A$ tale che $d'|a\wedge d'|b$ allora $d'|d$
+
+Inoltre in entrambi i casi possiamo scrivere $MCD(a,b)=d=\delta$.
+
+### Polinomi primi fra loro
+Si dice che $a,b\in A$ sono primi fra loro se $MCD(a,b)=1$ come accade su $\mathbb{Z}$. Anche qui funziona il calcolo del massimo comun divisore con l'algoritmo euclideo.
+
+## Polinomi Irriducibili
+Prendiamo $P\in A\backslash A^X (deg(P)>0)$ si dice che $P$ è irriducibile se scrivendo una fattorizzazione di $P$ come prodotto tra due polinomi $Q$ ed $R$ con almeno uno grado 0, quindi $P=QR$ si ha che o $Q\in K^X$ oppure $R\in K^X$.
+
+## Polinomi Primi
+Prendiamo sempre un $P\in A\backslash A^X$, $P$ si dice primo se quando $P|QR$ allora o $P|Q$ o $P|R$.
+
+Inoltre abbiamo un **lemma**: $\text{P irriducibile} \Leftrightarrow\text{P primo}$.
+
+---
+
+Quindi se prendiamo l'anello $A/PA$ con $P$ irriducibile, è un campo.
+
+## Teorema Fattorizzazione Unica (T.F.A.)
+Ogni $H\in A\backslash\{ 0 \}$ si decompone in modo unico come prodotto:
+
+$$
+H=\underset{\in A^X}\lambda \cdot \prod_{P \in A^+\text{ e irriducibile}} P^{v_{p}(H)}
+$$
+
+Dove $v_{p}(H)\in \mathbb{N}$ e $\{ P \ t.c. \ v_{p}(H)\neq_{0} \}$ è un insieme finito. È quindi uguale all'enunciato di $\mathbb{Z}$.
+
+Questa fattorizzazione è facile in $K=\mathbb{R}, \mathbb{C}$:
+
+In $\mathbb{C}[X]$ i polinomi monici e irriducibili sono tutti i polinomi nella forma:
+
+$$
+X-\alpha:\alpha\in \mathbb{C}
+$$
+
+Quindi su $\mathbb{C}$ i polinomi irriducibili sono tutti i polinomi di grado 1.
+
+Mentre in $\mathbb{R}[X]$ se $P$ è monico e irriducibile allora si ha una delle due proprietà:
+- $deg(P)=1$ e quindi come prima $P=X-\alpha:\alpha\in \mathbb{R}$
+- $deg(P)=2$ e quindi quando scriviamo $P=X^2+aX+b$ deve accadere $\Delta=a^2-4b<0$
+
+---
+
+La fattorizzazione è più difficile in $\mathbb{F}_{p},\mathbb{Q}$ perché non c'è un algoritmo che permette di scrivere la lista dei polinomi irriducibili monici. Questo soprattutto per $\mathbb{Q}$.
+
+## Valutazione
+Prendiamo $x\in K$ e $F\in K[X]$, con $F=F_{0},F_{1},X+\dots+F_{n}X^n$ la valutazione di $F$ in $x$ è:
+
+$$
+ev_{x}(F):=F_{0}+F_{1}x+\dots+F_{n}x^n
+$$
+
+Quindi abbiamo $ev_{x}:K[X]\to K$, infatti sostituiamo il valore dell'indeterminata e abbiamo una somma fra valori. Questa operazione di valutazione è compatibili con le operazioni di addizione e moltiplicazione.
+
+**Osservazione**
+
+1) $ev_{x}(F+G)=ev_{x}(F)+ev_{x}(G)$
+2) $ev_{x}(FG)=ev_{x}(F)\cdot ev_{x}(G)$
+3) $\lambda\in K, ev_{x}(\lambda)=\lambda$
+
+Si dice che $ev_{x}:K[X]\to K$ è un **morfismo di anelli** (lo vedremo sui gruppi, per ora non serve molto).
+
+_Esempio_
+
+Prendiamo $F=X^2+1\in \mathbb{R}[X]$ e $x=1$ allora:
+
+$$
+ev_{x}(F)=x^2+1=2
+$$
+
+---
+
+**Lemma**: Sia $x\in K$ allora $ev_{x}^{-1}(\{ 0 \})=\{ P\in A \ t.c. \ ev_{x}(P)=0 \}=(X-x)A$. L'immagine inversa di 0 è l'insieme di tutti gli $x\in K$ tali che se li sostituiamo nel polinomio, questo ci da 0. È quindi l'insieme dei polinomi che si annullano in $x$.
+
+**Dimostrazione**: Dobbiamo dimostrare che i due insiemi sono uno incluso nell'altro.
+
+_Mostriamo che_ $(X-x)A\subset \{ P\in A \ t.c. \ ev_{x}(P)=0 \}$ ovvero dimostrare che ogni multiplo di $(X-x)$ ha la proprietà che $ev_{x}=0$.
+
+Sia $Q=(X-x)H$ allora $ev_{x}(Q)=\underbrace{ ev_{x}(X-x) }_{ x-x=0 }\cdot ev_{x}(H)=0\Rightarrow Q\in ev_{x}^{-1}(\{ 0 \})$
+
+_Mostriamo l'inclusione inversa_
+
+Sia $P\in A$ tale che $vp_{x}(P)=0$. Applichiamo l'algoritmo della divisione euclidea per il polinomio $(X - x)$ quindi:
+
+$$
+\exists!(q,r)\in A\times A \ t.c. \ P=q\overbrace{ (X-x) }^{ b }+r
+$$
+
+E per il grado di $r$ abbiamo due possibilità $deg(r)\in \{ -\infty,0 \}$ dato che $b$ è di grado 1 e quindi il grado di $r$ deve essere strettamente minore. Questo è equivalente a dire che $r\in K$ perché è o 0 o un elemento non nullo.
+
+Adesso valutiamo entrambe le parti:
+
+$$
+\begin{align*}
+\overbrace{ ev_{x}(P) }^{ 0 }&=ev_{x}(q(X-x)+r) \\
+&=ev_{x}(q)\cdot \underbrace{ ev_{x}(X-x) }_{ 0 }+ev_{x}(r)\Rightarrow ev_{x}(r)=0
+\end{align*}
+$$
+
+Quindi $r$ si annulla in $x$, però sappiamo che $r\in K$ inoltre sappiamo che $ev_{x}(\lambda)$ con $\lambda\in K$ è uguale a $\lambda$ stesso e quindi $ev_{x}(r)=0\Rightarrow r=0$
+
+Quindi se $r=0$ significa che $(X-x)|P$ e questo è equivalente a dire che $P\in(X-x)A$.
+
+Possiamo dire che $P$ ha una radice in $x \Leftrightarrow X-x|P$ che significa $ev_{x}(P)=0$.
+
+_Osservazione_
+
+Se prendiamo $X-x$ polinomio è sempre irriducibile (e quindi anche primo) $\forall x\in K$ perché:
+
+$$
+X-x=U\cdot V
+$$
+
+Calcolando i gradi:
+
+$$
+\overbrace{ deg(X-x) }^{ 1 }=deg(U)+deg(V)
+$$
+
+Questo implica che $\{ deg(U),deg(V) \}=\{ 0,1 \}$ dato che non possono essere $-\infty$, e quindi uno dei due è invertibile ovvero che $\{ U,V \}\cap A^X\neq \emptyset$.
+
+_Osservazione_
+
+
+
