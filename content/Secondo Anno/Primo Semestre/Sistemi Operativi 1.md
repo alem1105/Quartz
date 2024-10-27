@@ -1015,3 +1015,181 @@ In breve quindi:
 - I Signal Handler sono eseguiti in user mode mentre gli interrupt handler in kernel mode.
 - I signal handler potrebbero essere riscritto dal programmatore mentre gli interrupt handler no. (Anche 2 signal handler non possono essere riscritti `SIGKILL e SIGSTOP`).
 
+# Scheduling
+Ne abbiamo parlato spesso, è il modo in cui il sistema operativo alloca le risorse tra i vari processi.
+
+Quindi lo scopo è assegnare ad ogni processore i processi da eseguire durante l'esecuzione stessa. Per raggiungere questo scopo nel modo più efficiente possibile vanno ottimizzati alcuni aspetti:
+- Tempo di risposta dei processi
+- Throughput (massimizzare l'uso delle risorse)
+- Efficienza del processore, ovvero minor tempo di idle
+- Distribuire il tempo di esecuzione in modo equo
+	- In alcuni casi però va gestita anche la loro priorità, quindi bisogna essere equi fra quelli che hanno la stessa priorità
+- Evitare la starvation dei processi (un processo in starving è un processo in attesa di essere eseguito ma con un scheduling fatto male non viene mai eseguito)
+- Overhead basso (per overhead si intende del lavoro aggiuntivo, anche lo scheduler stesso è lavoro aggiuntivo e quindi deve lavorare in modo efficiente e decidere velocemente chi mandare in esecuzione).
+
+## Vari tipi di Scheduler
+Si differenziano in base a quanto spesso vengono esuguiti
+
+- **Long-term Scheduling**: viene eseguito molto raramente e decide chi aggiungere ai processi da eseguire
+- **Medium-term Scheduling**: viene eseguito non molto spesso e decide i processi da aggiungere alla memoria principale
+- **Short-term Scheduling**: eseguito molto spesso e decide tra i processi pronti quale mandare in esecuzione
+- **I/O Scheduling**: Decide a quale processo in attesa di I/O assegnare il corrispondente dispotivo
+
+Riprendendo lo schema a 7 stati visto precedentemente, possiamo notare come alcune transizioni tra stati vengono decise dai vari scheduler:
+
+![[Screenshot 2024-10-27 alle 18.19.06.png|500]]
+
+- **Long-term**: vediamo che decide se un processo appena creato va allocato in RAM oppure sul disco
+- **Medium-term**: Decide se processi sospesi devono andare in ready o blocked
+- **Short-term**: Decide chi mandare in esecuzione tra i processi pronti
+
+Nello specifico, a livello implementativo:
+
+![[Pasted image 20241027182044.png|500]]
+
+Quindi appena un processo viene creato interviene il _long-term scheduling_ che decide se mandarli su RAM o su disco quindi o su _Ready Queue_ o su _Ready, Suspended Queue_.
+
+Poi il _medium-term scheduling_ decide se da _Ready Queue_ mandarlo in _Ready, Suspende Queue_ e se da _Blocked Queue_ mandarlo in _Blocked, Suspended Queue_. O vicerversa.
+
+Lo _short-term Scheduling_ manda i processi dai _Ready Queue_ all'esecuzione sul processore.
+
+### Long-Term Scheduling
+Decide quali programmi sono ammessi nel sistema per essere eseguiti.
+- Spesso è FIFO, ovvero il primo che entra è anche il primo ad essere ammesso. Inoltre tiene anche conto della priorità o di altri fattori come le richieste I/O in sospeso.
+- Controlla il grado di multiprogrammazione, quindi ad esempio potrebbe decidere di mettere un programma su disco perché la RAM è piena
+- Più processi ci sono, più piccole saranno le percentuali di tempo per cui ogni processo viene eseguito. Va trovato quindi il giusto numero di processi in esecuzione.
+
+Quali sono le tipiche strategie per i Long-Term Scheduler?
+- I lavori non interattivi (batch) vengono messi in una coda e lo scheduler li prende man mano che lo ritiene giusto.
+- I lavori interattivi vengono ammessi finché non si satura il sistema.
+- Se si sa quali processi utilizzando molto I/O (I/O bound) o la CPU (CPU bound) allora si mantiene un giusto equilibrio fra i due.
+
+Inoltre viene chiamato anche in altre occasioni oltre alla creazione di nuovi processi:
+- Quando un processo termina
+- Quando dei processi sono in idle da troppo tempo
+
+### Medium-Term Scheduling
+Abbiamo detto che decide se spostare i processi tra running/blocked a suspended, quindi nello specifico se spostare un programma dalla RAM al disco e viceversa.
+
+Anche qui ci basiamo sul grado di multiprogrammazione, se abbiamo troppi programmi magari alcuni verrano spostati su disco, oppure se ci sono pochi verranno presi alcuni dal disco e spostati su RAM.
+
+_Lo rivedremo quando faremo la memoria virtuale_
+
+### Short-Term Scheduling
+Viene chiamato anche **dispatcher**, è quello eseguito più frequentemente e viene invocato in seguito a degli eventi:
+- Interruzioni di clock (fanno parte degli interrupt)
+- Interruzioni I/O
+- Chiamate di sistema
+- Segnali
+- Altri motivi...
+
+Il suo scopo è quello di ottimizzare l'intero sistema decidendo che programma mandare in esecuzione, ma per valutare una **politica di scheduling** vanno definiti dei criteri:
+
+Dobbiamo fare una distinzione tra **Criteri Utente** e **Criteri Sistema**:
+
+Per utente:
+- Tempo di risposta, ovvero quanto tempo passa tra la richiesta e il suo completamento.
+Per sistema:
+- Uso efficiente del processore.
+
+Un'altra distinzione che va fatta è **Criteri Prestazionali** e **Criteri non Prestazionali**
+
+Prestazionali:
+- Sono correlati alle prestazioni e facili da misurare, sono quantitativi, ad esempio si basano sul tempo di risposta e il throughput
+Non Prestazionali:
+- Sono qualitativi e difficili da misurare come e si basano ad esempio sulla predicibilità e l'equità
+
+Vediamo questi criteri:
+- Criteri **Utente** Prestazionali
+	- **Turnaround Time (tempo di ritorno)**
+	- **Response Time**
+	- **Deadline (scadenza)**
+- Criteri **Utente** Non Prestazionali
+	- **Predictability**
+
+- Criteri **di Sistema** Prestazionali
+	- **Throughput (volume di lavoro nel tempo)**
+	- **Processor Utilization**
+- Criteri **di Sistema** non Prestazionali
+	- **Fariness (equità)**
+	- **Enforcing Priorities (gestione priorità)**
+	- **Balancing Resources (bilanciamento uso risorse)**
+
+#### Turn-Around Time
+È il tempo che passa tra la creazione di un processo creato dall'utente e il suo completamento, questo comprende anche i vari tempi di attesa di I/O. È un criterio spesso utilizzato per i processi non interattivi.
+
+#### Response Time
+Questo è più utilizzato per i processi interattivi, è il tempo tra l'invio del programma e il suo completamento.
+
+Lo scheduler ha due obiettivi in questo caso:
+- Minimizzare il tempo di risposta
+- Massimizzare il numero di utenti con un buon tempo di risposta
+
+#### Deadline e Predicibilità
+Ci sono dei sistemi operativi che ci permettono di dare una deadline ai processi, ovvero possiamo inserire un tempo massimo di esecuzione. Lo scheduler cerca di rispettare questo limite imposto dall'utente e il suo obiettivo è quindi quello di massimizzare il numero di scadenze rispettate.
+
+Per quanto riguarda la predicibilità, l'utente non vuole che ci sia troppa variabilità nei tempi di risposta, ad esempio un programma ci mette 5 secondi e un altro 1, oppure se lanciamo più volte lo stesso programma ci aspettiamo sempre il solito tempo di esecuzione. Ovviamente con alcune eccezioni particolari come ad esempio RAM satura.
+
+#### Throughput
+È il numero di processi che il sistema riesce a completare in un certo tempo, lo scheduler ovviamente vuole massimizzare questo valore. Ci dà una misura su quanto lavoro viene effettuato e ovviamente dipende anche dai tempi di esecuzioni dei processi
+
+#### Utilizzo del Processore
+È la percentuale di tempo in cui il processore viene utilizzato, lo scheduler deve fare in modo che il processore sia in idle il minor tempo possibile, quindi deve fare in modo che ci siano processi _ready_.
+
+Questo è molto utile su sistemi condivisi tra più utenti.
+
+#### Bilanciamento Risorse
+Lo scheduler deve fare in modo che le risorse vengano usate il più possibile, quindi fare in modo che processi che usino le risorse attualmente più utilizzate vengano favoriti.
+
+#### Fairness e priorità
+Se non ci sono specifiche sulla priorità allora tutti i processi devono essere trattati allo stesso modo, se c'è vanno favoriti quelli con priorità più alta, ogni priorità avrà una coda.
+
+Non deve verificarsi _starvation_ ovvero come detto prima, processi che aspettano la loro esecuzione senza mai andarci.
+
+> [!bug] Priorità e Starvation
+> Da notare che la priorità può causare la starvation, infatti un processo a bassa priorità potrebbe soffrire di starvation a causa di un processo a priorità più alta, come soluzione possiamo fare in modo che man mano che "l'età" del processo aumenta, aumenta anche la sua priorità. Oppure anche in base a quante volte è andato in esecuzione.
+
+---
+
+> [!info]- Algoritmi di Scheduling
+> ![[Pasted image 20241027190555.png]]
+
+Le colonne ci indicano i vari algoritmi, le prime due righe ci spiegano come vengono effetuate quelle decisioni mentre per le altre abbiamo delle descrizioni
+## Funzione di Selezione
+È quella che sceglie il processo da mandare in esecuzione, si basa sulle caratteristiche dell'esecuzione, ecco alcuni paramentri:
+- $w$: Tempo trascorso in attesa
+- $e$: Tempo trascorso in esecuzione
+- $s$: Tempo totale richiesto
+
+Quindi appena un processo nasce avremo $e=0$ mentre per $s$ o viene effettuata una stima o viene fornita una _deadline_.
+
+## Modalità di Decisione
+Specifica quando viene invocata la funzione di selezione, abbiamo due modalità:
+- **Non-Preemptive**: Se un processo è in esecuzione allora arriva o a fine terminazione o ad una richiesta bloccante
+- **Preemptive**: Il sistema operativo può interrompere un processo in esecuzione e mandarlo in stato di _ready_. Questo blocco può avvenire o per l'arrivo di nuovi processi o per un interrupt:
+	- Interrupt I/O: Un processo _blocked_ diventa _ready_
+	- Clock Interrupt: Avviene in modo periodico per evitare che un processo monopolizzi il sistema
+
+## Esempi
+
+![[Pasted image 20241027191711.png|500]]
+
+### FCFS: First Come First Served
+Tutti i processi vengono aggiunti alla coda dei processi ready e quando un processo smette di essere eseguito si passa a quello che ha aspettato di più in coda. È **non-preemptive** quindi si passa ad un altro solo se termina o per interrupt.
+
+![[Pasted image 20241027191937.png]]
+
+Quali sono i principali problemi?
+- Un processo con poco tempo di esecuzione potrebbe dover attendere molto tempo prima di andare in esecuzione, in questo esempio $E$
+- Favorisce i processi _CPU-Bound_ infatti dopo che uno di questi prende la CPU non la libera finché non viene interrotto o termina.
+
+### Round-Robin
+Usa la **preemption** basandosi su un clock, spesso viene anche chiamato _time sicing_ perché ogni processo ha una "fetta" di tempo prestabilita.
+
+![[Pasted image 20241027192243.png]]
+
+Inizialmente c'è solo $A$ quindi dopo una "fetta" interviene lo scheduler ma sceglie comunque $A$. Successivamente invece notiamo che viene sempre scelto un processo diverso tranne alla fine quando accade la stessa situazione iniziale ma con $D$.
+
+Notiamo che il problema di prima con $E$ che è molto corto non si presenta, infatti viene eseguito non molto lontano dalla sua richiesta.
+
+_Riprendere da secondo video Scheduling_
