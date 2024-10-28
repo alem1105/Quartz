@@ -1384,3 +1384,161 @@ $$
 E[X]=0\cdot \frac{1}{4}+1\cdot \frac{2}{4}+2\cdot \frac{1}{4}=1
 $$
 
+_Esercizio_
+
+Data un'urna con 3N e 2B. Estraggo due palline senza rimpiazzo, sia $X:=\#\text{Palline nere estratte, calcolare}$ calcolare $E[X]$.
+
+Abbiamo $X=\{ 0,1,2 \}$
+
+- $P(X=0)=\frac{2\cdot 1}{5\cdot 4}=\frac{2}{20}$
+- $P(X=1)=\frac{3\cdot 2}{5\cdot 4} + \frac{2\cdot 3}{5\cdot 4}=\frac{12}{20}$
+- $P(X=2)=\frac{3\cdot 2}{5\cdot 4}=\frac{6}{20}$
+
+$$
+E[X]=0\cdot \frac{2}{20} + 1\cdot \frac{12}{20} + 2\cdot \frac{6}{20}=\frac{6}{5}
+$$
+
+## Funzione di Distribuzione (o Ripartizione)
+
+Data una variabile aleatoria $X$, la sua funzione di distribuzione è definiti come:
+
+$$
+F_{X}:\mathbb{R}\to[0,1] \text{ con } F_{X}(a)=P(X\leq a) \ \forall a\in \mathbb{R}
+$$
+
+_Esempio_
+
+Sia $X$ la stessa v.a. di prima determiniamo $F_{X}$.
+
+- Se $a<0$ allora $F_{X}(a)=P(X\leq a)=0$
+- Se $0\leq a<1$ allora $F_{X}(a)=P(X\leq a)=\frac{1}{10}$
+- Se $1\leq a<2$ allora $F_{X}(a)=P(X\leq a)=F_{X}(\{ X=1 \cup \{ X=0 \})=\frac{1}{10}+\frac{6}{10}=\frac{7}{10}$
+- Se $a\geq 2$ allora $F_{X}(a)=P(X\leq a)=F_{X}(\{ X=0 \}\cup \{ X=1 \}\cup \{ X=\text{} \})=\frac{1}{10}+\frac{6}{10}+\frac{3}{10}=1$
+
+Quindi guardando meglio la funzione abbiamo che:
+
+$$
+F_{X}(a)=
+\begin{cases}
+0 \ se \ a<0 \\
+\frac{1}{10} \ se \ 0\leq a <1 \\
+\frac{7}{10} \ se \ 1\leq a < 2 \\
+1 \ se \ a\geq 2
+\end{cases}
+$$
+
+![[Pasted image 20241028215529.png|500]]
+
+In generale se $X$ è variabile aleatoria che assume $n$ valori dati da $X_{1}\leq X_{2}\leq\dots\leq X_{n}$ allora si ha che:
+
+$$
+F_{X}(a)=
+\begin{cases}
+0 \ \ \ se \ a<X_{1} \\
+P(X_{1}) \ \ \ se \ X_{1}\leq a <X_{2} \\
+P(X_{1})+P(X_{2}) \ \ \ se \ X_{2}\leq  a < X_{3} \\
+. \\
+P(X_{1})+P(X_{2})+\dots+P(X_{k}) \ \ \ se \ X_{k}\leq a < X_{k+1} \\
+. \\
+1=P(X_{1})+\dots+P(X_{n}) \ \ \ se \ a\geq X_{n}
+\end{cases}
+$$
+
+E vista come grafico:
+
+![[Pasted image 20241028220218.png]]
+
+_Esercizio_
+
+Estraggo 3 carte da un mazzo da 40. Sia $X:=\#\text{Carte di bastoni uscite}$ determinare $P_{X},F_{X},E[X]$
+
+- $P(X=0)=\frac{\binom{30}{3}}{\binom{40}{3}}=\frac{812}{1976}$
+- $P(X=1)=\frac{\binom{30}{2}\binom{10}{1}}{\binom{40}{3}}=\frac{870}{1976}$
+- $P(X=2)=\frac{\binom{30}{1}\binom{10}{2}}{\binom{40}{3}}=\frac{270}{1976}$
+- $P(X=3)=\frac{\binom{10}{3}}{\binom{40}{3}}=\frac{24}{1976}$
+
+Quindi abbiamo:
+
+$$
+E[X]=0\cdot \frac{812}{1976}+1\cdot \frac{870}{1976}+2\cdot \frac{270}{1976}+3\cdot \frac{24}{1976}=\frac{1482}{1976}
+$$
+
+E per $F(a)$:
+
+$$
+F_{X}(a)=
+\begin{cases}
+0 \ se \ a<0 \\
+\frac{812}{1976} \ se \ 0\leq a< 1 \\
+\frac{812}{1976}+\frac{870}{1976} \ se \ 1\leq a < 2 \\
+\frac{812}{1976}+\frac{870}{1976} + \frac{270}{1976} \ se \ 2\leq a < 3 \\
+1 \ se \ a\geq 3
+\end{cases}
+$$
+
+
+## Varianza di una variabile aleatoria
+Sia $X$ una v.a. discreta, la varianza di $X$ è definita come $Var(X):=E[(X-\underbrace{ EX }_{ \text{valore atteso} })^2]$.
+
+La varianza torna utile perché quantifica quanto la v.a. $X$ si discosta dal suo valore atteso.
+
+_Esempio_
+
+Sia $X$ una v.a. con $X(1)=\frac{1}{2}$ e $X(-1)=\frac{1}{2}$ abbiamo che:
+
+$$
+E[X]=EX=1\cdot \frac{1}{2} + -1\cdot \frac{1}{2}=0
+$$
+
+e quindi:
+
+$$
+Var(X)=E[(X-EX)^2]=E[(X-0)^2]=E[X^2]=1
+$$
+
+_Esempio_
+
+Sia $X$ una v.a. che assume i valore $\{ -3,0,1,2 \}$ con:
+- $P_{X}(-3)=\frac{2}{10}$
+- $P_{X}(0)=\frac{1}{10}$
+- $P_{X}(1)=\frac{4}{10}$
+- $P_{X}(2)=\frac{3}{10}$
+
+Calcolare $EX$ e $Var(X)$.
+
+- $EX=-3\cdot \frac{2}{10}+0\cdot \frac{1}{10}+ 1\cdot \frac{4}{10}+2\cdot \frac{3}{10}=\frac{4}{10}$
+
+$$
+Var(X)=E\left[ \left( X-\frac{4}{10} \right)^2 \right]
+$$
+
+Ma come calcoliamo $\left( X-\frac{4}{10} \right)^2$? Dobbiamo vedere i singoli casi
+
+- $X=-3 \to (X-0.4)^2=(-3-0.4)^2=11.56$
+- $X=0 \to (X-0.4)^2=(-0-0.4)^2=0.16$
+- $X=1 \to (X-0.4)^2=(1-0.4)^2=0.36$
+- $X=2 \to (X-0.4)^2=(2-0.4)^2=2.56$
+
+Quindi otteniamo:
+
+$$
+(X-0.4)^2=
+\begin{cases}
+11.56 \text{ con probabilità } \frac{2}{10} \\
+0.16 \text{ con probabilità } \frac{1}{10} \\
+0.36 \text{ con probabilità } \frac{4}{10} \\
+2.56 \text{ con probabilità } \frac{3}{10}
+\end{cases}
+$$
+
+E quindi:
+
+$$
+Var(X)=E[(X-0.4)^2]=11.56\cdot 0.2+0.16\cdot 0.1+0.36\cdot 0.4+2.56\cdot 0.3=3.24
+$$
+
+## Deviazione Quadrata
+Sia $X$ una v.a., la deviazione quadrata standard di $X$ è data da $\sigma_{X}:=\sqrt{ Var(X) }$
+
+
+

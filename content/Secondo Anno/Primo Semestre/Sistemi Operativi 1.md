@@ -1139,7 +1139,7 @@ Per quanto riguarda la predicibilità, l'utente non vuole che ci sia troppa vari
 Questo è molto utile su sistemi condivisi tra più utenti.
 
 #### Bilanciamento Risorse
-Lo scheduler deve fare in modo che le risorse vengano usate il più possibile, quindi fare in modo che processi che usino le risorse attualmente più utilizzate vengano favoriti.
+Lo scheduler deve fare in modo che le risorse vengano usate il più possibile, quindi ad esempio favorire i processi che useranno per meno tempo una risorsa che in quel momento è poco utilizzata.
 
 #### Fairness e priorità
 Se non ci sono specifiche sulla priorità allora tutti i processi devono essere trattati allo stesso modo, se c'è vanno favoriti quelli con priorità più alta, ogni priorità avrà una coda.
@@ -1184,7 +1184,7 @@ Quali sono i principali problemi?
 - Favorisce i processi _CPU-Bound_ infatti dopo che uno di questi prende la CPU non la libera finché non viene interrotto o termina.
 
 ### Round-Robin
-Usa la **preemption** basandosi su un clock, spesso viene anche chiamato _time sicing_ perché ogni processo ha una "fetta" di tempo prestabilita.
+Usa la **preemption** basandosi su un clock, spesso viene anche chiamato _time slicing_ perché ogni processo ha una "fetta" di tempo prestabilita.
 
 ![[Pasted image 20241027192243.png]]
 
@@ -1192,4 +1192,302 @@ Inizialmente c'è solo $A$ quindi dopo una "fetta" interviene lo scheduler ma sc
 
 Notiamo che il problema di prima con $E$ che è molto corto non si presenta, infatti viene eseguito non molto lontano dalla sua richiesta.
 
-_Riprendere da secondo video Scheduling_
+Le interruzioni di clock vengono generate a intervalli periodici e quando ne arriva una il processo in esecuzione viene messo in stato di _ready_ e viene selezionato il nuovo processo da eseguire. Ovviamente se prima del clock arriva un interrupt I/O allora questo viene messo nella coda _blocked_.
+
+---
+
+Questa "fetta di tempo" che diamo ad ogni processo, quanto deve essere lunga?
+
+In generale deve essere **poco più grande** del tempo di interazione di un processo. Quindi ad esempio:
+
+![[Pasted image 20241028132208.png|250]]
+
+Dove _Quantum q_ indica la "fetta di tempo". Se invece prendiamo dei valori non corretti accade questo:
+
+![[Pasted image 20241028132337.png|500]]
+
+Non avremo uno scheduler molto ottimale, infatti interromperà i processi prima della loro terminazione.
+
+> [!info] Scelta del "Quanto di Tempo"
+> In generale deve essere poco più lungo del tempo medio di interazione per un processo, ma non troppo lungo perché potrebbe durare più del tipico processo e in quel caso il _Round-Robin_ degenera in un _FCFS_.
+
+---
+
+Come abbiamo visto prima il **FCFS** favorisce i processi **CPU-Bound** ovvero con poche richieste bloccanti, questo accade anche con il **Round-Robin**, infatti se un processo fa poche richieste I/O significa che questo userà al massimo il suo quanto di tempo.
+
+Questo però significa che i processi **I/O Bound** sono poco favoriti e inefficienti.
+
+Una soluzione proposta è il **Round-Robin virtuale**:
+- Se un processo fa una richiesta bloccante durante il suo tempo, il processo non va in coda di _ready_ ma in un'altra che ha priorità su quella ready.
+
+A livello implementativo abbiamo:
+
+![[Pasted image 20241028153945.png|400]]
+
+In questo modo quindi evitiamo di favorire i processi CPU-Bound e garantire più equità.
+
+Da notare però che i processi che vengono mandati in esecuzione da questa coda ausiliaria non hanno a disposizione un intera fetta di tempo ma soltanto quello che gli rimaneva quando hanno effettuato la richiesta.
+
+_Ad esempio:_ Il processo ha 5 ms di tempo e a 3ms fa una richiesta I/O quindi va nella coda ausiliaria, quando viene rimandato in esecuzione avrà a disposizione soltanto 5-3 ms quindi 2ms.
+
+### SPN: Shortest Process Next
+Come suggerisce il nome, il prossimo processo da mandare in esecuzione è quello più breve, per fare questo, quando un processo nasce deve dire quanto tempo impiegherà a terminare. È consigliato quindi per processi batch.
+
+Grazie a questo scheduler i processi corti verranno eseguiti prima di quelli più lunghi, inoltre è **non-preemptive** quindi una volta iniziato un processo questo o termina o fa una qualche richiesta bloccante.
+
+Quindi prendendo l'esempio di prima, i processi verranno eseguiti nel seguente modo:
+
+![[Pasted image 20241028160444.png]]
+
+Quali sono i problemi di questo tipo di scheduler?
+
+- Prima abbiamo visto un criterio utente non prestazionale, la predicibilità, ovvero che il tempo di risposta medio di un processo sia sempre lo stesso. Con questo tipo di scheduling riduciamo la predicibilità dei processi lunghi, infatti se ci sono molti processi corti questi avranno la precedenza. Per questo motivo potrebbe anche verificarsi **starvation** sui processi lunghi.
+- Se un processo fornisce un tempo di esecuzione inesatto, il sistema operativo può _abortire_ il processo.
+
+Se il processo, quando nasce, non fornisce un tempo di esecuzione possiamo comunque effettuare una stima? Si con il seguente metodo, usiamo il passato $T_{i}$ per predire il futuro $S_{i}$:
+
+$$
+S_{n+1}=\frac{1}{n}\sum_{i=1}^n T_{i} \text{ Abbiamo effettuato la media}
+$$
+
+Ma per eseguire questo metodo il dispatcher deve mantenere tutti i valori dei tempi di risposta di ciascun processo e questo potrebbe occupare molta memoria. Possiamo però calcolare questa media in un altro modo:
+
+
+$$
+S_{n+1}=\frac{1}{n}T_{n}+\frac{n-1}{n}S_{n}
+$$
+
+Quindi si deve ricordare soltanto l'ultimo tempo $T_{n}$ e l'ultima stima $S_{n}$ per ciascun programma.
+
+Adesso se in questa formula chiamiamo $\frac{1}{n}=\alpha$ possiamo scrivere:
+
+$$
+S_{n+1}=\alpha T_{n}+(1-\alpha)S_{n}, 0<\alpha<1
+$$
+
+Se la scomponiamo, otteniamo:
+
+$$
+S_{n+1}=\alpha T_{n}+\dots+\alpha(1-\alpha)^i T_{n-i}+\dots+(1-\alpha)^n S_{1}
+$$
+
+Questo si chiama **Exponential Averaging** e serve a far pesare di più le istanze più recenti.
+
+![[Pasted image 20241028170913.png|500]]
+
+Notiamo quindi che i valori passati, soprattutto con $\alpha$ grandi vengono dimenticati più velocemente.
+
+Vediamo le differenze:
+
+![[Pasted image 20241028170434.png]]
+
+In nero abbiamo i tempi di esecuzione del processo, vediamo quindi che i primi 10 avvii hanno un tempo che cresce e poi si stabilizza.
+
+Se effettuiamo una semplice media (quadrati neri vuoti) notiamo che la predizione è molto lontana dai veri valori.
+
+Se invece utilizziamo degli $\alpha$ fissi vediamo che i valori sono molto vicini.
+
+### SRT: Shortest Remaining Time
+Funziona come l'SPN ma è **preemptive**, a differenza di altri però non ha una **time quantum** ma si basa sul fatto che arrivi un nuovo processo, quindi quando ne arriva un altro si fa un controllo.
+
+Viene effettuata una stima sul tempo rimanente di esecuzione e prende quello con il tempo più breve.
+
+![[Pasted image 20241028172149.png]]
+
+### HRRN: Highest Response Ratio Next
+Anche questo algoritmo necessita di conoscere il tempo di risposta di un processo, in questo caso non abbiamo starvation.
+
+In questo algoritmo si sceglie il processo che ha come valore più alto:
+
+$$
+\frac{w+s}{s}=\frac{\text{tempo trascorso in attesa + tempo totale richiesto}}{\text{Tempo totale richiesto}}
+$$
+
+![[Pasted image 20241028172753.png]]
+
+In generale quindi non guarda soltanto quanto ci metterà il processo ma anche quanto ha aspettato.
+
+## Scheduling Tradizionale in UNIX
+In UNIX abbiamo diversi algoritmi di scheduling usati insieme, nello specifico combina la priorità con il Round Robin:
+- Un processo resta in esecuzione per al massimo un secondo a meno che non termini o si blocchi.
+- Ci sono diverse code per ogni priorità e per ogni coda si fa un Round-Robin
+- Ogni secondo vengono ricalcolate le priorità, quindi più uno resta in esecuzione più la sua priorità viene abbassata.
+- Le priorità iniziale vengono stabilite in base al tipo di processo:
+	- Swapper (alta), gestisce la memoria virtuale
+	- Controllo dispositivi I/O a blocchi (dischi)
+	- Gestione file
+	- Controllo dispositivi I/O a caratteri (tastiera)
+	- Processi Utente (bassa)
+
+### Formula di Scheduling (ricalcolo delle probabilità)
+
+$$
+CPU_{j}(i)=\frac{CPU_{j}(i-1)}{2}
+$$
+
+Che utilizziamo nella formula:
+
+$$
+P_{j}(i) = Base_{j}+\frac{CPU_{j}(i)}{2}+nice_{j}
+$$
+
+Abbiamo:
+- $j$ indica il numero del processo
+- $CPU_{j}(i)$ indica quanto il processo $j$ ha usato il processore nell'intervallo $i$, usa **exponentiale averaging**, questo viene incrementato di $1$ ogni $\frac{1}{60}$ di secondo
+- $base_{j}$ indica la categoria del processo vista prima
+- $nice_{j}$, un processo può indicare questo valore per "autodeclassarsi" e dare spazio ad altri processi, quindi se ne dichiara uno maggiore di 0 questo andrà ad alzare il valore della priorità dato che vanno da 0 a 4 dove 0 è il più alto.
+  Di solito è utilizzato in processi di sistema dove il S.O. sa che può toglierli precedenza se serve
+
+_Esempio_
+
+![[Pasted image 20241028180734.png]]
+
+Hanno tutti lo stesso livello di $nice$ e di $base$ quindi:
+- Arriva per primo $A$ e viene mandato in esecuzione, mentre gli altri non sono in esecuzione il loro valore di $CPU_{j}$ non viene incrementato di $\frac{1}{60}$ mentre $A$ si.
+- Arriva l'interrupt dopo un secondo quindi il suo valore $CPU$ diventa $\frac{60}{2}$ e nella priorità viene ridiviso per 2 e sommato a $base$ quindi $15+60=75$ di priorità.
+- Viene quindi scelto $B$ dato che è arrivato prima di $C$ e ha priorità più bassa di $A$.
+- Vengono effettuati gli stessi passaggi di prima...
+
+## Architetture Multiprocessore
+Cosa succede quando abbiamo computer multiprocessore? Vediamo i diversi tipi di macchina:
+- **Cluster**: Ogni processore ha la sua RAM e una rete locale.
+- **Processori Specializzati**: Ad esempio ogni I/O ha un suo processore
+- **Multiprocessore e/o multicore**: Condividono la RAM e c'è un solo sistema operativo che controlla tutto. Vedremo nello specifico questo tipo di macchine.
+
+Prima avevamo dei processi _ready_ e dovevamo decidere quale mandare in esecuzione, adesso dobbiamo anche decidere su quale processore. Vediamo come assegnare i processori.
+
+### Assegnamento Statico
+- Quando un processo viene creato gli viene assegnato un processore e per tutta la sua durata andrà sempre in esecuzione su di lui.
+- Possiamo utilizzare uno scheduler per ogni processore
+- Come vantaggio abbiamo che è semplice da realizzare e poco **overhead** (lavoro aggiuntivo)
+- Come svantaggio abbiamo che qualche processore può rimanere in idle, causato appunto dal fatto che scegliamo sempre lo stesso processore per ogni processo.
+
+### Assegnamento Dinamico
+- Nel corso della sua esistenza un processo può essere spostato su un altro processore
+- È più complesso da realizzare
+
+Questo metodo può andare bene sui processi utente, ma per quelli del sistema operativo?
+
+Questi potrebbero essere eseguiti sullo stesso processore in modo da essere realizzabile più facilmente, però potrebbe causare bottleneck dato che ha più carico rispetto agli altri e inoltre se quel processore va in errore o smette di funzionare, si blocca tutto il sistema operativo.
+
+È più ragionevole quindi eseguire il sistema operativo su più processori anche se causa un maggiore overhead dato dal fatto che il S.O. viaggia in continuazione.
+
+## Scheduling in Linux
+Linux vuole velocità di esecuzione in modo semplice a livello implementativo e per questo non utilizza _long-term o medium-term scheduling_.
+
+C'è una via di mezzo di _long-term_:
+- Quando un processo viene creato questo viene aggiunto alla coda appropriata e se non viene creato è perché la memoria è satura.
+
+In Linux come code abbiamo le **runqueues e le wait queues** che corrispondono rispettivamente alla coda dei ready e a quella dei suspended. Infatti nelle wait vengono messi i processi quando effettuano una richiesta che implica un'attesa, mentre le run queues sono quelle da cui il dispatcher prende i processi da eseguire.
+
+Da notare che in architetture multiprocessori, ogni processore avrà la sua runqueues ma le wait sono in comune fra tutti.
+
+---
+
+ Come quello di UNIX è **preemptive** quindi a "quanto di tempo" e con priorità dinamica:
+ - Questa decresce man mano che un processo viene eseguito
+ - Cresce man mano che non viene eseguito
+
+Implementa delle correzioni per avere:
+- Operazione in quasi $O(1)$ e quindi costante
+- Servire in modo appropriato i processi real-time
+
+Come?
+
+Riceve un interrupt hardware ogni 1ms:
+- Se più lungo ci sono problemi per i real-time
+- Se più corto arrivano troppi interrupt e si passa troppo tempo in **Kernel Mode**
+
+Il quanto di tempo per ciascun processo è un multiplo di 1ms.
+
+Per capire questo multiplo dobbiamo vedere i vari tipi di processi:
+
+- **Interattivi**:
+	- Quando si agisce sul programma bisogna dargli la CPU entro 150ms
+	- Altrimenti per l'utente sembrerà che il programma non sia reattivo
+- **Batch**:
+	- Sono penalizzati dallo scheduler, infatti l'utente non dovendo usare il programma attivamente non ricerca reattività
+- **Real Time**:
+	- I 2 tipi precedenti vengono individuati da Linux in modo autonomo tramite dei suoi metodi, per questo tipo di processi invece deve essere presente la system call `sched_setscheduler` nel codice sorgente.
+	- Normalmente sono utilizzati solo dai KLT (Kernel Level Thread) di sistema.
+
+Tutti possono essere CPU - I/O Bound
+
+---
+
+Per quanto riguarda lo scheduling quindi ci sono 3 classi:
+- **SCHED_FIFO e SCHED_RR** per i processi real time
+- **SCHED_OTHER** per tutti gli altri
+
+Prima si eseguono i processi con scheduler **SCHED_FIFO e SCHED_RR** poi andiamo a vedere gli altri:
+- Le prime due classi abbiamo un livello di priorità da 1 a 99 mentre per la terza da 100 a 139.
+- Ci sono quindi 140 runqueues, 140 per ogni processore. In alcuni casi è presente anche una con priorità 0 per casi particolari.
+- Si passa dal livello $n$ al livello $n+1$ solo se o non ci sono processi in $n$ o nessun processo in $n$ è in stato di _RUNNING_.
+
+La **preemption** è dovuta a 2 casi:
+- Si esaurisce il "quanto di tempo" per il processo
+- Un altro processo passa da uno stato _blocked_ a _RUNNING_
+
+Nel secondo caso, molto spesso il processo che ha cambiato stato verrà eseguito dal processore (ad esempio è stato mandato un comando da tastiera e quindi entro 150ms il sistema operativo deve dargli il processore). Ad esempio se abbiamo un editor di testo un compilatore verrà data precedenza all'editor di testo.
+
+### Regole Generali
+La classe **SCHED_FIFO** non viene bloccato da interrupt, un processo viene rimesso in coda solo se si blocca per qualche richiesta o viene mandato in _RUNNING_ un processo prioritario altrimenti non viene fermato.
+
+Gli altri processi funzionano normalmente a "quanti di tempo" compresa la classe **SCHE_RR**, quindi questi vengono rimessi in coda anche quando finiscono il loro tempo.
+
+I processi real-time **non cambiano mai priorità** mentre gli **SCHED_OTHER** si, ovvero man mano che vanno in esecuzione la loro priorità decresce.
+
+In sistemi multi CPU c'è un sistema periodico che ridistribuisce il carico se necessario, anche se l'assegnamento è statico.
+
+# Gestione della Memoria
+Per evitare problemi nella scrittura di programmi, è il sistema operativo a gestire la memoria, questo dà un'illusione ai vari processi facendogli credere che hanno a disposizione l'intera memoria.
+
+Per fare questo il sistema operativo "appoggia" alcuni processi sul disco, questo ovviamente rallenta le operazioni e quindi il sistema operativo devi pianificarlo in modo efficiente e fare in modo di avere più processi possibili in RAM.
+
+Come realizziamo questo?
+- **Rilocazione**: Deve esserci un "aiuto" da parte dell'hardware quindi s.o. e hardware devono collaborare (devono esserci istruzioni macchina utili)
+- **Protezione**
+- **Condivisione**
+- **Organizzazione Logica**
+- **Organizzazione Fisica**
+
+## Rilocazione
+Il programmatore non sa e non deve sapere in quale zona della memoria il programma che sta scrivendo verrà caricato, potrebbe anche andare sul disco e poi tornare in RAM in una posizione diversa a prima.
+
+I riferimenti in memoria delle istruzioni macchina non sono i veri indirizzi in RAM, c'è un'operazione che prende quell'indirizzo e lo traduce in un vero indirizzo in RAM. Questa operazione può essere fatta o in _preprocessing_ ad esempio a compilazione o a _run-time_, se siamo in questo caso c'è bisogno di supporto hardware.
+
+![[Pasted image 20241028192707.png|500]]
+
+Gli indirizzi che abbiamo nel programma sono o **indirizzi di salto** ad altre istruzioni o riferimenti a **dati**. Tutti questi indirizzi vanno ricalcolati per garantire la rilocazione.
+
+Come funziona?
+
+![[Pasted image 20241028192953.png]]
+
+Il programma è scritto in _moduli_ e può utilizzare anche _librerie statiche_ presenti nel sistema operativo. Ogni modulo viene compilato separatamente generando un file oggetto ciascuno e tutti vengono collegati da un **linker** per creare un programma eseguibile chiamato **load-module** (può essere caricato in RAM).
+
+Il **Loader** prende un file su disco e lo carica in RAM, potrebbe esserci bisogno di _librerie dinamiche_ che vengono chiamate a tempo di esecuzione.
+
+![[Pasted image 20241028193206.png]]
+
+Ogni modulo è formato da un blocchetto che ha codice sorgente e dati condivisi, non essendo in esecuzione non ha lo stack. Notiamo che all'inizio abbiamo indirizzi simbolici e quando diventa eseguibile abbiamo più possibilità:
+- Diventano indirizzi **assoluti** (b) e non funziona bene in sistemi operativi moderni, dobbiamo sapere da dove parte il programma.
+- Diventano indirizzi **relativi** (c), ogni processo inizia, secondo lui, da 0.
+- Indirizzi **relativi e rilocazione** (d), ogni processo inizia da un indirizzo $x$ e i suoi indirizzi diventano $x+$ il valore specificato.
+
+Gli indirizzi li denominiamo:
+- **Logici**: Il riferimento in memoria è indipendente dall'attuale posizionamento del programma in memoria, si trovano nelle istruzioni ma hanno bisogno di "traduzione"
+- **Relativi**: Il riferimento è espresso come uno spiazzamento rispetto ad un punto fisso, sono un caso particolare degli indirizzi logici.
+- **Fisici o Assoluti**: Riferimento effettivo ad un indirizzo in memoria, non ha bisogno di traduzione.
+
+Le soluzioni più recenti fanno in modo che gli indirizzi assoluti vengano calcolati soltanto nel momento in cui si fa riferimento alla memoria ma serve hardware dedicato.
+
+_Esempio_
+
+![[Pasted image 20241028194551.png|500]]
+
+Il Sistema Operativo da un valore al _Base Register_ che è da dove inizia il processo, poi ad ogni indirizzo del codice aggiunge questo valore, quindi se inizia da 1500 e c'è un jump 400, questo diventerà un jump 400+1500.
+
+Per fare questo e permettere anche i cambi di locazione, il sistema operativo deve sempre mantenere aggiornato il valore all'interno del _Base Register_.
+
+I valori di _Base e Bounds Register_ si trovano all'interno del **PCB** del processo e i loro valori vengono impostati durante il **process switch**, va sempre mantenuto il valore iniziale corretto del processo in esecuzione.
