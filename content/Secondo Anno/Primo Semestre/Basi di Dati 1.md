@@ -1341,3 +1341,159 @@ Ricostruiamo lo schema originale tramite un join naturale:
 ![[Pasted image 20241025143320.png|300]]
 
 Notiamo che non è un'istanza legale di $R$ infatti non rispettiamo la dipendenza $B\to C$, **dobbiamo preservare tutte le dipendenze presenti in $F^+$**.
+
+--- 
+
+Vediamo un altro esempio.
+
+Consideriamo lo schema $R=ABC$ con l'insieme di dipendenze funzionali $F=\{ A\to B,C\to B \}$, lo schema non è 3NF dato che entrambe le dipendenze sono parziali, la chiave infatti è AC e possiamo decomporre lo schema in:
+
+- $R1=AB$ con $\{ A\to B \}$
+- $R2=BC$ con $\{ C\to B \}$
+
+Questo schema preserva tutte le dipendenze di $F^+$ ma non va comunque bene.
+
+Prendiamo un'istanza legale di $R$
+
+![[Pasted image 20241030223919.png|300]]
+
+Adesso decomponiamola in base ai due schemi visti prima:
+
+![[Pasted image 20241030223954.png|300]]
+
+In teria facendo un join dovremmo ricostruire l'istanza originale ma non è così:
+
+![[Pasted image 20241030224032.png|200]]
+
+Le ultime due tuple sono estranee all'istanza originale, c'è stata quindi **perdita di informazione**.
+
+---
+
+Ci sono altri esempi nelle slide ma i casi sono uguali a questi due.
+
+---
+
+Per concludere quindi quando si decompone uno schema per ottenere una 3NF dobbiamo ricordare che:
+- Dobbiamo **preservare le dipendenze funzionali** che valgono sullo schema originario.
+- Dobbiamo permettere di **ricostruire tramite join** lo schema originario, senza aggiunta di informazioni estranee.
+
+## Formale Normale di Boyce-Codd
+La 3NF non è la più restrittiva che possiamo ottenere, ne esistono altre come la forma normale di Boyce-Codd.
+
+> [!info] Definizione
+> Una relazione è in formale normale di Boyce-Codd (BCNF) quando ogni determinante è una superchiave.
+
+Una relazione che rispetta BCNF è anche in terza formale normale, ma **non è vero l'opposto**.
+
+Inoltre non è sempre possibile decomporre uno schema non BCNF e ottenere sottoschemi BCNF preservando allo stesso tempo tutte le dipendenze ma **è sempre possibile** per 3NF che va comunque bene.
+
+_Ci sono esempi su slide ma non so se sono utili, dato che prenderemo in considerazione solo 3NF da adesso_
+
+# Chiusura di un Insieme di Attributi
+Abbiamo detto che quando si decompone uno schema su cui è definito un insieme di dipendenze funzionali $F$ per ottenere altri schemi in 3NF, vogliamo preservare tutte le dipendenze e poter ricostruire tramite join tutta l'informazione originaria.
+
+Si vogliono preservare tutte le dipendenze in $F^+$ quindi tutte quelle soddisfatte da ogni istanza legale, siamo quindi interessati a calcolare $F^+$ ma sappiamo che richiede tempo esponenziale in $|R|$.
+
+A noi basterà avere un metodo per decidere se una dipendenza funzionale $X\to Y$ appartiene ad $F^+$, e possiamo farlo calcolando $X^+$ e verificando che $Y\subseteq X^+$, infatti per il lemma: $X\to Y\in F^A\Leftrightarrow Y\subseteq X^+$ e poi il teorema dimostra che $F^A=F^+$.
+
+Il calcolo di $X^+$ può tornare utile a verificare che un insieme di attributi sia chiave di uno schema oppure verificare se una decomposizione preserva le dipendenze originarie. Vediamo come si calcola.
+
+## Calcolo di $X^+$
+Per il calcolo della chiusura di un insieme di attributi $X$ denotata con $X^+$ possiamo utilizzare un algoritmo.
+
+Come _input_ abbiamo bisogno di uno schema di relazione $R$, un insieme $F$ di dipendenze funzionali su $R$ e un sottoinsieme $X$ di $R$.
+
+Come _output_ riceviamo la chiusura di $X$ rispetto ad $F$ restituita nella variabile $Z$.
+
+$$
+\begin{align}
+&Z:=X; \\
+&S:=\{ A/Y\to V\in F\wedge A\in V\wedge Y\subseteq Z \} \\
+ \\
+&while \ \ \ \ \ S\not\subset Z \\
+&\ \ \ do \\
+&\ \ \ begin \\
+&\ \ \ \ \ \ Z:=Z\cup S; \\
+&\ \ \ \ \ \ S:=\{ A/Y\to V\in F\wedge A\in V\wedge Y\subseteq Z \} \\
+&\ \ \ end \\
+&end
+\end{align}
+$$
+
+Quindi abbiamo $Z$ che è $X$ stesso, poi in $S$ inseriamo i singoli attributi che compongono le parti a destra delle dipendenze funzionali la cui parte sinistra è in $Z$, quindi inizialmente in $S$ avremo gli attributi determinati da $X$. Poi aggiungiamo questi elementi a $Z$ e continuiamo a iterare sui nuovi insieme $Z$.
+
+Ci fermiamo quando $S$ non ha elementi "nuovi" rispetto a $Z$.
+
+_Esempio di applicazione_
+
+![[Pasted image 20241031101315.png]]
+
+Notiamo che per ogni passaggio dobbiamo sempre far partire la catena di operazioni da $AB$.
+
+È quindi più semplice vedere cosa abbiamo in $Z$ e "combinando" i pezzi vedere cosa possiamo ottenere.
+
+Adesso dobbiamo dimostrare che l'algoritmo è corretto, ovvero che calcola correttamente la chiusura di un insieme di attributi $X$ rispetto ad un insieme $F$ di dipendenze funzionali
+
+**Dimostrazione**
+
+Con $Z^0$ indichiamo il valore iniziale di $Z$ e con $Z^i$ e $S^i$ i valori di $Z$ ed $S$ dopo la i-esima iterazione
+Ad ogni iterazione aggiungiamo elementi in $Z$, alla fine otteniamo $Z^j$, dobbiamo provare che, siccome ad ogni iterazione non cancelliamo mai elementi ma al massimo ne aggiungiamo di nuovi, è facile notare che $Z^i\subseteq Z^{i+1}$ per ogni $i$.
+
+Quindi sia $j$ tale che $S(j)\subseteq Z(j)$, con $j$ indichiamo l'iterazione finale, proveremo che:
+
+$$
+A\in Z^{(j)} \Leftrightarrow A\in X^+
+$$
+
+- Iniziamo mostrando che $A\in Z^j\Rightarrow A\in X^+$, per induzione.
+
+_Base Induzione:_ $Z^0$, sappiamo che questo è uguale ad $X$ ma $X\subseteq X^+$ e quindi $Z^0\subseteq X^+$.
+
+_Ipotesi Induttiva:_ $Z^{i-1}\subseteq X^+\underset{\text{Lemma 1}}\Rightarrow X\to Z^{i-1}\in F^A$
+
+_Passo Induttivo_: Prendiamo un attributo $A\in Z^i-Z^{i-1}$ ovvero un attributo che abbiamo appena aggiunto. Se abbiamo aggiunto $A$, significa che:
+
+$$
+\exists Y\to W\in F:Y\subseteq Z^{i-1}\wedge A\in W
+$$
+
+Notiamo che $Y\subseteq Z^{i-1}\subseteq X^+$ quindi possiamo scrivere che $Y\subseteq X^+$ e sempre per il lemma 1 $X\to Y\in F^A$.
+
+Adesso siccome abbiamo $X\to Y\in F^A$ e $Y\to W\in F$, per transitività abbiamo che $X\to W\in F^A$ e per il lemma $W\subseteq X^+$.
+
+- Adesso mostriamo che $A\in X^+\Rightarrow A\in Z^j$
+
+Dato che abbiamo un $A\in X^+$ per il lemma sappiamo che $X\to A\in F^+$ quindi significa che questa dipendenza deve essere soddisfatta da ogni istanza legale.
+
+Prendiamo come esempio la seguente istanza di $R$:
+
+![[Pasted image 20241101112606.png]]
+
+Mostriamo che è un'istanza legale.
+
+Prendiamo una qualsiasi dipendenza $V\to W\in F$ e supponiamo per assurdo che non sia soddisfatta, questo significa che:
+
+$$
+t_{1}[V]=t_{2}[V] \ e \ t_{1}[W]\neq t_{2}[W]
+$$
+
+Ovvero che:
+
+$$
+V\subseteq Z^j \ \ \ e \ \ \ W\cap(R-Z^j)\neq \emptyset
+$$
+
+Ma questo significa che questo elemento che si trova ancora in $R-Z^j$ potrei raccoglierlo con l'algoritmo e portarlo dentro a $Z^{j+1}$ in una nuova iterazione, ma questo significa che non abbiamo preso il "vero" $Z^j$ ovvero l'ultima iterazione e andiamo in contraddizione con la costruzione della nostra istanza.
+
+Quindi la dipendenza $V\to W\in F$ è soddisfatta anche quando le tuple hanno valori uguali su $V$, l'istanza è legale.
+
+Dato che è legale soddisfa la nostra dipendenza $X\to A\in F^+$, e dato che $X=Z^0\subseteq Z^j$ significa che le due tuple sono uguali su $X$ e quindi, siccome è legale, lo sono anche su $A$ ma questo significa che $A\in Z^j$ (per come abbiamo costruito l'istanza).
+
+> [!example] Insieme Vuoto
+> Ricordiamo che $\{ \emptyset \}$ è diverso da $\emptyset$, infatti il primo è un insieme che contiene l'insieme vuoto mentre il secondo è l'insieme vuoto stesso. Proprietà:
+> - L'insieme vuoto è un sottoinsieme di ogni insieme $A$
+> - L'unione di un qualunque insieme $A$ con l'insieme vuoto è $A$
+> - L'intersezione di un qualunque insieme $A$ con l'insieme vuoto è l'insieme vuoto
+> - L'unico sottoinsieme dell'insieme vuoto, è l'insieme vuoto stesso
+> - L'insieme vuoto è finito ed ha 0 elementi
+

@@ -1540,5 +1540,85 @@ $$
 ## Deviazione Quadrata
 Sia $X$ una v.a., la deviazione quadrata standard di $X$ è data da $\sigma_{X}:=\sqrt{ Var(X) }$
 
+---
 
+Dati $(S,P)$ e $X:S\to \mathbb{R}$
+
+Sia $f:\mathbb{R}\to \mathbb{R}$. Denoto con $f(X)$ la variabile aleatoria $f\circ X$, abbiamo quindi che:
+
+$$
+\underbrace{ S\xrightarrow{X}\mathbb{R}\xrightarrow{f}\mathbb{R} }_{ f\circ X=f(X) }
+$$
+
+- $f(X):S\to \mathbb{R}$ è una variabile aleatoria discreta
+
+Infatti:
+- $X:S\to \mathbb{R}$ assume valori $\{ X_{i}:i\in I \}$
+- $f(X)=f\circ X:S\to \mathbb{R}$ assume valori $\{ f(X_{i}):i\in I \}$
+
+_Esempio_
+
+Lancio 10 volte una moneta e $X=\#\text{Teste Uscite}$. Vinco 2 Euro per ogni testa e perdo 1 euro per ogni croce.
+
+$Y=\#\text{Guadagno Algebrico}$, posso esprimere $Y$ come $f(X)$.
+
+$$
+Y=2\cdot X-1(10-X)=3X-10 \ \ \ \ \ Y=f(X)\text{ dove } f:\mathbb{R}\to \mathbb{R}
+$$
+
+---
+
+Ho $(S,P)$ e $X:S\to \mathbb{R}$ v.a.
+
+Ho $f:\mathbb{R}\to \mathbb{R}$, se $X$ è una v.a. discreta, allora $f\circ X=f(X)$ è v.a. discreta.
+
+Ci interessa calcolare $E[f(X)]$ 
+
+_Primo Metodo_
+
+Determino i possibili valori di $f(X)$ che chiamo $\{ y_{j}:j\in J \}$ e calcolo $P(f(X)=y_{j}) \ \ \forall j\in J$. Quindi per definizione:
+
+$$
+E[f(X)]=\sum_{j}y_{j}\cdot P(f(X)=y_{j})
+$$
+
+_Secondo Metodo_ **Teorema**
+
+Sia $X$ v.a. discreta che assume valori $\{ X_{i} \}_{i\in I}$ e sia $f:\mathbb{R}\to \mathbb{R}$. Allora:
+
+$$
+E[f(X)]=\sum_{i\in I} f(X_{i})\cdot P(X=X_{i})=\sum_{i\in I}f(X_{i})\cdot P_{X}(X_{i})
+$$
+
+_Dimostrazione_
+
+![[Pasted image 20241030221242.png]]
+
+_Esempio_
+
+Data $X$ che assume valori $-1,0,3$ con prob $0.2,0.5,0.3$ rispettivamente. Calcolare $E((X-1)^2)$.
+
+_Primo Metodo_
+
+$$
+Y=(X-1)^2 \text{ assume valori } 
+\begin{cases}
+4 \text{ se } X=-1 \ o \ X=3 \\
+1 \text{ se } X=0
+\end{cases}
+$$
+
+- $P(Y=4)=P(X=-1)+P(X=3)=0.2+0.3=0.5$
+- $P(Y=1)=P(X=0)=0.5$
+- $E[Y]=4\cdot 0.5+1\cdot 0.5=2.5$
+
+_Secondo Metodo_
+
+$$
+\begin{align*}
+E[Y]&=f(-1)\cdot P(X=-1)+f(0)\cdot P(X=0)+f(3)\cdot P(X=3) \\
+&=(-1-1)^2\cdot 0.2+(0-1)^2 \cdot 0.5 + (3-1)^2 \cdot 0.3 \\
+&= 0.8+0.5+1.2=2.5
+\end{align*}
+$$
 

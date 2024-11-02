@@ -2367,7 +2367,277 @@ $$
 
 Questo implica che $\{ deg(U),deg(V) \}=\{ 0,1 \}$ dato che non possono essere $-\infty$, e quindi uno dei due è invertibile ovvero che $\{ U,V \}\cap A^X\neq \emptyset$.
 
-_Osservazione_
+---
 
+Esercizi sulla fattorizzazione di polinomi
 
+_Esercizio_
 
+$X^2+X+6$ in $\mathbb{R}[X]$
+
+Calcoliamo $\nabla (X^2+X+6)=-23<0$ e quindi dato che negativo il polinomio è irriducibile in $\mathbb{R}[X]$
+
+_Esercizio_
+
+$X^3-6X^2+11X-6$ in $\mathbb{R}[X]$
+
+Possiamo fare dei tentativi e notare che $1$ è radice del polinomio, ovvero sostituendo $X$ con $1$ otteniamo $0$.
+
+Sappiamo quindi che $x-1$ divide il nostro polinomio, dobbiamo trovare il quoziente della divisione, lo facciamo attraverso la divisione euclidea (non scrivo i passaggi, è la divisione fra polinomi).
+
+Come quoziente otteniamo $X^2-5X+6$ e quindi possiamo scrivere il polinomio come:
+
+$$
+(X-1)\underbrace{ (X^2-5X+6) }_{ \text{Ancora scomponibile} }
+$$
+
+Possiamo scomporlo in $(X-2)(X-3)$ e quindi alla fine otteniamo come fattorizzazione:
+
+$$
+(X-1)(X-2)(X-3)
+$$
+
+In $\mathbb{R}[X]$
+
+_Esercizio_
+
+$F=X^2-2X+2$ in $\mathbb{C}[X]$ ma osserviamo che $F\in \mathbb{R}[X]\subset \mathbb{C}[X]$, quindi le fattorizzazioni ottenute in $\mathbb{R}[X]$ possiamo mantenerle in $\mathbb{C}[X]$
+
+Notiamo che $\nabla(F)=-4<0$ ed è quindi irriducibile su $\mathbb{R}[X]$ però in $\mathbb{C}[X]$ ammette due radici:
+
+$$
+X_{1}=\frac{2+2i}{2} \ \ \ X_{2}=\frac{2-2i}{2}
+$$
+
+E quindi otteniamo $F=(X-(1+1))(X-(1-i))$
+
+_Esercizio_
+
+$F=X^3-1$ in $\mathbb{R}[X]$ e $\mathbb{C}[X]$
+
+Osserviamo che $ev_{1}(F)=0$ e quindi in $\mathbb{R}[X]$, svolgendo la divisione otteniamo:
+
+$$
+F=(X-1)\underbrace{ (X^2+X+1) }_{ \text{Irrid. in } \mathbb{R} }
+$$
+
+Quindi in $\mathbb{R}[X]$ ci fermiamo, ma possiamo continuare su $\mathbb{C}[X]$ con le radici:
+
+$$
+X_{1}=\frac{-1-\sqrt{ -3 }}{2} \ \ \ X_{2}=\frac{-1+\sqrt{ -3 } }{2}
+$$
+
+E quindi mantenendo anche $X-1$ abbiamo $F=(X-1)(X-X_{1})(X-X_{2})$
+
+# Numeri Complessi
+L'insieme dei numeri complessi è definito $\mathbb{C}=\{ x+iy:x,y\in \mathbb{R} \}$ dove $i:=\sqrt{ -1 }$ e quindi $i^2=-1$, possiamo anche dire che $\mathbb{C}=\mathbb{R}+i\mathbb{R}$.
+
+**Operazioni sui numeri Complessi**:
+
+Definiamo $z=x+iy$ e $z'=x'+iy'$ due numeri complessi.
+
+- $-z:=-x+i(-y)$
+- $z+z':=(x+x')+i(y+y')$
+- $z\cdot z':= (x+iy)(x'+iy')=xx'+xiy'+iyx'+i^2yy'=xx'-yy'+i(yx'+xy')$
+
+Quindi $(\mathbb{C},-,+,\cdot,0,1)$ è un anello
+
+_Rappresentazione nel Grafico_
+
+![[Pasted image 20241029205405.png|500]]
+
+## Esponenziale di Eulero
+
+$e^{i\sigma}:=\cos\sigma+i\sin \sigma\in \mathbb{C}$ con $\sigma\in \mathbb{R}$.
+
+Eulero ha notato che se $\sigma,\eta\in \mathbb{R}$:
+
+$$
+e^{i\sigma}\cdot e^{i\eta}=e^{i(\sigma+\eta)}
+$$
+
+![[Pasted image 20241029210132.png]]
+
+E in modo simile troviamo anche che $(e^{i\sigma})^n=e^{in\sigma} \ \forall n\in \mathbb{N}$.
+
+_Esempi_
+
+- $e^{i 2\pi}=\cos(2\pi)+i\sin(2\pi)=1+i 0=1$
+- $e^{i 0}=\cos(0)+i\sin(0)=1+i 0=1$
+- $1=e^{i 2\pi}=e^{\frac{i2\pi }{3}\cdot 3}=(e^{\frac{i 2 \pi}{3}})^3$
+
+Quindi se poniamo $x=e^{\frac{2\pi i}{3}}$ possiamo dire che $x^3=1$ e quindi $x$ è radice di $x^3-1$ ovvero $ev_{x}(x^3-1)=0$.
+
+Osserviamo che possiamo scrivere:
+
+$$
+1=1^2=(e^{\frac{2\pi i}{3}})^{3\cdot 2} =(e^{\frac{2\pi i}{3}\cdot 2})^3=(e^{\frac{4\pi i}{3}})^3
+$$
+
+E quindi anche $x^2$ è radice di $x^3-1$.
+
+Notiamo che:
+
+$$
+\begin{align*}
+&x^0=e^{\frac{0\pi i}{3}}=\cos(\frac{0\pi}{3})+i\sin(\frac{0\pi}{3})=1 \\
+&x^1=e^{\frac{2\pi i}{3}}=\cos(\frac{2\pi}{3})+i\sin(\frac{2\pi}{3}) \\
+&x^2=e^{\frac{4\pi i}{3}}=\cos(\frac{4\pi}{3})+i\sin(\frac{4\pi}{3}) \\
+\end{align*}
+$$
+
+L'insieme $\{ x^0,x^1,x^2 \}=\mathcal{R}$ ha 3 elementi distinti e $\forall y\in\mathcal{R}$ abbiamo che
+
+$$
+ev_{y}(X^3-1)=0\Rightarrow X^3-1=(X-x^0)(X-x^1)(X-x^2)
+$$
+
+## Coniugazione Complessa
+Si pone per $z=x+iy\in \mathbb{C}, \overline{z}=x-iy\in \mathbb{C}$.
+
+Poniamo anche $h:\mathbb{C}\to \mathbb{C}$ e quindi $h(z):=\overline{z}$.
+
+$\forall z,z'\in \mathbb{C}$ si ha:
+- $h(z+z')=h(z)+h(z')$
+- $h(zz')=h(z)h(z')$
+- $h(-z)=-h(z)$
+- $h$ è una biiezione ovvero $h^{-1}=h$
+
+Le formule viste sopra possiamo anche scriverle: $\overline{z+z'}=\overline{z}+\overline{z'}, \overline{z\cdot z'}=\overline{z}\cdot \overline{z'}, ecc\dots$
+
+Quando $h$ rispetta queste proprietà si dice che è un **isomorfismo d'anelli** ovvero un **morfismo invertibile**.
+
+Nei reali, abbiamo che $z=\overline{z}$ infatti non hanno parte immaginaria. Graficamente la coniugazione complessa corrisponde alla riflessione rispetto all'asse $\mathbb{R}$:
+
+![[Pasted image 20241101115913.png|500]]
+
+### Formule Fondamentali
+
+- $z\cdot \overline{z}=(x+iy)\cdot(x-iy)=x^2-ixy+ixy+y^2=x^2+y^2$
+  
+  Questo è uguale a 0 se e solo se $x=y=0$ mentre è maggiore di 0 se e solo se $z\in \mathbb{C}\backslash\{ 0 \}$
+
+- $|z|=\sqrt{ z\overline{z} }=\sqrt{ x^2+y^2 }$, **valore assoluto complesso**
+
+---
+
+Dimostriamo che $\mathbb{C}$ è un campo ovvero che ogni elemento non nullo è invertibile.
+
+Dato $z\in \mathbb{C}\backslash\{ 0 \}$, prendiamo $z\overline{z}=x^2+y^2$, che sappiamo essere maggiore di 0 dato che $z$ non è nullo. Lo moltiplichiamo per il suo inverso $(x^2+y^2)^{-1}$.
+
+Quindi sappiamo che $z\overline{z}\cdot(x^2 +y^2)=1$ dato che è il suo inverso ma possiamo anche dire che:
+
+$$
+z \cdot \underbrace{ \overline{z}(x^2 +y^2)^{-1} }_{ \text{Inverso di z} } = 1
+$$
+
+![[Pasted image 20241101125117.png]]
+
+## Valore Assoluto Complesso
+Graficamente possiamo vederlo come:
+
+![[Pasted image 20241101130414.png|300]]
+
+Questo ha diverse proprietà:
+- $|z|=0\Leftrightarrow z=0$
+- $|zz'|=|z|\cdot |z'|$
+- $|z+z'|\leq |z|+|z'|$
+
+---
+
+Vediamo altre proprietà e dimostriamole:
+
+$\forall\sigma \in \mathbb{R}$:
+- $|e^{i\sigma}|=1$
+- $(e^{i\sigma})^{-1}=\overline{e^{i\sigma}}=e^{-i\sigma}$
+
+![[Pasted image 20241101131759.png|500]]
+
+_Dimostrazione 2 da finire di controllare su iPad_.
+
+## Rappresentazione Polare
+Dati $z\in \mathbb{C}$ e $z=x+iy,p=\sqrt{ x^2+y^2 }$
+
+**Lemma**
+
+Esiste $\sigma\in \mathbb{R}$ tale che $z=p\cdot e^{i\sigma}$, inoltre $\sigma+2\pi \mathbb{Z}$ è unicamente determinato.
+
+![[Pasted image 20241101143535.png|300]]
+
+**Dimostrazione**
+
+Sappiamo che $p=\sqrt{ z\overline{z} }$, inoltre definiamo $z':=p^{-1}\cdot z$
+
+- $z' \overline{z'}=p^{-1}z\cdot \overline{p^{-1}}\overline{z}$ sappiamo che $p$ è reale quindi il suo coniugato è un reale, moltiplicando tutto possiamo scrivere $p^{-2}z\overline{z}=p^{-2}p^2=1$
+
+- $z'=x'+iy'$ allora $\exists \sigma$ tale che $x'=\cos(\sigma)$ e $y'=\sin(\sigma)$ (1)
+  
+  Sostituendo in $z'$ otteniamo $z'=\cos(\sigma)+i\sin(\sigma)=e^{i\sigma}$ 
+  
+  Quindi dato che $z'=p^{-1}z$ possiamo dire che $z=pe^{i\sigma}$ (facendo la formula inversa)
+
+Le soluzioni di (1) sono gli elementi $\sigma+2\pi \mathbb{Z}$ per un certo $\sigma\in[0,2\pi)$
+
+- Su $\mathbb{R}$ c'è la relazione di congruenza $mod.2\pi$
+
+$\alpha,\beta\in \mathbb{R}$ diciamo che $\alpha \equiv_{2} \beta\Leftrightarrow \alpha-\beta\in 2\pi \mathbb{Z}$ da cui $\sigma+2\pi \mathbb{Z}$ è una classe di equivalenza e si identifica con un elemento di $\mathbb{R}/2\pi \mathbb{Z}$
+
+![[Pasted image 20241101152329.png]]
+
+## Algebricamente Chiuso
+Un $K$ campo è detto algebricamente chiuso se $\forall F\in K[X]\backslash K$ (tolte le costanti):
+
+$$
+\exists x\in K \ t.c. \ x \text{ è radice di } F\Leftrightarrow \exists x\in K:X-x|F
+$$
+
+**Lemma**
+
+$K$ è algebricamente chiuso se i soli polinomi irriducibili e monici sono i polinomi $X-x, x\in K$, quindi di grado 1.
+
+**Dimostrazione**
+
+Parte $\Rightarrow$, sia $P\in K[X]$ irriducibile e monico. Siccome $K$ è chiuso algebricamente abbiamo che $\exists x\in K$ tale che $X-x|P$.
+
+Quindi possiamo scrivere $P=(X-x)Q$ con $Q\in K[X]\backslash\{ 0 \}$
+
+Il grado di $P$ è quindi $deg(P)=1+deg(Q)$, se $deg(P)=1$ abbiamo dimostrato
+
+Ma se $deg(P)\geq 2$ allora $deg(Q)\geq 1$ quindi $Q\not\in K[X]^X=K^X$ ma anche $(X-x)\not\in K[X]^X$ e questo contraddice $P$ irriducibile ($\Rightarrow deg(P)=1; \Rightarrow P=X-x$)
+
+---
+
+Parte $\Leftarrow$ Supponiamo $\{ P\in K[X] \text{ monico e irriducibile}\}=\{ X-x:x\in K \}$.
+
+Sia $P$ monico con $deg\geq 1$ allora $P=\prod Q^{V_{Q}(P)}$ 
+
+_Da completare_
+
+---
+
+## Molteplicità
+$K$ algebricamente chiuso $\Rightarrow \forall F\in K[X]\backslash\{ 0 \}$ si scrive in modo unico come:
+
+$$
+F=\underset{\in K^X}\lambda \prod_{x\in K} (X-x)^{V_{X}(F)}
+$$
+
+Dove $V_{X}(F)$ è la **molteplicità** di $F$ in $x$
+
+Si ha che $\{ X:V_{X}(F)\neq 0 \}=\{ X: ev_{X}(F) = 0 \}=\{ X \text{ radice di } F \}=\mathcal{R}$
+
+Questo insieme ha cardinalità $\leq deg(F):=n$
+
+$$
+deg(F)=\sum_{x\in K} V_{x}(F)=\sum_{x\in\mathcal{R}} V_{x}(F)\geq \sum_{x\in\mathcal{R}}1= \text{cardinalità di } \mathcal{R}
+$$
+
+Infatti un polinomio di grado $n$ ha $\leq n$ soluzioni.
+
+## Teorema Fondamentale Algebra
+
+$\mathbb{C}$ è algebricamente chiuso, omettiamo la dimostrazione.
+
+**Teorema**
+
+$\forall K$ campo esiste sempre un altro campo algebricamente chiuso che lo contiene ad esempio $\mathbb{R}$ non è algebricamente chiuso ma $\mathbb{R}\subset \mathbb{C}$.
