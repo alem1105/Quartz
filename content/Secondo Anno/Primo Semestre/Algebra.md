@@ -2641,3 +2641,323 @@ $\mathbb{C}$ è algebricamente chiuso, omettiamo la dimostrazione.
 **Teorema**
 
 $\forall K$ campo esiste sempre un altro campo algebricamente chiuso che lo contiene ad esempio $\mathbb{R}$ non è algebricamente chiuso ma $\mathbb{R}\subset \mathbb{C}$.
+
+---
+
+Molte di queste cose le ho sistemate in un documento scritto dopo, lo caricherò da qualche parte su github =P.
+
+---
+
+## Esempi Fattorizzazzione
+Prendiamo un polinomio $X^n-1$ con $n\leq 5$, questo polinomio ha sempre come radice $1$, inoltre se $n$ è pari come radice abbiamo anche $-1$. Quindi possiamo scriverlo:
+
+$$
+X^n-1=(X-1)Q
+$$
+
+Dove $Q$ è il quoziente della divisione euclidea con $X-1$ e ha quindi grado $n-1$, è unicamente determinato.
+
+Possiamo scriverlo come:
+
+$$
+Q=X^{n-1}+X^{n-2}+\dots+X+1
+$$
+
+Ovvero tutte le potenze di $X$ con coefficiente 1, ha in totale $n$ termini. Perché possiamo scriverlo così? Facciamo la moltiplicazione:
+
+$$
+(X-1)(X^{n-1}+\dots+X+1)=X^n+X^{n-1}+\dots+X+1-(X^{n-1}+\dots+X+1)=X^n - 1
+$$
+
+Infatti escluso primo e ultimo termine gli altri si cancellano tutti fra loro.
+
+_Esempio con n=3_
+
+$$
+X^3 - 1=(X-1)(X^2+X+1)
+$$
+
+Dato che $\Delta(X^2+X+1)<0$, questa è la sua fattorizzazzione in $\mathbb{R}[X]$, ma possiamo continuare in $\mathbb{C}[X]$, infatti qui gli irriducibili sono solo i polinomi nella forma $X-x$ con $x\in \mathbb{C}$.
+
+Calcoliamo le radici di quel polinomio di grado 2 in $\mathbb{C}[X]$ e manteniamo $X-1$ di $\mathbb{R}[X]$:
+
+$$
+X^2+X+1=\left( X+\frac{1}{2}+i\frac{\sqrt{ 3 }}{2} \right)\left( x+\frac{1}{2}+i\frac{\sqrt{ 3 }}{2} \right)
+$$
+
+Tutte le sue radici si trovano nel cerchio unità, rappresentiamole:
+
+![[Pasted image 20241103165005.png|300]]
+
+Possiamo anche scriverle in forma esponenziale, $X^3 - 1$ ha come radici:
+- $X^0=1$
+- $X^1$
+- $X^2$
+
+Dato $X=e^{\frac{i2\pi}{3}}=\cos\left( \frac{2\pi}{3} \right)+i\sin\left( \frac{2\pi}{3} \right)$.
+
+_Esempio n=4_
+
+Come detto prima oltre alla radice $1$ abbiamo anche radice $-1$, quindi:
+
+$$
+X^4-1=(X-1)(X+1)(X^2 + 1)
+$$
+
+Questa è la sua fattorizzazzione in $\mathbb{R}[X]$, mentre in $\mathbb{C}[X]$ abbiamo:
+
+$$
+(X-1)(X+1)(X-i)(X+i)
+$$
+
+Che scritta in forma esponenziale:
+
+$$
+(X-x^0)(X-x^1)(X-x^2)(X-x^3) \ \ \ x=e^{\frac{i2\pi}{4}}=\cos\left( \frac{\pi}{2} \right)+i\sin\left( \frac{\pi}{2} \right)
+$$
+
+Anche queste sono tutte sul cerchio unità, rappresentiamole:
+
+![[Pasted image 20241103165533.png|300]]
+
+**Cosa iniziamo a notare?**
+
+Che se ci sono radici complesse, allora ci sono anche le loro coniugate, questo è sempre vero per polinomi in $\mathbb{R}[X]$, queste coppie ci danno dei fattori irriducibili in $\mathbb{R}[X]$.
+
+_Esempio n=5_
+
+$$
+X^5-1=(X-1)\underbrace{ (X^4+X^3+X^2+X+1) }_{ \text{Riducibile in } \mathbb{R}[X]}
+$$
+
+Il polinomio di grado 4 che vediamo ha un fattore di grado 1 se e solo se ha una radice reale e questo se e solo se $X^5-1$ ha una radice reale differente da 1.
+
+Vediamo le radici in $\mathbb{C}[X]$:
+
+$$
+\begin{align*}
+&(e^{\frac{i2\pi}{5}})^k \text{ con } k =0,1,2,3,4 \text{ sostituamolo:} \\
+ \\
+&((e^{\frac{i2\pi}{5}})^k)^5=(e^{i2\pi})^k=1 \text{ sono tutte radici distinte}
+\end{align*}
+$$
+
+Sono distinte perché:
+
+$$
+\left( e^{\frac{2\pi i}{5}} \right)^k=\cos\left( \frac{2\pi k}{5} \right)+i\sin\left( \frac{2\pi k}{5} \right)
+$$
+
+Che graficamente:
+
+![[Pasted image 20241103170440.png|300]]
+
+Con $x=e^{\frac{2\pi i}{5}}$.
+
+Notiamo che abbiamo una sola radice reale quindi $X^4+X^3+X^2+X+1$ si spezza in due polinomi di grado 2.
+
+Scriviamo questi polinomi:
+
+$$
+\begin{align*}
+P_{1}=(X-x)(X-x^4)\in \mathbb{R}[X] \\
+P_{2}=(X-x^2)(X-x^3)\in \mathbb{R}[X]
+\end{align*}
+$$
+
+Infatti:
+
+$$
+P_{1}=(X-x)(X-\overline{x})=X^2-X\underbrace{ (x+\overline{x}) }_{ \in \mathbb{R} }+\underbrace{ \overbrace{ x\overline{x} }^{ |x|^2 } }_{ 1\ }
+$$
+
+$$
+P_{2}=(X-x^2)(X-\overline{x^2})=X^2-X\underbrace{ (x^2+\overline{x^2}) }_{ \in \mathbb{R} }+\underbrace{ \overbrace{ x^2\overline{x^2} }^{ |x^2|^2 } }_{ 1\ }
+$$
+
+Infatti se scriviamo $x=\alpha+i\beta$ e $\overline{x}=\alpha-i\beta$ notiamo che:
+
+$$
+x+\overline{x}=2\alpha \text{ e quindi è reale}
+$$
+
+Mentre
+
+$$
+x\cdot\overline{x}=\alpha^2+\beta^2=1 \text{ dato che sta sul cerchio unità}
+$$
+
+Effettuiamo i calcoli:
+
+$$
+\begin{align*}
+&x+\overline{x}=2\mathrm{Re}(x)=2\cos\left( \frac{2\pi}{5} \right) \\
+&x^2+\overline{x^2}=2\mathrm{Re}(x^2)=2\cos\left( \frac{4\pi}{5} \right) \\
+ \\
+&P_{1}=x^2-2\cos\left( \frac{2\pi}{5} \right)X+1 \\
+&P_{2}=x^2-2\cos\left( \frac{4\pi}{5} \right)X+1
+\end{align*}
+$$
+
+Quindi possiamo scrivere:
+
+$$
+X^5-1=\underbrace{ \prod_{i=0}^4 (X-x^i) }_{ \text{Fattorizzazzione } \mathbb{C}[X] } = (X-x^0)(X-x)(X-\overline{x})(X-x^2)(X-\overline{x^2})=(X-x^0)P_{1} \cdot P_{2}
+$$
+
+Dove i due polinomi:
+
+$$
+P_{1}\cdot P_{2}=X^4+X^3+X^2+X+1
+$$
+
+_Caso veloce n=7_
+
+Avremo la stessa situazione, quindi:
+
+$$
+X^7-1=(X-x^0)\overbrace{ \left( X^2-2\cos\left( \frac{2\pi}{7} \right)+1 \right) }^{ P_{1} }\overbrace{ \left( X^2-2\cos\left( \frac{4\pi}{7} \right)+1 \right) }^{ P_{2} }\overbrace{ \left( X^2-2\cos\left( \frac{6\pi}{7} \right)+1 \right) }^{ P_{3} }
+$$
+
+---
+
+Quindi l'esponenziale di Eulero ci permette di fattorizzzare polinomi $X^n-1$ con $n>1$ nella forma:
+
+$$
+X^n-1=\prod_{i=0}^{n-1} (X-x^i) \text{ con } x=e^{\frac{i2\pi}{n}}
+$$
+
+E la radici si trovano in un poligono inscritto nel cerchio unità, ovvero sono i suoi vertici. Sappiamo che una si trova in $-1$ se $n$ è pari. Questa è la fattorizzazzione in $\mathbb{C}[X]$.
+
+## Coniugato di un Polinomio
+Dato $F=f_{0}+f_{1}X+\dots+f_{n}X^n\in \mathbb{C}[X]$ e ogni $f_{\cdot}\in \mathbb{C}$ poniamo:
+
+$$
+\overline{F}=\overline{f_{0}}+\overline{f_{1}}X+\dots+\overline{f_{n}X^n}
+$$
+
+Osserviamo che:
+
+$$
+F\in \mathbb{R}[X]\Leftrightarrow F=\overline{F} \text{ inoltre se } F\in \mathbb{R}[X] \ e \ ev_{z}(F)=0 \text{ allora } ev_{\overline{z}}(F)=0
+$$
+
+_Dimostrazione_
+
+$$
+ev_{\overline{z}}(F)=ev_{\overline{z}}(\overline{F})\underset{\text{Per comp. di } \overline{\cdot}}=\overline{ev_{z}(F)}=\overline{0}=0
+$$
+
+Le radici di un polinomio in $\mathbb{R}[X]$ sono sempre o reali o 2 a 2 complessi coniugati. Questo implica un lemma.
+
+**Lemma**
+
+Dato $F\in \mathbb{R}[X]$ e detto $\mathcal{R}$ l'insieme delle sue radici, allora:
+
+$$
+\mathcal{R}=\mathcal{R}_{\mathbb{R}}\sqcup\mathcal{R}^+_{\mathbb{C}\backslash\mathbb{R}}\sqcup \mathcal{R}^-_{\mathbb{C}\backslash\mathbb{R}}
+$$
+
+Dove:
+
+- $\mathcal{R}_{\mathbb{R}}$ indica le radici reali
+- $\mathcal{R}^+_{\mathbb{C}\backslash\mathbb{R}}$ indica le radici immaginarie con parte immaginaria positiva
+- $\mathcal{R}^-_{\mathbb{C}\backslash\mathbb{R}}$ indica radici immaginarie con parte immaginaria negativa
+
+_Graficamente_
+
+![[Pasted image 20241103172739.png|300]]
+
+Possiamo dire che:
+
+$$
+\mathcal{R}_{\mathbb{C}\backslash\mathbb{R}}=\mathcal{R}^+_{\mathbb{C}\backslash\mathbb{R}} \sqcup \mathcal{R}^-_{\mathbb{C}\backslash\mathbb{R}}
+$$
+
+E inoltre i complessi sono coniugati quindi:
+
+$$
+\overline{\mathcal{R}^-_{\mathbb{C}\backslash\mathbb{R}}}=\mathcal{R}^+_{\mathbb{C}\backslash\mathbb{R}}
+$$
+
+**Lemma**
+
+$X^2+\beta X+\gamma\in \mathbb{R}[X]$ è irriducibile in $\mathbb{R}[X]\Leftrightarrow \Delta=\beta^2-4\gamma<0$
+
+_Dimostrazione_
+
+Supponiamo $P$ irriducibile e quindi non ha radici reali $\mathcal{R}_{\mathbb{R}}=\emptyset$
+
+Ha però due radici complesse $z$ e $\overline{z}$ dato che $deg(P)=2$. Scriviamo quindi:
+
+$$
+P=(X-z)(X-\overline{z})=X^2-\underbrace{ (z+\overline{z}) }_{ 2\mathrm{Re}(z) }X+\underbrace{ z\overline{z} }_{ |z|^2 }
+$$
+
+Adesso calcoliamo $\Delta$:
+
+$$
+\begin{align*}
+(z+\overline{z})^2-4z\overline{z}&=z^2+2z\overline{z}+\overline{z}^2-4z\overline{z} \\
+&=z^2-2z\overline{z}+\overline{z}^2=(z-\overline{z})^2 \\
+ \\
+&\text{Scriviamo } z=x+iy \ \ \  x,y\in \mathbb{R} \\
+ \\
+&z-\overline{z}=2iy \text{ quindi } (2iy)^2=-4y^2 \text{ che è } <0
+\end{align*}
+$$
+
+**Lemma**
+
+Ogni $F\in \mathbb{R}{[X]}$, in $\mathbb{R}[X]$ si spezza come:
+
+$$
+F=\underset{\in \mathbb{R}^X}\lambda \prod_{x\in\mathcal{R}_{\mathbb{R}}}(X-x) \underbrace{ \prod_{z\in\mathcal{R^+}_{\mathbb{C}\backslash\mathbb{R}}}
+[(X-z)(x-\overline{z})] }_{ \text{Polinomio di grado 2 irr. in  } \mathbb{R}[X] }$$
+
+_Esercizio / Proprietà_
+
+Sia $P\in \mathbb{R}[X]$ di grado dispari allora $P$ ammette almeno una radice reale. Infatti il lemma ci dice che:
+
+$$
+deg(P)=\#\mathcal{R}_{\mathbb{R}}+\#\mathcal{R}_{\mathbb{C}\backslash\mathbb{R}}=\underbrace{ \overbrace{ \#\mathcal{R}_{\mathbb{R}} }^{ r } }_{ \text{Mostrare che } \neq 0 }+2\overbrace{ \#\mathcal{R}^+_{\mathbb{C}\backslash\mathbb{R}} }^{ s }
+$$
+
+Ovvero vogliamo mostrare che c'è almeno una radice reale.
+
+Siccome $deg(P)$ è dispari allora $deg(P)=2n+1$ scriviamo:
+
+$$
+2n+1=2s+r \to r=2(n-s)+1\Rightarrow r\equiv_{2} 1 \Rightarrow r\neq 0
+$$
+
+Un'altra strada che possiamo prendere è quella di utilizzare il **Teorema dei Valori Intermedi**, ovvero l'analisi matematica. Infatti è impossibile dimostrare che $\mathbb{C}$ è algebricamente chiuso basandosi solo sull'algebra, ci serve anche l'analisi matematica, nello specifico il Teorema dei valori intermedi.
+
+![[Pasted image 20241103174417.png]]
+
+_Possibili fattorizzazioni in $\mathbb{Q}$_
+
+Prendiamo $Q\in\mathbb{Q}[X]$ o qualsiasi campo, scriviamo per ogni grado tutti i casi possibili:
+
+- Se $deg(Q)=1$
+	- Irriducibile
+
+- Se $deg(Q)=2$
+	- Irriducibile
+	- $P_{1} P_{2}$ entrambi di grado 1 e irriducibili
+
+- Se $deg(Q)=3$
+	- Irriducibile
+	- $P_{1} P_{2}$ con $P_{1}$ grado 1 e $P_2$ grado 2 irriducibili
+	- $P_{1} P_{2} P_{3}$ tutti irriducibili di grado 1
+
+In tutti questi casi se $Q$ non è irriducibile su $K$ allora ammette sempre almeno una radice, nel caso di grado uguale a 4 questo non è vero
+
+- Se $deg(Q)=4$
+	- Irriducibile
+	- $P_{1} P_{2}$ con uno grado 1 e uno grado 3
+	- $P_{1} P_{2}$ entrambi grado 2, ma **non abbiamo radici**
+	- $P_{1} P_{2} P_{3}$ due di grado 1 e uno di grado 3
+	- $P_{1} P_{2} P_{3} P_{4}$ tutti di grado 1
+
+Ecc...
