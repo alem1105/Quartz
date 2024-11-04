@@ -1622,3 +1622,277 @@ E[Y]&=f(-1)\cdot P(X=-1)+f(0)\cdot P(X=0)+f(3)\cdot P(X=3) \\
 \end{align*}
 $$
 
+---
+
+## Valore atteso con funzione
+Se $X$ è v.a. discreta che assume i valori $\{x_{i}\}_{i\in I}$ e $f:\mathbb{R}\to \mathbb{R}$ allora:
+
+$$
+E[f(X)]=\sum_{i\in I}f(x_{i})\cdot P(X=x_{i}) \ \ \text{La chiamiamo *}
+$$
+
+
+> [!example]- Esempio
+> $X$ assume valori $\{ -1,0,2,3 \}$ e abbiamo che:
+> - $P(-1)=0.1$
+> - $P(0)=0.2$
+> - $P(2)=0.2$
+> - $P(3)=0.5$
+> 
+> Allora:
+> 
+> $$
+> E[(X-1)^4]=E[f(X)] \text{ dove } f(u)=(u-1)^4
+> $$
+> 
+> Calcoliamolo:
+> 
+> $$
+> E[(X-1)^4]=E[f(X)]=f(-1)P(-1)+f(0)P(0)+f(2)P(2)+f(3)P(3)=
+> $$
+> 
+> $$
+> =(-1-1)^4\cdot 0.1 + (-1)^4 \cdot 0.2 + (2-1)^4 \cdot 0.2 + (3-1)^4 \cdot 0.5 = 2
+> $$
+
+**Proposizione**
+
+Sia $X$ v.a. discreta e siano $a,b\in \mathbb{R}$ allora $E[aX+b]=aE[X]+b$
+
+**Dimostrazione**
+
+Sia $\{ x_{i} \}_{i\in I}$ l'insieme dei valori assunti da $X$, inoltre abbiamo che $aX+b=f(X)$ dove $f(u)=au+b$, la scriviamo quindi come funzione di X.
+
+$$
+\begin{align*}
+E[aX+b]=E[f(X)]\overset{\text{usando *}}= \sum_{i\in I}f(x_{i})P(X=x_{i})&=\sum_{i\in I} (ax_{i} +b)P(X=x_{i}) \\ \\
+\text{Proprietà Distributiva }&= \sum_{i}ax_{i}P(x_{i})+bP(x_{i}) \\ \\
+\text{Portiamo fuori a,b e spezziamo}&=a\underbrace{ \sum_{i}x_{i}P(x_{i}) }_{ E[X] }+b\underbrace{ \sum P(x_{i}) }_{ 1 }=aE[X]+b
+\end{align*}
+$$
+
+_Esempio_
+
+$E[X]=1000$ come calcoliamo $E[3X-500]$ ?
+
+Applichiamo la formula -> $E[3X-500]=3E[X]-500=3000-500=2500$
+
+**Proposizione**
+
+Ricordando che la **varianza** si calcola $Var(X):=E[(X-EX)^2]$, possiamo anche calcolarla come:
+
+$$
+Var(X)=E[X^2]-(EX)^2
+$$
+
+_Dimostrazione_
+
+$$
+\begin{align*}
+Var(X)=E[(X-EX)^2]&=E[f(X)] \text{ dove } f(u)=(u-EX)^2 \\
+\text{Per teorema * } E[f(X)]&=\sum_{i}f(x_{i})P(x_{i})=\sum_{i}(x_{i}-EX)^2P(x_{i}) \\
+&=\sum_{i}(x_{i}^2-2x_{i}EX+(EX)^2)P(x_{i}) \\
+&=\underbrace{ \sum_{i}x_{i}^2P(x_{i}) }_{ E[X^2] \text{ per *} }-\underbrace{ 2EX\sum_{i}x_{i}P(x_{i}) }_{ -2EX\cdot EX }+\underbrace{ (EX)^2\sum_{i}P(x_{i}) }_{ (EX)^2 } \\
+&=E[X^2]-2(EX)^2+(EX)^2=E[X^2]-(EX)^2
+\end{align*}
+$$
+
+
+
+> [!example]- Esempio
+> $X$ assume valori $\{ -1,0,2,3 \}$ e abbiamo che:
+> - $P(-1)=0.1$
+> - $P(0)=0.2$
+> - $P(2)=0.2$
+> - $P(3)=0.5$
+>   
+>   $EX=-1\cdot 0.1+0\cdot 0.2 + 2\cdot 0.2 + 3\cdot 0.5=1.8$
+>   
+>   $Var(X)=E[X^2]-(EX)^2$
+>   
+>   Calcoliamo $E[X^2]=(-1)^2P(-1)+(0)^2P(0)+2^2P(2)+3^2P(3)=5.4$
+>   
+>   E quindi $Var(X)=5.4-(1.8)^2=2.16$
+>   
+>   Usando l'altra formula:
+>   
+>   $Var(X)=E((X-EX)^2)=(-1-1.8)^2P(-1)+(0-1.8)^2P(0)+(2-1.8)^2P(2)+(3-1.8)^2P(3)$
+
+---
+
+Ricordiamo la **deviazione quadratica standard**.
+
+$$
+=\sqrt{ Var(X) }
+$$
+
+Osserviamo che $Var(X)$ deve essere sempre $\geq 0$ infatti $Var(X)=E[(X-EX)^2]$ che è si un numero qualsiasi ma elevato al quadrato e quindi o 0 o positivo.
+
+$$
+Var(X)=0\Leftrightarrow P(X=EX)=1
+$$
+
+Se la varianza è uguale a 0 significa che la variabile è costante infatti $Var(X)$ misura quando $X$ si sposta dal suo valore atteso $E[X]$.
+
+_Osservazione_
+
+Nè la varianza nè la deviazione quadratica sono lineari infatti:
+
+**Proprietà**
+
+Data $X$ v.a. discreta e dati $a,b\in \mathbb{R}$ vale:
+
+$$
+Var(aX+b)=a^2Var(X)
+$$
+
+E quindi notiamo che amplifica le costanti moltiplicative e annulla quelle additive.
+
+> [!example]- Esempio
+> Consideriamo 100 lavoratori di cui 80 hanno salario 500, 10 hanno 1000 e 10 hanno 5000. Scegliamo un lavoratore a caso e indichiamo con $X$ il suo salario. Determinare $E[X],Var(X),\sigma(X)$.
+> 
+> Abbiamo che $X$ può assumere (500,1000,5000) con:
+> - $P(500)=0.8$
+> - $P(1000)=0.1$
+> - $P(5000)=0.1$
+> 
+> $E[X]=500\cdot 0.8+1000\cdot 0.1+5000\cdot 0.1=1000$
+> 
+> $Var(X)=E[(X-EX)^2]=E[(X - 1000)^2]=(500-1000)^2P(500)+(1000-1000)^2P(1000)+(5000-1000)P(5000)=1800000$
+> 
+> $\sigma(X)=\sqrt{ 1800000 }=1341.64$
+
+## Variabile di Bernoulli
+Una v.a. $X$ è detta di Bernoulli di parametro $p\in[0,1]$ se $P(X=1)=p$ e $P(X=0)=1-p$, quindi questa può assumere soltanto due valori.
+
+Quindi in questo caso notiamo che:
+
+$$
+E[X]=1\cdot P(X=1)+0\cdot P(X=0)=1\cdot p+0\cdot(1-p)=p
+$$
+
+Mentre
+
+$$
+Var(X)=E[X^2]-(EX)^2=p-p^2=p\cdot(1-p)
+$$
+
+Dove
+
+$$
+E[X^2]= 1^2\cdot P(X=1)+0^2\cdot P(X=0)=p
+$$
+
+## Variabile Aleatoria Binomiale
+Dato un esperimento con $n$ prove indipendenti, tutte svolte nello stesso modo, supponiamo che ogni prova abbiamo due esiti possibili che chiamiamo _successo_ e _insuccesso_.
+
+> [!example]- Esempi
+> Lancio una moneta 10 volte, i 10 lanci solo le prove e come successo stabilisco che deve uscire testa.
+>
+>Lancio un 8 volte, gli 8 lanci sono le prove e come successo stabilisco quando esce un numero multiplo di 3.
+> 
+
+Definiamo $X=\#\text{Successi Ottenuti}$ nelle prove, notiamo quindi che può assumere come valore, tutti i valori interi da $0$ a $n$, ma con che probabilità?
+
+Chiamiamo $p$ la probabilità che una singola prova ci dia successo come esito.
+
+**Proposizione**
+
+$$
+\forall k=0,1,2,\dots,n \text{ vale } P(X=k)=\binom{n}{k}\cdot p^k\cdot(1-p)^{n-k}
+$$
+
+Prendiamo l'esempio 2 quindi abbiamo $n=8,p=\frac{1}{3}$ e calcoliamo la probabilità di due successi:
+
+$$
+P(X=2)=\binom{8}{2}\cdot\left( \frac{1}{3} \right)^2 \cdot\left( \frac{2}{3} \right)^6
+$$
+
+**Perché vale questa proposizione?**
+
+Supponiamo di avere 4 prove e ci chiediamo $P(X=2)$, questo evento $\{ X=2 \}$ possiamo vederlo come unione di varie prove:
+
+$$
+E_{SSII}\cup E_{SISI}\cup E_{SIIS}\cup E_{ISSI}\cup E_{IISS}\cup E_{ISSI}
+$$
+
+Dove i pedici indicano successi e insuccessi.
+
+Abbiamo $\binom{4}{2}$ eventi, in generale $\binom{n}{k}$.
+
+Adesso se calcoliamo la probabilità di tutti questi eventi:
+
+$$
+\begin{align*}
+P(X=2)&=P(E_{SSII})+\dots+P(E_{ISSI}) \\
+&=p\cdot p\cdot (1-p)\cdot (1-p))+\dots+ ((1-p)\cdot p \cdot p \cdot (1-p))
+\end{align*}
+$$
+
+Hanno tutti la stessa probabilità che è data da $p^2 \cdot (1-p)^2$ quindi è uguale a:
+
+$$
+\binom{4}{2}\cdot p^2 \cdot (1-p)^2
+$$
+
+Ovviamente abbiamo $p=2$ e quindi $n-k=2$ ma dipende da quanti esiti con successo abbiamo. **Vale quindi la proposizione generale vista sopra**.
+
+### Definizione
+Una v.a. binomiale di paramentri $n\in \{ 1,2,3,\dots \}$ e $p\in[0,1]$ è una v.a. che assume valori $0,1,2,\dots,n$ con la stessa probabilità:
+
+$$
+P(X=k)=\binom{n}{k}\cdot p^k \cdot (1-p)^k \ \ \ \forall k\in \{ 0,1,2,\dots,n \}
+$$
+
+**Teorema**
+
+Indichiamo con $X=Bin(n,p)$ una v. binomiale di parametri $n,p$.
+
+Sia $X=Bin(n,p)$ allora:
+
+$$
+E[X]=n\cdot p \text{ e } Var(X)=n\cdot p \cdot (1-p)
+$$
+
+Se $n=1$ e $X=Bin(n,p)$ ho che $X$ assume i valori $0,1$ e:
+
+$$
+P(X=1)=\binom{n}{1}\cdot p^1 \cdot (1-p)^{n-1}=\binom{1}{1}p^1(1-p)^0=p
+$$
+
+Mentre
+
+$$
+P(X=0)=1-p
+$$
+
+Quindi notiamo che $Bin(1,0)=Bernoulli(p)$ ovvero una variabile aleatoria di Bernoulli di parametro $p$.
+
+
+> [!Example]- Esercizio
+> Lancio 5 volte una moneta onesta. Sia $X=\#\text{Teste Uscite}$ determinare la probabilità discreta di $X,EX, Var(X),\sigma(X)$.
+> 
+> **Dobbiamo riconoscere che è binomiale!**
+> 
+> Infatti $X=Bin\left( 5, \frac{1}{2} \right)$ ovvero 5 prove e il successo è che esce testa.
+> 
+> Calcoliamo $P_{X}$, sappiamo che $X$ assume $0,1,2,3,4,5$ ovvero le possibili teste quindi per questi valori $k$ calcoliamo:
+> 
+> ![[Pasted image 20241104201401.png|500]]
+> 
+> Poi abbiamo che:
+> 
+> $$
+> E[X]=np=5\cdot \frac{1}{2}=2.5
+> $$
+> 
+> $$
+> Var(X)=np(1-p)=5\cdot \frac{1}{2} \cdot \frac{1}{2} = 1.25
+> $$
+> 
+> $$
+> \sigma_{X}=\sqrt{ 1.25 }=1.118
+> $$
+> 
+
+
