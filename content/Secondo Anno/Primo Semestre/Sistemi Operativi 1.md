@@ -1490,4 +1490,442 @@ Il Sistema Operativo da un valore al _Base Register_ che è da dove inizia il pr
 
 Per fare questo e permettere anche i cambi di locazione, il sistema operativo deve sempre mantenere aggiornato il valore all'interno del _Base Register_.
 
-I valori di _Base e Bounds Register_ si trovano all'interno del **PCB** del processo e i loro valori vengono impostati durante il **process switch**, va sempre mantenuto il valore iniziale corretto del processo in esecuzione.
+I valori di _Base e Bounds Register (indirizzo fine processo)_ si trovano all'interno del **PCB** del processo e i loro valori vengono impostati durante il **process switch**, va sempre mantenuto il valore iniziale corretto del processo in esecuzione.
+
+## Protezione
+I processi non devono poter accedere a locazioni di memoria di altri processi a meno che non siano autorizzati. A causa della rilocazione non sappiamo in che zona di memoria si troverà il processo al momento di esecuzione e quindi anche qui abbiamo bisogno di un supporto hardware
+
+## Condivisione
+Contrario della Protezione, alcuni processi devono poter comunicare fra loro quindi hanno delle zone di memoria condivise con gli altri processi.
+
+In alcuni casi questo è previsto dallo sviluppatore del programma mentre in altri è il sistema operativo a decidere questo, ad esempio quando eseguiamo lo stesso programma più volte e quindi hanno lo stesso codice sorgente, conviene quindi mettere in memoria il codice una sola volta e far accedere tutte le istanze a quel blocco.
+
+## Organizzazione Logica
+A livello hardware la memoria è organizzata in modo lineare però a livello software, nei programmi, ci accediamo tramite variabili, inoltre i programmi possono essere scritti in vari moduli con diversi permessi. Il sistema operativo deve fare "da ponte" tra come è organizzata la memoria nell'hardware a come la vogliamo vedere ad alto livello.
+
+## Organizzazione Fisica
+Si occupa del flusso di dati tra RAM e Memoria Secondaria (Hard Disk ecc...).
+
+Non se ne può occupare il programmatore, infatti la memoria potrebbe non essere sempre sufficiente a contenere il programma e c'era bisogno dell'**overlaying**, ovvero il programmatore doveva dividere il codice in moduli e fare in modo che venissero posizionati nella stessa zona di memoria in tempi diversi, era molto difficile da programmare.
+
+Adesso se ne occupa il Sistema Operativo, quindi possiamo richiedere tutte le risorse che vogliamo anche non sapendo quanta memoria avremo a disposizione. **Come lo fa?**
+
+---
+
+Vedremo diversi tipi di strategie utilizzate per gestire la memoria, fino alla **memoria virtuale** che è quella usata oggi.
+
+Il problema di cui ci occupiamo adesso è quindi di avere un numero di processi e di volerli posizionare tutti in memoria, ma questa non può contenerli tutti.
+## Partizionamento
+Era uno dei primi metodi, esistono diversi tipi:
+- Partizionamento fisso
+- Partizionamento dinamico
+- Paginazione semplice
+- Segmentazione Semplice
+- Paginazione con memoria virtuale
+- Segmentazione con memoria virtuale
+
+## Partizionamento Fisso
+Possiamo dividerlo in altre due categorie, ma vediamo come funziona.
+
+Le partizioni vengono create all'accensione del PC e rimangono uguali fino al suo spegnimento.
+
+Abbiamo tutte partizioni di uguale lunghezza, se un processo ha una dimensione minore o uguale alla misura allora può essere caricato in una partizione libera, quando un processo viene sospeso, si libera la partizione da lui occupata e viene portato sul disco.
+
+Se un processo era troppo grande, il programmatore doveva usare **l'overlaying** visto prima.
+
+Questo era già un problema di questa tecnica, inoltre c'è un uso inefficiente della memoria, se un programma usava ad esempio anche solo 5kb gli veniva comunque data una partizione di dimensione fissa, ad esempio 8mb. Questo problema si chiama **Frammentazione Interna**
+
+### Partizionamento Fisso Variabile
+Non risolve i problemi ma li diminuisce.
+
+Appena accendiamo il PC vengono create le partizioni, fino al suo spegnimento rimangono uguali, in questo caso però le partizioni hanno dimensioni diverse.
+
+Possiamo quindi inserire programmi più piccoli in partizioni più piccole, riducendo la frammentazione interna e inoltre avendo partizioni più grandi, alcuni programmi non richiederanno overlaying.
+
+**Abbiamo bisogno però di un algoritmo per decidere su quale partizione mettere un processo**
+
+Nel caso di partizioni di uguale lunghezza non ne abbiamo bisogno. Nel caso di diverse lunghezza dobbiamo:
+- Trovare la partizione più piccola che lo contiene
+- Creare una coda per ogni partizione, oppure una per tutte
+
+![[Pasted image 20241105130417.png]]
+
+Quindi quali sono i problemi principali che persistono?
+- Numero massimo di processi in memoria, ovvero il numero di partizioni deciso all'inizio
+- Se ci sono molti processi piccoli, usiamo la memoria in modo inefficiente
+
+## Partizionamento Dinamico
+Qui le partizioni variano in misura e in quantità e per ciascun processo viene allocata esattamente la quantità di memoria che gli serve.
+
+_Vediamo un esempio_
+
+![[Pasted image 20241105131012.png|100]]
+
+Questo è come si presenta la memoria inizialmente, quindi troviamo soltanto la partizione del sistema operativo.
+
+![[Pasted image 20241105131046.png|100]]
+
+Arrivano in ordine i 3 processi e gli vengono allocate delle partizioni uguali allo spazio di cui hanno bisogno.
+
+![[Pasted image 20241105131136.png|100]]
+
+Arriva un processo P4 che ha bisogno di 8MB, non sono disponibili, il sistema operativo decide di spostare P2 sul disco e dare spazio a P4.
+
+![[Pasted image 20241105131230.png|100]]
+
+È tornato P2 e il S.O. ha deciso di rimuovere P1 per dargli spazio in memoria.
+
+Un problema che abbiamo adesso è che abbiamo si 16MB di memoria liberi ma non sono "successivi" quindi se arriva ad esempio un processo da 8MB non può essere allocato in memoria. Questo si chiama **Frammentazione Esterna**.
+
+Possiamo risolvere questo problema con la **compattazione**, ovvero ad un certo punto il S.O. quando vede che la memoria è troppo frammentata interviene riorganizzando la memoria, questo però porta a molto **overhead**.
+
+Un altro problema, sempre prendendo l'esempio di prima, è che se arriva un processo più piccolo, ad esempio 3MB, dobbiamo decidere dove metterlo, in quale blocco conviene di più? Si potrebbe pensare di inserirlo in quello più piccolo che lo contiene in modo da sprecare meno memoria ma in realtà questo porta ai risultati peggiori (**algoritmo best-fit**), questo perché lascia dei frammenti molto piccoli costringendo a fare spesso compattazione.
+
+Un algoritmo migliore è il **first-fit** ovvero scorre la memoria dall'inizio e lo inserisce nel primo blocco adatto, è molto veloce e tende a riempire solo la prima parte della memoria. In generale **era** il migliore.
+
+Un'altra alternativa è il **next-fit**, funziona come il first-fit ma tramite un puntatore si ricorda dove aveva concluso la ricerca e al successo riparte da li, questo per risolvere il problema di riempire soltanto la prima parte di memoria.
+
+### Buddy System (Sistema del Compagno)
+È una via di mezzo tra partizionamento fisso e dinamico, le partizioni si creano man mano che vengono aggiunti processi però è fisso perché non possiamo creare tutte le partizioni possibili.
+
+Abbiamo a disposizione $2^U$ per lo _user space_ ed $s$ la dimensione di un processo da mettere in RAM, il sistema inizia a dividere per 2 lo spazio fino a trovare un $X$ tale che $2^{X-1}<s<2^X$, in questo modo abbiamo due partizioni adatte a contenere il processo e ne usiamo una. Quando un processo finisce, se il buddy è libero si può fare una fusione, il buddy è il suo compagno.
+
+_Esempio_
+
+![[Pasted image 20241105141001.png]]
+
+Questo sistema si presta per essere rappresentato da un albero binario:
+
+![[Pasted image 20241105141517.png]]
+
+## Paginazione (Semplice)
+La paginazione semplice non viene usata ma è importante per capire come funziona la memoria virtuale.
+
+La memoria viene partizionata in pezzi di grandezza uguale e piccola, stesso trattamento avviene per i processi, i pezzi di processi sono chiamati **pagine**, mentre i pezzi di memoria **frame**.
+
+Ogni pagina, per essere utilizzata deve essere allocata in un frame:
+- Pagine contigue possono essere messe in frame distanti
+- Una pagina quindi **può andare in un qualsiasi frame**
+- Pagina e frame **hanno la stessa dimensione**
+
+Per fare questo, i sistemi operativi devono avere una tabella delle pagine per ogni processo, questa ci dice ogni pagina in che frame si trova, aggiunge ovviamente dell'overhead.
+
+Da notare inoltre che va corretta la rilocazione, non possiamo più sommare l'inizio del processo con l'indirizzo, dobbiamo fare in modo che l'hardware possa accedere alla tabella delle pagine, quindi con un process switch va ricaricata la tabella delle pagine del processo.
+
+_Esempio_
+
+![[Pasted image 20241105142513.png|300]]
+
+Arrivano 3 processi:
+
+![[Pasted image 20241105142615.png|300]]
+
+Adesso si libera B:
+
+![[Pasted image 20241105142630.png|300]]
+
+Adesso cosa succede se arriva un processo da 5?
+
+![[Pasted image 20241105142648.png|300]]
+
+Questo è tutto gestito dal sistema operativo, con l'aiuto dell'hardware.
+
+## Segmentazione (Semplice)
+Un programma viene diviso in segmenti, cosa cambia dalle pagine?
+- I segmenti hanno lunghezza variabile e un limite massimo alla loro dimensione
+- Un indirizzo di memoria è un numero di segmento e un offset al suo interno
+
+È simile al partizionamento dinamico ma:
+- Il programmatore deve gestire esplicitamente la segmentazione, deve dire quanti segmenti ci sono e la loro dimensione, a posizionarli in RAM ci pensa il S.O.
+
+Ovviamente, come le pagine, **deve esserci una tabella dei segmenti**
+
+---
+
+Vediamo come funzionano i salti
+
+![[Pasted image 20241105143625.png|500]]
+
+- Nel primo caso molto semplicemente dobbiamo solo sapere dove comincia il processo, e sommare il suo indirizzo iniziale a quello dell'istruzione.
+- Nella paginazione dobbiamo prima di tutto capire in che pagina si trova l'indirizzo poi grazie alla tabella vediamo in che punto della memoria si trova quella pagina e adesso abbiamo un certo offset che ci indica l'inizio di quella pagina. A questo punto effettuiamo normalmente la somma con l'indirizzo del codice.
+- Nella segmentazione funziona allo stesso modo ma dobbiamo tenere conto del fatto che i segmenti possono avere dimensioni diverse.
+
+_Esempio Paginazione_
+
+![[Pasted image 20241105144215.png]]
+
+Abbiamo un indirizzo logico, ovvero che deve essere tradotto in indirizzo fisico della RAM. Come lo facciamo?
+
+Le dimensioni delle pagine sono scelte sempre come potenza di 2, quindi $2^n$, nell'esempio abbiamo $2^{10}$.
+
+Quindi per ogni indirizzo, per trovare la pagina mi basta fare $/ 2^{10}$ che in binario corrisponde a togliere i 10 bit meno significativi, i bit rimanenti mi indicano la pagina che dovrò prendere dalla tabella delle pagine e sostituire il suo indirizzo nell'indirizzo fisico.
+
+Per l'offset non devo fare nulla, lo copio così come è.
+
+Quindi l'indirizzo della pagina ci fa muovere fra queste, mentre l'offset ci fa muovere all'interno della pagina.
+
+_Esempio più numerico_
+
+Consideriamo l'esempio di prima:
+
+![[Pasted image 20241105142648.png|300]]
+
+E quindi avremo come tabella delle pagine:
+
+![[Pasted image 20241105161036.png|500]]
+
+Supponiamo adesso di avere pagine da 100 bytes e quindi una RAM totale di 1500 bytes (15 frame).
+
+I processi occupano rispettivamente 400,300,400,500 bytes e nelle loro istruzioni, gli indirizzi in RAM sono relativi all'inizio, quindi D ad esempio avrà indirizzi da 0 a 499.
+
+Adesso mettiamo caso che in D ci sia l'istruzione `j 343`. Ovviamente 343 non è l'indirizzo fisico in RAM, calcoliamolo:
+
+Prima di tutto dobbiamo capire in che pagina ci troviamo quindi facciamo $343//100$ e otteniamo 3 quindi guardando la tabella delle pagine di D, notiamo che la pagina 3 si trova al frame 11, poi per muoverci all'interno del frame facciamo $343 \% 100$ e otteniamo 43.
+
+Quindi l'indirizzo finale è dato da $11*100 + 43$. Ovvero numero di frame per la loro grandezza, e ci posizioniamo sul giusto frame, sommiamo l'offset.
+
+_Esempio Segmentazione_
+
+![[Pasted image 20241105162236.png|500]]
+
+In questo caso si presuppone che i segmenti non possano essere più grandi di $2^{12}$ bytes, facciamo ragionamenti simili a prima ma al posto della tabella delle pagine abbiamo quella dei segmenti che deve indicarci sia da dove parte il segmento ma anche quanto è lungo, dato che possono avere dimensioni diverse.
+
+Quindi prendo da dove inizia il segmento, ci sommo l'offset e trovo l'indirizzo fisico.
+
+## Gestione della Memoria: Concetti Fondamentali
+Per ora abbiamo visto che i riferimenti alla memoria sono logici e vanno convertiti in indirizzi fisici a tempo di esecuzione, questo perché un processo potrebbe essere spostato durante la sua esecuzione, inoltre i processi sono spezzati in più parti non necessariamente contigue.
+
+Se queste condizioni sono vere, non occorre che tutte le pagine o segmenti del processo siano in memoria principale, l'importante è che ci sia l'istruzione successiva da eseguire. Si passa dalla paginazione semplice a quella **con memoria virtuale**.
+
+Il S.O. porta in memoria solo alcuni pezzi del programma, questo viene chiamato **resident set**, quando il programma richiede qualcosa che non si trova in questo set (**page fault**) viene generato un interrupt I/O che mette il processo in modalità blocked.
+
+Il pezzo di processo viene portato in RAM, ma finché questo non accade ci sono altri processi che vanno in esecuzione, nel momento in cui è tutto pronto ci sarà un interrupt che lo manderà in ready e il processo dovrà rieseguire la stessa istruzione che aveva causato il page fault, infatti adesso non lo causerà.
+
+Grazie a questo possiamo avere molti più processi in RAM, quindi il processore passa poco tempo in idle e inoltre un processo potrebbe richiedere più dell'intera memoria principale.
+
+### Memoria Virtuale: Terminologia
+Con **memoria virtuale** intendiamo uno schema di allocazione in cui la memoria secondaria può essere usata come se fosse principale.
+- Gli indirizzi dei programmi sono logici mentre quelli usati dal sistema sono fisici
+- C'è bisogno di una traduzione dai logici a fisici
+- La dimensione di questa memoria è limitata oltre che dalla sua grandezza anche dallo schema di indirizzamento
+- La dimensione della RAM invece non influisce sulla dimensione della virtuale.
+
+Definizioni:
+- **Indirizzo Virtuale**: Sono come gli indirizzi logici, fanno in modo che si possa accedere a locazioni della memoria virtuale come se fossero locazioni della principale.
+- **Spazio indirizzi virtuali**: La quantità di memoria virtuale assegnata ad un processo
+- **Spazio degli indirizzi** Quantità di memoria assegnata ad un processo
+- **Indirizzo Reale**: Indirizzo di una locazione di memoria principale, sarebbe l'indirizzo fisico.
+
+Quindi:
+- Memoria Reale: Indichiamo la RAM
+- Memoria Virtuale: Quella su disco, ci permette di avere multiprogrammazione elevata liberando il programmatore dai vincoli della principale
+
+Vediamo però alcuni effetti collaterali.
+
+## Trashing
+Il Sistema Operativo impiega troppo tempo a swappare pezzi di processi da RAM a disco o viceversa, accade ad esempio quando ci sono troppi page fault.
+
+Per evitarlo il S.O. cerca di indovinare quali pezzi di processo saranno richiesti nella prossima istruzione, questo tentativo si basa sulla storia recente. Come si fa?
+
+I riferimenti che un processo fa tendono ad essere vicini, quindi solo pochi pezzi di processo saranno necessari di volta in volta, è possibile quindi prevedere quali pezzi di processo saranno necessari in futuro. Funziona simile alla cache quindi.
+
+## Memoria Virtuale: Supporto Richiesto
+Vediamo come si realizza.
+
+Paginazione e Segmentazione devono essere supportati dall'hardware altrimenti il S.O. avrebbe troppo lavoro, come ad esempio la traduzione degli indirizzi.
+
+Il S.O. deve essere in grado di muovere pagine / segmenti dalla RAM alla memoria secondaria.
+
+### Paginazione per la Memoria Virtuale
+Ogni processo ha una sua tabella delle pagine, ogni entry di questa tabella contiene:
+- Un bit di presenza che indica se quella pagina è in RAM o se bisogna prenderla su disco
+- Un bit che indica se la pagina è stata usata in lettura o anche scrittura
+- Altri bit di controllo
+- Il numero di frame in memoria principale
+
+![[Pasted image 20241105165056.png|300]]
+
+Come funziona la traduzione adesso?
+
+![[Pasted image 20241105165143.png]]
+
+In un registro **Page Tabe Ptr** è contenuto il riferimento all'inizio della tabella delle pagine, tramite l'indirizzo virtuale accediamo alla pagina corrispondente, lo facciamo andando come prima cosa all'indirizzo puntato dal registro (inizio della tabella) e poi sommiamo il numero di pagina dell'indirizzo moltiplicato per la grandezza di ogni entry della tabella.
+
+Adesso dalla tabella otteniamo il frame della RAM con il quale sostituiamo il numero di pagina dell'indirizzo virtuale ottenendo un indirizzo fisico.
+
+Quindi ad ogni process switch il sistema operativo deve occuparsi di aggiornare il valore presente nel registro che contiene l'inizio della tabella delle pagine.
+
+Questa struttura porta però a molto overhead, le tabelle potrebbero contenere molti elementi. Quando un processo è in esecuzione, è assicurato che almeno una parte della sua tabella delle pagine sia in memoria principale, vediamo qualche conto:
+
+Abbiamo 8Gb di spazio virtuale e 1kb per ogni pagina, quindi in totale possiamo avere $\frac{8Gb}{1kB}$ di entry per ogni tabella, questo significa che per ogni processo abbiamo $2^{23}$ entries (divisione ma in binario), necessari a indicizzare tutti i frames della RAM. (8 giga è $2^{33}$ mentre 1kb è $2^{10}$)
+
+Quanto spazio occupa una entry? Ha 1 byte per i bit di controllo + $\log(\text{Grandezza della RAM in frames})$ quindi ad esempio con 4GB di RAM abbiamo indirizzi da massimo 32 bit, ne togliamo 10 per le pagine da 1kB ci rimangono 22 bit per il _Frame Number_ della entry, quindi in totale abbiamo 3 bytes per il frame number più un byte per i bit di controllo.
+
+Se abbiamo $2^{23}$ entries allora dobbiamo fare $4\cdot 2^{23}=32MB$ di overhead per ogni processo
+
+Ad esempio con una RAM da 1Gb, bastano 20 processi a occupare più di metà RAM in overhead.
+
+**Come risolviamo questo problema?**
+
+### Tabella delle pagine a 2 livelli
+
+![[Pasted image 20241105171954.png]]
+
+In questo caso abbiamo una tabella che invece di puntare direttamente a zone di RAM punta ad un'altra tabella che poi punta allo spazio utente.
+
+_Come funziona adesso la traduzione?_
+
+![[Pasted image 20241105172204.png]]
+
+Adesso l'indirizzo va spezzato in 3, in generale in n.livelli + 1.
+
+L'hardware deve consultare due tabelle adesso ma il funzionamento è uguale a quello visto prima.
+
+Vediamo perché conviene facendo dei conti.
+
+Abbiamo 8GB di spazio virtuale e quindi 33 bits di indirizzo, supponiamo di utilizzare 10 bit per l'offset quindi come prima abbiamo pagine da 1kB, i restanti 23 li dividiamo in 15+8, i 15 bit li usiamo per il primo livello e gli 8 per il secondo. Per rendere più efficiente il tutto una tabella di secondo livello deve essere grande quanto una pagina.
+
+Ogni processo ha quindi un overhead di $2^{23+2}=32MB$ infatti deve contenere tutte le entries di entrambe le tabelle e in più un ulteriore overhead di $2^{15+2}=128KB$ solo per il primo livello.
+
+Adesso è sufficiente caricare in RAM il primo livello che è molto poco e una tabella del secondo e quindi per ogni processo $2^{15+2}+2^{8+2}$ di overhead che è circa $128KB$, con una RAM da 1GB servono circa 1000 processi per occupare metà RAM.
+
+_Da rivedere =(_
+
+![[Pasted image 20241105183509.png]]
+
+Slide dove si vede meglio graficamente, noi carichiamo il primo livello ovvero la tabella a sinistra dove ogni pagina è una tabella di secondo livello. A noi ci basta caricare in RAM il primo livello e poi vedere quale sottotabella caricare.
+
+Infatti dividiamo l'indirizzo in indirizzo di primo livello e di secondo.
+
+---
+## Translation Lookaside Buffer
+Tradotto possiamo vederlo come: Memoria temporanea per la traduzione futura.
+
+Ogni riferimento alla memoria virtuale può generare due accessi alla memoria, uno per la tabella delle pagine e uno per prendere il dato vero e proprio. Per risolvere questo si usa una cache per gli elementi della tabella delle pagine, questo contiene indirizzi di frame. Questo è il TLB.
+
+Dato un indirizzo virtuale il processore non va subito a fare la traduzione ma prima consulta il TLB, se la pagina è presente allora si prende il frame number e ricava l'indirizzo reale. Altrimenti prende la tabella delle pagine del processo ed effettua i normali calcoli, se la pagina si trova in memoria ok altrimenti si gestisce il page fault e successivamente si aggiorna il TLB, funziona quindi molto simile alla cache.
+
+_Schema Funzionamento_
+
+![[Pasted image 20241105184433.png]]
+
+_Schema Logico_
+
+![[Pasted image 20241105184531.png|300]]
+
+Il TLB deve poter essere resettato dal S.O., infatti ogni processo ha il proprio TLB, quindi ad ogni process switch dobbiamo cambiare TLB.
+
+Da notare che nel TLB non sono presenti ovviamente tutte le pagine ma solo alcune e quindi non possiamo accedere direttamente ad un indirizzo ma dobbiamo cercare la pagina in ogni entry del TLB, potrebbe essere molto lento. Grazie all'hardware possiamo fare questa cosa in modo parallelo e controllarle tutte nello stesso momento.
+
+![[Pasted image 20241105185735.png]]
+
+A sinistra quindi possiamo utilizzare il numero come indirizzo per accedervi direttamente mentre a destra dobbiamo controllarli tutti.
+
+Un altro problema è che bisogna fare in modo che il TLB contenga solo pagine che si trovano in RAM, non devono verificarsi page fault dopo un TLB hit altrimenti sarebbe impossibile accorgersene. Quindi se il S.O. swappa una pagina deve informare anche il TLB.
+
+Quindi mettendo insieme tutto quello che abbiamo visto:
+
+![[Pasted image 20241105190152.png]]
+
+Il blocco del TLB si occupa di trasformare un indirizzo logico in uno fisico e una volta fatto questo si va a controllare nella cache se questo è presente altrimenti si accede veramente alla RAM.
+
+## Dimensione delle Pagine
+Più piccola è una pagina minore è la frammentazione all'interno delle pagine ma è anche maggiore il numero di pagine per un processo e questo porta ad una tabella delle pagine più grande per ogni processo. Quindi la maggior parte delle tabelle finisce in memoria secondaria e questa è ottimizzata per trasferire grossi blocchi di dati quindi è comodo avere pagine ragionevolmente grandi.
+
+Più piccola è una pagina maggiore sarà il numero di pagine in RAM, e in tutte queste i riferimenti saranno vicini e quindi pochi page fault, questo non accade con pagine più grandi.
+
+Dobbiamo quindi realizzare pagine alla giusta dimensione, quale?
+
+![[Pasted image 20241105190652.png|500]]
+
+Sull'asse X abbiamo il numero di Byte per ogni pagina fino ad arrivare a pagine della stessa dimensione del processo. Sulla Y invece abbiamo il numero di page fault. Il grafico a destra non ci interessa per ora.
+
+Notiamo che quindi con pagine grandi abbiamo pochi fault ma ovviamente meno multiprogrammazione dato che possiamo caricare meno processi in RAM. Con pagine piccole abbiamo comunque pochi fault ma dobbiamo stare attenti a non avere troppo overhead.
+
+## Segmentazione
+Permette al programmatore di vedere la memoria come un insieme di segmenti di indirizzi, semplifica la gestione di strutture che crescono nel tempo come lo stack. Inoltre permette di creare ad esempio dei segmenti per i dati condivisi ed altri per i dati da non condividere con altri processi.
+
+In modo simile alla paginazione ogni processo ha una tabella dei segmenti e ogni entry di questa tabella ha:
+- L'indirizzo in RAM di partenza del processo
+- La lunghezza del segmento
+- Un bit per indicare se il segmento è presente in RAM o no
+- Altri bit di controllo
+
+_Traduzione_
+
+![[Pasted image 20241105191524.png]]
+
+Quindi facciamo all'interno della tabella in modo analogo alla paginazione effettuiamo una moltiplicazione con quanti segmenti abbiamo e ci sommiamo l'inizio della tabella presente nel registro. Una volta ottenuto il valore _Base_ lo sommiamo all'offset per accedere al segmento della memoria, dobbiamo controllare di non superare la _Length_ del segmento.
+
+## Paginazione e Segmentazione
+La paginazione è invisibile al programmatore mentre la segmentazione no, ovviamente se programma in assembler. Di base si uniscono queste tecniche, i segmenti possono essere molto grandi e quindi li dividiamo in pagine.
+
+Quindi abbiamo:
+
+![[Pasted image 20241105192021.png|500]]
+
+Ogni indirizzo virtuale ha un riferimento al segmento e uno alla pagina e quindi ha una tabella dei segmenti con i vari entry e una tabella delle pagine con i suoi entry, come funziona la traduzione?
+
+![[Pasted image 20241105192128.png]]
+
+Quindi prima vediamo di quale segmento abbiamo bisogno, poi dato che il segmento è paginato vediamo con la tabella delle pagine dove si trova e infine otteniamo l'indirizzo fisico.
+
+Quindi nella tabella dei segmenti una volta trovato l'entry corretto abbiamo l'inizio della tabella delle pagine corrispondente
+
+## Decisioni nel S.O.
+Come decidiamo quindi se usare o no la memoria virtuale, se usare segmentazione, paginazione o entrambe? Che algoritmi usare per i vari aspetti della gestione della memoria?
+
+Ci sono alcuni aspetti da considerare:
+- Politica di prelievo (fetch)
+- Politica di posizionamento (placement policy)
+- Politica di sostituzione (replacement policy)
+- Altro:
+	- Gestione resident set
+	- Politica di pulitura
+	- Controllo del carico
+- Tutto questo minimizzando page fault
+
+### Fetch Policy
+Decide quando una pagina data va portata in memoria principale, ci sono due modi principali:
+- Paginazione su richiesta (demand paging) - Quella vista fino ad ora
+- Prepaginazione (prepaging)
+
+Il prepaging cerca di anticipare il processo, porta quindi in memoria più pagine di quelle richieste, ovviamente vicine a quella richiesta. Questo è anche efficiente per quanto riguarda il disco.
+
+### Placement Policy
+Decide dove mettere una pagina in memoria principale quando c'è almeno un frame libero, tipicamente il primo frame libero è quello dove viene messa la pagina.
+
+### Replacement Policy
+Se tutti i frame sono occupati, quale pagina tolgo dalla RAM?
+
+Va fatto in modo da minimizzare la probabilità che la pagina appena sostituita venga subito richiesta dopo, si usa sempre il principio di località, quindi ci si basa sulle richieste fatte prima.
+
+Da notare che alcuni frame potrebbero essere bloccati, **Frame Locking**, questi non possono essere sostituiti, di solito sono del sistema operativo.
+
+### Gestione Resident Set
+Il resident set è la parte del processo presente in RAM, la gestione di questo racchiude due problemi:
+- Decidere per ogni processo quanti frame allocare - **Resident set management**
+- Quando si rimpiazza un frame, scegliamo fra i frame del processo corrente o anche di altri processi? **Replacement Scope**
+
+Ci sono 2 tecniche per ogni problema
+
+Resident set management:
+- Allocazione Fissa: Il numero di frame è deciso al tempo di creazione del processo
+- Allocazione Dinamica: Il numero di frame varia durante la vita del processo
+
+Riprendendo il grafico di prima
+
+![[Pasted image 20241105190652.png|500]]
+
+A Destra abbiamo, sulla Y i page fault mentre sulla X il numero di frame allocati, l'ottimo è la W ovvero più o meno la metà tra pochi frame e molti.
+
+Replacement Scope:
+- Politica locale: Rimpiazzo soltanto i frame dello stesso processo
+- Politica globale: Posso scegliere altri processi (non del S.O.)
+
+In tutto abbiamo 3 strategie, infatti se scegliamo l'allocazione fissa non possiamo utilizzare la politica globale perché a quel punto stiamo togliendo dei frame ad un processo e aggiungendone altri ad un altro, e quindi è stata cambiata l'allocazione fissa fatta all'inizio.
+
+### Politica di Pulitura
+Se modifichiamo un frame va riportata la modifica anche sulla pagina corrispondente, quindi abbiamo gli stessi problemi della cache, quando facciamo questa modifica? Quando facciamo la modifica o quando il frame viene sostituito?
+
+Solitamente si fa una via di mezza con il **page buffering** che vedremo più avanti. L'idea è accumulare delle richieste di modifica e poi farle tutte insieme.

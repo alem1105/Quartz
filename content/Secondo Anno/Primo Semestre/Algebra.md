@@ -2913,7 +2913,8 @@ Ogni $F\in \mathbb{R}{[X]}$, in $\mathbb{R}[X]$ si spezza come:
 
 $$
 F=\underset{\in \mathbb{R}^X}\lambda \prod_{x\in\mathcal{R}_{\mathbb{R}}}(X-x) \underbrace{ \prod_{z\in\mathcal{R^+}_{\mathbb{C}\backslash\mathbb{R}}}
-[(X-z)(x-\overline{z})] }_{ \text{Polinomio di grado 2 irr. in  } \mathbb{R}[X] }$$
+[(X-z)(x-\overline{z})] }_{ \text{Polinomio di grado 2 irr. in  } \mathbb{R}[X] }
+$$
 
 _Esercizio / Proprietà_
 
