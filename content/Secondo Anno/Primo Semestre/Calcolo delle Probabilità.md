@@ -1537,6 +1537,29 @@ $$
 Var(X)=E[(X-0.4)^2]=11.56\cdot 0.2+0.16\cdot 0.1+0.36\cdot 0.4+2.56\cdot 0.3=3.24
 $$
 
+### Non linearità della Varianza
+
+Non è lineare infatti $Var(aX+b)=a^2Var(X)$
+
+_Dimostrazione_
+
+$$
+\begin{align*}
+Var(aX+b)&=E[((aX+b)-E[aX+b])^2] \\
+\text{Linearità di E } &=E[(aX+\cancel b-aEX-\cancel b)^2] \\
+\text{Raccogliamo } &=E[a^2(X-EX)^2] \\
+\text{Linearità di E } &= a^2\underbrace{ E[(X-EX)^2] }_{ \text{Definizione Varianza} }=a^2Var(X)
+\end{align*}
+$$
+
+Quindi abbiamo anche che:
+
+$$
+\sigma_{aX+b}=\sqrt{ Var(aX+b) }=|a|\sqrt{ Var(X) }=|a|\sigma_{X}
+$$
+
+_Deviazione Quadrata sotto_
+
 ## Deviazione Quadrata
 Sia $X$ una v.a., la deviazione quadrata standard di $X$ è data da $\sigma_{X}:=\sqrt{ Var(X) }$
 
@@ -1655,7 +1678,7 @@ $$
 > =(-1-1)^4\cdot 0.1 + (-1)^4 \cdot 0.2 + (2-1)^4 \cdot 0.2 + (3-1)^4 \cdot 0.5 = 2
 > $$
 
-**Proposizione**
+**Linearità del valore atteso**
 
 Sia $X$ v.a. discreta e siano $a,b\in \mathbb{R}$ allora $E[aX+b]=aE[X]+b$
 
@@ -1868,7 +1891,6 @@ $$
 
 Quindi notiamo che $Bin(1,0)=Bernoulli(p)$ ovvero una variabile aleatoria di Bernoulli di parametro $p$.
 
-
 > [!Example]- Esercizio
 > Lancio 5 volte una moneta onesta. Sia $X=\#\text{Teste Uscite}$ determinare la probabilità discreta di $X,EX, Var(X),\sigma(X)$.
 > 
@@ -1895,4 +1917,164 @@ Quindi notiamo che $Bin(1,0)=Bernoulli(p)$ ovvero una variabile aleatoria di Ber
 > $$
 > 
 
+---
 
+Perché le costanti additive non importano nella varianza?
+
+Prendiamo come esempio due grafici di due probabilità:
+
+![[Pasted image 20241108153446.png|500]]
+
+Notiamo che se trasliamo la probabilità di una costante, i grafici rimangono uguali ma vengono traslati, la varianza quindi rimane la stessa, dato che misura la dispersione dal valore atteso.
+
+Quindi $Var(X)$ e $Var(X+b)$ coincidono.
+
+Per vederlo meglio:
+
+![[Pasted image 20241108153745.png|500]]
+
+Qui infatti abbiamo che $Var(X)<Var(Y)$, notiamo infatti che nel grafico di $P_{Y}$ abbiamo più dispersione dal valore atteso rispetto al grafico di $P_{X}$
+
+## Variabile Aleatoria di Poisson
+Una variabile aleatoria $X$ è detta di Poisson di parametro $\lambda>0$ se assume valori $0,1,2\dots$(tutti valori interi) e:
+
+$$
+P_{X}(k)=P(X=k)=e^{-\lambda}\cdot \frac{\lambda^{k}}{k!} \ \ \ \forall k=0,1,2,\dots
+$$
+
+Per verificare l'esistenza della variabile aleatoria di Poisson di parametro $k$ devo verificare:
+
+$$
+\begin{cases}
+P_{X}(k)\geq 0 \ \ \ \forall k=0,1,2,\dots \\
+ \\
+\sum\limits_{k=0}^{\infty} P_{X}(k)=1
+\end{cases}
+$$
+
+Infatti:
+
+$$
+\sum_{k=0}^\infty P_{X}(k)=\sum_{k=0}^\infty e^{-\lambda}\cdot \frac{\lambda^k}{k!}=e^{-\lambda}\cdot \underbrace{ \sum_{k=0}^\infty \frac{\lambda^k}{k!}U }_{ \text{Serie Esponenziale} } =e^{-\lambda}\cdot e^{\lambda}=1
+$$
+
+La variabile aleatoria di Poisson è un'approssimazione della variabile aleatoria binomiale $Bin(n,p)$ quando $n$ è molto grande e $p$ è piccolo, più precisamente:
+
+**Teorema, Legge dei piccoli numeri**
+
+Dato $n\in \{ 1,2,\dots \}$ sia $P_{n}\in[0,1]$ tale che:
+
+$$
+\exists \lim_{ n \to \infty } nP_{n} =: \lambda >0
+$$
+
+Allora posto $X_{n}=Bin(n,P_{n})$ e $Z=Pos(\lambda)$ ho:
+
+$$
+\lim_{ n \to \infty } P(X_{n}=k)=P(Z=k) \ \ \ \forall k\in \{ 0,1,2,\dots \}
+$$
+
+
+Quindi per $n$ grande possiamo approssimare $P(X_{n} = k) \approx P(Z=K)$, quindi in alcune situazioni abbiamo che:
+
+$$
+Bin(n,p)\approx Poisson(\lambda)
+$$
+
+Dove presi $n,p,\lambda$ abbiamo che:
+
+$$
+\begin{align*}
+&n\gg 1 \text{ (molto grande)} \\
+&np \approx \lambda \text{ quindi anche } p\approx \frac{\lambda}{n} 
+\end{align*}
+$$
+
+Cosa intendiamo per $Bin(n,p)\approx Poisson(\lambda)$? Intendiamo che:
+
+$$
+P(X=k)\approx  P(Z=k) \ \ \ \forall k=0,1,2,\dots
+$$
+
+Dove $X=Bin(n,p)$ e $Z=Poisson(\lambda)$
+
+_Esempio di grandezza ben modellizzata da una variabile aleatoria di Poisson_
+
+Prendiamo la pagina di un libro e consideriamo la probabilità che un carattere venga stampato in modo errato. Quindi abbiamo una v.a. binomiale infatti un numero di prove $n$ e due esiti, successo se stampato male e insuccesso altrimenti.
+
+Notiamo che $n$ è il numero di caratteri ed è molto alto all'interno di una pagina, e $p$ possiamo assumerla piccola.
+
+Possiamo quindi assumere $Bin(n,p)\approx Poisson(\lambda)$ dove $\lambda=n\cdot p$
+
+_Esempio più concreto_
+
+Supponiamo che il numero di errori tipografici per pagina sia approssimato da $Poiss\left( \frac{1}{2} \right)$:
+
+- Qual è la probabilità che ci sia almeno un errore a pagina 20?
+
+Consideriamo quindi $z:=\#\text{Errori a pagina 20}$ e abbiamo quindi che:
+
+$$
+\begin{align*}
+&z=Poiss(\lambda) \ \ \ \lambda=\frac{1}{2} \\
+ \\
+&P(z=k)=e^{-\frac{1}{2}}\cdot\left( \frac{1}{2} \right)^k \cdot \frac{1}{k!}
+\end{align*}
+$$
+
+Possiamo considerare il fatto che ci sia almeno un errore come l'evento complementare di non ci sono errori, quindi possiamo calcolare:
+
+$$
+P(z\geq 1)=1-P(z=0)=1-e^{-\frac{1}{2}}\cdot\left( \frac{1}{2} \right)^0 \cdot \frac{1}{0!}=1-e^{-\frac{1}{2}}\approx 0.393
+$$
+
+- Qual è la probabilità che ci siano esattamente 4 errori?
+
+Dobbiamo quindi calcolare:
+
+$$
+P(z=4)=e^{-\frac{1}{2}}\cdot\left( \frac{1}{2} \right)^4 \cdot \frac{1}{4!}=\frac{1}{\sqrt{ e }}\cdot \frac{1}{16} \cdot \frac{1}{24}\approx0.00158
+$$
+
+**La Poisson approssima una binomiale $Poiss(\lambda)\approx Bin\left( n,\frac{\lambda}{n} \right)$ per un $n$ abbastanza grande**
+
+**Teorema, Valore Atteso e Varianza Poisson**
+
+Se $X=Poiss(\lambda)$ allora $E[X]=\lambda$ e anche $Var(X)=\lambda$
+
+---
+
+Dimostrazione legge piccoli numeri, non mi va di scriverla per bene =P
+
+![[Pasted image 20241108164547.png]]
+
+---
+
+## Variabile Aleatoria Geometrica
+Immaginiamo di ripetere in maniera indipendente una prova (lancio dado $\infty$ volte). Ogni prova ha successo con probabilità $p$ e insuccesso con $1-p$.
+
+Sia $X$ il numero di prove necessarie per ottenere il primo successo.
+
+$$
+P(X=k) \ \ \ k=1,2,3,\dots
+$$
+
+Quindi:
+
+$$
+P(X=k)=\underbrace{ (1-p) }_{ \text{Prova 1, ins.} }\cdot \underbrace{ (1-p) }_{ \text{Prova 2 ins.} }\cdot (1-p) \cdots p \to \text{Ultima prova, successo}
+$$
+
+Quindi abbiamo che:
+
+$$
+P(X=k)=(1-p)^{k-1} \cdot p \ \ \ \forall k=1,2,\dots
+$$
+
+Tecnicamente però potrei sempre ottenere un insuccesso e quindi avere che $X=+\infty$ e quindi avrei che:
+
+$$
+P(X=+\infty)=(1-p)^{\infty}=0 \ \ \ \text{con } 0<p<1 
+$$
+
+Questo significa che l'evento è possibile ma ha una probabilità nulla, questa strana situazione è data dal fatto che l'insieme degli esiti è un insieme non numerabile.

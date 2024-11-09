@@ -1497,3 +1497,263 @@ Dato che è legale soddisfa la nostra dipendenza $X\to A\in F^+$, e dato che $X=
 > - L'unico sottoinsieme dell'insieme vuoto, è l'insieme vuoto stesso
 > - L'insieme vuoto è finito ed ha 0 elementi
 
+# Identificare le chiavi di uno Schema
+Per determinarle possiamo utilizzare il calcolo della chiusura di un insieme di attributi.
+
+_Esempio_
+
+Prendiamo lo schema $R=(A,B,C,D,E,H)$  e lo schema di relazioni:
+
+$$
+F=\{ AB\to CD, C \to E, AB\to E, ABC\to D \}
+$$
+
+Calcoliamo la chiusura di $ABH$, abbiamo che:
+
+$$
+\begin{align*}
+&ABH\to CD \\
+&ABCDH\to E \\
+&\text{E quindi} \\
+&ABH^+= ABCDEH=R
+\end{align*}
+$$
+
+Ma $ABH$ è chiave? Ricordando la definizione abbiamo che un sottoinsieme $K$ di $R$ e un insieme di dipendenze funzionali $F$ è chiave se:
+- $K\to R\in F^+$
+- Non esiste un sottoinsieme proprio di $K$ che soddisfa la prima condizione
+
+Quindi dobbiamo verificare che non ci siano sottoinsiemi di $ABH$ che siano chiave. Quindi utilizziamo ancora l'algoritmo delle chiusure sui sottoinsiemi di $K$, facendo però alcune osservazioni:
+
+1) Conviene partire da quelli con cardinalità maggiore, infatti se la loro chiusura non contiene $R$ è inutile proseguire con loro sottoinsiemi.
+2) Gli attributi che non compaiono mai come dipendenti (a destra) faranno sicuramente parte della chiave, se invece compaiono sempre come dipendenti allora sicuramente non fanno parte della chiave.
+
+Infatti prendendo l'esempio di prima, per vedere i sottoinsiemi di $ABH$ che sono chiavi possiamo dire per prima cosa che $H$ va sicuramente nella chiave dato che non viene mai determinato e quindi dobbiamo controllare i sottoinsiemi $AH, BH$ che sono quelli di cardinalità più grande.
+
+Entrambi i sottoinsiemi non determinano altri attributi quindi possiamo fermarci qui, è inutile controllare sottoinsiemi di cardinalità inferiore, quindi $ABH$ è chiave.
+
+**In uno schema possiamo avere più chiavi**
+
+Abbiamo detto che $H$ deve essere sicuramente parte della chiave e abbiamo già verificato che $H,AH,BH$ non sono chiavi, proviamo a controllare $CH,DH,EH$.
+
+$$
+CH\to CHE
+$$
+
+Quindi non è chiave.
+
+$$
+DH\to DH
+$$
+
+Non è chiave
+
+$$
+EH\to EH
+$$
+
+Non è chiave.
+
+Quindi dovremmo provare con altri sottoinsiemi di 3 elementi, incluso $H$, notiamo che $A,B$ da soli non determinano nulla e inoltre non dipendono da altri attributi quindi vanno per forza nella chiave. Questo significa che $ABH$ è l'unica chiave.
+
+---
+
+Per decidere da dove cominciare per cercare una chiave possiamo partire dalla osservazioni di prima, oppure si può cominciare dagli insiemi individuati dalle dipendenze funzionali: data una dipendenza $V\to W\in F$ calcoliamo la chiusura dell'insieme di attributi $X=R-(W-V)$. Se la chiusura di questo insieme $X$ contiene $R$ allora $X$ è superchiave però **dobbiamo verificare che sia chiave** e quindi controllare i suoi sottoinsiemi.
+
+_Esempio_
+
+Abbiamo $R=\{ A,B,C,D,E \}$ e:
+
+$$
+F=\{ AB\to C,AC\to B,D\to E \}
+$$
+
+Quindi in base a quanto detto prima calcoliamo le superchiavi:
+
+$$
+\begin{align*}
+&ABCDE-(C-AB)=(ABDE)^+=R \\
+&ABCDE-(B-AC)=(ACDE)^+=R \\
+&ABCDE-(E-D)=(ABCD)^+=R
+\end{align*}
+$$
+
+Adesso però dobbiamo verificare che siano chiavi:
+- Notiamo che $A,D$ vanno sicuramente nella chiave
+- $A$ da solo non determina nulla quindi va sicuramente insieme a $C$ o $B$
+
+Proviamo a vedere quindi $ADC$ e $ADB$.
+
+$$
+\begin{align*}
+ADC\to BE \text{ é chiave} \\
+ADB\to CE \text{ è chiave}
+\end{align*}
+$$
+
+Quindi $ABDE$ e $ABCD$ non sono chiavi dato che contengono $ABD$ mentre $ACDE$ non è chiave dato che contiene $ADC$.
+
+Per le osservazioni di prima è inutile controllare sottoinsiemi, non esistono. Dobbiamo avere sicuramente $D$ e $A$ non può stare da solo.
+
+---
+
+**Test di unicità della chiave**
+
+Calcoliamo la chiusura dell'intersezione degli insiemi ottenuti con la formula di prima, nell'esempio precedente, se la loro chiusura determina tutto $R$ allora questa intersezione è l'unica chiave:
+
+$$
+(ABDE\cap ACDE\cap ABCD)^+=(AD)^+=AD
+$$
+
+Quindi avremmo potuto capire che esiste più di una chiave, infatti ce ne sono 2.
+
+---
+
+Una volta determinate le chiavi possiamo passare alla verifica di $3NF$ per ognuna di queste, e quindi verificare che:
+
+$$
+\forall X\to A\in F^+,A\not\in X
+$$
+
+- $A$ è primo (fa parte di una chiave)
+Oppure
+- $X$  contiene una chiave
+
+# Decomposizione di Uno Schema
+Se non siamo in $3NF$ gli schemi vanno decomposti:
+- I sottoschemi devono essere in 3NF
+- Dobbiamo preservare le dipendenze in $F^+$
+- Il join dei sottoschemi devi farci ottenere istanze valide dello schema di partenza
+
+Inoltre non sempre li decomponiamo per ottenere una 3NF ma anche per motivi di efficienza degli accessi.
+
+- Definizione Decomposizione Schema
+
+Iniziamo a dare delle definizioni: Sia $R$ uno schema di relazione. Una **Decomposizione** di $R$ è una famiglia di $\rho =\{ R_{1},R_{2},\dots,R_{k} \}$ di sottoinsiemi di $R$ che ricopre $R$ ($\bigcup_{i=1}^k \ R_{i}=R$), i sottoinsiemi possono avere intersezioni non vuota.
+
+Quindi decomporre uno schema $R$ significa definire dei sottoschemi che contengono ognuno un insieme degli attributi di $R$, questi possono avere attributi in comune e la loro unione deve necessariamente contenere tutti gli attributi di $R$.
+
+"$R$ è un insieme di attributi e una decomposizione di $R$ è una famiglia di insiemi di attributi".
+
+Quindi possiamo avere anche più decomposizioni ma poi dobbiamo verificare se sono "buone" ovvero se i sottoschemi preservano la 3NF, le dipendenze funzionali e facendo un join non abbiamo perdite.
+
+- Definizione Decomposizione Istanza
+
+Decomporre un'istanza significa invece fare una proiezione dello schema originale con gli attributi del sottoschema, eliminando eventuali duplicati generati dal fatto che nello schema originale magari due tuple sono distinte ma considerando solo una parte degli attributi, ovvero il sottoschema, risultano uguali.
+
+_Esempio_
+
+![[Pasted image 20241108193950.png]]
+
+- Definizione Equivalenza tra due insiemi di dipendenze funzionali
+
+Siano $F$ e $G$ due insiemi di dipendenze funzionali, sono equivalenti $F\equiv G$ se $F^+=G^+$, quindi $F$, e $G$ non contengono le stesse dipendenze ma le loro chiusure si.
+
+## Verificare Equivalenza di due insiemi di Dipendenze Funzionali
+Quindi per verificare l'equivalenza dobbiamo verificare l'uguaglianza tra le loro chiusure, ovvero $F^+\subseteq G^+$ e che $G^+ \subseteq F^+$.
+
+Come visto prima calcolare la chiusura di un insieme di dipendenze richiede tempo esponenziale, ma questo lemma ci viene in aiuto.
+
+**Lemma 2**
+
+Siano $F$ e $G$ due insiemi di dipendenze funzionali, se $F \subseteq G^+$ allora $F^+ \subseteq G^+$
+
+_Dimostrazione_
+
+- Sia $f\in F^+ - F$, quindi è una dipendenza che sta in $F^+$ ma non in $F$.
+
+- Ogni dipendenza che si trova in $F$ è derivabile da $G$ per gli assiomi di Armstrong, infatti per la nostra ipotesi $F\subseteq G^+$ e per il teorema $G^+ = G^A$. Infatti se $F\subseteq G^+$ significa che $F$ fa parte della chiusura di $G$ ed è quindi derivabile da $G$ mediante gli assiomi di Armstrong
+
+$$
+G\xrightarrow{A}F
+$$
+
+- Dato che $F^+ = F^A$ abbiamo $f$ è derivata da $F$ tramite Armstrong.
+
+$$
+F\xrightarrow{A}F^+
+$$
+
+- E quindi $f$ è derivabile da $G$ mediante gli assiomi di Armstrong, infatti dato che $F$ sta in $G^+$ significa che abbiamo applicato Armstrong a tutto e quindi anche $F^+$ sta in $G^+$.
+
+$$
+G\xrightarrow{A}F\xrightarrow{A} F^+
+$$
+
+---
+
+Adesso possiamo dare la definizione.
+
+Sia $R$ uno schema di relazione, $F$ un insieme di dipendenze funzionali su $R$ e $\rho=\{ R_{1},\dots,R_{k} \}$ una decomposizione di $R$ diciamo che $\rho$ preserva $F$ se:
+
+$$
+F\equiv \bigcup_{i=1}^k \pi_{Ri}(F)
+$$
+
+Dove con $\pi_{Ri}(F)$ indichiamo $\{ X\to Y \ t.c. \ X\to Y\in F^+\wedge XY\subseteq R_{i} \}$ quindi è l'insieme delle dipendenze funzionali che appartengono ad $F^+$ e sono "compatibili" con il sottoschema ovvero che gli attributi che compaiono nella relazione sono contenuti nel sottoschema.
+
+In modo formale quindi $\pi_{Ri}(F)$ è un insieme di dipendenze funzionali dato dalla proiezione dell'insieme di dipendenze funzionali $F$ sul sottoschema $R_{i}$ e proiettare un insieme di dipendenze $F$ su un sottoschema $R_i$ significa prendere tutte e sole le dipendenze in $F^+$ che hanno tutti gli attributi in $R_{i}$.
+
+---
+
+Adesso supponiamo di avere già una decomposizione e di voler verificare se preserva le dipendenze funzionali.
+
+Verificare se una decomposizione preserva un insieme di dipendenze $F$ richiede che venga verificata l'equivalenza dei due insiemi di dipendenze funzionali $F$ e $G=\bigcup\limits_{i=1}^k \pi_{Ri}(F)$.
+Quindi dobbiamo verificare che $G^+\subseteq F^+$ e che $F^+\subseteq G^+$.
+
+Per come abbiamo definito $G$ sappiamo che i suoi elementi sono proiezioni di dipendenze di $F$, inoltre sappiamo che $F^+$ contiene queste proiezioni (condizione dell'and) e quindi $F^+$ contiene $G$, scritto più formalmente abbiamo che $G\subseteq F^+$ che per il lemma 2 implica che $G^+\subseteq F^+$.
+
+Quindi adesso ci manca da verificare che $F\subseteq G^+$ che poi con il lemma ci porta a dire che $F^+\subseteq G^+$.
+
+Questa verifica può essere fatta tramite un algoritmo. **Algoritmo contenimento di F in $G^+$** 
+
+- Input: Due insiemi $F$ e $G$ di dipendenze funzionali su $R$
+- Output: Una variabile che indica _true_ se $F\subseteq G^+$, altrimenti _false_
+
+$$
+\begin{align*}
+&\text{begin} \\
+&\qquad \text{successo}:=true \\
+&\qquad \text{foreach}(X\to Y\in F): \\
+&\qquad \qquad \text{calcola } X^+_{G} \\
+&\qquad \qquad \text{if } (Y\not\in X^+_{G}): \\
+&\qquad \qquad \qquad \text{successo}:= false \\
+&\qquad \qquad \qquad \text{end} \\
+&\text{end}
+\end{align*}
+$$
+ 
+Infatti se $Y\not\in X^+_{G}$ per il lemma abbiamo che $X\to Y\not\in G^A$ e quindi neanche in $G^+$ per il teorema. Basta quindi trovare una sola dipendenza che non rispetta la condizione per poter affermare che non c'è equivalenza.
+
+Ma come calcoliamo $X^+_{G}$? Infatti non possiamo utilizzare l'algoritmo che conosciamo dato che non sappiamo come è fatta $G$, inoltre per la definizione di $G$ dobbiamo prima calcolare $F^+$ ma richiede tempo esponenziale.
+
+Vediamo quindi un algoritmo che ci permette di calcolare $X^+_{G}$ a partire da $F$.
+
+- Input: uno schema $R$, un insieme $F$ di dipendenze funzionali su $R$, una decomposizione $\rho=\{ R_{1},\dots,R_{k} \}$ di $R$ e un sottoinsieme $X$ di $R$.
+- Output: La chiusura di $X$ rispetto a $G=\bigcup\limits_{i=1}^k \pi_{Ri}(F)$, in questo caso lo inseriamo nella variabile $Z$.
+
+$$
+\begin{align*}
+&\text{begin} \\
+&\qquad Z:=X \\
+&\qquad S:= \emptyset \\
+&\qquad \text{for } (i:=1, i\leq k, i++): \\
+&\qquad\qquad S:=S\cup (Z\cap R_{i})^+_{F} \cap R_{i} \\
+&\qquad \text{while } (S\not\subset Z): \\
+&\qquad\qquad Z:= Z\cup S \\
+&\qquad\qquad \text{for } (i:=1, i\leq k, i++): \\
+&\qquad\qquad\qquad S:=S\cup(Z\cap R_{i})^+_{F}\cap R_{i} \\
+&\text{end}
+\end{align*}
+$$
+
+Nel primo _for_ stiamo raccogliendo gli attributi determinati da $Z$ ovvero il nostro $X$, e grazie all'intersezione ci assicuriamo che sia dipendenti che dipendente si trovino nel sottoschema, tutti questi li raccogliamo in $S$.
+
+Poi con il _while_ quello che andiamo a fare è essenzialmente raccogliere in $Z$ tutti gli attributi che sono determinati da $X$ anche se $X$ non si trova nel sottoschema, questo perché magari sono determinati da attributi presenti in altri schemi dove in questi sono determinati da $X$.
+
+Per fare questo utilizziamo le dipendenze nella chiusura di $F$ dato che sappiamo che le dipendenze che formano $G$ sono incluse in $F^+$.
+
+Ricordiamo che l'algoritmo per definizione termina sempre, ci fornisce la chiusura di un insieme di attributi rispetto ad un insieme di dipendenze funzionali che non conosciamo, ma sappiamo essere incluso in un altro, questo risultato dobbiamo quindi utilizzarlo insieme all'algoritmo visto precedentemente per l'equivalenza di due insiemi di dipendenze.
+
+**Teorema Dimostrazione Algoritmo**, ho paura =(
+

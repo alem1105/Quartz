@@ -2962,3 +2962,177 @@ In tutti questi casi se $Q$ non è irriducibile su $K$ allora ammette sempre alm
 	- $P_{1} P_{2} P_{3} P_{4}$ tutti di grado 1
 
 Ecc...
+
+# Teoria dei Gruppi
+Dato un insieme $G\neq \emptyset$ con $*$ operazione binaria su $G$ e quindi definita come:
+
+$$
+G \times G \to G \ \ | \  \ (a,b)\to a*b
+$$
+Inoltre selezioniamo un elemento $e\in G$ allora la terna $G=(G,+,e)$ è **un gruppo** se:
+1) $\forall a,b,c\in G$ abbiamo che $a*(b*c)=(a*b)*c$ e scriviamo quindi $a*b*c$ | **Associatività**
+2) $\forall a\in G$ si verifica $a*e=e*g=a$ | **Elemento neutro per l'operazione binaria**
+3) $\forall a\in G$ deve $\exists a'\in G$ tale che $a*a'=a'*a=e$ | **Inverso per l'operazione**
+
+Inoltre se si verifica anche:
+4) $\forall a,b\in G, a*b=b*a$ allora $G$ è un **gruppo abeliano (o commutativo)**
+
+## Gruppi in Notazione Additiva
+La terna $(G,+,0)$ dove scriviamo $+$ per l'operazione e $0$ o $0_G$ per l'elemento neutro si dive **in notazione additiva**, di solito i gruppi in questa notazione sono anche commutativi e in questa notazione l'inverso di $a\in G$ si chiama **opposto** e si scrive $-a$.
+
+Ad esempio dato un anello $(A,+,-,\cdot,1_{A},0_{A})$ se lo scriviamo $(A,+,0_{A})$ è un gruppo in notazione additiva, inoltre è un gruppo abeliano dato che è derivato da un anello (sicuramente additivo per definizione). Inoltre possiamo prendere come esempio anche $\mathbb{Z}=(\mathbb{Z},+,0)$, $\mathbb{R}=(\mathbb{R},+,0)$ o anche $K=(K,+,0)$ con $K$ un qualsiasi campo.
+
+## Gruppi in notazione Moltiplicativa
+La terna $(G,\cdot,1)$ dove scriviamo $\cdot$ per l'operazione e $1$ o $1_{G}$ per l'elemento neutro si dicono **in notazione moltiplicativa**.
+
+Ad esempio se prendiamo $(A,+,-,\cdot,1_{A},0_{A})$ Anello, allora $A^X=(A^X,\cdot,1)$ è un gruppo in notazione moltiplicativa, infatti abbiamo visto che il prodotto di elementi invertibili è invertibile, il prodotto è associativo e infine se $a,b\in A^X$ allora $ab\in A^X$ e inoltre sappiamo che $(ab)^{-1}=b^{-1}a^{-1}$. $A^X$ è abeliano.
+
+## Sottogruppo
+Dato un gruppo $G$ in notazione moltiplicativa e un sottoinsieme $H\subset G$ non vuoto, si dice che $H$ è un **sottogruppo di $G$** se $\forall a,b\in H$ si ha che $a\cdot b^{-1}\in H$. Si scrive $H<G$.
+
+_Osservazione_
+
+$H$ è un gruppo. Se $a\in H$ allora $aa^{-1}=1_{G}\in H$. Ma allora $\forall b\in H,1_{G}\cdot b^{-1}=b^{-1}\in H$ inoltre $1_{G}=1_{H}$ e $\forall b\in H,b^{-1}\in H$.
+
+Infine se $a,b\in H$ e anche $b^{-1}\in H$ allora $a(b^{-1})^{-1}\in H$
+
+_Esempio_ $\mathbb{Z}<\mathbb{Q}<\mathbb{R}<\mathbb{C}$
+
+In notazione additiva per il sottogruppo deve verificarsi:
+
+$$
+H<G \Leftrightarrow \forall a,b\in H, a-b\in H
+$$
+
+## Omomorfismi di gruppi
+Dati $G_{1},G_{2}$ due gruppi in notazione moltiplicativa e sia $G_{1}\xrightarrow{f}G_{2}$ un'applicazione, $f$ si dice **omomorfismo di gruppi** se:
+1) $f(1_{G_{1}})=1_{G_{2}}$
+2) $\forall a\in G_{1}, \underbrace{ f(a^{-1}) }_{ \text{Inverso in } G_{1}}=\underbrace{ f(a)^{-1} }_{ \text{Inverso in }G_{2} }$
+3) $\forall a,b\in G_{1}, f(\underbrace{ ab }_{ \text{operazione }G_{1} })=f(a)(\text{operazione }G_{2})f(b)$
+_Esercizio_
+
+Mostrare che $f:G_{1}\to G_{2}$ è un omomorfismo di gruppi $\Leftrightarrow a,b\in G,f(ab^{-1})=f(a)f(b)^{-1}$
+
+### Isomorfismo
+Sia $f:G_{1}\to G_{2}$ un omomorfismo di gruppi, se $f$ è biiettiva allora si dice che $f$ è **isomorfismo**
+
+_Esercizio_
+
+![[Pasted image 20241105215602.png]]
+
+Quindi se $f$ è isomorfismo lo è anche $f^{-1}$, inoltre date due funzioni $f,g$ omomorfismi allora anche $g\circ f$ è omomorfismo. In più se sono isomorfismi allora lo è anche $g\circ f$, anche di inverso $f^{-1}\circ g^{-1}$.
+
+_Esempi_
+
+Prendiamo tutto in notazione additiva
+
+$$
+\mathbb{Z}\xrightarrow{f}m\mathbb{Z}<\mathbb{Z}
+$$
+
+Osserviamo che $m\mathbb{Z}$ è un gruppo e un sottogruppo di $\mathbb{Z}$.
+
+Definiamo $f(n):=mn$ con $m\neq 0$ applicazione, questa è isomorfismo di gruppi infatti:
+1) $f(n-n')=m(n-n')=mn-mn'=f(n)-f(n')\Rightarrow$ è omomorfismo 
+2) $f$ iniettiva: $f(p)=f(q)\Leftrightarrow pm=qn\Leftrightarrow m(p-q)=0\Leftrightarrow p=q$
+3) $f$ suriettiva: Sia $y\in m\mathbb{Z}$ allora $\exists k\in \mathbb{Z}$ t.c. $y=mk$, ponendo $x=k$ si ha $f(x)=mk=y$
+
+---
+
+Altro esempio, mischiando $+,\cdot$
+
+$G_{1}=\mathbb{R}$ con operazione $+$.
+
+$G_{2}=\mathbb{R}_{>0}$ ovvero i reali positivi con operazione $\cdot$, da notare che $\mathbb{R}_{>0}<\mathbb{R}^X$, adesso poniamo:
+
+$$
+\begin{align*}
+&f:\mathbb{R}\to \mathbb{R}_{>0} \ \ \ f(x):=e^x \\
+&g:\mathbb{R}_{>0}\to \mathbb{R} \ \ \ g(y):= \log(y)
+\end{align*}
+$$
+
+Sono due isomorfismi di gruppi, l'uno inverso dell'altro. Quindi abbiamo che $f^{-1}=g$ e $g^{-1}=f$, inoltre:
+
+$$
+\begin{align*}
+&f(0)=e^0=1=1_{G_{2}}\in G_{2} \\
+&f(-x)=e^{-x}=(e^x)^{-1} \ \text{ Compatibile con inverso} \\
+&f(x-x')=e^{x-x'}=e^x e^{-x'}=f(x)f(x')^{-1}
+\end{align*}
+$$
+
+In modo analogo:
+
+$$
+\begin{align*}
+&g(1)=0 \\
+&g(y^{-1})=\log(y^{-1})=-g(y) \\
+&g(y'y^{-1})=g(y')-g(y) \text{ infatti sarebbe } \log\left( \frac{y'}{y} \right)=\log(y')-\log(y)
+\end{align*}
+$$
+## Costruzioni canoniche di un sottogruppo
+Sia $G_{1}\xrightarrow{f}G_{2}$ omomorfismo in notazione moltiplicativa.
+
+**Lemma**
+
+Sia $f:G_{1}\to G_{2}$ un omomorfismo di gruppi indichiamo con:
+
+$$
+H=\{ g\in G_{1} :f(g_{1})=1_{G_{2}}\}=f^{-1}(\{ 1_{G_{2}} \})\subset G_{1}
+$$
+
+Ovvero gli elementi di $G_{1}$ che puntano all'elemento neutro di $G_{2}$, questo è un sotto gruppo di $G_{1}$: $H<G_{1}$ e si chiama **nucleo** di $f$, lo indichiamo con $H=Ker(f)$ (kernel).
+
+> [!info] Osservazione
+> Un gruppo qualsiasi ha due sottogruppi evidenti: $\{ 1_{G} \}$ e se stesso, se in notazione additiva allora $\{ 0_{G} \}$
+
+_Dimostrazione_
+
+Dati $a,b\in H$ con $f(a)=f(b)=1_{G_{2}}$.
+
+$$
+f(ab^{-1})=f(a)f(b^{-1})=f(a)f(b)^{-1}=1G_{2}1G_{2}^{-1}=1G_{2}
+$$
+
+Quindi $ab^{-1}\in H$ dato che in $H$ abbiamo tutti gli elementi che puntano a $1G_{2}$
+
+**Lemma**
+
+Sia $f:G_{1}\to G_{2}$ un omomorfismo di gruppi si ha che:
+
+$$
+Ker(f)=\{ 1_{G_{1}} \}\Leftrightarrow f \text{ è iniettiva}
+$$
+
+Questo è detto **kernel banale** dato che per definizione di omomorfismo di gruppi $f(1_{G_{1}})=1_{G_{2}}$
+
+Questo è il più piccolo sottogruppo di $G_{1}$.
+
+_Dimostrazione_
+
+Dimostriamo la parte $\Rightarrow$
+
+Quindi supponiamo che $Ker(f)=1_{G}=\{ x\in G_{1}:f(x)=1_{G_{2}} \}$
+
+Siano $x,x'\in G_{1}$ tali che $f(x)=f(x')\underbrace{ \Leftrightarrow }_{ \text{Divisione} } f(x)f(x')^{-1}=1_{G_{2}}$ 
+
+Per omomorfismo possiamo dire che $f(x)f(x')^{-1}=f(xx'^{-1})$
+
+Quindi $x(x')^{-1}\in Ker(f)=\{ 1_{G_{1}} \}$ dato che la sua $f$ punta a $G_{2}$, questo significa che $x(x')^{-1}=1G_{1}$, possiamo poi moltiplicare per $x'$ e ottenere:
+
+$$
+x(x')^{-1}\cdot x'=1_{G_{1}}\cdot x'\Leftrightarrow x'=x
+$$
+
+Quindi $f$ è iniettiva.
+
+
+Dimostriamo la parte $\Leftarrow$
+
+Supponiamo quindi $f$ iniettiva e sia $x\in Ker(f)$ e allora $f(x)=1_{G_{2}}$.
+
+Ma $f$ è un omomorfismo di gruppi da cui deduciamo che $f(1_{G_{1}})=1_{G_{2}}$.
+
+Siccome $f(x)=f(1_{G_{1}})=1_{G_{2}}$ e $f$ iniettiva, dobbiamo avere che $x=1_{G_{1}}\Rightarrow Ker(f)=\{ 1_{G_{1}} \}$
+
