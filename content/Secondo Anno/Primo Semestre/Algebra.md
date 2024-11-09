@@ -3136,3 +3136,267 @@ Ma $f$ è un omomorfismo di gruppi da cui deduciamo che $f(1_{G_{1}})=1_{G_{2}}$
 
 Siccome $f(x)=f(1_{G_{1}})=1_{G_{2}}$ e $f$ iniettiva, dobbiamo avere che $x=1_{G_{1}}\Rightarrow Ker(f)=\{ 1_{G_{1}} \}$
 
+_Esercizio Gruppi_ - **Sottogruppo Immagine**
+
+Data una funzione $f:G_{1}\to G_{2}$ e omomorfismo di gruppi con $f(G_{1})\subset G_{2}$, infatti:
+
+$$
+f(G_{1})=\{ y\in G_{2}:\exists x\in G_{1} \text{ con } f(x)=y \}
+$$
+
+Dimostrare che $f(G_{1})<G_{2}$, **sottogruppo immagine**, ovvero dimostrare che se $y,y'\in f(G_{1})$ allora $y(y')^{-1}\in f(G_{1})$.
+
+_Soluzione_
+
+$$
+\begin{align*}
+&\exists x,x'\in G_{1} \ t.c. \ f(x)=y \ \ \ f(x')=y' \\
+ \\
+&y(y')^{-1}=f(x)f(x')^{-1}=f(\underbrace{ x(x')^{-1} }_{ \text{Elemento di }G_{1} })=f(z) \ \text{ con } z\in G_{1} \\
+ \\
+&\text{Abbiamo mostrato che:} \\
+ \\
+&\exists z\in G_{1} \ t.c. \ f(z)=y(y')^{-1}\Leftrightarrow y(y')^{-1}\in f(G_{1})
+\end{align*}
+$$
+
+## Sottogruppi Coniugati
+Dato un gruppo $G$, un altro gruppo $H<G$ e un elemento $g\in G$, definiamo:
+
+$$
+H^g:=\underbrace{ \{ g'\in G \ t.c. \ \exists h\in H \ t.c. g'=g^{-1}hg \} }_{ \text{Coniugato di H per g} }
+$$
+
+_Osservazione_
+
+Se $G$ è abeliano allora $g^{-1}hg=h$ e quindi $H^g=H \ \forall g$, per gruppi abeliani quindi non ci porta a nulla questo insieme.
+
+_Nota_
+
+Ricordiamo che se un gruppo non è abeliano allora $(abc)^{-1}=c^{-1}b^{-1}a^{-1}$, mentre se è abeliano e quindi commutativo non ci importa dell'ordine.
+
+**Lemma** $H^g<G$ 
+
+_Dimostrazione_
+
+Prendiamo due elementi $a,b\in H^g$, vogliamo dimostrare che $ab^{-1}\in H^g$, per definizione possiamo scrivere (con $g$ fissato):
+
+$$
+\begin{align*}
+&a=g^{-1}a'g \qquad \exists a'\in H \\
+&b=g^{-1}b'g \qquad \exists b'\in H \\
+ \\
+&ab^{-1}=g^{-1}a'gg^{-1}(b')^{-1}g=g^{-1}\underbrace{ a'(b')^{-1} }_{ \in H \text{ visto che } H<G }g \Rightarrow ab^{-1}\in H^g \ \forall a,b\in H^g \ \Rightarrow H^g<G
+\end{align*}
+$$
+
+_Dimostrazione Alternativa_
+
+Definiamo dato $g\in G$, un'applicazione $G\xrightarrow{fg}G$, $x\to fg(x)=g^{-1}xg$ e osserviamo che $\forall g$, $fg$ è un omomorfismo di gruppi (e dato che va $G$ a $G$, si parla di **endomorfismo**), per verificarlo devo mostrare che $\forall a,b\in G,f(ab^{-1})=f(a)fg(b^{-1})$
+
+$$
+fg(a)fg(b^{-1})=g^{-1}ag(g^{-1}bg)^{-1}=g^{-1}agg^{-1}b^{-1}(g^{-1})^{-1}=g^{-1}ab^{-1}g=fg(ab^{-1})
+$$
+
+Questo dimostra perché se $H<G_{1}$ e $G_{1}\xrightarrow{f}G_{2}$ omomorfismo allora $f(G_{1})<G_{2}$, se $G_{1}=G_{2}=G$ e $f=fg$ otteniamo che $\forall H<G,\underbrace{ fg(H) }_{ g^{-1}Hg=H^g }<G\Rightarrow H^g<G$
+
+# Permutazioni
+Dato $\mathcal{E}$ insieme finito, sia $S(\mathcal{E})=\{ f:\mathcal{E}\to\mathcal{E} :f \text{ biiettiva}\}$ gli elementi di questo insieme sono chiamati **permutazioni**.
+
+Su $S(\mathcal{E})$ esiste l'operazione di composizione di applicazioni:
+
+$$
+\mathcal{E}\xrightarrow{f}\mathcal{E}\xrightarrow{g}\mathcal{E} \ \ allora \ \ \mathcal{E}\xrightarrow{g\circ f}\mathcal{E}
+$$
+
+E se $f,g\in S(\mathcal{E})$ allora $g\circ f\in S(\mathcal{E})$.
+
+Inoltre $(g\circ f)^{-1}=f^{-1}\circ g^{-1}\Rightarrow (S(\mathcal{E}),\circ,Id_{\mathcal{E}})\text{ è un gruppo}$ perché:
+
+- $f\circ(g\circ h)=(f\circ g)\circ h$, associativo
+- $f\circ Id=Id\circ f=f \quad\forall f\in S(\mathcal{E})$, elemento neutro
+- $\forall f\in S(\mathcal{E})$ invertibile e $f\circ f^{-1}=f^{-1}\circ f\in S(\mathcal{E})$ inverso per $\circ$
+
+Sia $\mathcal{E}=\{ 1,\dots,n \}=:I_{n}$ con $n\geq 1$ allora si scrive $S_{n}=S(I_{n})(=S(\mathcal{E}))$
+
+Ogni elemento di $S_{n},f\in S_{n}$ può essere identificato con un diagramma:
+
+![[Pasted image 20241109155632.png]]
+
+_Definizione di n-ciclo_
+
+È una permutazione del tipo:
+
+![[Pasted image 20241109155935.png|500]]
+
+Con $a_{1},a_{2},\dots a_{s}\in I_{n}$ con $s\leq n$ distinti, che fissa ovvero manda su se stessi tutti gli elementi che non appartengono a $\{ a_{1},\dots,a_{s} \}$, invece quelli che ci appartengono li manda in maniera ciclica su di loro quindi $a_{1}\to a_{2}\to a_{3}\to a_{s}\to a_{1}$, si chiama s-ciclo e si scrive $(a_{1}a_{2}\dots a_{s})$ e bisogna rispettare l'ordine del ciclo nella notazione.
+
+_Esempi_
+
+![[Pasted image 20241109160621.png]]
+
+_Terminologia_
+
+Tutti i 2-cicli si chiamano **trasposizioni**, l'identità è uno 0-ciclo
+
+_Nota_
+
+Tutti i cicli sono permutazioni, ma non tutte le permutazioni sono cicli:
+
+![[Pasted image 20241109160911.png|500]]
+
+### Inversione
+
+$$
+\begin{pmatrix}
+1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+4 & 6 & 7 & 5 & 1 & 3 & 2
+\end{pmatrix}^{-1}
+=
+\begin{pmatrix}
+4 & 6 & 7 & 5 & 1 & 3 & 2 \\
+1 & 2 & 3 & 4 & 5 & 6 & 7
+\end{pmatrix}
+$$
+
+Ovviamente possiamo anche cambiare l'ordine delle colonne, l'importante è mantenere le associazioni.
+
+Nella notazione a ciclo l'inverso si ottiene leggendo da destra a sinista:
+
+$$
+(a_{1} a_{2} \dots a_{s})^{-1}=(a_{s}\dots a_{2} a_{1})
+$$
+
+### Composizione (o Prodotto)
+Definiamo
+
+$$
+\sigma=\begin{pmatrix}
+1 & 2 & 3 & 4 & 5 \\
+3 & 1 & 4 & 2 & 5
+\end{pmatrix}=(1342)\in S_{5}
+,
+\tau=\begin{pmatrix}
+1 & 2 & 3 & 4 & 5 \\
+5 & 4 & 2 & 1 & 3
+\end{pmatrix} =(15324)\in S_{5}
+$$
+
+Calcoliamo $\sigma\circ \tau=\sigma \tau$, agisce prima $\tau$
+
+![[Pasted image 20241109162416.png|500]]
+
+Quindi il risultato sarà:
+
+$$
+\begin{pmatrix}
+1 & 2 & 3 & 4 & 5 \\
+5 & 2 & 1 & 3 & 4
+\end{pmatrix}=(543)
+$$
+
+Se calcoliamo invece $\tau \sigma$ e quindi agisce prima $\sigma$:
+
+$$
+\begin{pmatrix}
+1 & 2 & 3 & 4 & 5 \\
+2 & 5 & 1 & 4 & 3
+\end{pmatrix}=(1253)
+$$
+
+I due cicli non sono uguali dato che $S_{5}$ non è commutativo.
+
+### Descrizione di $S_{3}$
+
+![[Pasted image 20241109163702.png]]
+
+Quindi abbiamo che:
+
+$$
+S_{3}=\{ Id,(23),(12),(123),(132),(13) \}
+$$
+
+Ogni permutazione è un s-ciclo con $s=0,2,3$.
+
+Quindi $\#S_{3}=3\cdot 2 \cdot 1$
+
+- Qual è il più piccolo $n$ t.c. in $S_{n}$ esiste una permutazione che non è un ciclo? $n=4$
+
+Infatti prendiamo ad il prodotto $(12)(34)$ e calcoliamo i valori per $1,2,3,4$:
+
+$$
+\begin{align*}
+(12)(34)(1)=(12)((34)(1))=(12)(1)=2 \\
+(12)(34)(2)=(12)((34)(2))=(12)(2)=1 \\
+(12)(34)(3)=(12)((34)(3))=(12)(4)=4 \\
+(12)(34)(4)=(12)((34)(4))=(12)(3)=3
+\end{align*}
+$$
+
+$(12)(34)(1)$ significa che applichiamo all'elemento 1 il ciclo $(34)$ che lascia invariato 1 e poi ci applichiamo il ciclo (12) che lo porta in 2.
+
+In questo modo otteniamo:
+
+$$
+\begin{pmatrix}
+1 & 2 & 3 & 4 \\
+2 & 1 & 4 & 3
+\end{pmatrix}
+$$
+
+Che non è un ciclo
+
+_Esercizio_
+
+Mostrare che $(123)^{-1}=(132)$:
+
+$$
+(123)=
+\begin{pmatrix}
+1 & 2 & 3 \\
+2 & 3 & 1
+\end{pmatrix};
+(123)^{-1}=\begin{pmatrix}
+1 & 2 & 3 \\
+3 & 1 & 2
+\end{pmatrix}=(132)
+$$
+
+## Cicli a Supporti Disgiunti
+Dati due cicli $(a_{1}\dots a_{s})$ e $(b_{1}\dots b_{s})$ di $S_{n}$, si dice che sono a **supporti disgiunti** se $\{ a_{1},\dots,a_{s} \}\cap \{ b_{1},\dots,b_{s} \}=\emptyset$.
+
+Più generalmente dati $r$ cicli $c_{1},\dots,c_{r}$ di $S_{n}$ sono a supporti disgiunti.
+
+Per esempio $(12),(34)$ sono a supporti disgiunti.
+
+**Teorema** - Decomposizione di permutazione
+
+Ogni $\sigma\in S_{n}$ può essere decomposto in prodotto di cicli a supporti disgiunti. Inoltre, tali cicli sono unicamente determinati e commutano tra loro. (C'è analogia tra i cicli e i numeri primi nel TFA).
+
+_Esempio_
+
+$$
+\sigma=\begin{pmatrix}
+1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+2 & 4 & 6 & 7 & 3 & 8 & 1 & 5
+\end{pmatrix}
+$$
+
+Estraiamo i cicli, partiamo da un elemento ad esempio 1:
+
+$$
+1\to 2 \to 4 \to 7 \to 1 = (\underbrace{ 1247 }_{ \text{Orbita} })
+$$
+
+Questo ciclo muove solo questi elementi, troviamone altri quindi partendo da altri elementi non appartenenti all'orbita.
+
+$$
+3\to 6\to 8 \to 5\to 3=(3685)
+$$
+
+I due cicli sono disgiunti e il loro prodotto commutativi ci restituisce $\sigma$:
+
+$$
+(1247)(3685)=(3685)(1247)=\sigma
+$$
+
