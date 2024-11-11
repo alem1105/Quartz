@@ -1812,7 +1812,7 @@ Dato un esperimento con $n$ prove indipendenti, tutte svolte nello stesso modo, 
 > [!example]- Esempi
 > Lancio una moneta 10 volte, i 10 lanci solo le prove e come successo stabilisco che deve uscire testa.
 >
->Lancio un 8 volte, gli 8 lanci sono le prove e come successo stabilisco quando esce un numero multiplo di 3.
+>Lancio un dado 8 volte, gli 8 lanci sono le prove e come successo stabilisco quando esce un numero multiplo di 3.
 > 
 
 Definiamo $X=\#\text{Successi Ottenuti}$ nelle prove, notiamo quindi che può assumere come valore, tutti i valori interi da $0$ a $n$, ma con che probabilità?
@@ -2078,3 +2078,109 @@ P(X=+\infty)=(1-p)^{\infty}=0 \ \ \ \text{con } 0<p<1
 $$
 
 Questo significa che l'evento è possibile ma ha una probabilità nulla, questa strana situazione è data dal fatto che l'insieme degli esiti è un insieme non numerabile.
+
+Oppure possiamo dimostrare che questo risultato è 0 svolgendo:
+
+$$
+P(X=\infty)=1-P(X<\infty)=1-1=0
+$$
+
+Dove
+
+$$
+P(X<\infty)=\sum^\infty_{k=0}P(X=k)=\sum^\infty_{k=0}(1-p)^k\cdot p=p\underbrace{ \sum^\infty_{k=0}(1-p)^k }_{ \text{Serie Geometrica} }=p\cdot \frac{1}{1-(1-p)}=1
+$$
+
+Infine possiamo dire che in una v.a. geometrica:
+
+$$
+EX=\frac{1}{p} \qquad Var(X)=\frac{1-p}{p^2}
+$$
+
+> [!Example]- Esercizio
+> Lancio un dado finché non esce 6.
+> a) Calcolare valore atteso del numero di lanci effettuati
+> b) Calcolare probabilità di aver effettuato almeno 7 lanci
+> 
+> a)
+> 
+> $$
+> \begin{align*}
+> &P(\text{Esce 6})=\frac{1}{6}=p \\
+> &X=\text{Lanci effettuati fino al primo 6}=Geom\left( \frac{1}{6} \right) \\
+> &E[X]=\frac{1}{\frac{1}{p}}=\frac{1}{\frac{1}{6}}=6
+> \end{align*}
+> $$
+> 
+> b) Abbiamo $p=\frac{1}{6}$ come prima e anche la v.a. $X$. Adesso però dobbiamo calcolare $P(X=7)$
+> 
+> $$
+> P(X=7)=(p)^{k-1}=\left( \frac{5}{6} \right)^6
+  $$
+
+## Variabile Aleatoria Binomiale Negativa
+Dipende da due parametri, $p\in(0,1)$ che è la probabilità di successo in una prova e $r\in \{ 1,2,3\dots \}$ intero che indica il numero di successi che voglio ottenere.
+
+_Esempio Chiave_
+
+Considero una successione di prove indipendenti di tipo successo / insuccesso.
+
+$$
+X:=\#\text{Prove effettuate fino ad avere } r \text{ successi per la prima volta}
+$$
+
+Allora $X=\text{Bin\_Neg}(p,r)$, $X$ assume valori $r,r+1,r+2,\dots$ quindi dato $k\in \{ r,r+1,r+2\dots \}$ come calcoliamo $P(X=k)$?
+
+Sappiamo che sicuramente la k-esima prova deve avere come esito successo, mentre nelle k-1 prove dobbiamo avere sicuramente r-1 successi ma non ci importa in che ordine, possiamo quindi scriverlo come:
+
+$$
+P(X=K)=P(\text{Ho r-1 successi nelle prime k-1 prove})\cdot p
+$$
+
+A questo punto possiamo utilizzare la binomiale per calcolare la probabilità dei r-1 successi:
+
+$$
+\binom{k-1}{r-1}\cdot p^{r-1}\cdot(1-p)^{(k-1)-(r-1)}=\binom{k-1}{r-1}\cdot p^{r-1}\cdot(1-p)^{k-r}
+$$
+
+Quindi moltiplicando per $p$ dell'ultimo successo otteniamo:
+
+$$
+P(X=k)=\binom{k-1}{r-1}\cdot p^{r}\cdot(1-p)^{k-r}
+$$
+
+Inoltre sappiamo che:
+
+$$
+X=\text{Bin\_Neg}(p,r) \Rightarrow E[X]=\frac{r}{p} \qquad Var(X)=\frac{r(1-p)}{p^2} 
+$$
+
+> [!info] Osservazione
+> 
+> ![[actually.png|100]]
+> 
+> Se $r=1$ ovvero il numero di successi uguale a 1 otteniamo le stesse formule delle geometrica
+
+> [!Example]- Esercizio
+> In un gioco si estrae una pallina a caso da un'urna con 40 palline di cui una dorata, se si estrae quest'ultima si vince un peluche. Vogliamo giocare finché non vinciamo 2 peluche e ogni giocata costa 1.50 euro. Calcolare il valore atteso della spesa.
+> 
+> Definiamo:
+> - $X=\#\text{Numero di volte che giochiamo}$
+> - $Y=\text{Spesa Effettuata}$
+>   
+>   Che relazione c'è fra le due? $Y=1,5\cdot X$ e quindi $E[Y]=1,5\cdot E[X]$, calcoliamo il valore atteso di $X$ dato che è una binomiale negativa:
+>   
+>   $X=\text{Bin\_Neg}\left( p=\frac{1}{40},r=2 \right)$ questo significa che possiamo calcolare il suo valore atteso con la formula:
+>   
+>   $$
+> E[X]=\frac{r}{p}=\frac{2}{\frac{1}{40}}=80  
+> $$ 
+> 
+> E quindi:
+> 
+> $$
+> E[Y]=1,5\cdot 80 =120
+> $$
+>   
+
+
