@@ -2116,7 +2116,8 @@ $$
 > 
 > $$
 > P(X=7)=(p)^{k-1}=\left( \frac{5}{6} \right)^6
-  $$
+> $$
+> 
 
 ## Variabile Aleatoria Binomiale Negativa
 Dipende da due parametri, $p\in(0,1)$ che è la probabilità di successo in una prova e $r\in \{ 1,2,3\dots \}$ intero che indica il numero di successi che voglio ottenere.
