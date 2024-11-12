@@ -1433,7 +1433,7 @@ Nel secondo caso, molto spesso il processo che ha cambiato stato verrà eseguito
 ### Regole Generali
 La classe **SCHED_FIFO** non viene bloccato da interrupt, un processo viene rimesso in coda solo se si blocca per qualche richiesta o viene mandato in _RUNNING_ un processo prioritario altrimenti non viene fermato.
 
-Gli altri processi funzionano normalmente a "quanti di tempo" compresa la classe **SCHE_RR**, quindi questi vengono rimessi in coda anche quando finiscono il loro tempo.
+Gli altri processi funzionano normalmente a "quanti di tempo" compresa la classe **SCHED_RR**, quindi questi vengono rimessi in coda anche quando finiscono il loro tempo.
 
 I processi real-time **non cambiano mai priorità** mentre gli **SCHED_OTHER** si, ovvero man mano che vanno in esecuzione la loro priorità decresce.
 
@@ -1929,3 +1929,4 @@ In tutto abbiamo 3 strategie, infatti se scegliamo l'allocazione fissa non possi
 Se modifichiamo un frame va riportata la modifica anche sulla pagina corrispondente, quindi abbiamo gli stessi problemi della cache, quando facciamo questa modifica? Quando facciamo la modifica o quando il frame viene sostituito?
 
 Solitamente si fa una via di mezza con il **page buffering** che vedremo più avanti. L'idea è accumulare delle richieste di modifica e poi farle tutte insieme.
+

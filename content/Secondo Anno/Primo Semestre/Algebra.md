@@ -3400,3 +3400,158 @@ $$
 (1247)(3685)=(3685)(1247)=\sigma
 $$
 
+---
+
+Sia $G$ gruppo in notazione moltiplicativa e $H<G$, introduciamo una relazione su $G$:
+
+$$
+x,x'\in G \qquad x \textasciitilde x' \Leftrightarrow  x(x')^{-1}\in H
+$$
+
+**Lemma**: ~ è di equivalenza
+
+_Dimostrazione_
+
+- Riflessività
+
+$$
+H<G\Rightarrow 1_{G}\in H \text{ ma } 1_{G}=xx^{-1} \ \forall x\in G \text{ quindi } x\textasciitilde x
+$$
+
+- Simmetria
+
+$$
+\begin{align*}
+&x\textasciitilde x' \Leftrightarrow x(x')^{-1}\in H \\
+&\text{Ma } \forall h\in H,h^{-1}\in H \\
+&\text{Quindi } (x(x')^{-1})^{-1}=x'x^{-1}\in H
+\end{align*}
+$$
+
+- Transitività
+
+Supponiamo $x$ ~ $x'$ e $x'$ ~ $x''$ allora $x(x')^{-1},x'(x'')^{-1}\in H$. Se $a,b$ appartengono al sottogruppo allora ne fa parte anche il loro prodotto e quindi:
+
+$$
+x(x')^{-1}x'(x'')^{-1}=x(x'')^{-1}\in H
+$$
+
+_Domanda_
+
+È possibile costruire su $G/\textasciitilde$ un'operazione binaria in modo tale che $G/\textasciitilde=G/H$ acquisisca una struttura di gruppo? Talvolta si, talvolta no, quali sono le condizioni?
+
+Vorremmo che questa identità fosse valida per la nuova operazione:
+
+$$
+[x]\circ [x']=[x \cdot x'] \text{ Indipendentemente dai rappresentanti}
+$$
+
+Dove $\circ$ indica la nuova operazione mentre $\cdot$ la vecchia operazione di $G$.
+
+Supponiamo:
+
+$$
+\begin{align*}
+&x \textasciitilde y\Leftrightarrow [x]=[y]\Leftrightarrow x(y)^{-1}\in H \\
+&x' \textasciitilde y'\Leftrightarrow [x']=[y']\Leftrightarrow x'(y')^{-1}\in H
+\end{align*}
+$$
+
+Ci serve che $[xx']=[yy']$ ovvero che $xx'(yy')^{-1}\in H$ ma notiamo che:
+
+$$
+xx'(yy')^{-1}=x\underbrace{ x'y'^{-1} }_{ \in H }y^{-1}
+$$
+
+E questo suggerisce una definizione.
+
+**Definizione Sottogruppo Normale**
+
+$H$ è un sottogruppo normale di $G$ se $\forall x\in G,xH=Hx$ e si scrive $H\triangleleft G$ 
+
+_Condizioni Equivalenti_
+
+1) $H\triangleleft G$
+2) $\forall g\in G$ e $h\in H$, $\exists h'\in H \ t.c. \ gh=h'g$
+3) $\forall g\in G,H^g=H$ 
+
+Ci basta mostrare che $3\Rightarrow 1\Rightarrow 2\Rightarrow 3$ 
+
+![[Pasted image 20241112180740.png]]
+
+
+> [!Info] Osservazione
+> 
+> ![[actually.png|100]]
+> 
+> Se $G$ abeliano e $H<G$ allora $H\triangleleft G$, tutti i sottogruppi di un gruppo abeliano sono normali.
+> 
+> Inoltre dato $G$ qualsiasi ho $G\triangleleft G$ infatti $\forall x\in G, xG=Gx \ e \ G/G=\{ G \}$; e anche $\{ 1_{G} \}\triangleleft G$ infatti $\forall x\in G,x 1_{G}=1_{G}x=x$ e $G/\{ 1_{G} \}=\{ \{ g \}:g\in G \}$.
+> 
+
+Tornando all'operazione di prima:
+
+$$
+xx'(yy')^{-1}=x\underbrace{ x'y'^{-1} }_{ \in H }y^{-1} = xhy^{-1}=h'\underbrace{ xy^{-1} }_{ \in H }\in H
+$$
+
+Quindi $[xx']=[yy']$ e in questo caso possiamo definire su $G/$~ l'operazione $[x]\cdot[x']:=[xx']$
+
+**Teorema**
+
+Dati $H\triangleleft G$ e ~ di equivalenza, allora l'operazione su $G/$~ $[x][x']=[xx']$ definisce una struttura di gruppo su $G/$~.
+
+Si scrive $G/H=G/$~ **gruppo quoziente di G per H**, l'elemento neutro è $1_{G/H}=H$
+
+**Lemma**
+
+L'applicazione:
+
+$$
+\begin{align*}
+G\xrightarrow{\pi_{H}}G_{H} \\
+g\to [g]
+\end{align*}
+$$
+
+È un omomorfismo di gruppi suriettivo.
+
+_Dimostrazione_
+
+La suriettività di $\pi_{H}$ è chiara, perché ogni classe contiene un rappresentante inoltre:
+
+$$
+\pi_{H}(g(g')^{-1})=[g(g')^{-1}]=[g][(g')^{-1}]=\pi_{H}(g)\pi_{H}(g')^{-1}
+$$
+
+Osserviamo inoltre $[g]=gH=Hg$
+
+Infatti $g'\in[g]\Leftrightarrow g'g^{-1}\in H\Leftrightarrow g'\in Hg$
+
+Gli elementi di $G/H$ (sottoinsieme di G) sono le **classi laterali** di H
+
+**Lemma**
+
+Data $G_{1}\xrightarrow{f}G_{2}$ omomorfismo di gruppi allora $\underbrace{ Ker(f) }_{ ='H' }\triangleleft G_{1}$ inoltre se $H\triangleleft G_{1}$ allora $H=Ker(\pi_{H})$ 
+
+_Dimostrazione_
+
+Se $h\in G_{1}$ tale che $f(h)=1_{G_{2}}$ ($\Leftrightarrow h\in Ker(f)$) mostriamo che $\forall x\in G, Ker(f)^x=Ker(f)$.
+
+Allora si ha $\forall x\in G_{1}$:
+
+$$
+\begin{align*}
+&f(x^{-1}hx)=f(x^{-1})f(h)f(x) \\
+&=f(x)^{-1}1G_{2} f(x) \\
+&=f(x)^{-1}f(x)=1G_{2} \\
+&\Leftrightarrow x^{-1}hx\in Ker(f) \qquad \forall h\in Ker(f), \forall x\in G \Leftrightarrow Ker(f)^x=Ker(f)
+\end{align*}
+$$
+
+Se $H\triangleleft G$ poniamo $f=\pi_{H}$, mostriamo che $H=Ker(\pi_{H})$. Ma se $y\in G$ soddisfa:
+
+$$
+\pi_{H}(g)=1_{G/H}=H\Leftrightarrow gH=H\Leftrightarrow g\in H
+$$
+
