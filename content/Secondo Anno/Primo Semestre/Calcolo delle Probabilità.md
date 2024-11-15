@@ -2184,4 +2184,312 @@ $$
 > $$
 >   
 
+## Variabile Aleatoria Ipergeometrica
 
+Prototipo: Abbiamo un'urna con $N$ palline di cui $m$ bianche e $N-m$ nere, estraggo senza rimpiazzo $n$ palline con $n\leq N$.
+
+Definiamo $X:=\#\text{Numero palline bianche estratte}$
+
+$X$ è detta **variabile aleatoria di parametri** $N,m,n$
+
+Come si calcola $P(X=k)?$ Numeriamo tutte le palline per distinguerle, nello spazio campionario abbiamo: $\binom{N}{n}$ modi per scegliere $n$ palline. Usiamo il principio fondamentale della combinatoria:
+
+$$
+P(X=k)=\frac{\binom{n}{k}\cdot \binom{N-m}{n-k}}{\binom{N}{n}}
+$$
+
+Quindi al numeratore abbiamo i modi per scegliere le bianche per i modi per scegliere le nere.
+
+Per quali $k$ abbiamo che $P(X=k)>0$?
+
+$$
+P(X=k)\Leftrightarrow \binom{m}{k}>0 \Leftrightarrow 0\leq n-k\leq N-m
+$$
+
+Ricordiamo che per i binomiali $\binom{b}{a}$ deve valere $0\leq a\leq b$ altrimenti è 0.
+
+Quindi abbiamo:
+
+$$
+\begin{cases}
+0\leq k\leq m \\
+0\leq n-k \leq N-m
+\end{cases}
+$$
+
+Ovvero 4 disuguaglianze:
+
+$$
+\begin{cases}
+0\leq k \\
+k\leq m \\
+k\leq n \\
+n+m-N\leq k
+\end{cases}
+$$
+
+Scritto in un'unica disuguaglianza:
+
+$$
+max(0,n+m-N)\leq k\leq min(m,n)
+$$
+
+**Definizione**
+
+Una variabile aleatoria ipergeometrica di parametri $N,m,n$ è una variabile aleatoria discreta con densità di probabilità come il prototipo visto per l'esercizio sopra, cioè:
+
+$$
+P(X=k)=\frac{\binom{n}{k}\cdot \binom{N-m}{n-k}}{\binom{N}{n}}
+$$
+
+Inoltre abbiamo che:
+
+$$
+E[X]=\frac{n\cdot m}{N} \qquad Var(X)=np(1-p)\left( 1-\frac{n-1}{N-1} \right) \qquad \text{dove } p=\frac{m}{n}
+$$
+
+_Esempio_
+
+Un rivenditore acquista componenti a lotti da 10, per ogni lotto controlla a caso 3 componenti e mantiene il lotto solo se i 3 componenti sono buoni. Il 30% dei lotti ha 4 componenti difettosi mentre il 70% ne ha soltanto 1 difettoso. Che % di lotti rifiuterà il rivendtiore?
+
+Definiamo $X:=\#\text{Pezzi difettosi tra i 3 scelti dal lotto}$
+
+Calcoliamo $P(X\geq 1)$ ovvero che ci sia almeno un pezzo difettoso.
+
+$$
+\begin{align*}
+&P(X\geq 1) = 1-P(X=0) \\
+ \\
+&P(X=0)=P(X=0|E)P(E)+P(X=0|E^C)P(E^C) \\
+&\text{Dove E indica che il lotto ha 4 pezzi difettosi} \\
+ \\
+&P(X=0|E)=\frac{\binom{4}{0}\binom{6}{3}}{\binom{10}{3}} \\
+ \\
+&P(X=0|E^C)=\frac{\binom{1}{0}\binom{9}{3}}{\binom{10}{3}} \\
+ \\
+&\text{Quindi:} \\
+ \\
+&P(X=0)=\frac{\binom{4}{0}\binom{6}{3}}{\binom{10}{3}} \cdot 0.3 + \frac{\binom{1}{0}\binom{9}{3}}{\binom{10}{3}} \cdot 0.7
+\end{align*}
+$$
+
+
+> [!Example]- Esempio
+> 50 studenti di cui 7 con occhi verdi, scegliamo a caso 10 studenti, calcolare media e varianza di studenti con occhi verdi fra quelli scelti.
+> 
+> Abbiamo N=50, m=7 e n=10 mentre $X:=\#\text{Studenti con occhi verdi}$.
+> 
+> $$
+> E[X]=\frac{nm}{N}=\frac{7}{5} 
+> $$
+> 
+> Mentre per la varianza:
+> 
+> $$
+> Var(X)=10\cdot \frac{7}{50}\cdot\left( \frac{43}{50} \right)\cdot \left( 1- \frac{9}{49} \right)
+> $$
+> 
+> Infatti $p=\frac{7}{50}$
+> 
+
+
+> [!NOTE] Osservazione
+> 
+> ![[actually.png|100]]
+> 
+>
+> Prima abbiamo visto esempi senza rimpiazzo, cosa succede reinserendo ad esempio le palline estratte? Otteniamo semplicemente una binomiale, infatti avremo un numero di prove tutte uguali e indipendenti.
+> 
+
+---
+
+## Recap Variabile Aleatoria
+
+- $X$ variabile aleatoria è una funzione $X:S\to \mathbb{R}$
+- $X$ è discreta se l'insieme dei possibili valori $\{ x_{i} \}_{i\in I}$ è finito oppure infinito numerabile
+
+In varaibili aleatorie discrete, abbiamo introdotto la densità di probabilità discreta $p_{X}:\{ x_{i} \}_{i\in I}\to[0,1]$, definita come $p_{X}(x_{i}):= P(X=x_{i})$.
+
+**Proposizione**
+
+$$
+\sum_{i\in I}p_{X}(x_{i})=1 \qquad \text{Per X v.a. discreta}
+$$
+
+_Dimostrazione_
+
+Definiamo $E_{i}:=\{ X=x_{i} \}$ al variare di $i\in I$. Gli eventi $E_{i}$ sono una famiglia numerabile di eventi perché $X$ è una variabile aleatoria discreta, inoltre gli eventi sono 2 a 2 incompatibili.
+
+Per l'additività finita se $I$ è finito e per l'additività numerabile se $I$ è infinito numerabile ho:
+
+$$
+P\left( \bigcup_{i\in I}E_{i} \right)=\sum_{i\in I}P(E_{i})
+$$
+
+Inoltre notiamo che:
+
+$$
+\bigcup_{i\in I}E_{i}=S\Rightarrow P(\bigcup_{i\in I}E_{i})=P(S)=1
+$$
+
+Infatti l'unione di tutti gli eventi è l'evento certo.
+
+E quindi:
+
+$$
+1=P\left( \bigcup_{i\in I}E_{i} \right)=\sum_{i\in I} \overbrace{ P(E_{i}) }^{ \{ X=x_{i} \} }=\sum_{i\in I}p_{X}(x_{i})
+$$
+
+> [!info] Osservazione
+> 
+> ![[actually.png|100]]
+> 
+> Se $X$ è v.a. generica allora non è vero che $\sum\limits_{x}P(X=x)=1$ dove $x$ è un possibile valore di $X$.
+
+**Definizione**
+
+Date due v.a. $X$ e $Y$ definite sullo stesso spazio campionario, ovvero sono entrambe delle funzioni definite come $S\to \mathbb{R}$, entrambe discrete dove $X$ ha valori in $\{ x_{i} \}_{i\in I}$ e $Y$ ha valori in $\{ y_{j} \}_{j\in J}$.
+
+La **densità di probabilità discreta congiunta** denotata con $p_{X,Y}$ è la funzione:
+
+$$
+p_{X\times Y}:= \{ x_{i} \}_{i\in I} \times \{ y_{j} \}_{j\in J}\to[0,1]
+$$
+
+È quindi definita sul prodotto cartesiano dei due insiemi, è inoltre definita come:
+
+$$
+p_{X,Y}(x_{i},y_{j})=P(X=x_{i},Y=y_{j})
+$$
+
+
+> [!example]- Esempio
+> 
+> Supponiamo di lanciare un dado 2 volte, chiamiamo $X:=\#\text{Lanci in cui ho faccia pari}$ e $Y:=\#\text{Lanci in cui esce multiplo di 3}$. Come calcoliamo $p_{X,Y}$?
+> 
+> $X$ ha valori in $\{ 0,1,2 \}$ mentre $Y$ in $\{ 0,1,2 \}$.
+> 
+> $$
+> p_{X,Y}(x,y)=P(X=x,Y=y)
+> $$
+> 
+> Dobbiamo calcolare quindi 9 valori
+> 
+> 
+>| X/Y | 0   | 1   | 2   |
+>| --- | --- | --- | --- |
+>| 0   |  $\frac{4}{36}$   |  $\frac{4}{36}$   |  $\frac{1}{36}$   |
+>| 1   |  $\frac{4}{36}$   |  $\frac{8}{36}$   |     |
+>| 2   |     |     |     |
+>
+>Dove per ogni casella calcoliamo $P(X,Y)$ dove al posto di $X$ e $Y$ inseriamo il corrispondente valore della variabile aleatoria.
+>
+>- Prima Riga
+>- $p_{X,Y}(0,2)=P(X=0,Y=2)=P(\{ 3,3 \})=\frac{1}{36}$
+>- $p_{X,Y}(0,0)=P(X=0,Y=0)=\frac{2\cdot 3}{36}$
+>- $p_{X,Y}(0,1)=P(X=0,Y=1)=P((3,1),(3,5),(1,3),(5,3))=\frac{4}{36}$
+> - Seconda Riga
+>- $p_{X,Y}(1,0)=P(X=1,Y=0)=P((2,1),(2,5),(4,1),(4,5))=\frac{4}{36}$
+>- $p_{X,Y}(1,1)=P(X=1,Y=1)=P((2,3),(4,3),(1,6),(5,6),(6,5),(6,1))=\frac{8}{36}$
+>- $p_{X,Y}(1,2)=P(X=1,Y=2)=\dots$
+>  
+>  Altro metodo è quello di fare la tabella con i casi, in questo caso un 6x6 e poi inserire in ogni casella la coppia di valori (x,y), poi contiamo quante caselle per ogni coppia di valori. 
+>  
+>  ![[Pasted image 20241115125935.png|250]]
+>  
+>  Se prendiamo lo stesso esempio ma lanciando il dado una sola volta abbiamo che:
+>  
+>  $$
+>  \begin{cases}
+> 1 \qquad X=0,Y=0 \\
+> 2 \qquad X=1,Y=0 \\
+> 3 \qquad X=0,Y=1 \\
+> 4 \qquad X=1,Y=0 \\
+> 5 \qquad X=0,Y=0 \\
+> 6 \qquad X=1,Y=1
+> \end{cases}
+> $$
+>  
+>  E inserendolo nella tabella:
+>  
+>  
+>| X/Y | 0             | 1             |
+>| --- | ------------- | ------------- |
+>| 0   | $\frac{2}{6}$ | $\frac{1}{6}$ |
+>| 1   | $\frac{2}{6}$ | $\frac{1}{6}$ |
+>
+>Notiamo che la somma di tutti i valori fa 1.
+>
+
+**Proposizione**
+
+Siano $X$ e $Y$ v.a. discrete definite su $S$, sia $\{ x_{i} \}_{i\in I}$ l'insieme dei possibili valori di $X$ e sia $\{ y_{j} \}_{j\in J}$ l'insieme dei possibili valori di $Y$.
+
+Allora:
+1) $p_{X,Y}(x_{i},y_{j})\in[0,1]$
+2) $\sum_{i\in I}\sum_{j\in J}p_{X,Y}(x_{i},y_{j})=1$
+3) $p_{X}(x_{i})=\sum_{j\in J}p_{X,Y}(x_{i},y_{j})$
+4) $p_{Y}(y_{j})=\sum_{i\in I}p_{X,Y}(x_{i},y_{j})$ 
+
+_Dimostrazione_
+
+1) $p_{X,Y}(x_{i},y_{j})\underset{definizione}=P(X=x_{i},Y=y_{j})\in[0,1]$ 
+2) Questa dimostrazione usa le stesse idee della dimostrazione di $\sum_\limits{i\in I}p_{X}(x_{i})=1$ 
+
+Poniamo $E_{ij}=\{ X=x_{i},Y=y_{j} \}$, abbiamo che $p_{X,Y}(x_{i},y_{j})\underset{definizione}= P(X=x_{i},Y=y_{j})=P(E_{ij})$.
+
+Gli eventi $E_{ij}$ al variare di $i\in I,j\in J$ formano una famiglia finita o infinita numerabile di eventi 2 a 2 incompatibili.
+
+Quindi:
+
+$$
+\sum_{i\in I,j\in J}p_{X,Y}(x_{i},y_{j})=\sum_{i\in I,j\in J}P(E_{i})\underset{\text{additività}}=P\left( \bigcup_{i\in I,j\in J}E_{ij} \right) =P(S)=1
+$$
+
+3) $p_{X}(x_{i})\underset{\text{definizione}}=P(X=x_{i})=P\left( \bigcup\limits_{j\in J}\{ X=x_{i},Y=y_{j} \} \right)=P\left( \bigcup_\limits{j\in J}E_{ij} \right)=\sum\limits_{j\in J}P(E_{ij})=\sum\limits_{j\in J}p_{X,Y}(x_{i},y_{j})$ 
+4) Dimostrazione simile a (3).
+
+_Esempio_
+
+Ho variabili aleatorie $X,Y$ su $S$. $X$ assume valori $-2,0,5$ e $Y$ assume valori $4,9$. Inoltre $p_{X,Y}$ è data da:
+
+| X / Y | 4              | 9              |
+| ----- | -------------- | -------------- |
+| -2    | $\frac{1}{10}$ | $\frac{2}{10}$ |
+| 0     | $\frac{0}{10}$ | $\frac{1}{10}$ |
+| 5     | $\frac{3}{10}$ | $\frac{3}{10}$ |
+Dobbiamo determinare $p_{X}$ e $p_{Y}$. Ricordiamo la formula:
+
+$$
+p_{X}(x_{i})=\sum_{j}p_{X,Y}(x_{i},y_{j})
+$$
+
+Quindi calcolando $p_{X}$
+
+$$
+p_{X}(-2)=p_{X,Y}(-2,4)+p_{X,Y}(-2,9)=\frac{1}{10}+\frac{2}{10}=\frac{3}{10}
+$$
+
+$$
+p_{X}(0)=\frac{0}{10}+\frac{1}{10}=\frac{1}{10}
+$$
+
+$$
+p_{X}(-2,9)=\frac{1}{10}+\frac{2}{10}=\frac{3}{10}
+$$
+
+$$
+p_{X}(5)=\frac{3}{10}+\frac{3}{10}=\frac{6}{10}
+$$
+
+Mentre per la $p_{Y}$:
+
+$$
+p_{Y}(4)=p_{XY}(-2,4)+p_{XY}(0,4)+p_{XY}(5,4)=\frac{1}{10}+\frac{0}{10}+\frac{3}{10}=\frac{4}{10}
+$$
+
+$$
+p_{Y}(9)=\frac{2}{10}+\frac{1}{10}+\frac{3}{10}=\frac{6}{10}
+$$
+
+_Esercizi Lunedì_  Estraggo 2 carte da un mazzo di 40, X= assi di bastoni estratti e Y = carte di denari estratte calcolare Px Py Px,y

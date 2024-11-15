@@ -3079,7 +3079,7 @@ Sia $G_{1}\xrightarrow{f}G_{2}$ omomorfismo in notazione moltiplicativa.
 Sia $f:G_{1}\to G_{2}$ un omomorfismo di gruppi indichiamo con:
 
 $$
-H=\{ g\in G_{1} :f(g_{1})=1_{G_{2}}\}=f^{-1}(\{ 1_{G_{2}} \})\subset G_{1}
+H=\{ g\in G_{1} :f(g)=1_{G_{2}}\}=f^{-1}(\{ 1_{G_{2}} \})\subset G_{1}
 $$
 
 Ovvero gli elementi di $G_{1}$ che puntano all'elemento neutro di $G_{2}$, questo è un sotto gruppo di $G_{1}$: $H<G_{1}$ e si chiama **nucleo** di $f$, lo indichiamo con $H=Ker(f)$ (kernel).

@@ -1755,5 +1755,133 @@ Per fare questo utilizziamo le dipendenze nella chiusura di $F$ dato che sappiam
 
 Ricordiamo che l'algoritmo per definizione termina sempre, ci fornisce la chiusura di un insieme di attributi rispetto ad un insieme di dipendenze funzionali che non conosciamo, ma sappiamo essere incluso in un altro, questo risultato dobbiamo quindi utilizzarlo insieme all'algoritmo visto precedentemente per l'equivalenza di due insiemi di dipendenze.
 
-**Teorema Dimostrazione Algoritmo**, ho paura =(
+**Teorema Dimostrazione Algoritmo**
+
+Sia $R$ uno schema di relazione, $F$ un insieme di dipendenze funzionali su $R$ e $\rho=\{ R_{1},\dots,R_{k} \}$ una decomposizione di $R$. Prendiamo $X$ un sottoinsieme di $R$. L'algoritmo calcola correttamente $X^+_{G}$ dove $G=\bigcup_{i=i}^k \pi_{Ri}(F)$.
+
+_Dimostrazione_
+
+Dato che l'algoritmo aggiunge sempre qualcosa alla chiusura senza mai togliere nulla, possiamo procedere per induzione.
+
+Indichiamo con $Z^0$ il valore iniziale di $Z$ e con $Z^i$ il valore di $Z$ dopo l'i-esima esecuzione dell'assegnazione $Z=Z\cup S$, è facile vedere che $Z^i\subseteq Z^{i+1}$ per ogni i.
+
+Sia $Z^f$ il valore di $Z$ quando l'algoritmo termina, proveremo che:
+
+$$
+A\in Z^f \Leftrightarrow A\in X^+G
+$$
+
+_Parte solo se_
+
+Mostriamo che $Z^i\subseteq X^+_{G}$ per ogni $i$, in particolare per $f=i$
+
+- Base dell'induzione $i=0$, poiché $Z^0=X$ e $X\subseteq X^+$ si ha che $Z^0\subseteq X^+_{G}$.
+
+- Induzione: $i>0$, per ipotesi induttiva abbiamo che $Z^{i-1}\subseteq X^+_{G}$, con $i$ indichiamo le iterazione del _while_
+
+Sia $A$ un attributo in $Z^i-Z^{i-1}$ ovvero che lo abbiamo aggiunto nell'iterazione appena fatta, significa che quindi esiste un indice $j$ della decomposizione tale che $A\in(Z^{i-1}\cap R_{j})^+_{F}\cap R_{j}$.
+
+Poiché $A\in(Z^{i-1}\cap R_{j})^+_{F}$ possiamo dire che $(Z^{i-1}\cap R_{j}) \to A\in F^+$.
+
+Quindi sappiamo che:
+- $(Z^{i-1}\cap R_{j}) \to A\in F^+$
+- $A\in R_{j}$ (appartiene all'intersezione fra la chiusura e $R_{j}$ vista prima)
+- $Z^{i-1}\cap R_{j}\subseteq R_{j}$
+
+Adesso per la definizione di $G$ si ha che $Z^{i-1}\cap R_{j}\to A\in G$, infatti in $G$ abbiamo le proiezione delle dipendenze sui sottoschemi e siccome abbiamo l'intersezione con $R_{j}$ sappiamo che si trova in un sottoschema.
+
+Per ipotesi induttiva sappiamo che $Z^{i-1}\subseteq X^+_{G}$ ovvero che $X\to Z^{i-1}\in G^+$ e per la regola della decomposizione possiamo dire che $X\to Z^{i-1}\cap R_{j}\in G^+$.
+
+Possiamo quindi usare l'assioma della transitività, dato che $X\to Z^{i-1}\cap R_{j}\in G^+$ e che $Z^{i-1}\cap R_{j}\to A\in G$ possiamo dire che $X\to A\in G^+$ e quindi che $A\in X^+_{G}$. Quindi $Z^i\subseteq X^+_{G}$.
+
+Abbiamo mostrato che vengono inseriti anche gli elementi della i-esima iterazione mentre quelli delle precedenti ci sono per ipotesi.
+
+_Parte Se non ci interessa_
+
+## Join Senza Perdita
+Quando uno schema viene decomposto abbiamo visto che non basta mantenere la 3NF sui sottoschemi, dobbiamo anche mantenere tutte le dipendenze e tutti i dati dell'istanza originale quando effettuiamo un join sui sottoschemi, per perdita di dati intendiamo in realtà un'aggiunta di informazioni estranee allo schema originale. (Fatti esempi più sopra).
+
+Quindi quando decomponiamo uno schema abbiamo come obiettivo: **permettere la ricostruzione di ogni istanza legale dello schema originale mediante join naturale**.
+
+_Definizione_
+
+Sia $R$ uno schema di relazione, una decomposizione $\rho=\{ R_{1},\dots,R_{k} \}$ di $R$ ha un join senza perdita se per ogni istanza legale $r$ di $R$ si ha che:
+
+$$
+r=\pi_{R_{1}}(r)\bowtie \dots \bowtie \pi_{R_{k}}(r)
+$$
+
+Infatti facendo la proiezione di un'istanza su ogni sottoschema otteniamo "una parte" di quell'istanza, facendo il join dobbiamo ricomporla tutta.
+
+---
+
+Partiamo da una decomposizione data e cerchiamo un modo per verificare che soddisfi la proprietà data.
+
+**Teorema**
+
+Sia $R$ uno schema di relazione e $\rho=\{ R_{1},\dots,R_{k} \}$ una decomposizione di $R$. Per ogni istanza legale $r$ di $R$, indicato con $m_{\rho}(r)=\pi_{R_{1}}(r)\bowtie \dots\bowtie \pi_{R_{k}}(r)$ si ha che:
+
+1) $r\subseteq m_{\rho}(r)$
+2) $\pi_{Ri}(m_{\rho}(r))=\pi_{Ri}(r)$
+3) $m_{\rho}(m_{\rho}(r))=m_{\rho}(r)$
+
+---
+
+Abbiamo uno schema $R$ e un insieme di dipendenze funzionali $F$ e una decomposizione $\rho$, come verifichiamo che la decomposizione ha un join senza perdita? Possiamo farlo tramite un algoritmo di verifica che agisce in tempo polinomiale ovvero $O(n^k)$ per una qualche costante $k$.
+
+- Input: uno schema di relazione $R$, un insieme $F$ di dipendenze funzionali su $R$ e una decomposizione $\rho=\{ R_{1},\dots,R_{k} \}$ di $R$.
+- Output: un booleano che ci dice se $\rho$ ha un join senza perdita.
+
+Costruiamo una tabella $r$ in modo tale da avere un numero di colonne pari al numero degli attributi di $R$ e un numero di righe pari al numero di sottoschemi presenti nella decomposizione $\rho$.
+
+Nelle celle che si incontrano all'indice $i$ per le righe e $j$ per le colonne inseriamo il simbolo $a_{j}$ se l'attributo $A_{j}\in R_{i}$ ovvero se l'attributo della colonna $j$ appartiene al sottoschema della riga $i$. Altrimenti inseriamo $b_{ij}$.
+
+Adesso per ogni dipendenza $X\to Y\in F$ controlliamo se nella tabella ci sono tuple che non rispettano la dipendenza ovvero tali che $t_{1}[X]=t_{2}[X]$ e $t_{1}[Y]\neq t_{2}[Y]$, e a questo punto le facciamo diventare "legali", se in una tupla è presente una $a$ nell'attributo $Y$ allora propaghiamo questa $a$ a tutte le altre, altrimenti scegliamo un $b$ a piacere e la propaghiamo su tutte le altre.
+
+Se abbiamo apportato modifiche continuiamo ad applicare l'algoritmo altrimenti ci fermiamo. Ci fermiamo anche se in una riga ci sono tutte $a$.
+
+Se quando ci fermiamo è presente una riga con tutte $a$ allora la decomposizione ha join senza perdita.
+
+> [!Osservazione]
+> 
+> ![[actually.png|100]]
+> 
+> - Possiamo considerare gli $a_{j}$ come valori particolari appartenenti al dominio dell'attributi $A_{j}$.
+> - Possiamo considerare i $b_{ij}$ come valori particolari appartenenti al dominio dell'attributo $A_{j}$
+> - Possiamo considerare tutti i valori $a_{j}$ uguali tra di loro
+> - Il valore $b_{ij}$ è diverso da $a_{j}$ e da un altro valore $b_{kj}$ anche se appartengono tutti allo stesso dominio dell'attributo $A_{j}$
+> - Quindi la nostra $r$ iniziale è una particolare istanza dello schema $R$ che trasformiamo in un'istanza legale e per fare questo dobbiamo fare in modo che tutte le dipendenze in $F$ siano soddisfatte.
+> - Infatti quando troviamo tuple uguali sugli attributi di sinistra (determinanti) allora facciamo in modo che siano uguali anche sui dipendenti, dando precedenza alle $a$.
+> - Quando ci fermiamo significa che abbiamo costruito un'istanza legale di $R$
+> 
+
+_Esempio_
+
+Dato lo schema $R=\{ A,B,C,D,E \}$ e $F=\{ C\to D, AB\to E,D\to B \}$, dire se la decomposizione $\rho=\{ AC,ADE,CDE,AD,B \}$ ha un join senza perdita.
+
+Costruiamo la tabella
+
+![[Pasted image 20241115170529.png|500]]
+
+Adesso iniziamo a verificare le dipendenze:
+
+1) $C\to D$, prima e terza riga sono uguali su C ma diverse su D, sulla riga 3 abbiamo $a_{4}$ quindi la portiamo anche alla prima riga
+2) $AB\to E$ è già soddisfatta
+3) $D\to B$, abbiamo 3 tuple uguali su D e diverse su B, non abbiamo nessuna $a$ quindi scegliamo una $b$ e la portiamo su tutte le righe
+
+Scriviamo la tabella e siccome abbiamo effettuato modifiche e non abbiamo $a$ su un'intera riga, continuiamo ad applicare l'algoritmo.
+
+![[Pasted image 20241115170910.png|500]]
+
+1) $C\to D$ è già soddisfatta
+2) $AB\to E$ abbiamo 3 tuple uguali su AB e diverse su E, sulla E abbiamo $a_{5}$ quindi portiamo $a_{5}$ su tutte le tuple
+3) $D\to B$ già soddisfatta
+
+Scriviamo la tabella e continuiamo con le iterazioni
+
+![[Pasted image 20241115171148.png|500]]
+
+Adesso notiamo che tutte e 3 le dipendenze sono soddisfatte e quindi non facciamo cambiamenti in questa iterazione, l'algoritmo si ferma.
+
+Abbiamo una riga con tutte $a$? No quindi la decomposizione non ha join senza perdita.
 
