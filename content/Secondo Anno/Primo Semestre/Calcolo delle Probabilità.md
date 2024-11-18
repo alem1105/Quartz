@@ -2434,7 +2434,7 @@ Allora:
 _Dimostrazione_
 
 1) $p_{X,Y}(x_{i},y_{j})\underset{definizione}=P(X=x_{i},Y=y_{j})\in[0,1]$ 
-2) Questa dimostrazione usa le stesse idee della dimostrazione di $\sum_\limits{i\in I}p_{X}(x_{i})=1$ 
+2) Questa dimostrazione usa le stesse idee della dimostrazione di $\sum\limits_{i\in I}p_{X}(x_{i})=1$ 
 
 Poniamo $E_{ij}=\{ X=x_{i},Y=y_{j} \}$, abbiamo che $p_{X,Y}(x_{i},y_{j})\underset{definizione}= P(X=x_{i},Y=y_{j})=P(E_{ij})$.
 
