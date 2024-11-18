@@ -2446,7 +2446,10 @@ $$
 \sum_{i\in I,j\in J}p_{X,Y}(x_{i},y_{j})=\sum_{i\in I,j\in J}P(E_{i})\underset{\text{additività}}=P\left( \bigcup_{i\in I,j\in J}E_{ij} \right) =P(S)=1
 $$
 
-3) $p_{X}(x_{i})\underset{\text{definizione}}=P(X=x_{i})=P\left( \bigcup\limits_{j\in J}\{ X=x_{i},Y=y_{j} \} \right)=P\left( \bigcup_\limits{j\in J}E_{ij} \right)=\sum\limits_{j\in J}P(E_{ij})=\sum\limits_{j\in J}p_{X,Y}(x_{i},y_{j})$ 
+3) 
+   
+$p_{X}(x_{i})\underset{\text{definizione}}=P(X=x_{i})=P\left( \bigcup\limits_{j\in J}\{ X=x_{i},Y=y_{j} \} \right)=P\left( \bigcup_\limits{j\in J}E_{ij} \right)=\sum\limits_{j\in J}P(E_{ij})=\sum\limits_{j\in J}p_{X,Y}(x_{i},y_{j})$ 
+
 4) Dimostrazione simile a (3).
 
 _Esempio_
