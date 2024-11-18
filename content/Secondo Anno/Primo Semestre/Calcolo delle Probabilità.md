@@ -2448,7 +2448,9 @@ $$
 
 3) 
    
-$p_{X}(x_{i})\underset{\text{definizione}}=P(X=x_{i})=P\left( \bigcup\limits_{j\in J}\{ X=x_{i},Y=y_{j} \} \right)=P\left( \bigcup_\limits{j\in J}E_{ij} \right)=\sum\limits_{j\in J}P(E_{ij})=\sum\limits_{j\in J}p_{X,Y}(x_{i},y_{j})$ 
+$$
+p_{X}(x_{i})\underset{\text{definizione}}=P(X=x_{i})=P\left( \bigcup_{j\in J}\{ X=x_{i},Y=y_{j} \} \right)=P\left( \bigcup_{j\in J}E_{ij} \right)=\sum_{j\in J}P(E_{ij})=\sum_{j\in J}p_{X,Y}(x_{i},y_{j})
+$$ 
 
 4) Dimostrazione simile a (3).
 
