@@ -2497,4 +2497,58 @@ $$
 p_{Y}(9)=\frac{2}{10}+\frac{1}{10}+\frac{3}{10}=\frac{6}{10}
 $$
 
-_Esercizi Lunedì_  Estraggo 2 carte da un mazzo di 40, X= assi di bastoni estratti e Y = carte di denari estratte calcolare Px Py Px,y
+---
+
+In una v.a. discreta congiunta, le densità che la compongono vengono chiamata **marginali** e conoscendo la congiunta possiamo calcolare le marginali, ma non vale il contrario.
+
+Vediamo un esempio
+
+Abbiamo un'urna con 6 palline numerate da 1 a 6, estraiamo 2 palline con rimpiazzo e definiamo:
+
+$$
+\begin{align*}
+&X:=\text{Numero della prima pallina} \\
+&Y:=\text{Numero della seconda pallina}
+\end{align*}
+$$
+
+Quindi $X$ assume valori in $\{ 1,2,3,4,5,6 \}$ e con $p_{X}(k)=\frac{1}{6}$ per ogni $k$ da 1 a 6, analogamente per $Y$.
+
+La congiunta $(X,Y)$ assume valori $(a,b)$ con $a,b\in \{ 1,2,3,4,5,6 \}$ e $p_{X,Y}(a,b)=P(X=a,Y=b)=\frac{1}{36}$  $\forall(a,b)\in \{ 1,2,3,4,5,6 \}^2$
+
+
+Adesso facciamo lo stesso esempio ma senza rimpiazzo:
+
+Quindi le due marginali sono identiche ma per la congiunta abbiamo che:
+
+$$
+p_{X,Y}(a,b)=\begin{cases}
+\frac{1}{30} \text{ se } a,b\in \{ 1,\dots,6 \} \text{ e } a\neq b \\
+0 \text{ se } a,b\in \{ 1,\dots,6 \} \text{ e } a=b
+\end{cases}
+$$
+
+Infatti la congiunta assume valori $(a,b)$ dove $a,b\in \{ 1,\dots,6 \}$ ma $a\neq b$.
+
+Notiamo quindi che nei due esperimenti le due marginali sono uguali ma la congiunta dipende dall'esperimento e quindi cambia.
+
+> [!Info] Definizione
+> Se ho $n$ v.a. discrete $X_{1},\dots X_{n}:S\to \mathbb{R}$ dove $X_{i}$ ha valori in $V_{i}$ con $i=1,\dots,n$ la densità di probabilità discreta congiunta è data da $p_{X_{1},\dots,X_{n}}:V_{1}\times\dots \times V_{n}\to [0,1]$ ed è definita come $p_{X_{1},\dots,X_{n}}(a_{1},\dots,a_{n}):=P(X_{1}=a_{1},\dots,X_{n}=a_{n})$
+
+Adesso torniamo ad un esempio con 2 v.a. definite quindi $X,Y:S\to \mathbb{R}$ e la loro congiunta definite come:
+
+$$
+\begin{align*}
+&X:S\to \mathbb{R} \qquad S\to X_{S} \\
+&Y:S\to \mathbb{R} \qquad S\to Y_{S} \\
+&(X,Y):S\to \mathbb{R}^2 \qquad S\to(X_{S},Y_{S})
+\end{align*}
+$$
+
+Supponiamo di avere una funzione composta $f:\mathbb{R}^2\to \mathbb{R}$ definita:
+
+$$
+f(X,Y):S\to \mathbb{R} \qquad S\to f(X_{S},Y_{S})
+$$
+
+Questa è una v.a. dato che va da $S$ in $\mathbb{R}$ e se $X,Y$ sono discrete allora lo è anche $f$ dato che se applichiamo una funzione "mappa", la cardinalità dell'insieme su cui la applichiamo non può aumentare.
