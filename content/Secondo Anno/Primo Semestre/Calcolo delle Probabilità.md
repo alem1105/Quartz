@@ -2551,4 +2551,95 @@ $$
 f(X,Y):S\to \mathbb{R} \qquad S\to f(X_{S},Y_{S})
 $$
 
-Questa è una v.a. dato che va da $S$ in $\mathbb{R}$ e se $X,Y$ sono discrete allora lo è anche $f$ dato che se applichiamo una funzione "mappa", la cardinalità dell'insieme su cui la applichiamo non può aumentare.
+Questa è una v.a. dato che va da $S$ in $\mathbb{R}$ e se $X,Y$ sono discrete allora lo è anche $f$ dato che se applichiamo una funzione, la cardinalità del codominio è sicuramente minore o uguale a quella del dominio.
+
+Adesso data una v.a. di questo tipo, calcoliamo il valore atteso.
+
+**Proposizione**
+
+Siano $X,Y$ v.a. discrete e $f:\mathbb{R}^2 \to \mathbb{R}$ allora:
+
+$$
+E[f(X,Y)]=\sum_{i\in I}\sum_{j\in J}f(x_{i},y_{j})P_{X,Y}(x_{i},y_{j})
+$$
+
+Dove $\{ x_{i} \}_{i\in I}$ è l'insieme dei valori di $X$ e $\{ y_{j} \}_{j\in J}$ è l'insieme dei valori di $Y$.
+
+> [!example]- Esempio
+> 
+> Data la v.a.
+> 
+> ![[Pasted image 20241120201611.png|200]]
+> 
+> Calcolare $E[X^2 Y]=\sum_{i}\sum_{j}x_{i}^2y_{j}P_{X,Y}(x_{i},y_{j})$ dove $f:\mathbb{R}^2\to \mathbb{R}$ e definita come $f(a,b)=a^2b$, eseguiamo i calcoli:
+> 
+> $$
+> E[X^2Y]=(-1)^2\cdot 0 \cdot \frac{2}{10}+(-1)^2\cdot 2\cdot \frac{1}{10}+(-1)^2\cdot 3\cdot 0 +\dots = \frac{45}{10}
+> $$
+
+
+**Proposizione**
+
+$E[X+Y]=E[X]+E[Y]$
+
+_Dimostrazione_
+
+Abbiamo $f:\mathbb{R}^2\to \mathbb{R}$ definita da $f(a,b)=a+b$ ovvero $f(X,Y)=X+Y$, possiamo quindi vederla come una funzione e usare la proposizione precedente per calcolare il valore atteso:
+
+$$
+\begin{align*}
+E[X+Y]&=E[f(X,Y)] \\
+&=\sum_{i}\sum_{j}\underbrace{ f(x_{i},y_{j}) }_{ x_{i}+y_{j} }P_{X,Y}(x_{i},y_{j}) \\
+&=\sum_{i}\sum_{j}x_{i}P_{X,Y}(x_{i},y_{j})U+\sum_{i}\sum_{j}y_{i}P_{X,Y}(x_{i},y_{j}) \\
+&=\sum_{i}x_{i}\underbrace{ \left( \sum_{j}P_{X,Y}(x_{i},y_{j})U \right) }_{ \text{Ruota solo la j, è il calcolo di } P_{X} }+\sum_{j}y_{j}\underbrace{ \left( \sum_{i}P_{X,Y}(x_{i},y_{j}) \right) }_{ \text{Ruota solo la i, è il calcolo di }P_{Y} } \\
+&=\underbrace{ \sum_{i}x_{i}P_{X}(x_{i}) }_{ E[X] }+\underbrace{ \sum_{j}y_{j}P_{Y}(y_{j}) }_{ E[Y] } \\
+&=E[X]+E[Y]
+\end{align*}
+$$
+
+In modo analogo si ottiene che:
+
+**Proposizione**
+
+$$
+E[X_{1}+\dots+X_{n}]=E[X_{1}]+\dots+E[X_{n}]
+$$
+
+In generali dati $a_{1},\dots,a_{n}\in \mathbb{R}$ si ha che:
+
+$$
+E[a_{1}X+\dots+a_{n}X_{n}]=a_{1}E[X_{1}]+\dots+a_{n}E[X_{n}]
+$$
+
+
+> [!example]- Esempio
+> Lancio un dado 1000 volte, calcolare $E[X]$ dove $X=\text{\#Esce 5}$, notiamo che usando la binomiale quindi $X=Bin(1000,1/6)$ si ha che:
+> 
+> $$
+> E[X]=\sum_{k=0}^1000 k\binom{1000}{k}\left( \frac{1}{6} \right)^k \left( \frac{5}{6} \right)^{1000-k}
+> $$
+> 
+> Ed è molto calcoloso.
+> 
+> È meglio scomporre questa variabile aleatoria in 1000 variabili più semplici piuttosto che eseguire il calcolo.
+> 
+> Possiamo scomporla in $X_{1},\dots,X_{1000}$ dove $X_{i}$ vale 1 se alla i-esima prova esce 5, 0 altrimenti, in questo modo otteniamo:
+> 
+> $$
+> E[X]=\sum_{i=1}^{1000} \underbrace{ E[X_{i}] }_{ 1\cdot \frac{1}{6}+0\cdot \frac{5}{6} } = 1000 \cdot \frac{1}{6}
+> $$
+> 
+> Da cui abbiamo trovato la formula $E[X]=np$ per le binomiali, infatti in questo caso abbiamo $n=1000$ e $p=\frac{1}{6}$
+
+**Proposizione**
+
+Se $X=Bin(n,p)\Rightarrow E[X]=np$
+
+_Dimostrazione_
+
+$X=\#Successi$ in $n$ prove indipendenti dove $p=\text{prob. successo}$ allora $X=X_{1}+\dots+X_{n}$ dove $X_{i}$ vale 1 se la i-esima prova ha successo, 0 altrimenti. Allora:
+
+$$
+E[X]=E\left[ \sum_{i=1}^n X_{i}\right]=\sum_{i=1}^n\underbrace{ E[X_{i}] }_{ 1\cdot p + 0\cdot (1-p) }=np
+$$
+
