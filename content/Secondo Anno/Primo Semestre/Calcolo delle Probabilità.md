@@ -2643,3 +2643,162 @@ $$
 E[X]=E\left[ \sum_{i=1}^n X_{i}\right]=\sum_{i=1}^n\underbrace{ E[X_{i}] }_{ 1\cdot p + 0\cdot (1-p) }=np
 $$
 
+---
+
+Prendiamo un'urna con $N$ palline di cui $m$ bianche e $N-m$ nere, estraiamo $n$ palline senza rimpiazzo, questo possiamo farlo in due modi.
+1) Estraiamo $n$ palline in un unico blocco
+2) Estraiamo una pallina alla volta senza rimpiazzo
+
+Pensiamo al caso di estrarre una pallina alla volta, definiamo quindi: $E_{i}=$ La i-esima pallina estratta è bianca.
+
+$$
+\begin{align*}
+&E_{1}=\frac{m}{N} \\
+&\dots \\
+&E_{3}=?
+\end{align*}
+$$
+
+Possiamo calcolare $E_{3}$ usando la combinatoria ma per altri motivi (?) possiamo dire che:
+
+$$
+P(E_{1})=P(E_{2})=\dots=P(E_{n}) \qquad (*)
+$$
+
+Quindi sapendo $(*)$ possiamo dire che:
+
+$$
+P(E_{i})=\frac{m}{N} \qquad \forall i=1,\dots ,n
+$$
+
+Ma perché vale $(*)$?
+
+Prendiamo l'urna e numeriamo le palline per distinguerle:
+
+$$
+U=\{ B_{1},B_{2},\dots ,B_{m},N_{1},N_{2},\dots ,N_{N-m} \}
+$$
+
+E abbiamo come spazio campionario:
+
+$$
+S=\{ (x_{1},x_{2},\dots,x_{n}):x_{i}\in U \ \forall i, x_{1},\dots,x_{n}  \text{ distinti} \}
+$$
+
+Abbiamo tutti esiti equiprobabili e quindi $P(E)=\frac{|E|}{|S|}$  $\forall E\subset S$ evento. Adesso supponiamo di avere una mappa bigettiva $f:S\to S$ quindi $\forall E\subset S$ abbiamo che $|E|=|f(E)|$ e quindi:
+
+$$
+P(E)=\frac{|E|}{|S|}=\frac{|f(E)|}{|S|}=P(f(E))
+$$
+
+> [!NOTE] Cosa abbiamo imparato?
+> $$
+> \forall f:S\to S \text{ bigettiva}
+> $$
+> 
+> Si ha che:
+> 
+> $$
+> P(E)=P(f(E)) \qquad \forall E\subset S \text{ evento}
+> $$
+
+Adesso dimostriamo $(*)$, più precisamente che $P(E_{1})=P(E_{i})$ $i=2,3,\dots,n$.
+
+
+Scegliamo $i\in \{ 2,3,\dots,n \}$ e abbiamo che $E_{1}=\{ (x_{1},\dots,x_{n})\in S:x_{1}\in \{ B_1,B_{2},\dots,B_{m} \} \}$. Possiamo esibire $f:S\to S$ bigettiva tale che $f(E_{1})=E_{i}$? Se possiamo farlo allora abbiamo che $P(E)=P(f(E_{1}))=P(E_{i})$ .
+
+Prendiamo ad esempio $i=3$, abbiamo $f(x_{1},x_{2},x_{3},\dots ,x_{n})=\{ x_{3},x_{2},x_{1},\dots,x_{n} \}$ ovvero $f$ scambia la prima con la i-esima entrata.
+
+_Esempio_
+
+Scegliamo 5 studenti da interrogare e definiamo:
+- E = Il secondo e il terzo studente scelto sono maschi.
+- F = Il quarto e il quinto studente scelto sono maschi.
+
+Abbiamo $C$ come classe e il nostro spazio campionario è:
+
+$$
+\begin{align*}
+&S=\{ (x_{1},x_{2},\dots,x_{5}):x_{i}\in C\quad\forall i, x_{1},\dots,x_{5} \text{ distinti} \} \\
+&E = \{ (x_{1},x_{2},\dots,x_{5})\in S:x_{2},x_{3} \text{ sono maschi} \} \\
+&F = \{ (x_{1},\dots,x_{5})\in S : x_{4},x_{5} \text{ sono maschi} \}
+\end{align*}
+$$
+
+Abbiamo che $P(E)=P(F)$ se esibiamo $f:S\to S$ bigettiva tale che $f(E)=F$, possiamo definire:
+
+$$
+f(x_{1},x_{2},x_{3},x_{4},x_{5})=(x_{1},x_{4},x_{5},x_{2},x_{3})
+$$
+
+Ovvero che scambia il 2 con il 4 e il 3 con il 5.
+
+Questo metodo vale sempre se si lavora con spazi di probabilità che hanno esiti equiprobabili.
+
+> [!NOTE] Proposizione
+> Sia $S$ uno spazio di probabilità con esiti equiprobabili e sia $f:S\to S$ una bigezione. Allora $P(E)=P(f(E))$ $\forall E\subset S$.
+
+_Dimostrazione_
+
+$$
+P(E)\underset{\text{esiti quiprobabili}}=\frac{|E|}{|S|}\underset{\text{f è bigettiva}}=\frac{|f(E)|}{|S|}\underset{\text{esiti equiprobabili}}=P(f(E))
+$$
+
+> [!NOTE] Proposizione
+> Sia $X$ v.a. ipergeometrica con paramentri $N,m,n$ (con il prototipo visto nella ipergeometrica) abbiamo $E[X]=\frac{nm}{N}$
+
+_Dimostrazione_ 
+
+Estraiamo le palline una alla volta e scomponiamo $X=X_{1}+X_{2}+\dots+X_{n}$ dove ogni v.a. $X_{i}$ vale 1 se la i-esima pallina è bianca, 0 altrimenti. Otteniamo quindi:
+
+$$
+E[X]=\sum_{i=1}^n E[X_{i}]=\frac{nm}{N}
+$$
+
+Infatti:
+
+$$
+E[X_{i}]=1\cdot P(E_{i})+0\cdot P(E_{i}^C)=P(E_{i})=P(E_{1})=\frac{m}{N}
+$$
+
+Se le $n$ estrazioni sono con rimpiazzo allora $X$ è una v.a. binomiale, infatti con il rimpiazzo tutti gli esperimenti sono identici e non si influenzano. Per dimostrarlo abbiamo usato la linearità del valore atteso in modo molto semplice, altrimenti avremmo dovuto usare metodi più complessi.
+
+
+> [!NOTE] Definizione - Variabili Aleatorie Indipendenti
+> Date $X_{1},X_{2},\dots,X_{n}$ v.a. sullo stesso spazio campionario, queste sono **indipendenti** se:
+> 
+> $$
+> P(X_{1}\in A_{1},\dots,X_{n}\in A_{n})=P(X_{1}\in A_{1}),\dots,P(X_{n}\in A_{n}) \quad \forall A_{1},\dots,A_{n}\subset \mathbb{R}
+> $$
+> 
+> Se ho un esperimento formato da sottoesperimenti operativamente indipendenti, ovvero che non si influenzanom allora variabili aleatori che si riferiscono a sottoesperimenti diversi sono tra loro indipendenti.
+
+_Esempio_
+
+Lanciamo un dado 20 volte, definiamo
+
+$$
+\begin{align*} 
+&X:= \text{Numero uscito al 3° lancio} \\
+&Y:= \text{Numero uscito al 9° lancio} \\
+&Z:= \text{Numero uscito al 17° lancio}
+\end{align*}
+$$
+
+Possiamo provare che $X,Y,Z$ sono v.a. indipendenti.
+
+> [!NOTE] Proposizione
+> Siano $X:S\to \mathbb{R}$ e $Y:S\to \mathbb{R}$ v.a. discrete, $X$ assume valori $\{ x_{i} \}_{i\in I}$ e $Y$ assume valori $\{ y_{j} \}_{j\in J}$.
+> Allora $X,Y$ sono indipendenti se e solo se:
+> 
+> $$
+> p_{X,Y}(x_{i},y_{j})=p_{X}(x_{i})p_{Y}(y_{j}) \quad \forall i\in I, j\in J
+> $$
+
+> [!alert] Nota
+>  Per decidere se $X$ e $Y$ sono indipendenti o meno mi basta sapere $p_{X,Y}$ infatti $p_{X}(x_{i})=\sum_{j}p_{X,Y}(x_{i},y_{j})$ e $p_{Y}(y_{j})=\sum_{i}p_{X,Y}(x_{i},y_{j})$.
+
+_Dimostrazione Proposizione_
+
+![[Pasted image 20241125090443.png]]
+

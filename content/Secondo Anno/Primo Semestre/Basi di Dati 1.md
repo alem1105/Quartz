@@ -1885,3 +1885,80 @@ Adesso notiamo che tutte e 3 le dipendenze sono soddisfatte e quindi non facciam
 
 Abbiamo una riga con tutte $a$? No quindi la decomposizione non ha join senza perdita.
 
+---
+
+**Non so se serve la dimostrazione di questo algoritmo di verifica**
+
+---
+
+## Ottenere una decomposizione con Join senza perdita
+Abbiamo visto sempre come verificare che una decomposizione non abbia perdita nel join, ma è sempre possibile ottenere una decomposizione con questa proprietà? Si, è possibile tramite un algoritmo.
+
+Ci sono alcune osservazioni da fare, la decomposizione che si ottiene da questo algoritmo non è l'unica possibile, quindi se ci viene fornito uno schema e una decomposizione ma con l'algoritmo non ci viene restituita la stessa non significa che una delle due è sbagliata, potrebbero essere entrambe corrette. È importante quindi utilizzare i due algoritmo nel momento giusto, uno per la verifica e uno per ottenere decomposizioni.
+
+Per usare questo algoritmo ci serve il concetto di **copertura minimale** di un insieme di dipendenze. Questa copertura è l'input dell'algoritmo e ce dato un insieme di dipendenze ci possono essere più coperture minimali, proprio per questo l'algoritmo può fornire diverse decomposizioni.
+
+### Copertura Minimale
+Sia $F$ un insieme di dipendenze funzionali, una copertura minimale di $F$ è un insieme $G$ equivalente ad $F$ tale che:
+- Ogni dipendenza funzionale di $G$ ha la parte destra che è un singleton.
+- Per nessuna dipendenza funzionale $X\to A\in G$ esiste $X'\subset X$ tale che $G\equiv G-\{ X-A \}\cup \{ X'\to A \}$ ovvero gli attributi nella parte sinistra non sono ridondanti. Ad esempio se abbiamo $AB\to C$ non dobbiamo avere $A\to C$ e $B\to C$.
+  
+  Non deve essere quindi possibile determinare $A$ tramite un sottoinsieme di $X$.
+  
+- Per nessuna dipendenza funzionale $X\to A\in G$ deve accadere $G\equiv G-\{ X\to A \}$, ovvero ogni dipendenza è non ridondante. Ad esempio se abbiamo $A\to C$ $A\to B$ e $B\to C$ possiamo eliminare $A\to C$ dato che possiamo ricostruirla per transitività.
+  
+  Non deve essere possibile determinare $A$ tramite altre dipendenze.
+
+Vediamo come calcolare questa copertura minimale.
+
+---
+
+Per ogni insieme $F$ di dipendenze funzionali esiste una copertura minimale equivalente ottenibile in tempo polinomiale.
+
+Passaggi:
+
+1) Usando la regola della decomposizione riduciamo i dipendenti in singleton
+2) Per ogni dipendenza funzionale $A_{1},\dots,A_{i-1},A_{i},A_{i+1},\dots A_{n}\to A\in F$ tale che $F\equiv F-\{ A_{1},\dots,A_{i-1},A_{i},A_{i+1},\dots A_{n}\to A\in F \}\cup \{ A_{1},\dots,A_{i-1},A_{i+1},\dots A_{n}\to A\in F \}$ questa viene sostituita appunto da $A_{1},\dots,A_{i-1},A_{i+1},\dots A_{n}\to A\in F$ ovvero la dipendenza che ha come determinante il sottoinsieme del precedente determinante. Se invece questa dipendenza è già presente allora eliminiamo semplicemente quella più grande. Applichiamo ricorsivamente il passo finché non è più possibile ridurre dipendenze.
+3) Ogni dipendenza $X\to A\in F$ tale che $F\equiv F-\{ X\to A \}$ viene eliminata dato che è ridondante.
+
+I passi 2 e 3 ovviamente richiedono una verifica dell'equivalenza, ma ci troviamo in dei casi particolari.
+
+Per il passo 2 assumiamo che $F$ sia l'insieme che contiene la dipendenza originaria e con $G$ l'insieme che contiene quella "ridotta". Notiamo che i due insieme differiscono soltanto di una dipendenza, quindi tutte le altre sono uguali e appartengono quindi alle loro chiusure. Per verificare quindi l'equivalenza dobbiamo solo verificare che la dipendenza originale si trova in $G^+$ e quella ridotta si trova in $F^+$.
+
+![[Pasted image 20241125101956.png]]
+
+Per calcolare le chiusure degli insiemi usiamo l'algoritmo, che a sua volta calcola le chiusure degli insiemi di attributi. Andare a verificare se la dipendenza originale si trova in $G^+$ è superfluo dato che in $G^+$ abbiamo quella con un dipendente in meno, e quindi se aggiungiamo qualcosa non cambia nulla.
+
+_Banalmente_, se abbiamo $A\to C$ sarà vero anche $AB\to C$.
+
+---
+
+_Esempio_
+
+Abbiamo $F=\{ AB\to C,A\to D,D\to C \}$, per verificare se possiamo eliminare la $B$ in $AB\to C$ dobbiamo verificare se $A\to C\in F^+$ e se $AB\to C\in G^+$. Per la prima ci basta applicare l'algoritmo e notiamo che $C\in A^+_{F}$ mentre per la seconda è banale dato che $G=\{ A\to D,A\to C,D\to C \}$ infatti compare $A\to C$.
+
+---
+
+Adesso ci manca da verificare che $X'\to A\in F^+$ e per farlo usiamo l'algoritmo per verificare se $A\in X^+_{F}$, dobbiamo quindi calcolarlo. Se questo accade possiamo ridurre la dipendenza o rimuoverla in alcuni casi.
+
+_Passo 3_
+
+Assumiamo di chiamare $F$ l'insieme che contiene $X\to A$ e con $G$ l'insieme dove è stata eliminata. Anche in questo caso i due insiemi differiscono di una sola dipendenza e inoltre si verifica che $G\subseteq F$ e quindi già sappiamo $G^+\subseteq F^+$. Ci manca quindi da verificare che $F^+\subseteq G^+$ che sarà vero se $F\subseteq G^+$.
+
+In particolare ci basta verificare che $X\to A\in G^+$ ovvero $A\in X^+_{G}$.
+
+_Riassumendo_
+
+Indichiamo con $F$ l'insieme che contiene la dipendenza $X\to A$ e con $G$ quello che contiene al suo posto $X'\to A$ dove $X'\subset X$. Per il passo 2:
+- Dobbiamo verificare che $A\in X'^+_{F}$, se accade riduciamo la dipendenza, o se presenti entrambe in $F$ eliminiamo $X\to A$.
+- Se $X\to A\in F$ e $Y\to A\in F$ tale che $Y\subseteq X$ allora eliminiamo $X\to A\in F$.
+- Se $X\to A\in F$ ma non esiste $Y\to A\in F$ con $Y\neq X$ allora è inutile provare ad eliminare attributi a sinistra della dipendenza.
+- È inutile ricalcolare chiusure transitive di attributi o di gruppi di attributi.
+
+Per il passo 3, assumiamo $F$ che contiene l'originale $X\to A$ e $G$ che non la contiene. Dobbiamo verificare $F\equiv G$ e per farlo ci basta verificare $X\to A\in G^+$ ovvero se $A\in X^+_{G}$:
+- Se $X\to A\in F$ ma non esiste $Y\to A\in F$ con $F\neq X$ allora è inutile provare ad eliminare $X\to A$.
+- Vanno ricalcolate le chiusure di attributi e gruppi di attributi.
+
+_Esempio_
+
+![[Pasted image 20241125110302.png]]
