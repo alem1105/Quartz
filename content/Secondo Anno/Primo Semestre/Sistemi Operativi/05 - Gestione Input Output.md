@@ -181,5 +181,14 @@ Anche qui partiamo da processo utente e arriviamo all'hardware.
 - **File System** È la struttura logica dell'operazione quindi come dobbiamo aprirli, scriverli ecc...
 - **Organizzazione Fisica** Si occupa di allocare e deallocare spazio sul disco
 
-_da secondo video I/O_
+# Tecniche Input Output
+
+## Buffering dell'I/O
+Nell'attesa del completamento di un'operazione di I/O, alcune pagine devono rimanere in memoria principale per evitare un deadlock. Infatti:
+
+Se un processo richiede un I/O su una sua zona di memoria, ma poi questo viene sospeso e sostituito da un altro processo, la richiesta per essere completata ha bisogno del processo in memoria, ma il processo per tornare in memoria ha bisogno del completamento della richiesta. Siamo in deadlock.
+
+Una soluzione a questo problema è il buffering, ovvero effettuare trasferimenti di input in anticipo e di output in ritardo rispetto alle richieste. E quindi non eseguirle on-demand.
+
+_Continuare da slide "Senza Buffer" con disegno_
 

@@ -2711,7 +2711,7 @@ Prendiamo ad esempio $i=3$, abbiamo $f(x_{1},x_{2},x_{3},\dots ,x_{n})=\{ x_{3},
 
 _Esempio_
 
-Scegliamo 5 studenti da interrogare e definiamo:
+Scegliamo 5 studenti da inter rogare e definiamo:
 - E = Il secondo e il terzo studente scelto sono maschi.
 - F = Il quarto e il quinto studente scelto sono maschi.
 
@@ -2771,7 +2771,7 @@ Se le $n$ estrazioni sono con rimpiazzo allora $X$ è una v.a. binomiale, infatt
 > P(X_{1}\in A_{1},\dots,X_{n}\in A_{n})=P(X_{1}\in A_{1}),\dots,P(X_{n}\in A_{n}) \quad \forall A_{1},\dots,A_{n}\subset \mathbb{R}
 > $$
 > 
-> Se ho un esperimento formato da sottoesperimenti operativamente indipendenti, ovvero che non si influenzanom allora variabili aleatori che si riferiscono a sottoesperimenti diversi sono tra loro indipendenti.
+> Se ho un esperimento formato da sottoesperimenti operativamente indipendenti, ovvero che non si influenzano allora variabili aleatorie che si riferiscono a sottoesperimenti diversi sono tra loro indipendenti.
 
 _Esempio_
 
@@ -2801,4 +2801,128 @@ Possiamo provare che $X,Y,Z$ sono v.a. indipendenti.
 _Dimostrazione Proposizione_
 
 ![[Pasted image 20241125090443.png]]
+
+---
+
+## Covarianza di variabili aleatorie
+Date 2 v.a. $X,Y:S\to \mathbb{R}$, ovvero che hanno lo stesso spazio campionario, la covarianza di $X$ e $Y$ è data da:
+
+$$
+Cov(X,Y)=E[(X-EX)\cdot(Y-EY)]
+$$
+
+Questa ha varie proprietà
+
+1) $Cov(X,X)=Var(X)$
+
+_Dimostrazione_
+
+$$
+Cov(X,X)=E[(X-EX)(X-EX)]=E[(X-EX)^2]=Var(X)
+$$
+
+2) $Cov(X,Y)=Cov(Y,X)$
+
+_Dimostrazione_
+
+$Cov(X,Y)=E[(X-EX)(Y-EY)]=E[(Y-EY)(X-EX)]=Cov(Y,X)$
+
+3) $Cov(X,Y)=E[XY]-E[X]E[Y]$
+
+Notiamo infatti che se $Y=X$ riotteniamo la varianza di X ma nell'altra forma ovvero $Var(X)=E[X^2]-(E[X])^2$
+
+_Dimostrazione_
+
+$$
+\begin{align*}
+Cov(X,Y)=E[(X-EX)(Y-EY)]&=E[XY-X\cdot EY-EX\cdot Y+EX\cdot EY] \\
+\text{Per linearità di E} &=E[XY]-EX\cdot EY\cancel{-EX\cdot EY}+\cancel{EX\cdot EY}  \\
+&= E[XY]-EX\cdot EY
+\end{align*}
+$$
+
+**La covarianza gode della linearità?** Si
+
+- **Proprietà 1**
+
+Siano $X,Y,Z:S\to \mathbb{R}$ v.a. e siano $a,b\in \mathbb{R}$:
+
+$$
+Cov(aX+bY,Z)=aCov(X,Z)+bCov(Y,Z)
+$$
+
+_Dimostrazione_
+
+$$
+\begin{align*}
+Cov(aX+bY,Z)&=E[(aX+bY-\underbrace{ E[aX+bY] }_{ aEX+bEY })(Z-EZ)] \\
+&=E[(aX+bY-aEX-bEY)(Z-EZ)] \\
+&=E[(a(X-EX)+b(E-EY))(Z-EZ)] \\
+&=E[a(X-EX)(Z-EZ)+b(Y-EY)(Z-EZ)] \\
+\text{Linearità di E}&=aE[(X-EX)(Z-EZ)]+bE[(Y-EY)(Z-EZ)] \\
+\text{Definizione cov}&= aCov(X,Z)+bCov(Y,Z)
+\end{align*}
+$$
+
+- **Proprietà 2**
+
+È analoga alla precedente ma in direzione opposta, quindi date $X,Y,Z:S\to \mathbb{R}$ e dati $a,b\in \mathbb{R}$ allora:
+
+$$
+Cov(Z,aX+bY)=aCov(X,Z)+bCov(Y,Z)
+$$
+
+La dimostrazione è simile alla precedente.
+
+---
+
+Le due proprietà appena viste implicano la linearità, quindi:
+
+$$
+Cov\left( \sum_{k=1}^n a_{k}X_{k}, \sum_{j=1}^m b_{j}Y_{j} \right)=\sum_{k=1}^n \sum_{j=1}^m a_{k} b_{j} Cov(X_{k},Y_{j})
+$$
+
+_Idea Utilizzo:_
+
+$$
+\begin{align*}
+&Cov(2X_{1}-3X_{2},-4Y_{1}+Y_{2})= \\
+\\
+&\text{Proprietà 1:}\\&=2Cov(X_{1},-4Y_{1}+Y_{2})-3Cov(X_{2},-4Y_{1}+Y_{2}) \\ \\
+&\text{Proprietà 2:}\\
+&= 2\cdot (-4) \cdot Cov(X_{1},Y_{1})+2\cdot 1 \cdot Cov(X_{1},Y_{2})-3\cdot(-4)\cdot Cov(X_{2},Y_{1})-3\cdot 1 \cdot Cov(X_{2},Y_{2}) \\
+&=-8 Cov(X_{1},Y_{1})+2Cov(X_{1},Y_{2})+12Cov(X_{2},Y_{1})-3Cov(X_{2},Y_{2})
+\end{align*}
+$$
+
+---
+
+**Proposizione**
+
+Se $X_{1},X_{2},\dots,X_{n}:S\to \mathbb{R}$ allora $Var(X_{1}+\dots+X_{n})$:
+
+$$
+\sum_{i=1}^n Var(X_{i})+2\sum_{1\leq i \leq j \leq n} Cov(X_{i},X_{j}) \qquad(1)
+$$
+Se le v.a. sono 2 a 2 non correlate ovvero se $Cov(X_{i},X_j)=0$ $\forall i\neq j$ allora:
+
+$$
+Var(X_{1}+\dots+X_{n})=\sum^n_{i=1} Var(X_{i}) \quad (2)
+$$
+
+La proprietà (1) implica la (2) se siamo sotto l'ipotesi detta prima, quindi dobbiamo dimostrare soltanto (1)
+
+_Dimostrazione_
+
+$$
+Var(X_{1}+\dots+X_{n})=Cov(X_{1}+\dots+X_{n},X_{1}+\dots+X_{n})
+$$
+
+Per bilinearità possiamo dire che che la covarianza è uguale:
+
+$$
+\sum^n_{k=1}\sum_{j=1}^n Cov(X_{k},X_{j})=\sum_{k=1}^n Cov(X_{k},X_{k})\dots
+$$
+
+_Da continuare non l'ho ben capita (ma tanto a l'esame non c'è, letsgoski 🤙🏻_.
 
