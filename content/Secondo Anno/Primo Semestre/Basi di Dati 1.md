@@ -1962,3 +1962,96 @@ Per il passo 3, assumiamo $F$ che contiene l'originale $X\to A$ e $G$ che non la
 _Esempio_
 
 ![[Pasted image 20241125110302.png]]
+
+---
+
+## Algoritmo di Decomposizione
+Dato uno schema di relazione $R$ e un insieme di dipendenze funzionali $F$ su $R$ esiste sempre una decomposizione $\rho=\{ R_{1},\dots,R_{k} \}$ di $R$ tale che:
+- Per ogni $i=1,\dots,k$ abbiamo $R_{i}$ in 3NF
+- $\rho$ preserva $F$
+- $\rho$ ha un join senza perdita
+
+Inoltre tale decomposizione può essere calcolata in tempo polinomiale. 
+
+L'algoritmo prende come $F$ una copertura minimale, ci va bene una qualsiasi.
+
+_Algoritmo_
+
+$$
+
+\begin{align}
+
+&S:=\varnothing \\
+
+&\mathbf{for\,\,every} A\in R\text{ tale che }A\text{ non è coinvolto in nessuna dipendenza funzionale in F} \\
+
+&\qquad S:=S\cup \{A\} \\\\
+
+&\mathbf{if\,\,}S\neq \varnothing\mathbf{\,\,then} \\
+
+&\qquad R:=R-S \\
+
+&\qquad \rho:=\rho \cup \{S\} \\ \\
+
+&\mathbf{if}\text{ esiste una dipendenza funzionale in }F\text{ che coinvolge tutti gli attributi in }R \\
+
+&\qquad\rho:=\rho \cup \{R\} \\
+
+&\mathbf{else} \\
+
+&\qquad\mathbf{for\,\,every\,\,}X\to A \\
+
+&\qquad\qquad \rho:=\rho \cup \{XA\} \\
+
+\end{align}
+
+$$
+
+_Dimostrazione Algoritmo_
+
+Abbiamo detto che l'algoritmo permette di calcolare una decomposizione che in tempo polinomiale ha ogni sottoschema in 3NF e preserva le dipendenze.
+
+Dimostriamo le due proprietà.
+
+- $\rho$ preserva $F$.
+
+Sia $G=\bigcup_{i=1}^k \pi_{Ri}(F)$. Poiché per ogni dipendenza funzionale $X\to A\in F$ si ha che $XA\in \rho$ (dato che è un sottoschema, li aggiungiamo in un passo dell'algoritmo) e quindi questa dipendenza di $F$ sarà sicuramente in $G$, quindi dato che $F\subseteq G$ allora $F^+\subseteq G^+$, l'inclusione inversa è verificata dato che per definizione abbiamo che $G\subseteq F^+$.
+
+- Ogni schema di relazione in $\rho$ è in 3NF
+
+Si possono verificare diversi casi:
+
+1) Se $S\in \rho$ ogni attributo in $S$ fa parte della chiave e quindi banalmente $S$ è in 3NF (infatti in S abbiamo gli attributi che non compaiono nelle dipendenze, questo significa che non vengono mai determinati e quindi si trovano sicuramente nella chiave)
+2) Se $R\in \rho$ esiste una dipendenza funzionale che coinvolge tutti gli attributi, siccome $F$ è una copertura minimale, avrà forma $R-A\to A$ inoltre non ci possono essere dipendenze $X\to A$ in $F$ tali che $X\subset R-A$ e quindi $R-A$ è chiave in $R$ (coinvolge tutti gli attributi). 
+   Inoltre sia $B$ una qualsiasi dipendenza in $F$, se $B=A$ allora, siccome $F$ minimale, $Y=R-A$ ovvero $Y$ superchiave e quindi mantiene la 3NF. Se invece $B\neq A$ allora $B\in R-A$ che è chiave e quindi $B$ è primo, rispetta ancora la 3NF.
+3) Se $XA\in \rho$, dato che $F$ è una copertura minimale, non ci può essere dipendenza funzionale $X'\to A\in F$ tale che $X'\subset X$ e quindi $X$ è chiave in $XA$. Inoltre sia $Y\to B$ una qualsiasi dipendenza in $F$ tale che $YB\subseteq XA$ se $B=A$ allora poiché $F$ è una copertura minimale $Y=X$ ovvero $Y$ superchiave e quindi rispettiamo la 3NF, se invece $B\neq A$ allora $B$ deve essere in $X$ che è chiave e quindi $B$ è primo, rispettiamo ancora la 3NF.
+
+- Come facciamo ad ottenere un join senza perdita?
+
+Ci basta aggiungere un sottoschema contenente una chiave al risultato dell'algoritmo di decomposizione. Adesso però dobbiamo dimostare che questa aggiunta non ci fa perdere gli obiettivi ottenuti prima.
+
+**Teorema**
+
+Sia $R$ uno schema di relazione e $F$ un insieme di dipendenze funzionali su $R$, che è una copertura minimale, inoltre sia $\rho$ la decomposizione di $R$ prodotta dall'algoritmo di decomposizione. La decomposizione $\sigma=\rho \cup \{ K \}$ dove $K$ è una chiave per $R$, è tale che:
+- Ogni schema di $\sigma$ è 3NF
+- $\sigma$ preserva $F$
+- $\sigma$ ha un join senza perdita
+
+_Dimostrazione_
+
+- $\sigma$ preserva $F$, infatti dato che $\rho$ preserva $F$, lo farà anche $\sigma$.
+
+Infatti stiamo aggiungendo un nuovo sottoschema, una nuova proiezione di $F$. Chiamiamo $G'$ il nuovo $G$, e lo definiamo come $G'=G\cup \pi_{K}(F)$ quindi $F\subseteq G\subseteq G'$ e quindi $F^+\subseteq G^+\subseteq G'^+$. L'inclusione inversa è banalmente verificata per lo stesso motivo del teorema precedente.
+
+- Ogni schema di relazione in $\sigma$ è in 3NF
+
+Poiché $\sigma=\rho\cup \{ K \}$, è sufficiente verificare che anche lo schema $K$ sia in 3NF, dobbiamo mostrare che $K$ è chiave anche per lo schema $K$.
+
+Supponiamo per assurdo che non lo sia, allora esiste un sottoinsieme proprio $K'$ di $K$ che determina tutto lo schema $K$ ovvero tale che $K'\to K\in F^+$ o più precisamente appartiene alla chiusura $\pi_{K}(F)$ ma questa è sottoinsieme di $F^+$. Poiché $K$ è chiave per lo schema $R$, ovvero $K\to R\in F^+$, per transitività si ha che $K'\to R\in F^+$ che contraddice il fatto che $K$ è chiave per lo schema $R$. Quindi $K$ è chiave per lo schema $K$ e per ogni dipendenza funzionale $X\to A\in F^+$ con $XA\subseteq K$, $A$ primo.
+
+- $\sigma$ ha un join senza perdita
+
+_Continuare dimostrazione, slide 19 con aggiunte pag. 13_
+
+Supponiamo che l'ordine in cui gli attributi in $R-K$ vengono aggiunti a $Z$ dell'algoritmo che calcola la chiusura di un insieme di attributi (qui $K^+$) sia $A_{1},\dots, A_{n}$ e supponiamo che per ogni $i=1,\dots,n$ l'attributo $A_{i}$ venga aggiunto a $Z$ a causa della presenza
+

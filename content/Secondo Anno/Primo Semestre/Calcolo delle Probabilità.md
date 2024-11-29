@@ -2245,7 +2245,7 @@ $$
 Inoltre abbiamo che:
 
 $$
-E[X]=\frac{n\cdot m}{N} \qquad Var(X)=np(1-p)\left( 1-\frac{n-1}{N-1} \right) \qquad \text{dove } p=\frac{m}{n}
+E[X]=\frac{n\cdot m}{N} \qquad Var(X)=np(1-p)\left( 1-\frac{n-1}{N-1} \right) \qquad \text{dove } p=\frac{m}{N}
 $$
 
 _Esempio_
@@ -2925,4 +2925,111 @@ $$
 $$
 
 _Da continuare non l'ho ben capita (ma tanto a l'esame non c'è, letsgoski 🤙🏻_.
+
+---
+
+Notiamo che la regola, in generale, funziona come il quadrato di binomio, infatti:
+
+$$
+Var(X+Y)=Var(X)+Var(Y) + 2Cov(X,Y)
+$$
+
+**Proposizione**
+
+Se $X,Y$ sono v.a. indipendenti allora $E[XY]=E[X]E[Y]$ e quindi $Cov(X,Y)=0$
+
+_Dimostrazione_
+
+Per dimostrarlo ci servono due cose:
+
+1) $E[f(X,Y)]=\sum_{i}\sum_{j}f(x_{i},y_{j})p_{X,Y}(x_{i},y_{j})$
+2) $p_{X,Y}(x_{i},y_{j})=p_{X}(x_{i})p_{Y}(y_{j})$
+
+$$
+\begin{align*}
+E[XY]&=\sum_{i}\sum_{j}x_{i}y_{j}p_{X,Y}(x_{i},y_{j}) \quad (1) \\
+&=\sum_{i}\sum_{k}x_{i}y_{j}p_{X}(x_{i})p_{Y}(y_{j}) \quad (2) \\
+\text{Distribuiamo} &= \underbrace{ \left( \sum_{i}x_{i}p_{X}(x_{i})U \right) }_{ E[X] }\underbrace{ \left( \sum_{j}y_{j}p_{Y}(y_{j}) \right) }_{ E[Y] }=E[X]E[Y]
+\end{align*}
+$$
+
+**Proposizione**
+
+Se $X,Y$ sono v.a. indipendenti e $f:\mathbb{R}\to \mathbb{R}$ e $g:\mathbb{R}\to \mathbb{R}$ allora anche $f(X)$ e $g(Y)$ sono indipendenti, per dimostrarlo, dire che le funzioni applicate alla v.a. sono indipendenti significa che $\forall A,B \subset \mathbb{R}$ vale:
+
+$$
+P(f(X)\in A,g(Y)\in B)=P(f(X)\in A)P(g(Y)\in B)
+$$
+
+_Proviamolo:_
+
+$$
+\begin{align*}
+P(f(X)\in A,g(Y)\in B)&=P(X\in f^{-1}(A),Y\in g^{-1}(B)) \\
+&=P(X\in f^{-1}(A))P(Y\in f^{-1}(B)) \\
+&=P(f(X)\in A)P(g(Y)\in B)
+\end{align*}
+$$
+
+---
+
+**Ricordiamo**
+
+- $X,Y$ non correlate se $Cov(X,Y)=0$
+- $X,Y$ sono indipendenti se $P(X\in A,Y\in B)=P(X\in A)P(Y\in B)$ $\forall A,B\subset \mathbb{R}$ 
+
+Notiamo che se $X,Y$ sono indipendenti, allora $Cov(X,Y)=0$, vale anche il contrario? No, esistono v.a. dipendenti con $Cov(X,Y)=0$
+
+**Corollario**
+
+Se $X_{1},\dots,X_{n}$ sono v.a. indipendenti allora $Var\left( \sum_{i=1}^nx_{i} \right)=\sum_{i=1}^n(x_{i})$ 
+
+**Applicazione - Proposizione**
+
+$$
+X=Bin(n,p)\Rightarrow Var(X)=np(1-p)
+$$
+
+_Dimostrazione_
+
+Prendo $n$ prove indipendenti di tipo successo / insuccesso:
+
+$$
+\begin{align*}
+&X:=\#\text{Successi Ottenuti} \\
+&X=X_{1}+\dots+X_{n}
+\end{align*}
+$$
+
+Quindi $X_{i}$ vale 1 se la i-esima prova è un successo, 0 altrimenti. Dato che le prove sono indipendenti, per il corollario possiamo dire:
+
+$$
+\begin{align*}
+Var(X)&=\sum^n_{i=1}\underbrace{ Var(X_{i}) }_{ E[X_{i}^2] -(E[X_{i}])^2}  \\
+&=(1\cdot p + 0 \cdot (1-p))-(1\cdot p + 0 \cdot (1-p))^2 \\
+&=p\cdot(1-p)
+\end{align*}
+$$
+
+
+> [!example]- Esercizio
+> Lanciamo una moneta truccata 100 volte, sappiamo che esce testa con probabilità $\frac{2}{3}$ e croce con $\frac{1}{3}$. Definiamo $X=\text{Teste Ottenute}$ e $Y=\text{Croci ottenute}$. Calcolare $Cov(X,Y)$.
+> 
+> Sappiamo che $X+Y=100$ e quindi possiamo scrivere $Y=100-X$ e quindi dobbiamo calcolare $Cov(X,100-X)$.
+> 
+> Per bilinearità possiamo dire $Cov(X,100-X)=Cov(X,100)-Cov(X,X)$, calcoliamo quindi:
+> 
+> $$
+> Cov(X,100)=E[X\cdot 100] - E[X]\cdot E[100] = 100\cdot E[X]-E[X]\cdot 100 = 0
+> $$
+> 
+> Quindi $Cov(X,Y)=0-Cov(X,X)=-Var(X)=-\frac{200}{9}$, infatti calcolando $Var(X)$ otteniamo:
+> 
+> $$
+> X=Bin\left( 100,\frac{2}{3} \right)\Rightarrow Var(X)=np(1-p)=100\cdot \frac{2}{3}\cdot \frac{1}{3}
+> $$
+> 
+
+> [!example]- Esercizio
+> ![[Pasted image 20241128092402.png]]
 
