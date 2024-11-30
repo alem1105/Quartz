@@ -2037,6 +2037,10 @@ Sia $R$ uno schema di relazione e $F$ un insieme di dipendenze funzionali su $R$
 - $\sigma$ preserva $F$
 - $\sigma$ ha un join senza perdita
 
+---
+
+***IN TEORIA NON LE CHIEDE***
+
 _Dimostrazione_
 
 - $\sigma$ preserva $F$, infatti dato che $\rho$ preserva $F$, lo farà anche $\sigma$.
@@ -2054,4 +2058,11 @@ Supponiamo per assurdo che non lo sia, allora esiste un sottoinsieme proprio $K'
 _Continuare dimostrazione, slide 19 con aggiunte pag. 13_
 
 Supponiamo che l'ordine in cui gli attributi in $R-K$ vengono aggiunti a $Z$ dell'algoritmo che calcola la chiusura di un insieme di attributi (qui $K^+$) sia $A_{1},\dots, A_{n}$ e supponiamo che per ogni $i=1,\dots,n$ l'attributo $A_{i}$ venga aggiunto a $Z$ a causa della presenza
+
+***SPERO NON LE CHIEDA VERAMENTE 🥶***
+
+---
+
+Quindi presa un qualsiasi schema di DB possiamo farlo diventare "buono" effettuando decomposizioni per portarlo in 3NF.
+
 

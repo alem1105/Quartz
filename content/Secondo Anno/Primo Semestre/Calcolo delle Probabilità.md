@@ -3033,3 +3033,98 @@ $$
 > [!example]- Esercizio
 > ![[Pasted image 20241128092402.png]]
 
+## Variabile Aleatorie Continue
+Ricordiamo che:
+
+- $X$ v.a. è una funzione definita come $X:S\to \mathbb{R}$
+- $X$ è detta discreta se $X$ assume valori $\{ x_{i} \}_{i\in I}$ insieme finito, oppure infinito ma numerabile
+
+_Definizione v.a. continua_
+
+Una v.a. $X:S\to \mathbb{R}$ è detta continua se esiste $f:\mathbb{R}\to[0,+\infty)$ t.c. $P(X\in A)=\int\limits_{A} f(x_{a})dx$, la funzione $f$ è detta **funzione di densità**
+
+_Definizione v.a. uniforme_
+
+Una v.a. $X$ è detta uniforme sull'intervallo $(a,b)$ se è continua con funzione di densità:
+
+$$
+f(x)=
+\begin{cases}
+\frac{1}{b-a} \qquad\text{ se } x\in(a,b) \\
+0 \qquad\quad \text{ altrimenti}
+\end{cases}
+$$
+
+(Anche con intervalli chiusi)
+
+Prendiamo $[a,b]=[0,1]$, sia $A\subset[0,1]$ allora $P(X\in A)$:
+
+$$
+\int_{A}f(x)dx=\int_{A}1dx=\text{Lunghezza di A}=L(A)
+$$
+
+Ad esempio se $P\left( X\in\left( \frac{1}{2}, \frac{3}{4} \right) \right)=L\left( \left( \frac{1}{2}, \frac{3}{4} \right) \right)=\frac{3}{4}-\frac{1}{2}=\frac{1}{4}$, infatti la probabilità di cadere in un punto dell'intervallo è uguale per tutti i punti dell'intervallo.
+
+---
+
+Sia $X=Unif([a,b])$ allora $P(X\subset[a,b])=1$, infatti $X$ ha sempre valori nell'intervallo essendo uniforme. Infatti:
+
+$$
+P(X\in[a,b])=\int_{[a,b]}f(x)dx=\int_{a}^b f(x)dx=\int_{a}^b \frac{1}{b-a} dx = 1
+$$
+
+_Esercizio_
+
+Sia $X=Unif([2,8])$ calcolare $P(-3<X<4 \text{ o } 5\leq X<8)$, noi sappiamo calcolare $P(X\in A)=\int_{A} f(x)dx$.
+
+Per quale $A\subset \mathbb{R}$ possiamo scrivere l'evento $-3<X<4 \text{ o } 5\leq X<8$  come $X\in A$.
+
+Si, prendiamo $A=(-3,4)\cup[5,8)$.
+
+Quindi calcoliamo:
+
+$$
+\begin{align*}
+P(-3<X<4 \text{ o } 5\leq X<8) =\int_{A}f(x)dx&=\int_{(-3,4)}f(x)dx+\int_{[5,8)}f(x)dx \\
+&=\int_{-3}^4 f(x)dx+\int_{5}^8 f(x)dx \\
+\end{align*}
+$$
+
+Dove:
+
+$$
+f(x)=
+\begin{cases}
+\frac{1}{b-a} \text{ se } x\in[a,b] ; \frac{1}{6} \text{ se } x\in[2,8]\\
+0 \text{ altrimenti}
+\end{cases}
+$$
+
+Infati dato che è uniforme in 2,8 tutti i punti hanno la stessa probabilità di $\frac{1}{8-2}=\frac{1}{6}$. Quindi abbiamo una situazione simile:
+
+![[Pasted image 20241130125107.png|500]]
+
+Eseguendo i calcoli otteniamo:
+
+$$
+\begin{align*}
+&\int_{-3}^4 f(x)dx=\int_{2}^4f(x)dx=\int_{2}^4 \frac{1}{6}dx=\frac{2}{6} \\
+ \\
+&\int_{5}^8 f(x)dx=\int_{5}^8 \frac{1}{6}dx=\frac{3}{6} \\
+ \\
+&\text{Quindi in conclusione:} \\
+ \\
+&P(-3<X<4 \text{ o } 5\leq X<8) = \frac{2}{6}+ \frac{3}{6} = \frac{5}{6}
+\end{align*}
+$$
+
+**Proposizione**
+
+Se $X$ è v.a. continua con funzione di densità $f$ allora:
+
+$$
+\int_{-\infty}^{+\infty} f(x)dx=1
+$$
+
+_Dimostrazione_
+
