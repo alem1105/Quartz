@@ -2,10 +2,9 @@
 title: Home
 description: Indice principale del vault
 ---
-
 ![[index_image.gif]]
 
-> Qui carico gli appunti che mi scrivo per studiare, potrebbero esserci errori (ci sono sicuramente 😔).
+> Qui carico gli appunti che mi scrivo per studiare, potrebbero esserci errori (ci sono sicuramente 😔). (Sopra c'è Ekko perché è il 🐐)
 
 # Studiate non per corsi uni
 
