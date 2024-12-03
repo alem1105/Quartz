@@ -3126,5 +3126,81 @@ $$
 \int_{-\infty}^{+\infty} f(x)dx=1
 $$
 
-_Dimostrazione_
+---
+
+$X$ è detta v.a. continua con funzione di densità $f\geq 0$ se $P(X\in A)=\int_{A}f(x)dx$ $\forall A\subset \mathbb{R}$ (misurabile).
+
+Ricordiamo che data $X$ v.a., la funzione di distribuzione (ripartizione) di $X$ è data da $F:\mathbb{R}\to[0,1]$ dove $F(x)=P(X\leq x)$ $\forall x\in \mathbb{R}$.
+
+**Proposizione**
+
+Se $X$ è v.a. continua con funzione di densità $f$ allora:
+
+$$
+F(x)=\int_{-\infty}^{x} f(u)du
+$$
+
+Infatti, $F(x)=P(X\leq x)=P(X\in\underbrace{ (-\infty,x] }_{ A })=\int_{A}f(u)du=\int\limits_{-\infty}^{x}f(u)du$ 
+
+**Proposizione**
+
+Sia $X$ v.a. continua allora $\forall x\in \mathbb{R}$ vale $P(X=x)=0$, infatti:
+
+$$
+P(X=x)=P(X\in \{ x \})=\int_{\{ x \}}f(u)du=\int_{x}^x f(u)du=0
+$$
+
+Anche nelle uniformi abbiamo questa regola, infatti è vero che la variabile assume valori nell'intervallo ma nessun valore dell'intervallo ha probabilità positiva. L'unica cosa che possiamo calcolare è la probabilità che la variabile assuma valori in degli intervalli.
+
+_Esercizio_
+
+Data $X$ v.a. continua con funzione di densità:
+
+$$
+f(x)=\begin{cases}
+cx^2 \text{ se } x\in[1,5] \\
+0 \text{ altrimenti}
+\end{cases}
+$$
+
+- Calcolare $c$:
+
+Sappiamo che $\int_{-\infty}^\infty f(x)dx=1$ quindi calcoliamo:
+
+$$
+1=\int_{1}^5 cx^2 dx=\frac{124}{3}c
+$$
+
+Quindi $c=\frac{3}{124}$
+
+- Calcolare $P(X>3)$
+
+È la stessa cosa di calcolare $P(X\in(3,+\infty))$ che, per come è definita la variabile, è uguale a $P(X\in(3,5])$:
+
+$$
+\int_{3}^5 f(x)dx=\frac{3}{124}\int_{3}^5 x^2 dx=\frac{3}{124} \cdot \frac{5^3 - 3^3}{3}=\frac{98}{124}
+$$
+
+### Valore Atteso Variabili Aleatorie continue
+Se $X$ è v.a. continua allora:
+
+$$
+E[X]:= \int_{-\infty}^\infty xf(x)dx
+$$
+
+Non pensiamo che sia come il classico valore atteso ovvero $f(x)=P(X=x)$, l'interpretazione corretta è che:
+
+$$
+f(x)dx=P(X\in[x,x+dx])+o(dx)
+$$
+
+Ovvero la probabilità che $X$ sia in un intervallo molto piccolo intorno al valore $x$.
+
+Per calcolarlo con delle funzioni, invece vale: **Proposizione**
+
+Sia $X$ v.a. continua con funzione di densità $f$ e sia $g:\mathbb{R}\to \mathbb{R}$ allora:
+
+$$
+E[g(X)]=\int_{-\infty}^\infty g(x)f(x)dx
+$$
 
