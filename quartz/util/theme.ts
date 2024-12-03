@@ -8,6 +8,11 @@ export interface ColorScheme {
   tertiary: string
   highlight: string
   textHighlight: string
+  bold: string
+  h1color: string
+  h2color:string
+  h3color: string
+  italic: string
 }
 
 interface Colors {
@@ -51,6 +56,11 @@ ${stylesheet.join("\n\n")}
   --tertiary: ${theme.colors.lightMode.tertiary};
   --highlight: ${theme.colors.lightMode.highlight};
   --textHighlight: ${theme.colors.lightMode.textHighlight};
+  --bold: ${theme.colors.lightMode.bold};
+  --h1color: ${theme.colors.lightMode.h1color};
+  --h2color: ${theme.colors.lightMode.h2color};
+  --h3color: ${theme.colors.lightMode.h3color};
+  --italic: ${theme.colors.lightMode.italic};
 
   --headerFont: "${theme.typography.header}", ${DEFAULT_SANS_SERIF};
   --bodyFont: "${theme.typography.body}", ${DEFAULT_SANS_SERIF};
@@ -67,6 +77,12 @@ ${stylesheet.join("\n\n")}
   --tertiary: ${theme.colors.darkMode.tertiary};
   --highlight: ${theme.colors.darkMode.highlight};
   --textHighlight: ${theme.colors.darkMode.textHighlight};
+  
+  --bold: ${theme.colors.darkMode.bold};
+  --h1color: ${theme.colors.darkMode.h1color};
+  --h2color: ${theme.colors.darkMode.h2color};
+  --h3color: ${theme.colors.darkMode.h3color};
+  --italic: ${theme.colors.darkMode.italic};
 }
 `
 }
