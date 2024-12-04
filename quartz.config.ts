@@ -45,7 +45,7 @@ const config: QuartzConfig = {
           italic: "#a74165",
         },
         darkMode: {
-          light: "#181818", //161618
+          light: "#25272b", //161618
           lightgray: "#393639",
           gray: "#646464",
           darkgray: "#ffffff", // d4d4d4
