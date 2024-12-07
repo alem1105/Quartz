@@ -1,3 +1,0 @@
-- [[01 - 04 - Fino a Gestione Memoria]]
-- [[05 - Gestione Input Output]]
-- 

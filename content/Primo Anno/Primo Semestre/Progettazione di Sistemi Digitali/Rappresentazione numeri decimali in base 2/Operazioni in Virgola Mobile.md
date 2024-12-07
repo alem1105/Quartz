@@ -1,3 +1,0 @@
-# [[Addizioni e Sottrazioni]]
-
-# [[Moltiplicazioni]]

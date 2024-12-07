@@ -1,2 +1,0 @@
-- [[Linguaggio Assembly MIPS]]
-- [[Architettura MIPS]]
