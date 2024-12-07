@@ -1,0 +1,3 @@
+[submodule "content/vault"]
+	path = content/vault
+	url = https://github.com/alem1105/UniNotes
