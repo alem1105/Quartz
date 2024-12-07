@@ -3181,7 +3181,7 @@ $$
 \int_{3}^5 f(x)dx=\frac{3}{124}\int_{3}^5 x^2 dx=\frac{3}{124} \cdot \frac{5^3 - 3^3}{3}=\frac{98}{124}
 $$
 
-### Valore Atteso Variabili Aleatorie continue
+### Valore Atteso e Varianza di Variabili Aleatorie continue
 Se $X$ è v.a. continua allora:
 
 $$
@@ -3203,4 +3203,293 @@ Sia $X$ v.a. continua con funzione di densità $f$ e sia $g:\mathbb{R}\to \mathb
 $$
 E[g(X)]=\int_{-\infty}^\infty g(x)f(x)dx
 $$
+
+Per quanto riguarda la varianza invece se $X$ v.a. continua allora:
+
+$$
+Var(X)=E[(X-EX)^2]
+$$
+
+In generale per le v.a. continue valgono le stesse proprietà che abbiamo visto per le discrete.
+
+Una proprietà aggiuntiva che invece troviamo nelle uniformi è la seguente:
+
+**Proprietà**
+
+Sia $X=Unif([a,b])$ e:
+
+$$
+f(x)=\begin{cases}
+\frac{1}{b-a} \text{ se } x\in[a,b] \\
+0 \text{ altrimenti}
+\end{cases}
+$$
+
+Allora:
+
+$$
+E[X]=\frac{a+b}{2}
+$$
+
+Infatti dato che la variabile è uniforme nell'intervallo, il valore atteso sarà proprio a metà intervallo.
+
+_Dimostrazione_
+
+$$
+\begin{align*}
+EX=\int_{-\infty}^\infty xf(x)dx=\int_{a}^b x \frac{1}{b-a}dx=\frac{1}{b-a}\int _{a}^b xdx&=\frac{1}{b-a} \cdot \frac{x^2}{2}|^b_{a} \\
+&=\frac{1}{b-a} \cdot \frac{b^2 - a^2}{2} \\
+&=\frac{1}{\cancel{b-a}} \cdot \frac{(b+a)\cancel{(b-a)}}{2}=\frac{a+b}{2}
+\end{align*}
+$$
+
+**Proprietà**
+
+Per quanto riguarda la varianza, sempre nelle uniformi, vale invece:
+
+$$
+Var(X)=\frac{(b-a)^2}{12}
+$$
+
+_Dimostrazione_
+
+$$
+Var(X)=E[X^2]-(EX)^2=E[X^2]-(\frac{a+b}{2})^2
+$$
+
+Calcoliamo singolarmente $E[X^2]$:
+
+$$
+\begin{align*}
+E[X^2]=\int_{-\infty}^\infty x^2 f(x)dx=\int_{a}^b x^2 \frac{1}{b-a}dx=\frac{1}{b-a}\int_{a}^b x^2dx&=\frac{1}{b-a} \cdot \frac{x^3}{3}|^b_{a} \\
+&=\frac{1}{b-a} \cdot \frac{b^3 - a^3}{3} = \frac{b^2+ab+a^2}{3}
+\end{align*}
+$$
+
+Adesso torniamo alla formula della varianza e mettendo insieme i risultati:
+
+$$
+\begin{align*}
+Var(X)=\frac{b^2+ab+a^2}{3}-\frac{a^2+2ab+b^2}{4}&=\frac{4b^2+4ab+4a^2-3a^2-6ab-3b^2}{12} \\
+&=\frac{a^2-2ab+b^2}{12}=\frac{(b-a)^2}{12}
+\end{align*}
+$$
+
+## Variabile Aleatoria Gaussiana
+Una variabile aleatoria $X$ è detta gaussiana o normale di media $\mu\in \mathbb{R}$ e varianza $\sigma^2>0$ se è una v.a. continua con funzione di densità:
+
+$$
+f(x)=\frac{1}{\sqrt{ 2\pi }\cdot\sigma}\cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+$$
+
+E scriveremo $X=\mathcal{N}(\mu,\sigma^2)$
+
+**Gaussiana Standard**
+
+Se $\mu=0$ e $\sigma^2=1$ allora $X=\mathcal{N}(0,1)$ è detta **Guassiana Standard**, quindi:
+
+$$
+f(x)=\frac{1}{\sqrt{ 2\pi }}\cdot e^{-\frac{x^2}{2}}
+$$
+
+---
+
+I nomi dei parametri non sono casuali, infatti possiamo provare che $E[X]=\mu$ e che $Var(X)=\sigma^2$, infatti anche la deviazione quadratica standard è uguale a:
+
+$$
+\sigma=\sqrt{ \sigma^2 }=\sqrt{ Var(X) }
+$$
+
+Il grafico di una Gaussiana è a campana e simmetrico rispetto alla retta verticale $x=\mu$, inoltre $\forall x$ $f(x)>0$ ma quasi tutta l'area della campana è concentrata in:
+
+![[Pasted image 20241206223923.png|500]]
+
+> [!danger] Attenzione
+> La variabile Gaussiana è ben definita, ovvero esiste, perché $f\geq 0$ e $1=\int_{-\infty}^\infty f(x)dx$, infatti data in generale una $f:\mathbb{R}\to[0,+\infty)$ con $1=\int_{-\infty}^\infty f(x)dx$ si può sempre costruire una v.a. $X$ continua che ha $f$ come funzione di densità.
+
+### Funzione di distribuzione
+Sia $X=\mathcal{N}(\mu,\sigma^2)$ calcoliamo $F(x)$ ovvero $P(X\leq x)$:
+
+$$
+P(X\leq x)=\int_{-\infty}^x f(z)dz=\frac{1}{\sqrt{ 2\pi }\cdot \sigma}\int_{-\infty}^x e^{-\frac{(z-\mu)^2}{2\sigma^2}}dz
+$$
+
+Se $X$ è una gaussiana standard e quindi $N(0,1)$ invece di scrivere $F(x)$ scriviamo $\phi(x)$:
+
+$$
+\phi(x)=\frac{1}{\sqrt{ 2\pi }}\int_{-\infty}^x e^{-\frac{z^2}{2}}dz
+$$
+
+Per $\phi(x)$ troviamo delle tabelle già compilate con $x\geq 0$, perché non troviamo i valori negativi? Osserviamo graficamente cosa otteniamo con $\phi(x)$:
+
+Prendiamo ad esempio $\phi(3)$ (non ci interessa il risultato ma solo il grafico):
+
+![[Pasted image 20241206224847.png|500]]
+
+Stiamo calcolando l'area colorata di viola, adesso guardiamo ad esempio, a cosa corrisponde graficamente $\phi(-3)$:
+
+![[Pasted image 20241206225012.png|500]]
+
+$\phi(-3)$ corrisponde all'area colorata di viola, ma notiamo che è identica all'area verde che prima abbiamo escluso con $\phi(3)$, cosa significa questo? Che $\phi(-3)=1-\phi(3)$. Quindi i valori negativi non sono presenti nella tabella perché possiamo calcolarli tramite i loro valori inversi.
+
+In generale quindi $\phi(-x)=1-\phi(x)$, e inoltre $\phi(0)=\frac{1}{2}$
+
+Prendiamo ad esempio $Z=\mathcal{N}(0,1)$ e calcoliamo $P(|Z|\geq 2)$ questo corrisponde a calcolare $P(Z\leq 2 \text{ o } Z\geq 2)$:
+
+$$
+= \underbrace{ P(Z\leq -2) }_{ \phi(-2)=1-\phi(2) } + \underbrace{ P(Z\geq 2) }_{ 1-\phi(2)=\phi(-2) }=2(1-\phi(2))=2\cdot 0.0228=0.0456=4.56\%
+$$
+
+In generale possiamo dire $\phi(x)=P(Z\leq x)$, per vedere meglio i calcoli sopra vediamo il grafico:
+
+![[Pasted image 20241206225737.png|500]]
+
+
+> [!NOTE] **Proposizione**
+> Sia $\mu\in \mathbb{R}$ e $\sigma^2 >0$ e sia $Z=\mathcal{N}(0,1)$ allora $Y:=\pm \sigma Z+\mu$ è $\mathcal{N}(\mu,\sigma^2)$
+
+Dove possiamo calcolare:
+- $E[Y]=E[\sigma Z+\mu]=\sigma E[Z]+\mu=\sigma \cdot 0+\mu=\mu$
+- $Var(Y)=Var(\sigma Z+\mu)=\sigma^2 Z\cdot Var(Z)=\sigma^2 \cdot 1= \sigma^2$
+
+_Dimostrazione_
+
+Devo capirla =P perché pisciato lezione.
+
+Possiamo anche dimostrare che $Y=\mathcal{N}(\mu,\sigma^2)\Rightarrow \frac{Y-\mu}{\sigma}=\mathcal{N}(0,1)$ 
+
+> [!example]- Esercizio
+> Sia $Y=\mathcal{N}(3,16)$, usando $\phi$ calcolare $P(Y\geq 10)$
+> 
+> $$
+> P(Y\geq 10)=P(Y-3\geq 10-3)=P\left(\frac{Y-3}{4}\geq \frac{10-3}{4}\right)
+> $$
+> 
+> In questo modo possiamo definire $Z=\frac{Y-3}{4}=\mathcal{N(0,1)}$ dato che $\mu=3$ e $\sigma=4 (\sigma^2 =16)$ e quindi calcolare adesso:
+> 
+> $$
+> P\left( Z\geq \frac{7}{4} \right)=P(Z\geq 1.75)=1-\phi(1.75)=1-0.9599=0.0401
+> $$
+
+
+---
+
+## Variabili Aleatorie Identicamente Distribuite
+Adesso vediamo due casi di variabili aleatorie diverse ma "con le stesse caratteristiche":
+
+_Caso 1_
+
+Abbiamo un mazzo da 40 carte, estraiamo una carta e definiamo:
+
+$$
+X=\begin{cases}
+1 \text{ se ho estratto Bastoni o Coppe} \\
+0 \text{ altrimenti}
+\end{cases}
+$$
+
+Come spazio campionario abbiamo il mazzo di carte e quindi esiti, quindi calcoliamo:
+
+$$
+P(X=1)=\frac{1}{2} \qquad P(X=0)=\frac{1}{2}
+$$
+
+_Caso 2_
+
+Lanciamo una moneta e definiamo:
+
+$$
+Y=\begin{cases}
+1 \text{ se esce T} \\
+0 \text{ se esce C}
+\end{cases}
+$$
+
+Come spazio campionario abbiamo quindi $S=\{ T,C \}$ e calcoliamo:
+
+$$
+P(Y=1)=\frac{1}{2} \qquad P(Y=0)=\frac{1}{2}
+$$
+
+Notiamo che $X,Y$ sono v.a. distinte e anche con funzioni definite anche su spazi campionari diversi, nonostante questo assumono gli stessi valori con le stesse probabilità.
+
+> [!NOTE] Definizione
+> Date v.a. $X:S\to \mathbb{R}$ e $Y:S'\to \mathbb{R}$, $X,Y$ sono dette **identicamente distribuite** (o aventi la stessa legge) se:
+> 
+> $$
+> P(X\in A)=P(Y\in A) \qquad \forall A\subset \mathbb{R}
+> $$
+> 
+
+
+> [!NOTE] Osservazione
+> ![[actually.png|100]]
+> 
+> Se $X$ è v.a. discreta che assume valori $\{ x_{i} \}_{i\in I}$ allora $P(X\in A)=P(X\in A\cap \{ x_{i} \}_{i\in I})$ che è uguale a:
+> 
+> $$
+> P\left( \bigcup_{i:x_{i}\in A} \{ X=x_{i} \} \right)=\sum_{i:x_{i}\in A}P(X=x_{i})=\sum_{i:x_{i}\in A}p_{X}(x_{i})=\sum_{x\in A}p_{X}(x)
+> $$
+> 
+> In conclusione quindi $P(X\in A)=\sum\limits_{x\in A}p_{X}(x)$
+
+Siano adesso $X$ e $Y$ v.a. discrete e supponiamo che $p_{X}=p_{Y}$. Allora per quanto appena provato possiamo dire che:
+
+$$
+P(X\in A)=\sum_{x\in A}p_{X}(x)\underset{p_{X}=p_{Y}}=\sum_{x\in A}p_{Y}(x)=P(Y\in A)
+$$
+
+Abbiamo provato quindi che due v.a. discrete $X,Y$ con $p_{X}=p_{Y}$ sono **identicamente distribuite** e si può provare anche il viceversa, quindi:
+
+> [!NOTE] **Proposizione**
+> Siano $X,Y$ v.a. discrete allora $X,Y$ sono identicamente distribuite(I.D.) $\Leftrightarrow p_{X}=p_{Y}$
+> 
+
+Per le v.a. continue vale qualcosa di simile:
+
+
+> [!NOTE] **Proposizione**
+> Siano $X,Y$ v.a. continue (anche con spazi campionari diversi) chiamiamo $f_{X}$ e $f_Y$ le rispettive funzioni di densità di probabilità. Allora:
+> 
+> $$
+> X,Y \text{ sono I.D.} \Leftrightarrow f_{X}=f_{Y} \text{ ovunque (o quasi)}
+> $$
+> 
+
+Dimostriamo quindi che se $X,Y$ sono continue e $f_{X}=f_{Y}$ allora sono I.D.
+
+Fissato un $A\subset \mathbb{R}$ abbiamo che:
+
+$$
+P(X\in A)=\int_{A} f_{X}(x)dx\underset{f_{X}=f_{Y}}=\int_{A}f_{Y}(x)dx=P(Y\in A)
+$$
+
+Dove ovviamente nella $f_{Y}$ le $x$ sono equivalenti alle $y$ dato che la funzione di distribuzione di è identica.
+
+Abbiamo provato quindi che $P(X\in A)=P(Y\in A)$ $\forall A\subset \mathbb{R}$ e quindi $X,Y$ sono I.D.
+
+## Teorema di De Moivre - Laplace (preludio del teorema del limite centrale)
+Fissiamo $p\in(0,1)$. Dato $n\in \{ 1,2,3,\dots \}$ sia $S_{n}$ v.a. binomiale di parametri $n,p$. Sia $Z=\mathcal{N}(0,1)$ allora $\forall a<b$ vale:
+
+$$
+\lim_{ n \to \infty } P\left(a\leq \frac{S_{n}-np}{\sqrt{ np(1-p) }}\leq b\right) =P(a\leq Z \leq b)
+$$
+
+Inoltre $\frac{S_{n}-np}{\sqrt{ np(1-p) }}$ ha valore atteso 0 e varianza 1.
+
+Dimostriamolo usando che $E[S_{n}]=np$ e che $Var(S_{n})=np(1-p)$:
+
+$$
+\begin{align*}
+&E\left[\frac{S_{n}-np}{\sqrt{ np(1-p) }}\right]\underset{\text{linearità di E}}=\frac{E[S_{n}]-np}{\sqrt{ np(1-p) }}=\frac{np-np}{\sqrt{ np(1-p) }}=0 \\
+ \\
+&Var\left(\frac{S_{n}-np}{\sqrt{ np(1-p) }}\right)=Var\left( \frac{S_{n}}{\sqrt{ np(1-p) }}\right)=\frac{1}{np(1-p)}\cdot Var(S_{n})=\frac{np(1-p)}{np(1-p)}=1
+\end{align*}
+$$
+
+Inoltre $S_{n}=X_{1}+X_{2}+\dots+X_{n}$ che sono tutte indipendenti quindi sono tutte $Bern(p)$. $S_{n}$ è quindi somma di v.a. indipendenti identicamente distribuite.
+
+_Eserczio_ Lancio 10.000 volte una moneta onesta, con l'approssimazione gaussiana trovare $P(|\text{\#Teste - 5000}|\geq 75)$
+
+
 
