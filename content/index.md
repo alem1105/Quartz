@@ -40,3 +40,10 @@ description: Indice principale del vault
 - [[Algebra]]
 - [[Sistemi Operativi 1]]
 - [[Basi di Dati 1]]
+
+## Secondo Semestre
+
+- [[Basi di Dati 2]]
+- [[Progettazione di Algoritmi]]
+- [[Sistemi Operativi 2]]
+- [[Reti di Elaboratori]]
