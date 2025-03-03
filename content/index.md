@@ -4,13 +4,11 @@ description: Indice principale del vault
 ---
 ![[index_image.gif]]
 
-> _"Heres the thing about time, if you cant make the most out of any given moment, then you dont deserve an single extra second"_
-
 > - Spotify: https://open.spotify.com/user/alessio1153
 
 ---
 
-> Qui carico gli appunti che mi scrivo per studiare, potrebbero esserci errori (ci sono sicuramente 😔). (Sopra c'è Ekko perché è il 🐐)
+> Qui carico gli appunti che mi scrivo per studiare, potrebbero esserci errori (ci sono sicuramente 😔)
 
 # Studiate non per corsi uni
 
