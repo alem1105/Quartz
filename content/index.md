@@ -2,13 +2,17 @@
 title: Home
 description: Indice principale del vault
 ---
+
+> - Currently obsessed with (watching): Mob Psycho 100
+
 ![[index_image.gif]]
 
 > - Spotify: https://open.spotify.com/user/alessio1153
 
 ---
 
-> Qui carico gli appunti che mi scrivo per studiare, potrebbero esserci errori (ci sono sicuramente 😔)
+> Qui carico gli appunti che mi scrivo per studiare, seguono molto le slide ma perchè a me serve scrivere per studiare :P e poi mi trovo più comodo a ricercare le cose da un'unica parte piuttosto che 200 pdf.
+Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️](https://github.com/erinrrr) 
 
 # Studiate non per corsi uni
 
