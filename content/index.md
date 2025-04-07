@@ -20,7 +20,7 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 
 # Primo Anno
 
-> Gli appunti del primo anno, soprattutto primo semestre fanno abbastanza schifo (forse si salva Sistemi Digitali)
+> Gli appunti del primo anno, soprattutto primo semestre fanno abbastanza schifo (forse si salvano i registri di Sistemi Digitali)
 
 ## Primo Semestre
 
