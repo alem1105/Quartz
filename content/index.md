@@ -3,7 +3,7 @@ title: Home
 description: Indice principale del vault
 ---
 
-![[index_image.jpg]]
+![index_image](https://github.com/user-attachments/assets/f97aa789-f96b-448f-ade4-08547f8de956)
 
 > - Spotify: https://open.spotify.com/user/alessio1153
 
