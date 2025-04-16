@@ -3,9 +3,7 @@ title: Home
 description: Indice principale del vault
 ---
 
-> - Currently obsessed with (watching): Mob Psycho 100
-
-![[index_image.gif]]
+![[index_image.jpg]]
 
 > - Spotify: https://open.spotify.com/user/alessio1153
 
