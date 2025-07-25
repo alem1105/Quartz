@@ -15,6 +15,7 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 # Studiate non per corsi uni
 
 - [[Git]]
+- [[Swift]]
 
 # Primo Anno
 
