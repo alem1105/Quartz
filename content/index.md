@@ -50,3 +50,15 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 - [[Progettazione di Algoritmi]]
 - [[Sistemi Operativi 2]]
 - [[Reti di Elaboratori]]
+
+# Terzo Anno
+
+## Primo Semestre
+
+- [[Ingegneria del Software]]
+- [[Automi]]
+- [[Interazione Uomo Macchina]]
+- [[Programmazione per il Web]]
+- [[Programmazione di Sistemi Embedded e Multicore]]
+
+## Secondo Semestre
