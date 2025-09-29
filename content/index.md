@@ -60,5 +60,6 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 - [[Interazione Uomo Macchina]]
 - [[Programmazione per il Web]]
 - [[Programmazione di Sistemi Embedded e Multicore]]
+- [[Cybersex]]
 
 ## Secondo Semestre
