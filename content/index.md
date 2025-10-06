@@ -57,7 +57,6 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 
 - [[Ingegneria del Software]]
 - [[Automi]]
-- [[Interazione Uomo Macchina]]
 - [[Programmazione per il Web]]
 - [[Programmazione di Sistemi Embedded e Multicore]]
 - [[Cybersex]]
