@@ -58,8 +58,11 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 - [[Ingegneria del Software]]
 - [[Automi]]
 - [[Programmazione per il Web]]
-- [[Programmazione di Sistemi Embedded e Multicore]]
-- [[Cybersex]]
+- [[Programmazione Multicore]]
+- [[Interazione Uomo Macchina]]
+
+Corsi abbandonati 🫡: 
+- [[Cybersecurity]]
 - [[Linguaggi di Programmazione]]
 
 ## Secondo Semestre
