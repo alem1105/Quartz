@@ -62,3 +62,6 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 - [[Interazione Uomo Macchina]]
 
 ## Secondo Semestre
+
+- [[sicurezza.pdf|Sicurezza]]
+- [[ailab.pdf|AI LAB]]
