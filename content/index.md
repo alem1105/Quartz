@@ -56,13 +56,9 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 ## Primo Semestre
 
 - [[Ingegneria del Software]]
-- [[Automi]]
-- [[Programmazione per il Web]]
-- [[Programmazione Multicore]]
+- [[automi.pdf|Automi]]
+- [[progweb.pdf|Programmazione per il Web]]
+- [[multicore.pdf|Multicore]]
 - [[Interazione Uomo Macchina]]
-
-Corsi abbandonati 🫡: 
-- [[Cybersecurity]]
-- [[Linguaggi di Programmazione]]
 
 ## Secondo Semestre
