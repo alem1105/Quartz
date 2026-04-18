@@ -64,4 +64,4 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 ## Secondo Semestre
 
 - [[sicurezza.pdf|Sicurezza]]
-- [[ailab.pdf|AI LAB]]
+- [[AI Lab]]
