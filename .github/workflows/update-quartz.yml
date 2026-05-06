@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fondamentale per poter unire le versioni
+          token: ${{ secrets.PAT }}
 
       - name: Configura Git
         run: |
