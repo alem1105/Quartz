@@ -26,13 +26,9 @@ jobs:
         with:
           node-version: 22
       - name: Installa dipendenze Quartz
-        run: |
-          rm -f package-lock.json
-          npm install
+        run: npm ci
       - name: Genera il sito (Build)
-        run: |
-          rm -rf .quartz-cache
-          npx quartz build
+        run: npx quartz build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
