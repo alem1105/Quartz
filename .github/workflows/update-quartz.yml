@@ -1,0 +1,40 @@
+name: Update Quartz Engine
+
+on:
+  # Permette di avviare l'aggiornamento manualmente
+  workflow_dispatch: 
+
+permissions:
+  contents: write # Necessario per salvare l'aggiornamento sul tuo GitHub
+
+jobs:
+  update-engine:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fondamentale per poter unire le versioni
+
+      - name: Configura Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Installa dipendenze
+        run: npm install
+
+      - name: Lancia l'aggiornamento di Quartz
+        env:
+          # Questa riga è vitale: impedisce a Git di bloccarsi chiedendo
+          # di inserire un messaggio di testo manuale durante l'aggiornamento
+          GIT_MERGE_AUTOEDIT: no 
+        run: npx quartz update
+
+      - name: Salva le modifiche su GitHub
+        run: git push
