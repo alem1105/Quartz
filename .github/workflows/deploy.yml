@@ -25,11 +25,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Install Dependencies
+      - name: Installa dipendenze Quartz
         run: |
-         npm install
-         npm install sharp
-      - name: Build Quartz
+          rm -f package-lock.json
+          npm install
+      - name: Genera il sito (Build)
         run: |
           rm -rf .quartz-cache
           npx quartz build
