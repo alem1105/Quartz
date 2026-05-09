@@ -56,7 +56,7 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 ## Primo Semestre
 
 - [[Ingegneria del Software]]
-- [[automi.pdf|Automi]]
+- [[automi.pdf|Automi]] - sto provando a rifarli [[automi_calc_compl.pdf|Automi 2.0]]
 - [[progweb.pdf|Programmazione per il Web]]
 - [[multicore.pdf|Multicore]]
 - [[Interazione Uomo Macchina]]
