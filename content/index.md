@@ -56,12 +56,12 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 ## Primo Semestre
 
 - [[Ingegneria del Software]]
-- [[Terzo Anno/Primo Semestre/Automi/main.pdf|Automi]]
-- [[Terzo Anno/Primo Semestre/Programmazione per il Web/main.pdf|Programmazione per il Web]]
-- [[Terzo Anno/Primo Semestre/Multicore/main.pdf|Multicore]]
+- [Automi](Terzo%20Anno/Primo%20Semestre/Automi/main.pdf)
+- [Programmazione per il Web](Terzo%20Anno/Primo%20Semestre/Programmazione%20per%20il%20Web/main.pdf)
+- [Multicore](Terzo%20Anno/Primo%20Semestre/Multicore/main.pdf)
 - [[Interazione Uomo Macchina]]
 
 ## Secondo Semestre
 
-- [[Terzo Anno/Secondo Semestre/Sicurezza/main.pdf|Sicurezza]]
+- [Sicurezza](Terzo%20Anno/Secondo%20Semestre/Sicurezza/main.pdf)
 - [[AI Lab]]
