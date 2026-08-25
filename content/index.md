@@ -56,12 +56,12 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 ## Primo Semestre
 
 - [[Ingegneria del Software]]
-- [Automi](/Quartz/vault/Terzo-Anno/Primo-Semestre/Automi/main.pdf)
-- [Programmazione per il Web](/Quartz/vault/Terzo-Anno/Primo-Semestre/Programmazione-per-il-Web/main.pdf)
-- [Multicore](/Quartz/vault/Terzo-Anno/Primo-Semestre/Multicore/main.pdf)
+- [Automi](/vault/Terzo-Anno/Primo-Semestre/Automi/main.pdf)
+- [Programmazione per il Web](/vault/Terzo-Anno/Primo-Semestre/Programmazione-per-il-Web/main.pdf)
+- [Multicore](/vault/Terzo-Anno/Primo-Semestre/Multicore/main.pdf)
 - [[Interazione Uomo Macchina]]
 
 ## Secondo Semestre
 
-- [Sicurezza](/Quartz/vault/Terzo-Anno/Secondo-Semestre/Sicurezza/main.pdf)
+- [Sicurezza](/vault/Terzo-Anno/Secondo-Semestre/Sicurezza/main.pdf)
 - [[AI Lab]]
