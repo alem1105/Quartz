@@ -56,12 +56,12 @@ Ci saranno sicuramente errori anche se gran parte li trova e risolve [Erin❤️
 ## Primo Semestre
 
 - [[Ingegneria del Software]]
-- [[automi.pdf|Automi]] - sto provando a rifarli [[automi_calc_compl.pdf|Automi 2.0]]
-- [[progweb.pdf|Programmazione per il Web]]
-- [[multicore.pdf|Multicore]]
+- [[Terzo Anno/Primo Semestre/Automi/main.pdf|Automi]]
+- [[Terzo Anno/Primo Semestre/Programmazione per il Web/main.pdf|Programmazione per il Web]]
+- [[Terzo Anno/Primo Semestre/Multicore/main.pdf|Multicore]]
 - [[Interazione Uomo Macchina]]
 
 ## Secondo Semestre
 
-- [[sicurezza.pdf|Sicurezza]]
+- [[Terzo Anno/Secondo Semestre/Sicurezza/main.pdf|Sicurezza]]
 - [[AI Lab]]
